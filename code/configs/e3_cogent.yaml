@@ -1,0 +1,31 @@
+# E3: Composition Difficulty Diagnosis（CoGenT valA / valB + sphere 对照）
+conditions:
+  A:
+    scene_file: scenes/CLEVR_valA_scenes.json
+    image_dir: images/valA
+  B:
+    scene_file: scenes/CLEVR_valB_scenes.json
+    image_dir: images/valB
+
+# 官方调色板（仅用于结果核对，不用于生成逻辑）
+palettes:
+  A:
+    cube: [gray, blue, brown, yellow]
+    cylinder: [red, green, purple, cyan]
+  B:
+    cube: [red, green, purple, cyan]
+    cylinder: [gray, blue, brown, yellow]
+# sphere 在 A / B 均可取全部 8 色（对照组）
+
+colors: [gray, blue, brown, yellow, red, green, purple, cyan]
+shapes: [cube, sphere, cylinder]
+
+sampling:
+  target_per_condition_shape: 3000
+  per_scene_cap: 2          # 每张图最多取 2 个对象
+  negative_types: [color, shape]   # 换色负例 + 换形负例各生成一条
+
+seeds: [0, 1, 2]
+bootstrap:
+  n_boot: 1000
+  ci: 0.95

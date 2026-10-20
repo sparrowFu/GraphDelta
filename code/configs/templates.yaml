@@ -1,0 +1,18 @@
+# 外层 prompt 模板（固定，报告模板间方差）。
+# 两类内容分别使用：
+#   phrase：名词短语类 caption（对象 / 属性 / 场景 / binding / color-shape）
+#   sentence：完整句子类 caption（relation / position）
+# 索引顺序不得改动；文本 nuisance 基线使用 phrase[0] vs phrase[1]。
+phrase:
+  - "a photo of {}."
+  - "a picture of {}."
+  - "an image of {}."
+  - "a photo showing {}."
+  - "an image showing {}."
+  - "a close-up photo of {}."
+  - "{}."
+sentence:
+  - "{}."
+  - "an image where {}."
+  - "a photo where {}."
+  - "a picture showing that {}."

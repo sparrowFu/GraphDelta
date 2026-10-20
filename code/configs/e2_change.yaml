@@ -1,0 +1,27 @@
+# E2: Single-Factor Representation Response Diagnosis（PUG: Animals 全量 215,040）
+factors: [environment, texture, size, camera]
+
+# canonical 顺序只用于统一 Δ 的方向（方案 §38），不解释为语义顺序。
+canonical_orders:
+  size: [small, medium, large]        # character_scale 0.7 / 1.0 / 1.3
+  camera: [0, 45, 225, 315]           # camera_yaw，按数值排序
+  texture: [Asphalt, Default, Grass, Sky]
+  environment: alphabetical           # 64 个 world_name 按字母序
+
+sampling:
+  max_pairs_per_context: 4            # 每个 context 每个 factor 的配对上限（控制相关性）
+  max_total_per_factor: 30000
+
+similarity:
+  max_comparisons_per_group: 20000    # 每组采样比较次数上限
+
+nuisance:
+  n_images: 2000                       # 视觉 nuisance：同图两个增强视图
+  crop_scale: [0.85, 1.0]
+  jpeg_quality: [90, 75]
+  text_template_indices: [0, 1]        # 文本 nuisance：phrase 模板 0 vs 1
+  n_captions: 1000
+
+bootstrap:
+  n_boot: 1000
+  ci: 0.95

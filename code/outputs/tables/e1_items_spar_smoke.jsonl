@@ -1,0 +1,800 @@
+{"image_id": "pug_spar_000007", "factor": "scene", "content_pos": "a Anlylosaurus and a Bear in the desert", "content_neg": "a Anlylosaurus and a Rabbit in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000008", "factor": "scene", "content_pos": "a Anlylosaurus and a Beaver in the desert", "content_neg": "a Anlylosaurus and a Chicken in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000018", "factor": "scene", "content_pos": "a Anlylosaurus and a EarlessSeal in the desert", "content_neg": "a Anlylosaurus and a Zebra in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000019", "factor": "scene", "content_pos": "a Anlylosaurus and a Goat in the desert", "content_neg": "a Anlylosaurus and a Impala in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000034", "factor": "scene", "content_pos": "a Anlylosaurus and a Goldfish in the arena", "content_neg": "a Anlylosaurus and a Beaver in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000035", "factor": "scene", "content_pos": "a Anlylosaurus and a Caribou in the arena", "content_neg": "a Anlylosaurus and a Goat in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000036", "factor": "scene", "content_pos": "a Anlylosaurus and a Elephant in the arena", "content_neg": "a Anlylosaurus and a EarlessSeal in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000053", "factor": "scene", "content_pos": "a Anlylosaurus and a Hippopotamus in the arena", "content_neg": "a Anlylosaurus and a Orca in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000065", "factor": "scene", "content_pos": "a Anlylosaurus and a PoisonDartFrog in the arena", "content_neg": "a Anlylosaurus and a Hippopotamus in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000067", "factor": "scene", "content_pos": "a Anlylosaurus and a Goldfish in the ocean floor", "content_neg": "a Anlylosaurus and a Impala in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000082", "factor": "scene", "content_pos": "a Anlylosaurus and a Rhinoceros in the ocean floor", "content_neg": "a Anlylosaurus and a Gecko in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000085", "factor": "scene", "content_pos": "a Anlylosaurus and a Goat in the ocean floor", "content_neg": "a Anlylosaurus and a Pig in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000110", "factor": "scene", "content_pos": "a Anlylosaurus and a Gecko in the race track", "content_neg": "a Anlylosaurus and a Tarantula in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_000111", "factor": "scene", "content_pos": "a Anlylosaurus and a Crow in the race track", "content_neg": "a Anlylosaurus and a Horse in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_000119", "factor": "scene", "content_pos": "a Anlylosaurus and a Hippopotamus in the race track", "content_neg": "a Anlylosaurus and a Impala in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_000128", "factor": "scene", "content_pos": "a Anlylosaurus and a WhiteShark in the race track", "content_neg": "a Anlylosaurus and a Impala in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_000172", "factor": "scene", "content_pos": "a Anlylosaurus and a Bear in the circus", "content_neg": "a Anlylosaurus and a Armadillo in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000187", "factor": "scene", "content_pos": "a Anlylosaurus and a Impala in the circus", "content_neg": "a Anlylosaurus and a Zebra in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000204", "factor": "scene", "content_pos": "a Anlylosaurus and a Zebra in the boxing ring", "content_neg": "a Anlylosaurus and a WhiteShark in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_000215", "factor": "scene", "content_pos": "a Anlylosaurus and a Dolphin in the boxing ring", "content_neg": "a Anlylosaurus and a Chicken in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_000217", "factor": "scene", "content_pos": "a Anlylosaurus and a Goat in the boxing ring", "content_neg": "a Anlylosaurus and a Beaver in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_000226", "factor": "scene", "content_pos": "a Anlylosaurus and a Chicken in the boxing ring", "content_neg": "a Anlylosaurus and a Lion in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_000239", "factor": "scene", "content_pos": "a Anlylosaurus and a Beaver in the australian road", "content_neg": "a Anlylosaurus and a PoisonDartFrog in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_000248", "factor": "scene", "content_pos": "a Anlylosaurus and a Dolphin in the australian road", "content_neg": "a Anlylosaurus and a Penguin in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_000252", "factor": "scene", "content_pos": "a Anlylosaurus and a Horse in the australian road", "content_neg": "a Anlylosaurus and a Penguin in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_000253", "factor": "scene", "content_pos": "a Anlylosaurus and a Impala in the australian road", "content_neg": "a Anlylosaurus and a Rabbit in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_000266", "factor": "scene", "content_pos": "a Anlylosaurus and a Caribou in the salt flats", "content_neg": "a Anlylosaurus and a Goldfish in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000272", "factor": "scene", "content_pos": "a Anlylosaurus and a Beaver in the salt flats", "content_neg": "a Anlylosaurus and a Goat in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000275", "factor": "scene", "content_pos": "a Anlylosaurus and a Gecko in the salt flats", "content_neg": "a Anlylosaurus and a Impala in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000278", "factor": "scene", "content_pos": "a Anlylosaurus and a GiantTortoise in the salt flats", "content_neg": "a Anlylosaurus and a Pig in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000279", "factor": "scene", "content_pos": "a Anlylosaurus and a Tarantula in the salt flats", "content_neg": "a Anlylosaurus and a Beaver in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000285", "factor": "scene", "content_pos": "a Anlylosaurus and a Horse in the salt flats", "content_neg": "a Anlylosaurus and a GiantTortoise in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000308", "factor": "scene", "content_pos": "a Anlylosaurus and a Gecko in the museum", "content_neg": "a Anlylosaurus and a EarlessSeal in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000312", "factor": "scene", "content_pos": "a Anlylosaurus and a Tarantula in the museum", "content_neg": "a Anlylosaurus and a Zebra in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000313", "factor": "scene", "content_pos": "a Anlylosaurus and a Rhinoceros in the museum", "content_neg": "a Anlylosaurus and a Crow in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000318", "factor": "scene", "content_pos": "a Anlylosaurus and a Horse in the museum", "content_neg": "a Anlylosaurus and a Scorpion in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000322", "factor": "scene", "content_pos": "a Anlylosaurus and a Pig in the museum", "content_neg": "a Anlylosaurus and a Zebra in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000326", "factor": "scene", "content_pos": "a Anlylosaurus and a WhiteShark in the museum", "content_neg": "a Anlylosaurus and a Beaver in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000328", "factor": "scene", "content_pos": "a Anlylosaurus and a BlackRockFish in the museum", "content_neg": "a Anlylosaurus and a Rabbit in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000344", "factor": "scene", "content_pos": "a Anlylosaurus and a GiantTortoise in the desert", "content_neg": "a Anlylosaurus and a Goat in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000352", "factor": "scene", "content_pos": "a Anlylosaurus and a Impala in the desert", "content_neg": "a Anlylosaurus and a Beaver in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000353", "factor": "scene", "content_pos": "a Anlylosaurus and a Lion in the desert", "content_neg": "a Anlylosaurus and a Gecko in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000354", "factor": "scene", "content_pos": "a Anlylosaurus and a Orca in the desert", "content_neg": "a Anlylosaurus and a Scorpion in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000361", "factor": "scene", "content_pos": "a Anlylosaurus and a BlackRockFish in the desert", "content_neg": "a Anlylosaurus and a Dolphin in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000367", "factor": "scene", "content_pos": "a Anlylosaurus and a Camel in the arena", "content_neg": "a Anlylosaurus and a Crow in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000368", "factor": "scene", "content_pos": "a Anlylosaurus and a Penguin in the arena", "content_neg": "a Anlylosaurus and a Beaver in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000372", "factor": "scene", "content_pos": "a Anlylosaurus and a Cattle in the arena", "content_neg": "a Anlylosaurus and a EarlessSeal in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000373", "factor": "scene", "content_pos": "a Anlylosaurus and a Armadillo in the arena", "content_neg": "a Anlylosaurus and a Hippopotamus in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000382", "factor": "scene", "content_pos": "a Anlylosaurus and a Goat in the arena", "content_neg": "a Anlylosaurus and a WhiteShark in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000388", "factor": "scene", "content_pos": "a Anlylosaurus and a Pig in the arena", "content_neg": "a Anlylosaurus and a Zebra in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000395", "factor": "scene", "content_pos": "a Anlylosaurus and a PoisonDartFrog in the arena", "content_neg": "a Anlylosaurus and a Horse in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000396", "factor": "scene", "content_pos": "a Anlylosaurus in the ocean floor", "content_neg": "a PoisonDartFrog in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000405", "factor": "scene", "content_pos": "a Anlylosaurus and a Cattle in the ocean floor", "content_neg": "a Anlylosaurus and a Impala in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000415", "factor": "scene", "content_pos": "a Anlylosaurus and a Goat in the ocean floor", "content_neg": "a Anlylosaurus and a Horse in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000417", "factor": "scene", "content_pos": "a Anlylosaurus and a Horse in the ocean floor", "content_neg": "a Anlylosaurus and a Hippopotamus in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000425", "factor": "scene", "content_pos": "a Anlylosaurus and a WhiteShark in the ocean floor", "content_neg": "a Anlylosaurus and a PoisonDartFrog in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000428", "factor": "scene", "content_pos": "a Anlylosaurus and a PoisonDartFrog in the ocean floor", "content_neg": "a Anlylosaurus and a Cattle in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000430", "factor": "scene", "content_pos": "a Anlylosaurus and a Goldfish in the race track", "content_neg": "a Anlylosaurus and a Camel in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_000437", "factor": "scene", "content_pos": "a Anlylosaurus and a Beaver in the race track", "content_neg": "a Anlylosaurus and a Dolphin in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_000443", "factor": "scene", "content_pos": "a Anlylosaurus and a GiantTortoise in the race track", "content_neg": "a Anlylosaurus and a Tarantula in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_000468", "factor": "scene", "content_pos": "a Anlylosaurus and a Zebra in the city", "content_neg": "a Anlylosaurus and a Impala in the city", "kind": "phrase"}
+{"image_id": "pug_spar_000476", "factor": "scene", "content_pos": "a Anlylosaurus and a GiantTortoise in the city", "content_neg": "a Anlylosaurus and a Gecko in the city", "kind": "phrase"}
+{"image_id": "pug_spar_000506", "factor": "scene", "content_pos": "a Anlylosaurus and a Gecko in the circus", "content_neg": "a Anlylosaurus and a Rabbit in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000508", "factor": "scene", "content_pos": "a Anlylosaurus and a Scorpion in the circus", "content_neg": "a Anlylosaurus and a Lion in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000514", "factor": "scene", "content_pos": "a Anlylosaurus and a Goat in the circus", "content_neg": "a Anlylosaurus and a Penguin in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000515", "factor": "scene", "content_pos": "a Anlylosaurus and a Hippopotamus in the circus", "content_neg": "a Anlylosaurus and a Goldfish in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000516", "factor": "scene", "content_pos": "a Anlylosaurus and a Horse in the circus", "content_neg": "a Anlylosaurus and a Gecko in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000518", "factor": "scene", "content_pos": "a Anlylosaurus and a Lion in the circus", "content_neg": "a Anlylosaurus and a BlackRockFish in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000526", "factor": "scene", "content_pos": "a Anlylosaurus and a BlackRockFish in the circus", "content_neg": "a Anlylosaurus and a Goat in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000532", "factor": "scene", "content_pos": "a Anlylosaurus and a Camel in the boxing ring", "content_neg": "a Anlylosaurus and a Tarantula in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_000546", "factor": "scene", "content_pos": "a Anlylosaurus and a EarlessSeal in the boxing ring", "content_neg": "a Anlylosaurus and a Beaver in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_000577", "factor": "scene", "content_pos": "a Anlylosaurus and a Rhinoceros in the australian road", "content_neg": "a Anlylosaurus and a Hippopotamus in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_000579", "factor": "scene", "content_pos": "a Anlylosaurus and a EarlessSeal in the australian road", "content_neg": "a Anlylosaurus and a Lion in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_000598", "factor": "scene", "content_pos": "a Anlylosaurus and a Camel in the salt flats", "content_neg": "a Anlylosaurus and a Bear in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000599", "factor": "scene", "content_pos": "a Anlylosaurus and a Penguin in the salt flats", "content_neg": "a Anlylosaurus and a Horse in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000606", "factor": "scene", "content_pos": "a Anlylosaurus and a Crow in the salt flats", "content_neg": "a Anlylosaurus and a Zebra in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000612", "factor": "scene", "content_pos": "a Anlylosaurus and a EarlessSeal in the salt flats", "content_neg": "a Anlylosaurus and a BlackRockFish in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000622", "factor": "scene", "content_pos": "a Anlylosaurus and a Chicken in the salt flats", "content_neg": "a Anlylosaurus and a Horse in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000634", "factor": "scene", "content_pos": "a Anlylosaurus and a Bear in the museum", "content_neg": "a Anlylosaurus and a BlackRockFish in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000642", "factor": "scene", "content_pos": "a Anlylosaurus and a Tarantula in the museum", "content_neg": "a Anlylosaurus and a Lion in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000666", "factor": "scene", "content_pos": "a Anlylosaurus and a Zebra in the desert", "content_neg": "a Anlylosaurus and a Rhinoceros in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000669", "factor": "scene", "content_pos": "a Anlylosaurus and a Cattle in the desert", "content_neg": "a Anlylosaurus and a Pig in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000673", "factor": "scene", "content_pos": "a Anlylosaurus and a Scorpion in the desert", "content_neg": "a Anlylosaurus and a Crow in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000680", "factor": "scene", "content_pos": "a Anlylosaurus and a Hippopotamus in the desert", "content_neg": "a Anlylosaurus and a WhiteShark in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000684", "factor": "scene", "content_pos": "a Anlylosaurus and a Orca in the desert", "content_neg": "a Anlylosaurus and a PoisonDartFrog in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_000697", "factor": "scene", "content_pos": "a Anlylosaurus and a Camel in the arena", "content_neg": "a Anlylosaurus and a PoisonDartFrog in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000715", "factor": "scene", "content_pos": "a Anlylosaurus and a Impala in the arena", "content_neg": "a Anlylosaurus and a Camel in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000721", "factor": "scene", "content_pos": "a Anlylosaurus and a Chicken in the arena", "content_neg": "a Anlylosaurus and a Bear in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_000727", "factor": "scene", "content_pos": "a Anlylosaurus and a Goldfish in the ocean floor", "content_neg": "a Anlylosaurus and a BlackRockFish in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000743", "factor": "scene", "content_pos": "a Anlylosaurus and a Dolphin in the ocean floor", "content_neg": "a Anlylosaurus and a Pig in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000754", "factor": "scene", "content_pos": "a Anlylosaurus and a Chicken in the ocean floor", "content_neg": "a Anlylosaurus and a Lion in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_000808", "factor": "scene", "content_pos": "a Anlylosaurus and a Rhinoceros in the city", "content_neg": "a Anlylosaurus and a Dolphin in the city", "kind": "phrase"}
+{"image_id": "pug_spar_000811", "factor": "scene", "content_pos": "a Anlylosaurus and a Goat in the city", "content_neg": "a Anlylosaurus and a Dolphin in the city", "kind": "phrase"}
+{"image_id": "pug_spar_000817", "factor": "scene", "content_pos": "a Anlylosaurus and a Pig in the city", "content_neg": "a Anlylosaurus and a Zebra in the city", "kind": "phrase"}
+{"image_id": "pug_spar_000820", "factor": "scene", "content_pos": "a Anlylosaurus and a Chicken in the city", "content_neg": "a Anlylosaurus and a Goldfish in the city", "kind": "phrase"}
+{"image_id": "pug_spar_000825", "factor": "scene", "content_pos": "a Anlylosaurus in the circus", "content_neg": "a Rhinoceros in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000828", "factor": "scene", "content_pos": "a Anlylosaurus and a Elephant in the circus", "content_neg": "a Anlylosaurus and a Dolphin in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000834", "factor": "scene", "content_pos": "a Anlylosaurus and a Cattle in the circus", "content_neg": "a Anlylosaurus and a Lion in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000840", "factor": "scene", "content_pos": "a Anlylosaurus and a Tarantula in the circus", "content_neg": "a Anlylosaurus and a Goat in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000853", "factor": "scene", "content_pos": "a Anlylosaurus and a Chicken in the circus", "content_neg": "a Anlylosaurus and a Beaver in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000865", "factor": "scene", "content_pos": "a Anlylosaurus and a Bear in the boxing ring", "content_neg": "a Anlylosaurus and a Goat in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_000866", "factor": "scene", "content_pos": "a Anlylosaurus and a Beaver in the boxing ring", "content_neg": "a Anlylosaurus and a Crow in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_000868", "factor": "scene", "content_pos": "a Anlylosaurus and a Armadillo in the boxing ring", "content_neg": "a Anlylosaurus and a PoisonDartFrog in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_000879", "factor": "scene", "content_pos": "a Anlylosaurus and a Horse in the boxing ring", "content_neg": "a Anlylosaurus and a Elephant in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_000894", "factor": "scene", "content_pos": "a Anlylosaurus and a Elephant in the australian road", "content_neg": "a Anlylosaurus and a EarlessSeal in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_000901", "factor": "scene", "content_pos": "a Anlylosaurus and a Armadillo in the australian road", "content_neg": "a Anlylosaurus and a Impala in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_000909", "factor": "scene", "content_pos": "a Anlylosaurus and a EarlessSeal in the australian road", "content_neg": "a Anlylosaurus and a Cattle in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_000910", "factor": "scene", "content_pos": "a Anlylosaurus and a Goat in the australian road", "content_neg": "a Anlylosaurus and a Rhinoceros in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_000920", "factor": "scene", "content_pos": "a Anlylosaurus and a WhiteShark in the australian road", "content_neg": "a Anlylosaurus and a Orca in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_000929", "factor": "scene", "content_pos": "a Anlylosaurus and a Penguin in the salt flats", "content_neg": "a Anlylosaurus and a Rabbit in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000938", "factor": "scene", "content_pos": "a Anlylosaurus and a GiantTortoise in the salt flats", "content_neg": "a Anlylosaurus and a Chicken in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000955", "factor": "scene", "content_pos": "a Anlylosaurus and a BlackRockFish in the salt flats", "content_neg": "a Anlylosaurus and a Gecko in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_000961", "factor": "scene", "content_pos": "a Anlylosaurus and a Camel in the museum", "content_neg": "a Anlylosaurus and a Caribou in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000964", "factor": "scene", "content_pos": "a Anlylosaurus and a Bear in the museum", "content_neg": "a Anlylosaurus and a Elephant in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000967", "factor": "scene", "content_pos": "a Anlylosaurus and a Armadillo in the museum", "content_neg": "a Anlylosaurus and a Chicken in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000975", "factor": "scene", "content_pos": "a Anlylosaurus and a EarlessSeal in the museum", "content_neg": "a Anlylosaurus and a Armadillo in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000981", "factor": "scene", "content_pos": "a Anlylosaurus and a Orca in the museum", "content_neg": "a Anlylosaurus and a Goat in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_000993", "factor": "scene", "content_pos": "a Anlylosaurus and a Elephant in the desert", "content_neg": "a Anlylosaurus and a WhiteShark in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_001006", "factor": "scene", "content_pos": "a Anlylosaurus and a Rhinoceros in the desert", "content_neg": "a Anlylosaurus and a Crow in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_001014", "factor": "scene", "content_pos": "a Anlylosaurus and a Orca in the desert", "content_neg": "a Anlylosaurus and a Scorpion in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_001016", "factor": "scene", "content_pos": "a Anlylosaurus and a Rabbit in the desert", "content_neg": "a Anlylosaurus and a Gecko in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_001020", "factor": "scene", "content_pos": "a Anlylosaurus and a Anlylosaurus in the desert", "content_neg": "a Anlylosaurus and a Armadillo in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_001022", "factor": "scene", "content_pos": "a Anlylosaurus and a PoisonDartFrog in the desert", "content_neg": "a Anlylosaurus and a Gecko in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_001024", "factor": "scene", "content_pos": "a Anlylosaurus and a Goldfish in the arena", "content_neg": "a Anlylosaurus and a Penguin in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001033", "factor": "scene", "content_pos": "a Anlylosaurus and a Armadillo in the arena", "content_neg": "a Anlylosaurus and a Camel in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001037", "factor": "scene", "content_pos": "a Anlylosaurus and a GiantTortoise in the arena", "content_neg": "a Anlylosaurus and a Gecko in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001040", "factor": "scene", "content_pos": "a Anlylosaurus and a Dolphin in the arena", "content_neg": "a Anlylosaurus and a PoisonDartFrog in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001054", "factor": "scene", "content_pos": "a Anlylosaurus and a BlackRockFish in the arena", "content_neg": "a Anlylosaurus and a Goat in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001055", "factor": "scene", "content_pos": "a Anlylosaurus and a PoisonDartFrog in the arena", "content_neg": "a Anlylosaurus and a Crow in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001064", "factor": "scene", "content_pos": "a Anlylosaurus and a Beaver in the ocean floor", "content_neg": "a Anlylosaurus and a GiantTortoise in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_001070", "factor": "scene", "content_pos": "a Anlylosaurus and a GiantTortoise in the ocean floor", "content_neg": "a Anlylosaurus and a Bear in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_001086", "factor": "scene", "content_pos": "a Anlylosaurus and a Anlylosaurus in the ocean floor", "content_neg": "a Anlylosaurus and a Goldfish in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_001095", "factor": "scene", "content_pos": "a Anlylosaurus and a Zebra in the race track", "content_neg": "a Anlylosaurus and a Impala in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001098", "factor": "scene", "content_pos": "a Anlylosaurus and a Cattle in the race track", "content_neg": "a Anlylosaurus and a PoisonDartFrog in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001099", "factor": "scene", "content_pos": "a Anlylosaurus and a Armadillo in the race track", "content_neg": "a Anlylosaurus and a Caribou in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001105", "factor": "scene", "content_pos": "a Anlylosaurus and a Rhinoceros in the race track", "content_neg": "a Anlylosaurus and a Orca in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001114", "factor": "scene", "content_pos": "a Anlylosaurus and a Pig in the race track", "content_neg": "a Anlylosaurus and a GiantTortoise in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001116", "factor": "scene", "content_pos": "a Anlylosaurus and a Squirrel in the race track", "content_neg": "a Anlylosaurus and a Armadillo in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001118", "factor": "scene", "content_pos": "a Anlylosaurus and a WhiteShark in the race track", "content_neg": "a Anlylosaurus and a Bear in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001121", "factor": "scene", "content_pos": "a Anlylosaurus and a PoisonDartFrog in the race track", "content_neg": "a Anlylosaurus and a Goldfish in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001123", "factor": "scene", "content_pos": "a Anlylosaurus and a Goldfish in the city", "content_neg": "a Anlylosaurus and a Lion in the city", "kind": "phrase"}
+{"image_id": "pug_spar_001131", "factor": "scene", "content_pos": "a Anlylosaurus and a Cattle in the city", "content_neg": "a Anlylosaurus and a Zebra in the city", "kind": "phrase"}
+{"image_id": "pug_spar_001133", "factor": "scene", "content_pos": "a Anlylosaurus and a Gecko in the city", "content_neg": "a Anlylosaurus and a GiantTortoise in the city", "kind": "phrase"}
+{"image_id": "pug_spar_001135", "factor": "scene", "content_pos": "a Anlylosaurus and a Scorpion in the city", "content_neg": "a Anlylosaurus and a EarlessSeal in the city", "kind": "phrase"}
+{"image_id": "pug_spar_001147", "factor": "scene", "content_pos": "a Anlylosaurus and a Pig in the city", "content_neg": "a Anlylosaurus and a Goat in the city", "kind": "phrase"}
+{"image_id": "pug_spar_001158", "factor": "scene", "content_pos": "a Anlylosaurus and a Elephant in the circus", "content_neg": "a Anlylosaurus and a Chicken in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_001160", "factor": "scene", "content_pos": "a Anlylosaurus and a Penguin in the circus", "content_neg": "a Anlylosaurus and a Crow in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_001165", "factor": "scene", "content_pos": "a Anlylosaurus and a Armadillo in the circus", "content_neg": "a Anlylosaurus and a Crow in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_001170", "factor": "scene", "content_pos": "a Anlylosaurus and a Tarantula in the circus", "content_neg": "a Anlylosaurus and a Lion in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_001177", "factor": "scene", "content_pos": "a Anlylosaurus and a Impala in the circus", "content_neg": "a Anlylosaurus and a Crow in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_001191", "factor": "scene", "content_pos": "a Anlylosaurus and a Elephant in the boxing ring", "content_neg": "a Anlylosaurus and a Penguin in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_001196", "factor": "scene", "content_pos": "a Anlylosaurus and a Beaver in the boxing ring", "content_neg": "a Anlylosaurus and a Hippopotamus in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_001199", "factor": "scene", "content_pos": "a Anlylosaurus and a Gecko in the boxing ring", "content_neg": "a Anlylosaurus and a Hippopotamus in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_001202", "factor": "scene", "content_pos": "a Anlylosaurus and a GiantTortoise in the boxing ring", "content_neg": "a Anlylosaurus and a BlackRockFish in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_001209", "factor": "scene", "content_pos": "a Anlylosaurus and a Horse in the boxing ring", "content_neg": "a Anlylosaurus and a Squirrel in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_001210", "factor": "scene", "content_pos": "a Anlylosaurus and a Impala in the boxing ring", "content_neg": "a Anlylosaurus and a Cattle in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_001217", "factor": "scene", "content_pos": "a Anlylosaurus and a WhiteShark in the boxing ring", "content_neg": "a Anlylosaurus and a Tarantula in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_001220", "factor": "scene", "content_pos": "a Anlylosaurus and a PoisonDartFrog in the boxing ring", "content_neg": "a Anlylosaurus and a Hippopotamus in the boxing ring", "kind": "phrase"}
+{"image_id": "pug_spar_001223", "factor": "scene", "content_pos": "a Anlylosaurus and a Caribou in the australian road", "content_neg": "a Anlylosaurus and a Armadillo in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_001227", "factor": "scene", "content_pos": "a Anlylosaurus and a Zebra in the australian road", "content_neg": "a Anlylosaurus and a Goldfish in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_001229", "factor": "scene", "content_pos": "a Anlylosaurus and a Beaver in the australian road", "content_neg": "a Anlylosaurus and a Bear in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_001235", "factor": "scene", "content_pos": "a Anlylosaurus and a GiantTortoise in the australian road", "content_neg": "a Anlylosaurus and a Scorpion in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_001238", "factor": "scene", "content_pos": "a Anlylosaurus and a Dolphin in the australian road", "content_neg": "a Anlylosaurus and a Orca in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_001242", "factor": "scene", "content_pos": "a Anlylosaurus and a Horse in the australian road", "content_neg": "a Anlylosaurus and a Bear in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_001247", "factor": "scene", "content_pos": "a Anlylosaurus and a Rabbit in the australian road", "content_neg": "a Anlylosaurus and a Armadillo in the australian road", "kind": "phrase"}
+{"image_id": "pug_spar_001254", "factor": "scene", "content_pos": "a Anlylosaurus in the salt flats", "content_neg": "a Scorpion in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_001256", "factor": "scene", "content_pos": "a Anlylosaurus and a Caribou in the salt flats", "content_neg": "a Anlylosaurus and a Cattle in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_001257", "factor": "scene", "content_pos": "a Anlylosaurus and a Elephant in the salt flats", "content_neg": "a Anlylosaurus and a Scorpion in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_001262", "factor": "scene", "content_pos": "a Anlylosaurus and a Beaver in the salt flats", "content_neg": "a Anlylosaurus and a Hippopotamus in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_001280", "factor": "scene", "content_pos": "a Anlylosaurus and a Rabbit in the salt flats", "content_neg": "a Anlylosaurus and a Scorpion in the salt flats", "kind": "phrase"}
+{"image_id": "pug_spar_001303", "factor": "scene", "content_pos": "a Anlylosaurus and a Rhinoceros in the museum", "content_neg": "a Anlylosaurus and a Armadillo in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_001306", "factor": "scene", "content_pos": "a Anlylosaurus and a Goat in the museum", "content_neg": "a Anlylosaurus and a Horse in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_001316", "factor": "scene", "content_pos": "a Anlylosaurus and a WhiteShark in the museum", "content_neg": "a Anlylosaurus and a Chicken in the museum", "kind": "phrase"}
+{"image_id": "pug_spar_001323", "factor": "scene", "content_pos": "a Armadillo and a Elephant in the desert", "content_neg": "a Armadillo and a Goat in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_001327", "factor": "scene", "content_pos": "a Armadillo and a Bear in the desert", "content_neg": "a Armadillo and a BlackRockFish in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_001337", "factor": "scene", "content_pos": "a Armadillo and a Dolphin in the desert", "content_neg": "a Armadillo and a Chicken in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_001352", "factor": "scene", "content_pos": "a Armadillo and a PoisonDartFrog in the desert", "content_neg": "a Armadillo and a Orca in the desert", "kind": "phrase"}
+{"image_id": "pug_spar_001356", "factor": "scene", "content_pos": "a Armadillo and a Elephant in the arena", "content_neg": "a Armadillo and a Zebra in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001360", "factor": "scene", "content_pos": "a Armadillo and a Bear in the arena", "content_neg": "a Armadillo and a Tarantula in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001361", "factor": "scene", "content_pos": "a Armadillo and a Beaver in the arena", "content_neg": "a Armadillo and a Anlylosaurus in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001362", "factor": "scene", "content_pos": "a Armadillo and a Cattle in the arena", "content_neg": "a Armadillo and a Hippopotamus in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001364", "factor": "scene", "content_pos": "a Armadillo and a Gecko in the arena", "content_neg": "a Armadillo and a Beaver in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001367", "factor": "scene", "content_pos": "a Armadillo and a GiantTortoise in the arena", "content_neg": "a Armadillo and a Anlylosaurus in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001374", "factor": "scene", "content_pos": "a Armadillo and a Horse in the arena", "content_neg": "a Armadillo and a Zebra in the arena", "kind": "phrase"}
+{"image_id": "pug_spar_001396", "factor": "scene", "content_pos": "a Armadillo and a Armadillo in the ocean floor", "content_neg": "a Armadillo and a Rabbit in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_001406", "factor": "scene", "content_pos": "a Armadillo and a Hippopotamus in the ocean floor", "content_neg": "a Armadillo and a Goat in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_001418", "factor": "scene", "content_pos": "a Armadillo and a PoisonDartFrog in the ocean floor", "content_neg": "a Armadillo and a Dolphin in the ocean floor", "kind": "phrase"}
+{"image_id": "pug_spar_001423", "factor": "scene", "content_pos": "a Armadillo and a Camel in the race track", "content_neg": "a Armadillo and a BlackRockFish in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001438", "factor": "scene", "content_pos": "a Armadillo and a Goat in the race track", "content_neg": "a Armadillo and a Elephant in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001444", "factor": "scene", "content_pos": "a Armadillo and a Pig in the race track", "content_neg": "a Armadillo and a PoisonDartFrog in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001451", "factor": "scene", "content_pos": "a Armadillo and a PoisonDartFrog in the race track", "content_neg": "a Armadillo and a Chicken in the race track", "kind": "phrase"}
+{"image_id": "pug_spar_001456", "factor": "scene", "content_pos": "a Armadillo and a Camel in the city", "content_neg": "a Armadillo and a Crow in the city", "kind": "phrase"}
+{"image_id": "pug_spar_001461", "factor": "scene", "content_pos": "a Armadillo and a Cattle in the city", "content_neg": "a Armadillo and a EarlessSeal in the city", "kind": "phrase"}
+{"image_id": "pug_spar_001463", "factor": "scene", "content_pos": "a Armadillo and a Gecko in the city", "content_neg": "a Armadillo and a Hippopotamus in the city", "kind": "phrase"}
+{"image_id": "pug_spar_001465", "factor": "scene", "content_pos": "a Armadillo and a Scorpion in the city", "content_neg": "a Armadillo and a Goat in the city", "kind": "phrase"}
+{"image_id": "pug_spar_001466", "factor": "scene", "content_pos": "a Armadillo and a GiantTortoise in the city", "content_neg": "a Armadillo and a Scorpion in the city", "kind": "phrase"}
+{"image_id": "pug_spar_001481", "factor": "scene", "content_pos": "a Armadillo and a WhiteShark in the city", "content_neg": "a Armadillo and a Rhinoceros in the city", "kind": "phrase"}
+{"image_id": "pug_spar_001487", "factor": "scene", "content_pos": "a Armadillo and a Caribou in the circus", "content_neg": "a Armadillo and a Gecko in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_001493", "factor": "scene", "content_pos": "a Armadillo and a Beaver in the circus", "content_neg": "a Armadillo and a Orca in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_001499", "factor": "scene", "content_pos": "a Armadillo and a GiantTortoise in the circus", "content_neg": "a Armadillo and a Chicken in the circus", "kind": "phrase"}
+{"image_id": "pug_spar_000002", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Caribou", "content_neg": "the Anlylosaurus is to the right of the Caribou", "kind": "sentence"}
+{"image_id": "pug_spar_000015", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Anlylosaurus is to the right of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_000018", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the EarlessSeal", "content_neg": "the Anlylosaurus is to the right of the EarlessSeal", "kind": "sentence"}
+{"image_id": "pug_spar_000022", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Impala", "content_neg": "the Anlylosaurus is to the right of the Impala", "kind": "sentence"}
+{"image_id": "pug_spar_000026", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Rabbit", "content_neg": "the Anlylosaurus is to the right of the Rabbit", "kind": "sentence"}
+{"image_id": "pug_spar_000030", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the right of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000034", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Goldfish", "content_neg": "the Anlylosaurus is to the right of the Goldfish", "kind": "sentence"}
+{"image_id": "pug_spar_000036", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Elephant", "content_neg": "the Anlylosaurus is to the right of the Elephant", "kind": "sentence"}
+{"image_id": "pug_spar_000054", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Horse", "content_neg": "the Anlylosaurus is to the right of the Horse", "kind": "sentence"}
+{"image_id": "pug_spar_000055", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Impala", "content_neg": "the Anlylosaurus is to the right of the Impala", "kind": "sentence"}
+{"image_id": "pug_spar_000093", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Squirrel", "content_neg": "the Anlylosaurus is to the right of the Squirrel", "kind": "sentence"}
+{"image_id": "pug_spar_000094", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Anlylosaurus is to the right of the Chicken", "kind": "sentence"}
+{"image_id": "pug_spar_000107", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Beaver", "content_neg": "the Anlylosaurus is to the right of the Beaver", "kind": "sentence"}
+{"image_id": "pug_spar_000109", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Anlylosaurus is to the right of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_000112", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Anlylosaurus is to the right of the Scorpion", "kind": "sentence"}
+{"image_id": "pug_spar_000117", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the EarlessSeal", "content_neg": "the Anlylosaurus is to the right of the EarlessSeal", "kind": "sentence"}
+{"image_id": "pug_spar_000130", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the Anlylosaurus is to the right of the BlackRockFish", "kind": "sentence"}
+{"image_id": "pug_spar_000131", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the PoisonDartFrog", "content_neg": "the Anlylosaurus is to the right of the PoisonDartFrog", "kind": "sentence"}
+{"image_id": "pug_spar_000146", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the GiantTortoise", "content_neg": "the Anlylosaurus is to the right of the GiantTortoise", "kind": "sentence"}
+{"image_id": "pug_spar_000148", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Rhinoceros", "content_neg": "the Anlylosaurus is to the right of the Rhinoceros", "kind": "sentence"}
+{"image_id": "pug_spar_000158", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Rabbit", "content_neg": "the Anlylosaurus is to the right of the Rabbit", "kind": "sentence"}
+{"image_id": "pug_spar_000178", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Anlylosaurus is to the right of the Scorpion", "kind": "sentence"}
+{"image_id": "pug_spar_000179", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the GiantTortoise", "content_neg": "the Anlylosaurus is to the right of the GiantTortoise", "kind": "sentence"}
+{"image_id": "pug_spar_000184", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Goat", "content_neg": "the Anlylosaurus is to the right of the Goat", "kind": "sentence"}
+{"image_id": "pug_spar_000186", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Horse", "content_neg": "the Anlylosaurus is to the right of the Horse", "kind": "sentence"}
+{"image_id": "pug_spar_000187", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Impala", "content_neg": "the Anlylosaurus is to the right of the Impala", "kind": "sentence"}
+{"image_id": "pug_spar_000192", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Squirrel", "content_neg": "the Anlylosaurus is to the right of the Squirrel", "kind": "sentence"}
+{"image_id": "pug_spar_000193", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Anlylosaurus is to the right of the Chicken", "kind": "sentence"}
+{"image_id": "pug_spar_000195", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the right of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000201", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Elephant", "content_neg": "the Anlylosaurus is to the right of the Elephant", "kind": "sentence"}
+{"image_id": "pug_spar_000210", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Crow", "content_neg": "the Anlylosaurus is to the right of the Crow", "kind": "sentence"}
+{"image_id": "pug_spar_000211", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Anlylosaurus is to the right of the Scorpion", "kind": "sentence"}
+{"image_id": "pug_spar_000224", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Rabbit", "content_neg": "the Anlylosaurus is to the right of the Rabbit", "kind": "sentence"}
+{"image_id": "pug_spar_000242", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Gecko", "content_neg": "the Anlylosaurus is to the right of the Gecko", "kind": "sentence"}
+{"image_id": "pug_spar_000244", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Anlylosaurus is to the right of the Scorpion", "kind": "sentence"}
+{"image_id": "pug_spar_000245", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the GiantTortoise", "content_neg": "the Anlylosaurus is to the right of the GiantTortoise", "kind": "sentence"}
+{"image_id": "pug_spar_000246", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Anlylosaurus is to the right of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_000248", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Dolphin", "content_neg": "the Anlylosaurus is to the right of the Dolphin", "kind": "sentence"}
+{"image_id": "pug_spar_000256", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Pig", "content_neg": "the Anlylosaurus is to the right of the Pig", "kind": "sentence"}
+{"image_id": "pug_spar_000259", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Anlylosaurus is to the right of the Chicken", "kind": "sentence"}
+{"image_id": "pug_spar_000270", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Zebra", "content_neg": "the Anlylosaurus is to the right of the Zebra", "kind": "sentence"}
+{"image_id": "pug_spar_000274", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Anlylosaurus is to the right of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_000280", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Rhinoceros", "content_neg": "the Anlylosaurus is to the right of the Rhinoceros", "kind": "sentence"}
+{"image_id": "pug_spar_000293", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the WhiteShark", "content_neg": "the Anlylosaurus is to the right of the WhiteShark", "kind": "sentence"}
+{"image_id": "pug_spar_000305", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Beaver", "content_neg": "the Anlylosaurus is to the right of the Beaver", "kind": "sentence"}
+{"image_id": "pug_spar_000325", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Anlylosaurus is to the right of the Chicken", "kind": "sentence"}
+{"image_id": "pug_spar_000342", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Crow", "content_neg": "the Anlylosaurus is to the above of the Crow", "kind": "sentence"}
+{"image_id": "pug_spar_000364", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Goldfish", "content_neg": "the Anlylosaurus is to the above of the Goldfish", "kind": "sentence"}
+{"image_id": "pug_spar_000366", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Elephant", "content_neg": "the Anlylosaurus is to the above of the Elephant", "kind": "sentence"}
+{"image_id": "pug_spar_000370", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Bear", "content_neg": "the Anlylosaurus is to the above of the Bear", "kind": "sentence"}
+{"image_id": "pug_spar_000373", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Armadillo", "content_neg": "the Anlylosaurus is to the above of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_000378", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Tarantula", "content_neg": "the Anlylosaurus is to the above of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_000381", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the EarlessSeal", "content_neg": "the Anlylosaurus is to the above of the EarlessSeal", "kind": "sentence"}
+{"image_id": "pug_spar_000392", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the WhiteShark", "content_neg": "the Anlylosaurus is to the above of the WhiteShark", "kind": "sentence"}
+{"image_id": "pug_spar_000412", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Rhinoceros", "content_neg": "the Anlylosaurus is to the above of the Rhinoceros", "kind": "sentence"}
+{"image_id": "pug_spar_000435", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Zebra", "content_neg": "the Anlylosaurus is to the above of the Zebra", "kind": "sentence"}
+{"image_id": "pug_spar_000442", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Scorpion", "content_neg": "the Anlylosaurus is to the above of the Scorpion", "kind": "sentence"}
+{"image_id": "pug_spar_000451", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Impala", "content_neg": "the Anlylosaurus is to the above of the Impala", "kind": "sentence"}
+{"image_id": "pug_spar_000458", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the WhiteShark", "content_neg": "the Anlylosaurus is to the above of the WhiteShark", "kind": "sentence"}
+{"image_id": "pug_spar_000459", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the above of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000463", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Goldfish", "content_neg": "the Anlylosaurus is to the above of the Goldfish", "kind": "sentence"}
+{"image_id": "pug_spar_000467", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Penguin", "content_neg": "the Anlylosaurus is to the above of the Penguin", "kind": "sentence"}
+{"image_id": "pug_spar_000468", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Zebra", "content_neg": "the Anlylosaurus is to the above of the Zebra", "kind": "sentence"}
+{"image_id": "pug_spar_000470", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Beaver", "content_neg": "the Anlylosaurus is to the above of the Beaver", "kind": "sentence"}
+{"image_id": "pug_spar_000476", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the GiantTortoise", "content_neg": "the Anlylosaurus is to the above of the GiantTortoise", "kind": "sentence"}
+{"image_id": "pug_spar_000486", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Orca", "content_neg": "the Anlylosaurus is to the above of the Orca", "kind": "sentence"}
+{"image_id": "pug_spar_000497", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Caribou", "content_neg": "the Anlylosaurus is to the above of the Caribou", "kind": "sentence"}
+{"image_id": "pug_spar_000500", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Penguin", "content_neg": "the Anlylosaurus is to the above of the Penguin", "kind": "sentence"}
+{"image_id": "pug_spar_000532", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Camel", "content_neg": "the Anlylosaurus is to the above of the Camel", "kind": "sentence"}
+{"image_id": "pug_spar_000533", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Penguin", "content_neg": "the Anlylosaurus is to the above of the Penguin", "kind": "sentence"}
+{"image_id": "pug_spar_000538", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Armadillo", "content_neg": "the Anlylosaurus is to the above of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_000543", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Tarantula", "content_neg": "the Anlylosaurus is to the above of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_000546", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the EarlessSeal", "content_neg": "the Anlylosaurus is to the above of the EarlessSeal", "kind": "sentence"}
+{"image_id": "pug_spar_000559", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the BlackRockFish", "content_neg": "the Anlylosaurus is to the above of the BlackRockFish", "kind": "sentence"}
+{"image_id": "pug_spar_000560", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the PoisonDartFrog", "content_neg": "the Anlylosaurus is to the above of the PoisonDartFrog", "kind": "sentence"}
+{"image_id": "pug_spar_000566", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Penguin", "content_neg": "the Anlylosaurus is to the above of the Penguin", "kind": "sentence"}
+{"image_id": "pug_spar_000567", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Zebra", "content_neg": "the Anlylosaurus is to the above of the Zebra", "kind": "sentence"}
+{"image_id": "pug_spar_000568", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Bear", "content_neg": "the Anlylosaurus is to the above of the Bear", "kind": "sentence"}
+{"image_id": "pug_spar_000578", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Dolphin", "content_neg": "the Anlylosaurus is to the above of the Dolphin", "kind": "sentence"}
+{"image_id": "pug_spar_000579", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the EarlessSeal", "content_neg": "the Anlylosaurus is to the above of the EarlessSeal", "kind": "sentence"}
+{"image_id": "pug_spar_000582", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Horse", "content_neg": "the Anlylosaurus is to the above of the Horse", "kind": "sentence"}
+{"image_id": "pug_spar_000606", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Crow", "content_neg": "the Anlylosaurus is to the above of the Crow", "kind": "sentence"}
+{"image_id": "pug_spar_000607", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Scorpion", "content_neg": "the Anlylosaurus is to the above of the Scorpion", "kind": "sentence"}
+{"image_id": "pug_spar_000609", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Tarantula", "content_neg": "the Anlylosaurus is to the above of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_000621", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Squirrel", "content_neg": "the Anlylosaurus is to the above of the Squirrel", "kind": "sentence"}
+{"image_id": "pug_spar_000629", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Caribou", "content_neg": "the Anlylosaurus is to the above of the Caribou", "kind": "sentence"}
+{"image_id": "pug_spar_000642", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Tarantula", "content_neg": "the Anlylosaurus is to the above of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_000644", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Dolphin", "content_neg": "the Anlylosaurus is to the above of the Dolphin", "kind": "sentence"}
+{"image_id": "pug_spar_000646", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Goat", "content_neg": "the Anlylosaurus is to the above of the Goat", "kind": "sentence"}
+{"image_id": "pug_spar_000650", "factor": "position", "content_pos": "the Anlylosaurus is to the below of the Lion", "content_neg": "the Anlylosaurus is to the above of the Lion", "kind": "sentence"}
+{"image_id": "pug_spar_000666", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Zebra", "content_neg": "the Anlylosaurus is to the right of the Zebra", "kind": "sentence"}
+{"image_id": "pug_spar_000670", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Anlylosaurus is to the right of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_000675", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Anlylosaurus is to the right of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_000684", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Orca", "content_neg": "the Anlylosaurus is to the right of the Orca", "kind": "sentence"}
+{"image_id": "pug_spar_000697", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Camel", "content_neg": "the Anlylosaurus is to the right of the Camel", "kind": "sentence"}
+{"image_id": "pug_spar_000709", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Rhinoceros", "content_neg": "the Anlylosaurus is to the right of the Rhinoceros", "kind": "sentence"}
+{"image_id": "pug_spar_000719", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Rabbit", "content_neg": "the Anlylosaurus is to the right of the Rabbit", "kind": "sentence"}
+{"image_id": "pug_spar_000724", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the Anlylosaurus is to the right of the BlackRockFish", "kind": "sentence"}
+{"image_id": "pug_spar_000741", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Anlylosaurus is to the right of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_000744", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the EarlessSeal", "content_neg": "the Anlylosaurus is to the right of the EarlessSeal", "kind": "sentence"}
+{"image_id": "pug_spar_000752", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Rabbit", "content_neg": "the Anlylosaurus is to the right of the Rabbit", "kind": "sentence"}
+{"image_id": "pug_spar_000755", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the WhiteShark", "content_neg": "the Anlylosaurus is to the right of the WhiteShark", "kind": "sentence"}
+{"image_id": "pug_spar_000756", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the right of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000769", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Anlylosaurus is to the right of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_000771", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Crow", "content_neg": "the Anlylosaurus is to the right of the Crow", "kind": "sentence"}
+{"image_id": "pug_spar_000772", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Anlylosaurus is to the right of the Scorpion", "kind": "sentence"}
+{"image_id": "pug_spar_000782", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Lion", "content_neg": "the Anlylosaurus is to the right of the Lion", "kind": "sentence"}
+{"image_id": "pug_spar_000785", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Rabbit", "content_neg": "the Anlylosaurus is to the right of the Rabbit", "kind": "sentence"}
+{"image_id": "pug_spar_000789", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the right of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000791", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the PoisonDartFrog", "content_neg": "the Anlylosaurus is to the right of the PoisonDartFrog", "kind": "sentence"}
+{"image_id": "pug_spar_000794", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Caribou", "content_neg": "the Anlylosaurus is to the right of the Caribou", "kind": "sentence"}
+{"image_id": "pug_spar_000797", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Penguin", "content_neg": "the Anlylosaurus is to the right of the Penguin", "kind": "sentence"}
+{"image_id": "pug_spar_000800", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Beaver", "content_neg": "the Anlylosaurus is to the right of the Beaver", "kind": "sentence"}
+{"image_id": "pug_spar_000801", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Cattle", "content_neg": "the Anlylosaurus is to the right of the Cattle", "kind": "sentence"}
+{"image_id": "pug_spar_000811", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Goat", "content_neg": "the Anlylosaurus is to the right of the Goat", "kind": "sentence"}
+{"image_id": "pug_spar_000821", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the WhiteShark", "content_neg": "the Anlylosaurus is to the right of the WhiteShark", "kind": "sentence"}
+{"image_id": "pug_spar_000823", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the Anlylosaurus is to the right of the BlackRockFish", "kind": "sentence"}
+{"image_id": "pug_spar_000829", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Camel", "content_neg": "the Anlylosaurus is to the right of the Camel", "kind": "sentence"}
+{"image_id": "pug_spar_000841", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Rhinoceros", "content_neg": "the Anlylosaurus is to the right of the Rhinoceros", "kind": "sentence"}
+{"image_id": "pug_spar_000843", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the EarlessSeal", "content_neg": "the Anlylosaurus is to the right of the EarlessSeal", "kind": "sentence"}
+{"image_id": "pug_spar_000861", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Elephant", "content_neg": "the Anlylosaurus is to the right of the Elephant", "kind": "sentence"}
+{"image_id": "pug_spar_000863", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Penguin", "content_neg": "the Anlylosaurus is to the right of the Penguin", "kind": "sentence"}
+{"image_id": "pug_spar_000873", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Anlylosaurus is to the right of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_000892", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Goldfish", "content_neg": "the Anlylosaurus is to the right of the Goldfish", "kind": "sentence"}
+{"image_id": "pug_spar_000903", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Crow", "content_neg": "the Anlylosaurus is to the right of the Crow", "kind": "sentence"}
+{"image_id": "pug_spar_000910", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Goat", "content_neg": "the Anlylosaurus is to the right of the Goat", "kind": "sentence"}
+{"image_id": "pug_spar_000920", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the WhiteShark", "content_neg": "the Anlylosaurus is to the right of the WhiteShark", "kind": "sentence"}
+{"image_id": "pug_spar_000922", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the Anlylosaurus is to the right of the BlackRockFish", "kind": "sentence"}
+{"image_id": "pug_spar_000926", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Caribou", "content_neg": "the Anlylosaurus is to the right of the Caribou", "kind": "sentence"}
+{"image_id": "pug_spar_000929", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Penguin", "content_neg": "the Anlylosaurus is to the right of the Penguin", "kind": "sentence"}
+{"image_id": "pug_spar_000930", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Zebra", "content_neg": "the Anlylosaurus is to the right of the Zebra", "kind": "sentence"}
+{"image_id": "pug_spar_000935", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Gecko", "content_neg": "the Anlylosaurus is to the right of the Gecko", "kind": "sentence"}
+{"image_id": "pug_spar_000943", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Goat", "content_neg": "the Anlylosaurus is to the right of the Goat", "kind": "sentence"}
+{"image_id": "pug_spar_000945", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Horse", "content_neg": "the Anlylosaurus is to the right of the Horse", "kind": "sentence"}
+{"image_id": "pug_spar_000947", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Lion", "content_neg": "the Anlylosaurus is to the right of the Lion", "kind": "sentence"}
+{"image_id": "pug_spar_000972", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Anlylosaurus is to the right of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_000980", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Lion", "content_neg": "the Anlylosaurus is to the right of the Lion", "kind": "sentence"}
+{"image_id": "pug_spar_000981", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Orca", "content_neg": "the Anlylosaurus is to the right of the Orca", "kind": "sentence"}
+{"image_id": "pug_spar_000993", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Elephant", "content_neg": "the Anlylosaurus is to the right of the Elephant", "kind": "sentence"}
+{"image_id": "pug_spar_000998", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Beaver", "content_neg": "the Anlylosaurus is to the right of the Beaver", "kind": "sentence"}
+{"image_id": "pug_spar_001010", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Hippopotamus", "content_neg": "the Anlylosaurus is to the right of the Hippopotamus", "kind": "sentence"}
+{"image_id": "pug_spar_001011", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Horse", "content_neg": "the Anlylosaurus is to the right of the Horse", "kind": "sentence"}
+{"image_id": "pug_spar_001012", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Impala", "content_neg": "the Anlylosaurus is to the right of the Impala", "kind": "sentence"}
+{"image_id": "pug_spar_001021", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the Anlylosaurus is to the right of the BlackRockFish", "kind": "sentence"}
+{"image_id": "pug_spar_001031", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Beaver", "content_neg": "the Anlylosaurus is to the right of the Beaver", "kind": "sentence"}
+{"image_id": "pug_spar_001041", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the EarlessSeal", "content_neg": "the Anlylosaurus is to the right of the EarlessSeal", "kind": "sentence"}
+{"image_id": "pug_spar_001045", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Impala", "content_neg": "the Anlylosaurus is to the right of the Impala", "kind": "sentence"}
+{"image_id": "pug_spar_001048", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Pig", "content_neg": "the Anlylosaurus is to the right of the Pig", "kind": "sentence"}
+{"image_id": "pug_spar_001060", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Camel", "content_neg": "the Anlylosaurus is to the right of the Camel", "kind": "sentence"}
+{"image_id": "pug_spar_001069", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Anlylosaurus is to the right of the Scorpion", "kind": "sentence"}
+{"image_id": "pug_spar_001070", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the GiantTortoise", "content_neg": "the Anlylosaurus is to the right of the GiantTortoise", "kind": "sentence"}
+{"image_id": "pug_spar_001084", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Anlylosaurus is to the right of the Chicken", "kind": "sentence"}
+{"image_id": "pug_spar_001091", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Caribou", "content_neg": "the Anlylosaurus is to the right of the Caribou", "kind": "sentence"}
+{"image_id": "pug_spar_001092", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Elephant", "content_neg": "the Anlylosaurus is to the right of the Elephant", "kind": "sentence"}
+{"image_id": "pug_spar_001098", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Cattle", "content_neg": "the Anlylosaurus is to the right of the Cattle", "kind": "sentence"}
+{"image_id": "pug_spar_001100", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Gecko", "content_neg": "the Anlylosaurus is to the right of the Gecko", "kind": "sentence"}
+{"image_id": "pug_spar_001117", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Anlylosaurus is to the right of the Chicken", "kind": "sentence"}
+{"image_id": "pug_spar_001136", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the GiantTortoise", "content_neg": "the Anlylosaurus is to the right of the GiantTortoise", "kind": "sentence"}
+{"image_id": "pug_spar_001137", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Anlylosaurus is to the right of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_001138", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Rhinoceros", "content_neg": "the Anlylosaurus is to the right of the Rhinoceros", "kind": "sentence"}
+{"image_id": "pug_spar_001150", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Anlylosaurus is to the right of the Chicken", "kind": "sentence"}
+{"image_id": "pug_spar_001161", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Zebra", "content_neg": "the Anlylosaurus is to the right of the Zebra", "kind": "sentence"}
+{"image_id": "pug_spar_001165", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Anlylosaurus is to the right of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001182", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Squirrel", "content_neg": "the Anlylosaurus is to the right of the Squirrel", "kind": "sentence"}
+{"image_id": "pug_spar_001186", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the Anlylosaurus is to the right of the BlackRockFish", "kind": "sentence"}
+{"image_id": "pug_spar_001190", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Caribou", "content_neg": "the Anlylosaurus is to the right of the Caribou", "kind": "sentence"}
+{"image_id": "pug_spar_001206", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the EarlessSeal", "content_neg": "the Anlylosaurus is to the right of the EarlessSeal", "kind": "sentence"}
+{"image_id": "pug_spar_001225", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Camel", "content_neg": "the Anlylosaurus is to the right of the Camel", "kind": "sentence"}
+{"image_id": "pug_spar_001242", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Horse", "content_neg": "the Anlylosaurus is to the right of the Horse", "kind": "sentence"}
+{"image_id": "pug_spar_001249", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Anlylosaurus is to the right of the Chicken", "kind": "sentence"}
+{"image_id": "pug_spar_001250", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the WhiteShark", "content_neg": "the Anlylosaurus is to the right of the WhiteShark", "kind": "sentence"}
+{"image_id": "pug_spar_001263", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Cattle", "content_neg": "the Anlylosaurus is to the right of the Cattle", "kind": "sentence"}
+{"image_id": "pug_spar_001264", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Anlylosaurus is to the right of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001282", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Anlylosaurus is to the right of the Chicken", "kind": "sentence"}
+{"image_id": "pug_spar_001289", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Caribou", "content_neg": "the Anlylosaurus is to the right of the Caribou", "kind": "sentence"}
+{"image_id": "pug_spar_001298", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Gecko", "content_neg": "the Anlylosaurus is to the right of the Gecko", "kind": "sentence"}
+{"image_id": "pug_spar_001300", "factor": "position", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Anlylosaurus is to the right of the Scorpion", "kind": "sentence"}
+{"image_id": "pug_spar_001344", "factor": "position", "content_pos": "the Armadillo is to the left of the Orca", "content_neg": "the Armadillo is to the right of the Orca", "kind": "sentence"}
+{"image_id": "pug_spar_001345", "factor": "position", "content_pos": "the Armadillo is to the left of the Pig", "content_neg": "the Armadillo is to the right of the Pig", "kind": "sentence"}
+{"image_id": "pug_spar_001348", "factor": "position", "content_pos": "the Armadillo is to the left of the Chicken", "content_neg": "the Armadillo is to the right of the Chicken", "kind": "sentence"}
+{"image_id": "pug_spar_001361", "factor": "position", "content_pos": "the Armadillo is to the left of the Beaver", "content_neg": "the Armadillo is to the right of the Beaver", "kind": "sentence"}
+{"image_id": "pug_spar_001366", "factor": "position", "content_pos": "the Armadillo is to the left of the Scorpion", "content_neg": "the Armadillo is to the right of the Scorpion", "kind": "sentence"}
+{"image_id": "pug_spar_001367", "factor": "position", "content_pos": "the Armadillo is to the left of the GiantTortoise", "content_neg": "the Armadillo is to the right of the GiantTortoise", "kind": "sentence"}
+{"image_id": "pug_spar_001373", "factor": "position", "content_pos": "the Armadillo is to the left of the Hippopotamus", "content_neg": "the Armadillo is to the right of the Hippopotamus", "kind": "sentence"}
+{"image_id": "pug_spar_001378", "factor": "position", "content_pos": "the Armadillo is to the left of the Pig", "content_neg": "the Armadillo is to the right of the Pig", "kind": "sentence"}
+{"image_id": "pug_spar_001387", "factor": "position", "content_pos": "the Armadillo is to the left of the Goldfish", "content_neg": "the Armadillo is to the right of the Goldfish", "kind": "sentence"}
+{"image_id": "pug_spar_001392", "factor": "position", "content_pos": "the Armadillo is to the left of the Zebra", "content_neg": "the Armadillo is to the right of the Zebra", "kind": "sentence"}
+{"image_id": "pug_spar_001396", "factor": "position", "content_pos": "the Armadillo is to the left of the Armadillo", "content_neg": "the Armadillo is to the right of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001397", "factor": "position", "content_pos": "the Armadillo is to the left of the Gecko", "content_neg": "the Armadillo is to the right of the Gecko", "kind": "sentence"}
+{"image_id": "pug_spar_001417", "factor": "position", "content_pos": "the Armadillo is to the left of the BlackRockFish", "content_neg": "the Armadillo is to the right of the BlackRockFish", "kind": "sentence"}
+{"image_id": "pug_spar_001424", "factor": "position", "content_pos": "the Armadillo is to the left of the Penguin", "content_neg": "the Armadillo is to the right of the Penguin", "kind": "sentence"}
+{"image_id": "pug_spar_001425", "factor": "position", "content_pos": "the Armadillo is to the left of the Zebra", "content_neg": "the Armadillo is to the right of the Zebra", "kind": "sentence"}
+{"image_id": "pug_spar_001429", "factor": "position", "content_pos": "the Armadillo is to the left of the Armadillo", "content_neg": "the Armadillo is to the right of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001433", "factor": "position", "content_pos": "the Armadillo is to the left of the GiantTortoise", "content_neg": "the Armadillo is to the right of the GiantTortoise", "kind": "sentence"}
+{"image_id": "pug_spar_001434", "factor": "position", "content_pos": "the Armadillo is to the left of the Tarantula", "content_neg": "the Armadillo is to the right of the Tarantula", "kind": "sentence"}
+{"image_id": "pug_spar_001437", "factor": "position", "content_pos": "the Armadillo is to the left of the EarlessSeal", "content_neg": "the Armadillo is to the right of the EarlessSeal", "kind": "sentence"}
+{"image_id": "pug_spar_001441", "factor": "position", "content_pos": "the Armadillo is to the left of the Impala", "content_neg": "the Armadillo is to the right of the Impala", "kind": "sentence"}
+{"image_id": "pug_spar_001451", "factor": "position", "content_pos": "the Armadillo is to the left of the PoisonDartFrog", "content_neg": "the Armadillo is to the right of the PoisonDartFrog", "kind": "sentence"}
+{"image_id": "pug_spar_001460", "factor": "position", "content_pos": "the Armadillo is to the left of the Beaver", "content_neg": "the Armadillo is to the right of the Beaver", "kind": "sentence"}
+{"image_id": "pug_spar_001489", "factor": "position", "content_pos": "the Armadillo is to the left of the Camel", "content_neg": "the Armadillo is to the right of the Camel", "kind": "sentence"}
+{"image_id": "pug_spar_000663", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Elephant", "content_neg": "a red Anlylosaurus and a blue Elephant", "kind": "phrase"}
+{"image_id": "pug_spar_000664", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Camel", "content_neg": "a red Anlylosaurus and a blue Camel", "kind": "phrase"}
+{"image_id": "pug_spar_000665", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Penguin", "content_neg": "a red Anlylosaurus and a blue Penguin", "kind": "phrase"}
+{"image_id": "pug_spar_000672", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Crow", "content_neg": "a red Anlylosaurus and a blue Crow", "kind": "phrase"}
+{"image_id": "pug_spar_000678", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red EarlessSeal", "content_neg": "a red Anlylosaurus and a blue EarlessSeal", "kind": "phrase"}
+{"image_id": "pug_spar_000682", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Impala", "content_neg": "a red Anlylosaurus and a blue Impala", "kind": "phrase"}
+{"image_id": "pug_spar_000683", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Lion", "content_neg": "a red Anlylosaurus and a blue Lion", "kind": "phrase"}
+{"image_id": "pug_spar_000684", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Orca", "content_neg": "a red Anlylosaurus and a blue Orca", "kind": "phrase"}
+{"image_id": "pug_spar_000690", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Anlylosaurus", "content_neg": "a red Anlylosaurus and a blue Anlylosaurus", "kind": "phrase"}
+{"image_id": "pug_spar_000694", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Goldfish", "content_neg": "a red Anlylosaurus and a blue Goldfish", "kind": "phrase"}
+{"image_id": "pug_spar_000698", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Penguin", "content_neg": "a red Anlylosaurus and a blue Penguin", "kind": "phrase"}
+{"image_id": "pug_spar_000702", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Cattle", "content_neg": "a red Anlylosaurus and a blue Cattle", "kind": "phrase"}
+{"image_id": "pug_spar_000710", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Dolphin", "content_neg": "a red Anlylosaurus and a blue Dolphin", "kind": "phrase"}
+{"image_id": "pug_spar_000714", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Horse", "content_neg": "a red Anlylosaurus and a blue Horse", "kind": "phrase"}
+{"image_id": "pug_spar_000715", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Impala", "content_neg": "a red Anlylosaurus and a blue Impala", "kind": "phrase"}
+{"image_id": "pug_spar_000717", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Orca", "content_neg": "a red Anlylosaurus and a blue Orca", "kind": "phrase"}
+{"image_id": "pug_spar_000718", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Pig", "content_neg": "a red Anlylosaurus and a blue Pig", "kind": "phrase"}
+{"image_id": "pug_spar_000719", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Rabbit", "content_neg": "a red Anlylosaurus and a blue Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_000727", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Goldfish", "content_neg": "a red Anlylosaurus and a blue Goldfish", "kind": "phrase"}
+{"image_id": "pug_spar_000729", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Elephant", "content_neg": "a red Anlylosaurus and a blue Elephant", "kind": "phrase"}
+{"image_id": "pug_spar_000730", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Camel", "content_neg": "a red Anlylosaurus and a blue Camel", "kind": "phrase"}
+{"image_id": "pug_spar_000732", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Zebra", "content_neg": "a red Anlylosaurus and a blue Zebra", "kind": "phrase"}
+{"image_id": "pug_spar_000738", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Crow", "content_neg": "a red Anlylosaurus and a blue Crow", "kind": "phrase"}
+{"image_id": "pug_spar_000741", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Tarantula", "content_neg": "a red Anlylosaurus and a blue Tarantula", "kind": "phrase"}
+{"image_id": "pug_spar_000745", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Goat", "content_neg": "a red Anlylosaurus and a blue Goat", "kind": "phrase"}
+{"image_id": "pug_spar_000749", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Lion", "content_neg": "a red Anlylosaurus and a blue Lion", "kind": "phrase"}
+{"image_id": "pug_spar_000750", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Orca", "content_neg": "a red Anlylosaurus and a blue Orca", "kind": "phrase"}
+{"image_id": "pug_spar_000752", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Rabbit", "content_neg": "a red Anlylosaurus and a blue Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_000757", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red BlackRockFish", "content_neg": "a red Anlylosaurus and a blue BlackRockFish", "kind": "phrase"}
+{"image_id": "pug_spar_000763", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Camel", "content_neg": "a red Anlylosaurus and a blue Camel", "kind": "phrase"}
+{"image_id": "pug_spar_000764", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Penguin", "content_neg": "a red Anlylosaurus and a blue Penguin", "kind": "phrase"}
+{"image_id": "pug_spar_000772", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Scorpion", "content_neg": "a red Anlylosaurus and a blue Scorpion", "kind": "phrase"}
+{"image_id": "pug_spar_000776", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Dolphin", "content_neg": "a red Anlylosaurus and a blue Dolphin", "kind": "phrase"}
+{"image_id": "pug_spar_000777", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red EarlessSeal", "content_neg": "a red Anlylosaurus and a blue EarlessSeal", "kind": "phrase"}
+{"image_id": "pug_spar_000778", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Goat", "content_neg": "a red Anlylosaurus and a blue Goat", "kind": "phrase"}
+{"image_id": "pug_spar_000783", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Orca", "content_neg": "a red Anlylosaurus and a blue Orca", "kind": "phrase"}
+{"image_id": "pug_spar_000786", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Squirrel", "content_neg": "a red Anlylosaurus and a blue Squirrel", "kind": "phrase"}
+{"image_id": "pug_spar_000793", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Goldfish", "content_neg": "a red Anlylosaurus and a blue Goldfish", "kind": "phrase"}
+{"image_id": "pug_spar_000795", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Elephant", "content_neg": "a red Anlylosaurus and a blue Elephant", "kind": "phrase"}
+{"image_id": "pug_spar_000796", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Camel", "content_neg": "a red Anlylosaurus and a blue Camel", "kind": "phrase"}
+{"image_id": "pug_spar_000797", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Penguin", "content_neg": "a red Anlylosaurus and a blue Penguin", "kind": "phrase"}
+{"image_id": "pug_spar_000800", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Beaver", "content_neg": "a red Anlylosaurus and a blue Beaver", "kind": "phrase"}
+{"image_id": "pug_spar_000806", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red GiantTortoise", "content_neg": "a red Anlylosaurus and a blue GiantTortoise", "kind": "phrase"}
+{"image_id": "pug_spar_000808", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Rhinoceros", "content_neg": "a red Anlylosaurus and a blue Rhinoceros", "kind": "phrase"}
+{"image_id": "pug_spar_000812", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Hippopotamus", "content_neg": "a red Anlylosaurus and a blue Hippopotamus", "kind": "phrase"}
+{"image_id": "pug_spar_000813", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Horse", "content_neg": "a red Anlylosaurus and a blue Horse", "kind": "phrase"}
+{"image_id": "pug_spar_000815", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Lion", "content_neg": "a red Anlylosaurus and a blue Lion", "kind": "phrase"}
+{"image_id": "pug_spar_000818", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Rabbit", "content_neg": "a red Anlylosaurus and a blue Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_000819", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Squirrel", "content_neg": "a red Anlylosaurus and a blue Squirrel", "kind": "phrase"}
+{"image_id": "pug_spar_000821", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red WhiteShark", "content_neg": "a red Anlylosaurus and a blue WhiteShark", "kind": "phrase"}
+{"image_id": "pug_spar_000823", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red BlackRockFish", "content_neg": "a red Anlylosaurus and a blue BlackRockFish", "kind": "phrase"}
+{"image_id": "pug_spar_000824", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red PoisonDartFrog", "content_neg": "a red Anlylosaurus and a blue PoisonDartFrog", "kind": "phrase"}
+{"image_id": "pug_spar_000830", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Penguin", "content_neg": "a red Anlylosaurus and a blue Penguin", "kind": "phrase"}
+{"image_id": "pug_spar_000831", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Zebra", "content_neg": "a red Anlylosaurus and a blue Zebra", "kind": "phrase"}
+{"image_id": "pug_spar_000835", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Armadillo", "content_neg": "a red Anlylosaurus and a blue Armadillo", "kind": "phrase"}
+{"image_id": "pug_spar_000837", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Crow", "content_neg": "a red Anlylosaurus and a blue Crow", "kind": "phrase"}
+{"image_id": "pug_spar_000841", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Rhinoceros", "content_neg": "a red Anlylosaurus and a blue Rhinoceros", "kind": "phrase"}
+{"image_id": "pug_spar_000849", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Orca", "content_neg": "a red Anlylosaurus and a blue Orca", "kind": "phrase"}
+{"image_id": "pug_spar_000853", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Chicken", "content_neg": "a red Anlylosaurus and a blue Chicken", "kind": "phrase"}
+{"image_id": "pug_spar_000856", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red BlackRockFish", "content_neg": "a red Anlylosaurus and a blue BlackRockFish", "kind": "phrase"}
+{"image_id": "pug_spar_000860", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Caribou", "content_neg": "a red Anlylosaurus and a blue Caribou", "kind": "phrase"}
+{"image_id": "pug_spar_000863", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Penguin", "content_neg": "a red Anlylosaurus and a blue Penguin", "kind": "phrase"}
+{"image_id": "pug_spar_000870", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Crow", "content_neg": "a red Anlylosaurus and a blue Crow", "kind": "phrase"}
+{"image_id": "pug_spar_000873", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Tarantula", "content_neg": "a red Anlylosaurus and a blue Tarantula", "kind": "phrase"}
+{"image_id": "pug_spar_000875", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Dolphin", "content_neg": "a red Anlylosaurus and a blue Dolphin", "kind": "phrase"}
+{"image_id": "pug_spar_000878", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Hippopotamus", "content_neg": "a red Anlylosaurus and a blue Hippopotamus", "kind": "phrase"}
+{"image_id": "pug_spar_000879", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Horse", "content_neg": "a red Anlylosaurus and a blue Horse", "kind": "phrase"}
+{"image_id": "pug_spar_000881", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Lion", "content_neg": "a red Anlylosaurus and a blue Lion", "kind": "phrase"}
+{"image_id": "pug_spar_000883", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Pig", "content_neg": "a red Anlylosaurus and a blue Pig", "kind": "phrase"}
+{"image_id": "pug_spar_000884", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Rabbit", "content_neg": "a red Anlylosaurus and a blue Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_000889", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red BlackRockFish", "content_neg": "a red Anlylosaurus and a blue BlackRockFish", "kind": "phrase"}
+{"image_id": "pug_spar_000890", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red PoisonDartFrog", "content_neg": "a red Anlylosaurus and a blue PoisonDartFrog", "kind": "phrase"}
+{"image_id": "pug_spar_000900", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Cattle", "content_neg": "a red Anlylosaurus and a blue Cattle", "kind": "phrase"}
+{"image_id": "pug_spar_000903", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Crow", "content_neg": "a red Anlylosaurus and a blue Crow", "kind": "phrase"}
+{"image_id": "pug_spar_000904", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Scorpion", "content_neg": "a red Anlylosaurus and a blue Scorpion", "kind": "phrase"}
+{"image_id": "pug_spar_000906", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Tarantula", "content_neg": "a red Anlylosaurus and a blue Tarantula", "kind": "phrase"}
+{"image_id": "pug_spar_000907", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Rhinoceros", "content_neg": "a red Anlylosaurus and a blue Rhinoceros", "kind": "phrase"}
+{"image_id": "pug_spar_000909", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red EarlessSeal", "content_neg": "a red Anlylosaurus and a blue EarlessSeal", "kind": "phrase"}
+{"image_id": "pug_spar_000913", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Impala", "content_neg": "a red Anlylosaurus and a blue Impala", "kind": "phrase"}
+{"image_id": "pug_spar_000914", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Lion", "content_neg": "a red Anlylosaurus and a blue Lion", "kind": "phrase"}
+{"image_id": "pug_spar_000917", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Rabbit", "content_neg": "a red Anlylosaurus and a blue Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_000918", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Squirrel", "content_neg": "a red Anlylosaurus and a blue Squirrel", "kind": "phrase"}
+{"image_id": "pug_spar_000923", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red PoisonDartFrog", "content_neg": "a red Anlylosaurus and a blue PoisonDartFrog", "kind": "phrase"}
+{"image_id": "pug_spar_000931", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Bear", "content_neg": "a red Anlylosaurus and a blue Bear", "kind": "phrase"}
+{"image_id": "pug_spar_000932", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Beaver", "content_neg": "a red Anlylosaurus and a blue Beaver", "kind": "phrase"}
+{"image_id": "pug_spar_000934", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Armadillo", "content_neg": "a red Anlylosaurus and a blue Armadillo", "kind": "phrase"}
+{"image_id": "pug_spar_000935", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Gecko", "content_neg": "a red Anlylosaurus and a blue Gecko", "kind": "phrase"}
+{"image_id": "pug_spar_000940", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Rhinoceros", "content_neg": "a red Anlylosaurus and a blue Rhinoceros", "kind": "phrase"}
+{"image_id": "pug_spar_000948", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Orca", "content_neg": "a red Anlylosaurus and a blue Orca", "kind": "phrase"}
+{"image_id": "pug_spar_000949", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Pig", "content_neg": "a red Anlylosaurus and a blue Pig", "kind": "phrase"}
+{"image_id": "pug_spar_000950", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Rabbit", "content_neg": "a red Anlylosaurus and a blue Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_000953", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red WhiteShark", "content_neg": "a red Anlylosaurus and a blue WhiteShark", "kind": "phrase"}
+{"image_id": "pug_spar_000956", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red PoisonDartFrog", "content_neg": "a red Anlylosaurus and a blue PoisonDartFrog", "kind": "phrase"}
+{"image_id": "pug_spar_000958", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Goldfish", "content_neg": "a red Anlylosaurus and a blue Goldfish", "kind": "phrase"}
+{"image_id": "pug_spar_000959", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Caribou", "content_neg": "a red Anlylosaurus and a blue Caribou", "kind": "phrase"}
+{"image_id": "pug_spar_000963", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Zebra", "content_neg": "a red Anlylosaurus and a blue Zebra", "kind": "phrase"}
+{"image_id": "pug_spar_000964", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Bear", "content_neg": "a red Anlylosaurus and a blue Bear", "kind": "phrase"}
+{"image_id": "pug_spar_000973", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Rhinoceros", "content_neg": "a red Anlylosaurus and a blue Rhinoceros", "kind": "phrase"}
+{"image_id": "pug_spar_000974", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Dolphin", "content_neg": "a red Anlylosaurus and a blue Dolphin", "kind": "phrase"}
+{"image_id": "pug_spar_000980", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Lion", "content_neg": "a red Anlylosaurus and a blue Lion", "kind": "phrase"}
+{"image_id": "pug_spar_000985", "factor": "attribute", "content_pos": "a blue Anlylosaurus and a red Chicken", "content_neg": "a red Anlylosaurus and a blue Chicken", "kind": "phrase"}
+{"image_id": "pug_spar_000993", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Elephant", "content_neg": "a stone Anlylosaurus and a grass Elephant", "kind": "phrase"}
+{"image_id": "pug_spar_000994", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Camel", "content_neg": "a stone Anlylosaurus and a grass Camel", "kind": "phrase"}
+{"image_id": "pug_spar_001000", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Armadillo", "content_neg": "a stone Anlylosaurus and a grass Armadillo", "kind": "phrase"}
+{"image_id": "pug_spar_001003", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Scorpion", "content_neg": "a stone Anlylosaurus and a grass Scorpion", "kind": "phrase"}
+{"image_id": "pug_spar_001005", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Tarantula", "content_neg": "a stone Anlylosaurus and a grass Tarantula", "kind": "phrase"}
+{"image_id": "pug_spar_001008", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone EarlessSeal", "content_neg": "a stone Anlylosaurus and a grass EarlessSeal", "kind": "phrase"}
+{"image_id": "pug_spar_001011", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Horse", "content_neg": "a stone Anlylosaurus and a grass Horse", "kind": "phrase"}
+{"image_id": "pug_spar_001021", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone BlackRockFish", "content_neg": "a stone Anlylosaurus and a grass BlackRockFish", "kind": "phrase"}
+{"image_id": "pug_spar_001022", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone PoisonDartFrog", "content_neg": "a stone Anlylosaurus and a grass PoisonDartFrog", "kind": "phrase"}
+{"image_id": "pug_spar_001026", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Elephant", "content_neg": "a stone Anlylosaurus and a grass Elephant", "kind": "phrase"}
+{"image_id": "pug_spar_001030", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Bear", "content_neg": "a stone Anlylosaurus and a grass Bear", "kind": "phrase"}
+{"image_id": "pug_spar_001036", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Scorpion", "content_neg": "a stone Anlylosaurus and a grass Scorpion", "kind": "phrase"}
+{"image_id": "pug_spar_001038", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Tarantula", "content_neg": "a stone Anlylosaurus and a grass Tarantula", "kind": "phrase"}
+{"image_id": "pug_spar_001047", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Orca", "content_neg": "a stone Anlylosaurus and a grass Orca", "kind": "phrase"}
+{"image_id": "pug_spar_001049", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Rabbit", "content_neg": "a stone Anlylosaurus and a grass Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_001058", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Caribou", "content_neg": "a stone Anlylosaurus and a grass Caribou", "kind": "phrase"}
+{"image_id": "pug_spar_001063", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Bear", "content_neg": "a stone Anlylosaurus and a grass Bear", "kind": "phrase"}
+{"image_id": "pug_spar_001067", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Gecko", "content_neg": "a stone Anlylosaurus and a grass Gecko", "kind": "phrase"}
+{"image_id": "pug_spar_001068", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Crow", "content_neg": "a stone Anlylosaurus and a grass Crow", "kind": "phrase"}
+{"image_id": "pug_spar_001070", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone GiantTortoise", "content_neg": "a stone Anlylosaurus and a grass GiantTortoise", "kind": "phrase"}
+{"image_id": "pug_spar_001077", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Horse", "content_neg": "a stone Anlylosaurus and a grass Horse", "kind": "phrase"}
+{"image_id": "pug_spar_001079", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Lion", "content_neg": "a stone Anlylosaurus and a grass Lion", "kind": "phrase"}
+{"image_id": "pug_spar_001080", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Orca", "content_neg": "a stone Anlylosaurus and a grass Orca", "kind": "phrase"}
+{"image_id": "pug_spar_001083", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Squirrel", "content_neg": "a stone Anlylosaurus and a grass Squirrel", "kind": "phrase"}
+{"image_id": "pug_spar_001084", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Chicken", "content_neg": "a stone Anlylosaurus and a grass Chicken", "kind": "phrase"}
+{"image_id": "pug_spar_001090", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Goldfish", "content_neg": "a stone Anlylosaurus and a grass Goldfish", "kind": "phrase"}
+{"image_id": "pug_spar_001092", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Elephant", "content_neg": "a stone Anlylosaurus and a grass Elephant", "kind": "phrase"}
+{"image_id": "pug_spar_001093", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Camel", "content_neg": "a stone Anlylosaurus and a grass Camel", "kind": "phrase"}
+{"image_id": "pug_spar_001094", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Penguin", "content_neg": "a stone Anlylosaurus and a grass Penguin", "kind": "phrase"}
+{"image_id": "pug_spar_001095", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Zebra", "content_neg": "a stone Anlylosaurus and a grass Zebra", "kind": "phrase"}
+{"image_id": "pug_spar_001096", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Bear", "content_neg": "a stone Anlylosaurus and a grass Bear", "kind": "phrase"}
+{"image_id": "pug_spar_001102", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Scorpion", "content_neg": "a stone Anlylosaurus and a grass Scorpion", "kind": "phrase"}
+{"image_id": "pug_spar_001104", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Tarantula", "content_neg": "a stone Anlylosaurus and a grass Tarantula", "kind": "phrase"}
+{"image_id": "pug_spar_001109", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Hippopotamus", "content_neg": "a stone Anlylosaurus and a grass Hippopotamus", "kind": "phrase"}
+{"image_id": "pug_spar_001112", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Lion", "content_neg": "a stone Anlylosaurus and a grass Lion", "kind": "phrase"}
+{"image_id": "pug_spar_001115", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Rabbit", "content_neg": "a stone Anlylosaurus and a grass Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_001121", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone PoisonDartFrog", "content_neg": "a stone Anlylosaurus and a grass PoisonDartFrog", "kind": "phrase"}
+{"image_id": "pug_spar_001125", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Elephant", "content_neg": "a stone Anlylosaurus and a grass Elephant", "kind": "phrase"}
+{"image_id": "pug_spar_001126", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Camel", "content_neg": "a stone Anlylosaurus and a grass Camel", "kind": "phrase"}
+{"image_id": "pug_spar_001129", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Bear", "content_neg": "a stone Anlylosaurus and a grass Bear", "kind": "phrase"}
+{"image_id": "pug_spar_001130", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Beaver", "content_neg": "a stone Anlylosaurus and a grass Beaver", "kind": "phrase"}
+{"image_id": "pug_spar_001133", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Gecko", "content_neg": "a stone Anlylosaurus and a grass Gecko", "kind": "phrase"}
+{"image_id": "pug_spar_001134", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Crow", "content_neg": "a stone Anlylosaurus and a grass Crow", "kind": "phrase"}
+{"image_id": "pug_spar_001136", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone GiantTortoise", "content_neg": "a stone Anlylosaurus and a grass GiantTortoise", "kind": "phrase"}
+{"image_id": "pug_spar_001140", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone EarlessSeal", "content_neg": "a stone Anlylosaurus and a grass EarlessSeal", "kind": "phrase"}
+{"image_id": "pug_spar_001149", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Squirrel", "content_neg": "a stone Anlylosaurus and a grass Squirrel", "kind": "phrase"}
+{"image_id": "pug_spar_001154", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone PoisonDartFrog", "content_neg": "a stone Anlylosaurus and a grass PoisonDartFrog", "kind": "phrase"}
+{"image_id": "pug_spar_001157", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Caribou", "content_neg": "a stone Anlylosaurus and a grass Caribou", "kind": "phrase"}
+{"image_id": "pug_spar_001160", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Penguin", "content_neg": "a stone Anlylosaurus and a grass Penguin", "kind": "phrase"}
+{"image_id": "pug_spar_001165", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Armadillo", "content_neg": "a stone Anlylosaurus and a grass Armadillo", "kind": "phrase"}
+{"image_id": "pug_spar_001175", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Hippopotamus", "content_neg": "a stone Anlylosaurus and a grass Hippopotamus", "kind": "phrase"}
+{"image_id": "pug_spar_001178", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Lion", "content_neg": "a stone Anlylosaurus and a grass Lion", "kind": "phrase"}
+{"image_id": "pug_spar_001179", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Orca", "content_neg": "a stone Anlylosaurus and a grass Orca", "kind": "phrase"}
+{"image_id": "pug_spar_001181", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Rabbit", "content_neg": "a stone Anlylosaurus and a grass Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_001183", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Chicken", "content_neg": "a stone Anlylosaurus and a grass Chicken", "kind": "phrase"}
+{"image_id": "pug_spar_001189", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Goldfish", "content_neg": "a stone Anlylosaurus and a grass Goldfish", "kind": "phrase"}
+{"image_id": "pug_spar_001192", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Camel", "content_neg": "a stone Anlylosaurus and a grass Camel", "kind": "phrase"}
+{"image_id": "pug_spar_001194", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Zebra", "content_neg": "a stone Anlylosaurus and a grass Zebra", "kind": "phrase"}
+{"image_id": "pug_spar_001195", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Bear", "content_neg": "a stone Anlylosaurus and a grass Bear", "kind": "phrase"}
+{"image_id": "pug_spar_001196", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Beaver", "content_neg": "a stone Anlylosaurus and a grass Beaver", "kind": "phrase"}
+{"image_id": "pug_spar_001197", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Cattle", "content_neg": "a stone Anlylosaurus and a grass Cattle", "kind": "phrase"}
+{"image_id": "pug_spar_001200", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Crow", "content_neg": "a stone Anlylosaurus and a grass Crow", "kind": "phrase"}
+{"image_id": "pug_spar_001204", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Rhinoceros", "content_neg": "a stone Anlylosaurus and a grass Rhinoceros", "kind": "phrase"}
+{"image_id": "pug_spar_001206", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone EarlessSeal", "content_neg": "a stone Anlylosaurus and a grass EarlessSeal", "kind": "phrase"}
+{"image_id": "pug_spar_001207", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Goat", "content_neg": "a stone Anlylosaurus and a grass Goat", "kind": "phrase"}
+{"image_id": "pug_spar_001208", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Hippopotamus", "content_neg": "a stone Anlylosaurus and a grass Hippopotamus", "kind": "phrase"}
+{"image_id": "pug_spar_001211", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Lion", "content_neg": "a stone Anlylosaurus and a grass Lion", "kind": "phrase"}
+{"image_id": "pug_spar_001213", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Pig", "content_neg": "a stone Anlylosaurus and a grass Pig", "kind": "phrase"}
+{"image_id": "pug_spar_001214", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Rabbit", "content_neg": "a stone Anlylosaurus and a grass Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_001215", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Squirrel", "content_neg": "a stone Anlylosaurus and a grass Squirrel", "kind": "phrase"}
+{"image_id": "pug_spar_001218", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Anlylosaurus", "content_neg": "a stone Anlylosaurus and a grass Anlylosaurus", "kind": "phrase"}
+{"image_id": "pug_spar_001223", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Caribou", "content_neg": "a stone Anlylosaurus and a grass Caribou", "kind": "phrase"}
+{"image_id": "pug_spar_001225", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Camel", "content_neg": "a stone Anlylosaurus and a grass Camel", "kind": "phrase"}
+{"image_id": "pug_spar_001226", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Penguin", "content_neg": "a stone Anlylosaurus and a grass Penguin", "kind": "phrase"}
+{"image_id": "pug_spar_001227", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Zebra", "content_neg": "a stone Anlylosaurus and a grass Zebra", "kind": "phrase"}
+{"image_id": "pug_spar_001231", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Armadillo", "content_neg": "a stone Anlylosaurus and a grass Armadillo", "kind": "phrase"}
+{"image_id": "pug_spar_001235", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone GiantTortoise", "content_neg": "a stone Anlylosaurus and a grass GiantTortoise", "kind": "phrase"}
+{"image_id": "pug_spar_001239", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone EarlessSeal", "content_neg": "a stone Anlylosaurus and a grass EarlessSeal", "kind": "phrase"}
+{"image_id": "pug_spar_001241", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Hippopotamus", "content_neg": "a stone Anlylosaurus and a grass Hippopotamus", "kind": "phrase"}
+{"image_id": "pug_spar_001242", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Horse", "content_neg": "a stone Anlylosaurus and a grass Horse", "kind": "phrase"}
+{"image_id": "pug_spar_001244", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Lion", "content_neg": "a stone Anlylosaurus and a grass Lion", "kind": "phrase"}
+{"image_id": "pug_spar_001247", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Rabbit", "content_neg": "a stone Anlylosaurus and a grass Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_001255", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Goldfish", "content_neg": "a stone Anlylosaurus and a grass Goldfish", "kind": "phrase"}
+{"image_id": "pug_spar_001262", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Beaver", "content_neg": "a stone Anlylosaurus and a grass Beaver", "kind": "phrase"}
+{"image_id": "pug_spar_001269", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Tarantula", "content_neg": "a stone Anlylosaurus and a grass Tarantula", "kind": "phrase"}
+{"image_id": "pug_spar_001271", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Dolphin", "content_neg": "a stone Anlylosaurus and a grass Dolphin", "kind": "phrase"}
+{"image_id": "pug_spar_001276", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Impala", "content_neg": "a stone Anlylosaurus and a grass Impala", "kind": "phrase"}
+{"image_id": "pug_spar_001279", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Pig", "content_neg": "a stone Anlylosaurus and a grass Pig", "kind": "phrase"}
+{"image_id": "pug_spar_001280", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Rabbit", "content_neg": "a stone Anlylosaurus and a grass Rabbit", "kind": "phrase"}
+{"image_id": "pug_spar_001281", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Squirrel", "content_neg": "a stone Anlylosaurus and a grass Squirrel", "kind": "phrase"}
+{"image_id": "pug_spar_001284", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Anlylosaurus", "content_neg": "a stone Anlylosaurus and a grass Anlylosaurus", "kind": "phrase"}
+{"image_id": "pug_spar_001289", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Caribou", "content_neg": "a stone Anlylosaurus and a grass Caribou", "kind": "phrase"}
+{"image_id": "pug_spar_001297", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Armadillo", "content_neg": "a stone Anlylosaurus and a grass Armadillo", "kind": "phrase"}
+{"image_id": "pug_spar_001299", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Crow", "content_neg": "a stone Anlylosaurus and a grass Crow", "kind": "phrase"}
+{"image_id": "pug_spar_001302", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Tarantula", "content_neg": "a stone Anlylosaurus and a grass Tarantula", "kind": "phrase"}
+{"image_id": "pug_spar_001303", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Rhinoceros", "content_neg": "a stone Anlylosaurus and a grass Rhinoceros", "kind": "phrase"}
+{"image_id": "pug_spar_001306", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Goat", "content_neg": "a stone Anlylosaurus and a grass Goat", "kind": "phrase"}
+{"image_id": "pug_spar_001311", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Orca", "content_neg": "a stone Anlylosaurus and a grass Orca", "kind": "phrase"}
+{"image_id": "pug_spar_001312", "factor": "attribute", "content_pos": "a grass Anlylosaurus and a stone Pig", "content_neg": "a stone Anlylosaurus and a grass Pig", "kind": "phrase"}
+{"image_id": "pug_spar_000004", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Camel", "content_neg": "the Camel is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000013", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Scorpion is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000019", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goat", "content_neg": "the Goat is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000024", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Orca", "content_neg": "the Orca is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000026", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Rabbit", "content_neg": "the Rabbit is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000028", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Chicken is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000029", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the WhiteShark", "content_neg": "the WhiteShark is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000043", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Armadillo is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000064", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the BlackRockFish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000069", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Elephant", "content_neg": "the Elephant is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000085", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goat", "content_neg": "the Goat is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000093", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Squirrel", "content_neg": "the Squirrel is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000096", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000097", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the BlackRockFish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000103", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Camel", "content_neg": "the Camel is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000115", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Rhinoceros", "content_neg": "the Rhinoceros is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000116", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Dolphin", "content_neg": "the Dolphin is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000123", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Orca", "content_neg": "the Orca is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000144", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Crow", "content_neg": "the Crow is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000147", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Tarantula is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000158", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Rabbit", "content_neg": "the Rabbit is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000162", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000166", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goldfish", "content_neg": "the Goldfish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000167", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Caribou", "content_neg": "the Caribou is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000180", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Tarantula is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000183", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the EarlessSeal", "content_neg": "the EarlessSeal is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000191", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Rabbit", "content_neg": "the Rabbit is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000193", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Chicken is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000208", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Armadillo is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000210", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Crow", "content_neg": "the Crow is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000223", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Pig", "content_neg": "the Pig is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000228", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000229", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the BlackRockFish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000232", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goldfish", "content_neg": "the Goldfish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000244", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Scorpion is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000250", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goat", "content_neg": "the Goat is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000258", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Squirrel", "content_neg": "the Squirrel is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000261", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000268", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Camel", "content_neg": "the Camel is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000272", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Beaver", "content_neg": "the Beaver is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000277", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Scorpion is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000290", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Rabbit", "content_neg": "the Rabbit is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000298", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goldfish", "content_neg": "the Goldfish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000304", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Bear", "content_neg": "the Bear is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000313", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Rhinoceros", "content_neg": "the Rhinoceros is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000324", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Squirrel", "content_neg": "the Squirrel is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000343", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Scorpion", "content_neg": "the Scorpion is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000356", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Rabbit", "content_neg": "the Rabbit is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000359", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the WhiteShark", "content_neg": "the WhiteShark is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000366", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Elephant", "content_neg": "the Elephant is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000379", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Rhinoceros", "content_neg": "the Rhinoceros is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000395", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the PoisonDartFrog", "content_neg": "the PoisonDartFrog is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000404", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Beaver", "content_neg": "the Beaver is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000412", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Rhinoceros", "content_neg": "the Rhinoceros is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000417", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Horse", "content_neg": "the Horse is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000420", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Orca", "content_neg": "the Orca is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000423", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Squirrel", "content_neg": "the Squirrel is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000427", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the BlackRockFish", "content_neg": "the BlackRockFish is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000432", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Elephant", "content_neg": "the Elephant is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000438", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Cattle", "content_neg": "the Cattle is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000446", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Dolphin", "content_neg": "the Dolphin is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000447", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the EarlessSeal", "content_neg": "the EarlessSeal is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000449", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Hippopotamus", "content_neg": "the Hippopotamus is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000451", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Impala", "content_neg": "the Impala is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000456", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Squirrel", "content_neg": "the Squirrel is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000475", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Scorpion", "content_neg": "the Scorpion is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000484", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Impala", "content_neg": "the Impala is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000487", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Pig", "content_neg": "the Pig is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000489", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Squirrel", "content_neg": "the Squirrel is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000490", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Chicken", "content_neg": "the Chicken is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000500", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Penguin", "content_neg": "the Penguin is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000511", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Rhinoceros", "content_neg": "the Rhinoceros is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000514", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Goat", "content_neg": "the Goat is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000515", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Hippopotamus", "content_neg": "the Hippopotamus is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000518", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Lion", "content_neg": "the Lion is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000519", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Orca", "content_neg": "the Orca is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000526", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the BlackRockFish", "content_neg": "the BlackRockFish is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000530", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Caribou", "content_neg": "the Caribou is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000535", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Bear", "content_neg": "the Bear is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000536", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Beaver", "content_neg": "the Beaver is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000542", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the GiantTortoise", "content_neg": "the GiantTortoise is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000549", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Horse", "content_neg": "the Horse is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000565", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Camel", "content_neg": "the Camel is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000568", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Bear", "content_neg": "the Bear is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000570", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Cattle", "content_neg": "the Cattle is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000589", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Chicken", "content_neg": "the Chicken is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000591", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000599", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Penguin", "content_neg": "the Penguin is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000600", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Zebra", "content_neg": "the Zebra is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000612", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the EarlessSeal", "content_neg": "the EarlessSeal is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000614", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Hippopotamus", "content_neg": "the Hippopotamus is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000618", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Orca", "content_neg": "the Orca is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000621", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Squirrel", "content_neg": "the Squirrel is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000628", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Goldfish", "content_neg": "the Goldfish is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000632", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Penguin", "content_neg": "the Penguin is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000635", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Beaver", "content_neg": "the Beaver is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000639", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Crow", "content_neg": "the Crow is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000640", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Scorpion", "content_neg": "the Scorpion is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000644", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Dolphin", "content_neg": "the Dolphin is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000645", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the EarlessSeal", "content_neg": "the EarlessSeal is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000654", "factor": "relation", "content_pos": "the Anlylosaurus is to the below of the Squirrel", "content_neg": "the Squirrel is to the below of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000670", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Armadillo is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000671", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Gecko", "content_neg": "the Gecko is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000673", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Scorpion is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000675", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Tarantula is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000680", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Hippopotamus", "content_neg": "the Hippopotamus is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000682", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Impala", "content_neg": "the Impala is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000684", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Orca", "content_neg": "the Orca is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000692", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the PoisonDartFrog", "content_neg": "the PoisonDartFrog is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000695", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Caribou", "content_neg": "the Caribou is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000717", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Orca", "content_neg": "the Orca is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000725", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the PoisonDartFrog", "content_neg": "the PoisonDartFrog is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000729", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Elephant", "content_neg": "the Elephant is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000735", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Cattle", "content_neg": "the Cattle is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000736", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Armadillo is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000738", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Crow", "content_neg": "the Crow is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000741", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Tarantula is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000751", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Pig", "content_neg": "the Pig is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000764", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Penguin", "content_neg": "the Penguin is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000766", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Bear", "content_neg": "the Bear is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000775", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Rhinoceros", "content_neg": "the Rhinoceros is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000790", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the BlackRockFish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000801", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Cattle", "content_neg": "the Cattle is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000831", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Zebra", "content_neg": "the Zebra is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000897", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Zebra", "content_neg": "the Zebra is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000907", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Rhinoceros", "content_neg": "the Rhinoceros is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000917", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Rabbit", "content_neg": "the Rabbit is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000919", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Chicken is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000921", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000932", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Beaver", "content_neg": "the Beaver is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000937", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Scorpion is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000944", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Hippopotamus", "content_neg": "the Hippopotamus is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000958", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goldfish", "content_neg": "the Goldfish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000963", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Zebra", "content_neg": "the Zebra is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000965", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Beaver", "content_neg": "the Beaver is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000987", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_000994", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Camel", "content_neg": "the Camel is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001003", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Scorpion", "content_neg": "the Scorpion is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001005", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Tarantula is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001009", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goat", "content_neg": "the Goat is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001014", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Orca", "content_neg": "the Orca is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001026", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Elephant", "content_neg": "the Elephant is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001027", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Camel", "content_neg": "the Camel is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001035", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Crow", "content_neg": "the Crow is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001040", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Dolphin", "content_neg": "the Dolphin is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001043", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Hippopotamus", "content_neg": "the Hippopotamus is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001058", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Caribou", "content_neg": "the Caribou is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001062", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Zebra", "content_neg": "the Zebra is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001066", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Armadillo is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001074", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the EarlessSeal", "content_neg": "the EarlessSeal is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001084", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Chicken is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001090", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goldfish", "content_neg": "the Goldfish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001097", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Beaver", "content_neg": "the Beaver is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001104", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Tarantula", "content_neg": "the Tarantula is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001112", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Lion", "content_neg": "the Lion is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001118", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the WhiteShark", "content_neg": "the WhiteShark is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001123", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goldfish", "content_neg": "the Goldfish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001124", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Caribou", "content_neg": "the Caribou is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001134", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Crow", "content_neg": "the Crow is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001141", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goat", "content_neg": "the Goat is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001150", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Chicken", "content_neg": "the Chicken is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001151", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the WhiteShark", "content_neg": "the WhiteShark is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001153", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the BlackRockFish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001161", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Zebra", "content_neg": "the Zebra is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001178", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Lion", "content_neg": "the Lion is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001187", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the PoisonDartFrog", "content_neg": "the PoisonDartFrog is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001200", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Crow", "content_neg": "the Crow is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001204", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Rhinoceros", "content_neg": "the Rhinoceros is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001213", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Pig", "content_neg": "the Pig is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001239", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the EarlessSeal", "content_neg": "the EarlessSeal is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001240", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Goat", "content_neg": "the Goat is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001256", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Caribou", "content_neg": "the Caribou is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001274", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Hippopotamus", "content_neg": "the Hippopotamus is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001285", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the BlackRockFish", "content_neg": "the BlackRockFish is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001297", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Armadillo", "content_neg": "the Armadillo is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001299", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the Crow", "content_neg": "the Crow is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001305", "factor": "relation", "content_pos": "the Anlylosaurus is to the left of the EarlessSeal", "content_neg": "the EarlessSeal is to the left of the Anlylosaurus", "kind": "sentence"}
+{"image_id": "pug_spar_001337", "factor": "relation", "content_pos": "the Armadillo is to the left of the Dolphin", "content_neg": "the Dolphin is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001354", "factor": "relation", "content_pos": "the Armadillo is to the left of the Goldfish", "content_neg": "the Goldfish is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001357", "factor": "relation", "content_pos": "the Armadillo is to the left of the Camel", "content_neg": "the Camel is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001369", "factor": "relation", "content_pos": "the Armadillo is to the left of the Rhinoceros", "content_neg": "the Rhinoceros is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001370", "factor": "relation", "content_pos": "the Armadillo is to the left of the Dolphin", "content_neg": "the Dolphin is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001371", "factor": "relation", "content_pos": "the Armadillo is to the left of the EarlessSeal", "content_neg": "the EarlessSeal is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001391", "factor": "relation", "content_pos": "the Armadillo is to the left of the Penguin", "content_neg": "the Penguin is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001401", "factor": "relation", "content_pos": "the Armadillo is to the left of the Tarantula", "content_neg": "the Tarantula is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001402", "factor": "relation", "content_pos": "the Armadillo is to the left of the Rhinoceros", "content_neg": "the Rhinoceros is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001405", "factor": "relation", "content_pos": "the Armadillo is to the left of the Goat", "content_neg": "the Goat is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001417", "factor": "relation", "content_pos": "the Armadillo is to the left of the BlackRockFish", "content_neg": "the BlackRockFish is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001418", "factor": "relation", "content_pos": "the Armadillo is to the left of the PoisonDartFrog", "content_neg": "the PoisonDartFrog is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001423", "factor": "relation", "content_pos": "the Armadillo is to the left of the Camel", "content_neg": "the Camel is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001429", "factor": "relation", "content_pos": "the Armadillo is to the left of the Armadillo", "content_neg": "the Armadillo is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001435", "factor": "relation", "content_pos": "the Armadillo is to the left of the Rhinoceros", "content_neg": "the Rhinoceros is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001441", "factor": "relation", "content_pos": "the Armadillo is to the left of the Impala", "content_neg": "the Impala is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001459", "factor": "relation", "content_pos": "the Armadillo is to the left of the Bear", "content_neg": "the Bear is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001463", "factor": "relation", "content_pos": "the Armadillo is to the left of the Gecko", "content_neg": "the Gecko is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001466", "factor": "relation", "content_pos": "the Armadillo is to the left of the GiantTortoise", "content_neg": "the GiantTortoise is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001476", "factor": "relation", "content_pos": "the Armadillo is to the left of the Orca", "content_neg": "the Orca is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001482", "factor": "relation", "content_pos": "the Armadillo is to the left of the Anlylosaurus", "content_neg": "the Anlylosaurus is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001486", "factor": "relation", "content_pos": "the Armadillo is to the left of the Goldfish", "content_neg": "the Goldfish is to the left of the Armadillo", "kind": "sentence"}
+{"image_id": "pug_spar_001487", "factor": "relation", "content_pos": "the Armadillo is to the left of the Caribou", "content_neg": "the Caribou is to the left of the Armadillo", "kind": "sentence"}

@@ -1,0 +1,15 @@
+# 数据与模型路径。相对目录以 code/ 为根。
+datasets:
+  clevr: /mnt/disk1/xpfu/datasets/CLEVR_v1.0
+  cogent: /mnt/disk1/xpfu/datasets/CLEVR_CoGenT_v1.0
+  pug_spar: /mnt/disk1/xpfu/datasets/facebook/PUG_SPAR
+  pug_animals: /mnt/disk1/xpfu/datasets/facebook/PUG_Animals
+  pug_imagenet: /mnt/disk1/xpfu/datasets/facebook/PUG_ImageNet
+
+models:
+  clip_vitl14: /mnt/disk1/xpfu/PreTrainedModels/clip-vit-large-patch14
+
+dirs:
+  manifests: data/manifests
+  cache: data/cache
+  outputs: outputs
