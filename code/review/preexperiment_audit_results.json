@@ -1,0 +1,207 @@
+{
+  "summary": {
+    "checks": 15,
+    "passed": 3,
+    "failed": 12
+  },
+  "results": [
+    {
+      "check": "python_syntax",
+      "passed": true,
+      "evidence": {
+        "files": 36
+      }
+    },
+    {
+      "check": "2afc_ties_are_errors",
+      "passed": true,
+      "evidence": {}
+    },
+    {
+      "check": "clevr_relation_positive_is_true",
+      "passed": false,
+      "evidence": [
+        {
+          "image_id": "fixture.png",
+          "factor": "relation",
+          "content_pos": "a large blue rubber sphere is to the left of a small red metal cube",
+          "content_neg": "a large blue rubber sphere is to the right of a small red metal cube",
+          "kind": "sentence"
+        },
+        {
+          "image_id": "fixture.png",
+          "factor": "relation",
+          "content_pos": "a small red metal cube is to the right of a large blue rubber sphere",
+          "content_neg": "a small red metal cube is to the left of a large blue rubber sphere",
+          "kind": "sentence"
+        }
+      ]
+    },
+    {
+      "check": "spar_ambiguous_same_species_pairs_are_rejected",
+      "passed": false,
+      "evidence": [
+        {
+          "image_id": "same_species",
+          "factor": "attribute",
+          "content_pos": "a blue cat and a red cat",
+          "content_neg": "a red cat and a blue cat",
+          "kind": "phrase"
+        },
+        {
+          "image_id": "same_species",
+          "factor": "relation",
+          "content_pos": "the cat is to the left of the cat",
+          "content_neg": "the cat is to the left of the cat",
+          "kind": "sentence"
+        }
+      ]
+    },
+    {
+      "check": "spar_vertical_relation_is_grammatical",
+      "passed": false,
+      "evidence": [
+        "the cat is to the below of the dog",
+        "the cat is to the above of the dog"
+      ]
+    },
+    {
+      "check": "e1_configured_one_item_per_scene_is_respected",
+      "passed": false,
+      "evidence": {
+        "binding": {
+          "items": 200,
+          "images": 121,
+          "maximum": 6
+        },
+        "color": {
+          "items": 200,
+          "images": 150,
+          "maximum": 4
+        },
+        "material": {
+          "items": 200,
+          "images": 150,
+          "maximum": 4
+        },
+        "object": {
+          "items": 200,
+          "images": 145,
+          "maximum": 4
+        },
+        "relation": {
+          "items": 200,
+          "images": 128,
+          "maximum": 5
+        },
+        "size": {
+          "items": 200,
+          "images": 147,
+          "maximum": 4
+        }
+      }
+    },
+    {
+      "check": "e2_pairs_change_one_factor",
+      "passed": true,
+      "evidence": {
+        "pairs": 2
+      }
+    },
+    {
+      "check": "e2_different_transition_excludes_identical_transition",
+      "passed": false,
+      "evidence": {
+        "number_of_transitions": 1,
+        "reported_different_transition_comparisons": 100
+      }
+    },
+    {
+      "check": "shared_cluster_identical_groups_have_zero_gap_in_every_resample",
+      "passed": false,
+      "evidence": {
+        "gap_and_ci": [
+          0.0,
+          -0.75,
+          0.75
+        ]
+      }
+    },
+    {
+      "check": "two_context_transition_keeps_its_unique_comparison",
+      "passed": false,
+      "evidence": {
+        "expected_similarity": 1.0,
+        "observed_similarity": null
+      }
+    },
+    {
+      "check": "environment_sampling_covers_all_2016_transitions_with_two_contexts",
+      "passed": false,
+      "evidence": {
+        "covered": 2014,
+        "required": 2016,
+        "single_context": 14
+      }
+    },
+    {
+      "check": "e3_conditions_use_same_negative_type_weights",
+      "passed": false,
+      "evidence": {
+        "pooled_gap": 0.01285714285714279,
+        "equal_type_weight_gap": -4.444959802107906e-05,
+        "type_counts": [
+          {
+            "condition": "A",
+            "negative_type": "color",
+            "n_samples": 160
+          },
+          {
+            "condition": "A",
+            "negative_type": "shape",
+            "n_samples": 140
+          },
+          {
+            "condition": "B",
+            "negative_type": "color",
+            "n_samples": 132
+          },
+          {
+            "condition": "B",
+            "negative_type": "shape",
+            "n_samples": 168
+          }
+        ]
+      }
+    },
+    {
+      "check": "e3_per_combo_retains_condition_and_margin",
+      "passed": false,
+      "evidence": {
+        "columns": [
+          "color",
+          "shape",
+          "n",
+          "accuracy"
+        ]
+      }
+    },
+    {
+      "check": "relation_prompt_count_is_between_five_and_seven",
+      "passed": false,
+      "evidence": {
+        "sentence_prompt_count": 4
+      }
+    },
+    {
+      "check": "image_extraction_completes_an_existing_partial_cache",
+      "passed": false,
+      "evidence": {
+        "cached_ids": [
+          "a.png"
+        ],
+        "encode_calls": 1
+      }
+    }
+  ]
+}
