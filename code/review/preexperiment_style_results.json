@@ -1,0 +1,240 @@
+{
+  "date": "2026-10-21",
+  "revision": "8ebdd3f",
+  "summary": {
+    "checks": 21,
+    "passed": 20,
+    "failed": 1
+  },
+  "results": [
+    {
+      "check": "source_syntax",
+      "passed": true,
+      "evidence": {
+        "files": 37
+      }
+    },
+    {
+      "check": "clevr_relation_labels",
+      "passed": true,
+      "evidence": {}
+    },
+    {
+      "check": "binding_caption_uniqueness",
+      "passed": true,
+      "evidence": {
+        "candidates": 3,
+        "nonunique_object": 2,
+        "same_color_or_shape": 1
+      }
+    },
+    {
+      "check": "spar_same_species_filter",
+      "passed": true,
+      "evidence": {
+        "rows": 1,
+        "same_animal_filtered": 1,
+        "blank_two_object_skipped": 0,
+        "attribute_same_texture_filtered": 0,
+        "scene_no_candidate": 0
+      }
+    },
+    {
+      "check": "different_factor_reference_uses_all_sources",
+      "passed": true,
+      "evidence": {
+        "camera": 28,
+        "environment": 28,
+        "size": 44
+      }
+    },
+    {
+      "check": "different_transition_excludes_identical_transition",
+      "passed": true,
+      "evidence": {}
+    },
+    {
+      "check": "two_context_transition_keeps_comparison",
+      "passed": true,
+      "evidence": {}
+    },
+    {
+      "check": "shared_images_are_resampled_together",
+      "passed": true,
+      "evidence": {
+        "gap_ci": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "check": "pair_gap_endpoint_order_invariance",
+      "passed": true,
+      "evidence": {
+        "forward": [
+          0.0,
+          -1.0,
+          1.0
+        ],
+        "reverse": [
+          0.0,
+          -1.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "check": "norm_gap_keeps_context_clustering",
+      "passed": true,
+      "evidence": {
+        "original": [
+          0.5,
+          -0.6666666666666667,
+          1.7562499999999943
+        ],
+        "duplicated": [
+          0.5,
+          -0.6666666666666667,
+          1.7562499999999943
+        ]
+      }
+    },
+    {
+      "check": "pair_mean_honors_configured_bootstrap_count",
+      "passed": true,
+      "evidence": {
+        "requested": 1000,
+        "effective": 1000,
+        "returned_ci": [
+          0.5,
+          0.1,
+          0.9
+        ]
+      }
+    },
+    {
+      "check": "sparse_type_draws_are_not_zero_filled",
+      "passed": true,
+      "evidence": {
+        "gap_ci": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "check": "missing_type_is_explicitly_nan",
+      "passed": true,
+      "evidence": {}
+    },
+    {
+      "check": "empty_group_draws_are_rejected",
+      "passed": true,
+      "evidence": {
+        "gap_ci": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "check": "pooled_gap_uses_picture_clusters",
+      "passed": true,
+      "evidence": {
+        "gap_ci": [
+          0.0,
+          -0.1396945401061846,
+          0.13253160616991183
+        ]
+      }
+    },
+    {
+      "check": "text_cache_keys_effective_text",
+      "passed": true,
+      "evidence": {
+        "with_period": [
+          [
+            5.0,
+            1.0
+          ]
+        ],
+        "no_period": [
+          [
+            4.0,
+            1.0
+          ]
+        ],
+        "calls": 2
+      }
+    },
+    {
+      "check": "official_retrieval_excludes_role_swap_distractors",
+      "passed": true,
+      "evidence": {
+        "candidates": 1
+      }
+    },
+    {
+      "check": "official_retrieval_expands_every_background",
+      "passed": true,
+      "evidence": {
+        "actual_candidates": 2,
+        "reference_candidates": 2,
+        "worlds": [
+          "arena",
+          "desert"
+        ]
+      }
+    },
+    {
+      "check": "core_scoring_and_statistics_ast_unchanged",
+      "passed": true,
+      "evidence": {
+        "code/src/experiments/e2_change_diagnosis.py": true,
+        "code/src/metrics/bootstrap.py": true,
+        "code/src/metrics/delta_stats.py": true,
+        "code/src/data/pair_matcher.py": true,
+        "code/src/experiments/e3_cogent_diagnosis.py": true,
+        "code/src/experiments/common.py": true
+      }
+    },
+    {
+      "check": "pug_cache_output_and_order_unchanged",
+      "passed": true,
+      "evidence": {
+        "decode_counts": {
+          "before": {
+            "subset": 2,
+            "completion": 5,
+            "complete_cache": 5
+          },
+          "after": {
+            "subset": 2,
+            "completion": 3,
+            "complete_cache": 0
+          }
+        },
+        "ids": [
+          "pug_000001",
+          "pug_000003",
+          "pug_000000",
+          "pug_000002",
+          "pug_000004"
+        ]
+      }
+    },
+    {
+      "check": "fresh_standalone_e3_creates_its_result_directory",
+      "passed": false,
+      "evidence": {
+        "error": "Cannot save file into a non-existent directory: 'D:\\code\\GraphDelta\\.style_review_j3vcgqbv\\fresh\\outputs\\tables'",
+        "outputs_root_created": true,
+        "tables_created": false
+      }
+    }
+  ]
+}
