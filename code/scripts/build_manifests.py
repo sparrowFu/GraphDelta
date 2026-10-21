@@ -39,7 +39,8 @@ def main():
         inv = {c: int(df[c].nunique()) for c in df.columns if c not in ("row_id", "sample_id")}
         inventory[name] = {"rows": len(df), "uniques": inv}
         logger.info(f"[manifest] {name}: {len(df)} rows -> {out}")
-        logger.info(json.dumps(inventory[name]["uniques"], ensure_ascii=False))
+        logger.info(f"[manifest] {name} uniques: "
+                    + json.dumps(inventory[name]["uniques"], ensure_ascii=False))
 
     with open(man_dir / "inventory.json", "w", encoding="utf-8") as f:
         json.dump(inventory, f, ensure_ascii=False, indent=2)

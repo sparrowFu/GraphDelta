@@ -88,6 +88,7 @@ def run(model, paths, logger, smoke=False, seed=None):
         check_palette(scenes, cond, cfg, logger)
         if smoke:
             scenes = scenes[:300]
+            logger.info(f"[E3] cogent val{cond} smoke subset: {len(scenes)} scenes")
         key = (f"cogent_val{cond}_smoke" if smoke else f"cogent_val{cond}")
         extract_clevr_images(model, cache, key, scenes,
                              condition_image_dir(paths["datasets"]["cogent"], cond),
@@ -128,7 +129,7 @@ def run(model, paths, logger, smoke=False, seed=None):
     out = pd.DataFrame(rows)
     path = out_tables / ("e3_cogent_smoke.csv" if smoke else "e3_cogent.csv")
     out.to_csv(path, index=False)
-    logger.info(f"[E3] written {path}")
+    logger.info(f"[E3] written {path} ({len(out)} rows)")
 
     # Difficulty Gap（A − B）：图片聚类 bootstrap + 跨题型等权平均（P2-9）
     gap_rows = []
@@ -162,7 +163,7 @@ def run(model, paths, logger, smoke=False, seed=None):
     gap_df = pd.DataFrame(gap_rows)
     path_g = out_tables / ("e3_difficulty_gap_smoke.csv" if smoke else "e3_difficulty_gap.csv")
     gap_df.to_csv(path_g, index=False)
-    logger.info(f"[E3] written {path_g}")
+    logger.info(f"[E3] written {path_g} ({len(gap_df)} rows)")
 
     # 逐 (color, shape)（含题型明细 + pooled 行）与逐颜色（P2-10）
     df = pd.DataFrame(all_items)
@@ -182,5 +183,6 @@ def run(model, paths, logger, smoke=False, seed=None):
         mean_margin=("item_margin", "mean")).reset_index()
     path_b = out_tables / ("e3_cogent_by_color_smoke.csv" if smoke else "e3_cogent_by_color.csv")
     by_color.to_csv(path_b, index=False)
-    logger.info(f"[E3] written {path_c} ({len(combo)} rows), {path_b} ({len(by_color)} rows)")
+    logger.info(f"[E3] written {path_c} ({len(combo)} rows)")
+    logger.info(f"[E3] written {path_b} ({len(by_color)} rows)")
     return out

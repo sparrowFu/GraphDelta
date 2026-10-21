@@ -23,3 +23,5 @@ spar:
 # 与上方自建 2AFC 并行输出；scripts/run_e1_spar_official.py 单独运行。
 spar_official:
   per_world: false     # true 时额外输出逐 world 的结果（官方脚本默认循环全部 world）
+  max_per_task: 2000   # 每个评测子集的图片抽样上限（seeds[0] 随机抽样，与自建 E1 的
+                       # target_per_cell 对齐；设 null 恢复官方全量子集；scene 保留官方 10 行）

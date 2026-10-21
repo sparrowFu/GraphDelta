@@ -11,7 +11,10 @@ CLIP 路径；审查报告 P2-11）。
   （sim_pos > sim_neg），固定 [pos, neg] 顺序与官方 accuracy 等价
   （平局除外：本实现平局判错，与方案 2AFC 规则一致）；
 - 官方脚本的已知 quirk 按原样保留：character1_pos 只有 left/below，
-  "bottom/top" 子集为空；actor 列表去 blank（官方用 unique()[1:] 近似实现）。
+  "bottom/top" 子集为空；actor 列表去 blank（官方用 unique()[1:] 近似实现）；
+- 抽样：spar_official.max_per_task 限制每个评测子集的图片数（按 seeds[0] 随机
+  抽样，与自建 E1 的 target_per_cell 对齐）。此时偏离官方全量子集，数值不再与
+  官方发布结果直接可比；配置缺省（null）保持官方全量；scene 保留官方 10 行。
 """
 import numpy as np
 import pandas as pd
@@ -32,6 +35,17 @@ POS_PAIRS = [("left", "right"), ("bottom", "top")]
 def _env_suffix(world):
     """官方 add_background 版 caption 的环境后缀（world 为 None 时不加）。"""
     return f" in a {world} environment" if world else ""
+
+
+def _cap_rows(df, cap, rng):
+    """子集超过 cap 时按 rng 随机抽样到 cap 行（cap 为 None 时原样返回）。"""
+    if cap is None or len(df) <= cap:
+        return df
+    return df.iloc[rng.permutation(len(df))[:cap]].reset_index(drop=True)
+
+
+def _fmt(v):
+    return f"{v:.4f}" if v == v else "nan"
 
 
 def _official_transform():
@@ -93,7 +107,7 @@ def extract_official_features(model, cache, key, parquet_dir, logger, only_row_i
     raw = np.concatenate(raws, axis=0)
     norm = np.concatenate(norms, axis=0)
     cache.save(key, ids, raw, norm)
-    logger.info(f"[extract] saved {total} new / {len(ids)} total -> {cache.path(key)}")
+    logger.info(f"[extract] saved {total} new / {len(ids)} total images -> {cache.path(key)}")
 
 
 # ---------------- 评测原语 ----------------
@@ -137,12 +151,15 @@ def _hardneg_eval(F_sub, pos_caps, neg_caps, tcache, model):
 
 # ---------------- 官方任务 ----------------
 
-def run(model, paths, logger, smoke=False):
-    cfg = load_config("e1_state").get("spar_official", {})
+def run(model, paths, logger, smoke=False, seed=None):
+    full = load_config("e1_state")
+    cfg = full.get("spar_official", {})
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
     tcache = TextCache(paths["dirs"]["cache"], model.name)
     out_tables = paths["dirs"]["outputs"] / "tables"
     out_tables.mkdir(parents=True, exist_ok=True)
+    max_per_task = cfg.get("max_per_task")   # null：官方全量（历史行为）
+    rng = np.random.default_rng(full.get("seeds", [0])[0] if seed is None else seed)
 
     meta = build_metadata(paths["datasets"]["pug_spar"])
     # add_background 候选的 world 展开按全量 metadata（官方脚本用完整 labels.csv，
@@ -150,7 +167,7 @@ def run(model, paths, logger, smoke=False):
     worlds = sorted(meta["world_name"].unique().tolist())
     if smoke:
         meta = meta.head(3000).reset_index(drop=True)
-        logger.info(f"[spar-official] smoke subset: {len(meta)} rows（子集会影响各任务的样本量）")
+        logger.info(f"[E1] spar_official smoke subset: {len(meta)} rows")
     key = "pug_spar_official_smoke" if smoke else "pug_spar_official"
     extract_official_features(model, cache, key, paths["datasets"]["pug_spar"], logger,
                               only_row_ids=set(meta["row_id"]) if smoke else None)
@@ -169,6 +186,14 @@ def run(model, paths, logger, smoke=False):
                         "texture": texture, "pos_pair": pos_pair, "hardneg": hardneg,
                         "n_images": n_images, "n_captions": n_captions,
                         "top1": top1, "top5": top5})
+        # 每个结果行一行日志，格式与自建 E1 的 [E1] clevr/… 一致
+        tags = [t for t in (texture, pos_pair, "bg" if add_background else "",
+                            "hardneg" if hardneg else "") if t]
+        if world != "all":
+            tags.append(f"w={world}")
+        name = task + (f"[{','.join(tags)}]" if tags else "")
+        logger.info(f"[E1] spar_official/{name}: n={n_images} caps={n_captions} "
+                    f"top1={_fmt(top1)} top5={_fmt(top5)}")
 
     # ---- 1. scene recognition（官方：blank-blank 前 10 行）----
     sub = meta[(meta["character_name"] == "blank")
@@ -179,7 +204,6 @@ def run(model, paths, logger, smoke=False):
     labels = [w2i[f"This is a photo in a {w} environment"] for w in sub["world_name"]]
     top1, top5 = _retrieval_eval(F_of(sub), caps, labels, tcache, model)
     add("scene_backgrounds", n_images=len(sub), n_captions=len(caps), top1=top1, top5=top5)
-    logger.info(f"[spar-official] scene: n={len(sub)} top1={top1:.4f}")
 
     # 单 / 双动物子集（actor 列：blank 侧取另一列）
     single = pd.concat([
@@ -204,7 +228,8 @@ def run(model, paths, logger, smoke=False):
 
         # ---- 2. 单动物识别（按 texture）----
         for texture in TEXTURES:
-            st = ss[ss["character_texture"] == texture].reset_index(drop=True)
+            st = _cap_rows(ss[ss["character_texture"] == texture].reset_index(drop=True),
+                           max_per_task, rng)
             chars = sorted({c for c in st["actor"].unique() if c != "blank"})
             if add_back:
                 caps = [f"This is a photo of a {c}" + _env_suffix(w)
@@ -222,7 +247,8 @@ def run(model, paths, logger, smoke=False):
         # ---- 3. 单动物位置（Default；官方 quirk：bottom/top 子集为空）----
         sr = ss[ss["character_texture"] == "Default"]
         for r1, r2 in POS_PAIRS:
-            st = sr[sr["character1_pos"] == r1].reset_index(drop=True)
+            st = _cap_rows(sr[sr["character1_pos"] == r1].reset_index(drop=True),
+                           max_per_task, rng)
             actors = sorted({c for c in st["actor"].unique() if c != "blank"})
             caps = sorted({f"This is a photo of a {a} on the {r} of the picture"
                            + _env_suffix(w)
@@ -258,7 +284,8 @@ def run(model, paths, logger, smoke=False):
 
         # ---- 4. 双动物识别（按 texture；官方按排序后的动物对）----
         for texture in TEXTURES:
-            st = sd[sd["character_texture"] == texture].reset_index(drop=True)
+            st = _cap_rows(sd[sd["character_texture"] == texture].reset_index(drop=True),
+                           max_per_task, rng)
             pairs = sorted({tuple(sorted((r["character_name"], r["character2_name"])))
                             for r in st.to_dict("records")})
             caps = sorted({f"This is a photo of a {a} and a {b}" + _env_suffix(w)
@@ -275,8 +302,9 @@ def run(model, paths, logger, smoke=False):
         # ---- 5. 双动物关系（Default；官方过滤同种动物）----
         sr = sd[sd["character_texture"] == "Default"]
         for r1, r2 in POS_PAIRS:
-            st = sr[(sr["character1_pos"] == r1)
-                    & (sr["character_name"] != sr["character2_name"])].reset_index(drop=True)
+            st = _cap_rows(sr[(sr["character1_pos"] == r1)
+                              & (sr["character_name"] != sr["character2_name"])]
+                           .reset_index(drop=True), max_per_task, rng)
 
             def relcap(c1, c2, w):
                 return f"This is a photo of a {c1} on the {r1} and a {c2} on the {r2} of the picture" \
@@ -306,8 +334,9 @@ def run(model, paths, logger, smoke=False):
 
         # ---- 6. 双动物属性（Blue/Grass；官方过滤同种动物，动物互换纹理不动）----
         for texture in ["Blue", "Grass"]:
-            st = sd[(sd["character_texture"] == texture)
-                    & (sd["character_name"] != sd["character2_name"])].reset_index(drop=True)
+            st = _cap_rows(sd[(sd["character_texture"] == texture)
+                              & (sd["character_name"] != sd["character2_name"])]
+                           .reset_index(drop=True), max_per_task, rng)
 
             def attrcap(c1, t1, c2, t2, w):
                 return f"This is a photo of a {c1} textured with {t1} and a {c2} textured with {t2}" \
@@ -340,5 +369,5 @@ def run(model, paths, logger, smoke=False):
     out = pd.DataFrame(results)
     path = out_tables / ("e1_spar_official_smoke.csv" if smoke else "e1_spar_official.csv")
     out.to_csv(path, index=False)
-    logger.info(f"[spar-official] written {path} ({len(out)} rows)")
+    logger.info(f"[E1] written {path} ({len(out)} rows)")
     return out

@@ -208,6 +208,7 @@ def run(model, paths, logger, smoke=False, seed=None):
     scenes = clevr.load_scenes(f"{paths['datasets']['clevr']}/{cl['scene_file']}")
     if smoke:
         scenes = scenes[:300]
+        logger.info(f"[E1] clevr smoke subset: {len(scenes)} scenes")
     key = "clevr_val_smoke" if smoke else "clevr_val"
     extract_clevr_images(model, cache, key, scenes,
                          f"{paths['datasets']['clevr']}/{cl['image_dir']}", logger,
@@ -218,7 +219,7 @@ def run(model, paths, logger, smoke=False, seed=None):
         its = cap_per_image(items_by_factor[f], cap, rng)
         its = subsample(its, target, rng)
         if not its:
-            logger.warning(f"[E1] clevr factor={f}: no valid items")
+            logger.warning(f"[E1] clevr/{f}: no valid items")
             continue
         m = eval_2afc_items(model, tcache, cache, key, its, n_boot=bs["n_boot"], ci=bs["ci"],
                             clusters=[it["image_id"] for it in its])
@@ -227,18 +228,20 @@ def run(model, paths, logger, smoke=False, seed=None):
         acc_store[("clevr", f)] = (m["item_acc"], [it["image_id"] for it in its])
         clevr_all_items.extend(its)
         logger.info(f"[E1] clevr/{f}: n={m['n_samples']} acc={m['accuracy']:.4f}")
-    write_jsonl(out_tables / ("e1_items_clevr_smoke.jsonl" if smoke else "e1_items_clevr.jsonl"),
-                clevr_all_items)
+    items_path = out_tables / ("e1_items_clevr_smoke.jsonl" if smoke else "e1_items_clevr.jsonl")
+    write_jsonl(items_path, clevr_all_items)
+    logger.info(f"[E1] written {items_path} ({len(clevr_all_items)} items)")
     stats_path = out_tables / ("e1_clevr_filter_stats_smoke.json" if smoke
                                else "e1_clevr_filter_stats.json")
     stats_path.write_text(json.dumps(clevr_stats, indent=2, ensure_ascii=False))
-    logger.info(f"[E1] written {stats_path}")
+    logger.info(f"[E1] written {stats_path} ({len(clevr_stats)} factors)")
 
     # ---- PUG: SPAR（自建 2AFC）----
     sp = cfg["spar"]
     meta = build_spar_metadata(paths["datasets"]["pug_spar"])
     if smoke:
         meta = meta.head(1500).reset_index(drop=True)
+        logger.info(f"[E1] spar smoke subset: {len(meta)} rows")
     key = "pug_spar_smoke" if smoke else "pug_spar"
     extract_pug_images(model, cache, key, paths["datasets"]["pug_spar"], SPAR_META_COLUMNS,
                        logger, only_row_ids=set(meta["row_id"]) if smoke else None,
@@ -251,7 +254,7 @@ def run(model, paths, logger, smoke=False, seed=None):
         its = cap_per_image(spar_items[f], cap, rng)
         its = subsample(its, target, rng)
         if not its:
-            logger.warning(f"[E1] spar factor={f}: no valid items")
+            logger.warning(f"[E1] spar/{f}: no valid items")
             continue
         m = eval_2afc_items(model, tcache, cache, key, its, n_boot=bs["n_boot"], ci=bs["ci"],
                             clusters=[it["image_id"] for it in its])
@@ -260,12 +263,13 @@ def run(model, paths, logger, smoke=False, seed=None):
         acc_store[("pug_spar", f)] = (m["item_acc"], [it["image_id"] for it in its])
         spar_all_items.extend(its)
         logger.info(f"[E1] spar/{f}: n={m['n_samples']} acc={m['accuracy']:.4f}")
-    write_jsonl(out_tables / ("e1_items_spar_smoke.jsonl" if smoke else "e1_items_spar.jsonl"),
-                spar_all_items)
+    items_path = out_tables / ("e1_items_spar_smoke.jsonl" if smoke else "e1_items_spar.jsonl")
+    write_jsonl(items_path, spar_all_items)
+    logger.info(f"[E1] written {items_path} ({len(spar_all_items)} items)")
     stats_path = out_tables / ("e1_spar_filter_stats_smoke.json" if smoke
                                else "e1_spar_filter_stats.json")
     stats_path.write_text(json.dumps(spar_stats, indent=2, ensure_ascii=False))
-    logger.info(f"[E1] written {stats_path}")
+    logger.info(f"[E1] written {stats_path} ({len(spar_stats)} factors)")
 
     out = pd.DataFrame(rows)
     path = out_tables / ("e1_results_smoke.csv" if smoke else "e1_results.csv")

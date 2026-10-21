@@ -93,7 +93,7 @@ def run(model, paths, logger, smoke=False, seed=None):
         envs = sorted(meta["environment"].unique())[:6]
         anims = sorted(meta["animal"].unique())[:6]
         meta = meta[meta["environment"].isin(envs) & meta["animal"].isin(anims)].reset_index(drop=True)
-        logger.info(f"[E2] smoke subset: {len(meta)} images")
+        logger.info(f"[E2] pug_animals smoke subset: {len(meta)} rows")
 
     orders = cfg["canonical_orders"]
     samp = cfg["sampling"]
@@ -236,16 +236,16 @@ def run(model, paths, logger, smoke=False, seed=None):
         })
         rows.append(row)
         logger.info(
-            f"[E2] {f}: |Δ|raw={row['mean_delta_norm_raw']:.3f} "
+            f"[E2] pug_animals/{f}: |Δ|raw={row['mean_delta_norm_raw']:.3f} "
             f"same_tr_z={row['same_transition_sim_diff_context']:.4f} "
             f"gap_z={row['transition_similarity_gap']:.4f} "
             f"[{row['gap_ci_low']:.4f}, {row['gap_ci_high']:.4f}] "
-            f"diff_factor 来源={src_counts}")
+            f"diff_factor_src={src_counts}")
 
     out = pd.DataFrame(rows)
     path = out_tables / ("e2_delta_stats_smoke.csv" if smoke else "e2_delta_stats.csv")
     out.to_csv(path, index=False)
-    logger.info(f"[E2] written {path}")
+    logger.info(f"[E2] written {path} ({len(out)} rows)")
 
     # 逐 transition 表（两个空间的 Δ 范数 + 相似度）
     tt = transition_table(delta_df, delta_norm,
