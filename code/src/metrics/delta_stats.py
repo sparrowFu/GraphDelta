@@ -4,12 +4,14 @@
 - same_transition_dc ：同 transition，不同 context
 - same_factor_dt_sc  ：同因素、不同 transition、同 context
 - same_factor_dt_dc  ：同因素、不同 transition、不同 context
-- diff_factor_sc/dc  ：d2 来自因素 g≠f；same/different context 按 f、g 共同固定的
-  metadata 字段（FIXED_COLS[f] ∩ FIXED_COLS[g]）是否全部相等判定（审查报告 P2-6）
+- diff_factor_sc/dc  ：d2 从**全部其他因素的联合集合**统一抽样（不按因素顺序
+  拼接后截头，二轮审查问题 1）；same/different context 按 f、g 共同固定的
+  metadata 字段（FIXED_COLS[f] ∩ FIXED_COLS[g]）是否全部相等判定
 - random             ：d2 来自全部因素，排除同一 delta 与（同因素 & 同 context）
 
-聚类单位：完整 metadata 组合（cluster_key）。
-比较采样直接抽取不相等的索引对，不会把有效比较删空（审查报告 P2-7）。
+每条比较记录两个端点的 context（ctx_a / ctx_b），供双端点聚类 bootstrap
+（二轮审查问题 3）。聚类单位：完整 metadata 组合（context_key）。
+比较采样直接抽取不相等的索引对，不会把有效比较删空（一轮 P2-7）。
 """
 import numpy as np
 import pandas as pd
@@ -45,9 +47,7 @@ def _distinct_pairs(rng, m, k):
 def group_similarities(delta_df: pd.DataFrame, factor: str, delta_mat: np.ndarray,
                        max_comparisons: int, rng) -> dict:
     sub = delta_df[delta_df["factor"] == factor].reset_index(drop=True)
-    f_pos = np.arange(len(sub))
     f_gidx = sub["delta_index"].to_numpy()
-    f_cluster = sub["cluster_key"].to_numpy()
     f_context = sub["context_key"].to_numpy()
     f_trans = sub["transition_key"].to_numpy()
 
@@ -58,15 +58,21 @@ def group_similarities(delta_df: pd.DataFrame, factor: str, delta_mat: np.ndarra
     D = delta_mat
     out = {}
 
-    def record(name, pos_i, pos_j_other_global):
-        """pos_i: sub 内位置；pos_j_other_global: 全局 delta 行号。"""
+    def record(name, pos_i, pos_j_other_global, extra=None):
+        """pos_i: sub 内位置；pos_j_other_global: 全局 delta 行号。
+
+        返回 values 与两个端点的 context（ctx_a = d1，ctx_b = d2）。
+        """
         pos_i = np.asarray(pos_i, dtype=np.int64)
         gj = np.asarray(pos_j_other_global, dtype=np.int64)
-        if len(pos_i) == 0:
-            out[name] = {"values": np.zeros(0), "clusters": np.zeros(0)}
-            return
-        vals = _cos(D, f_gidx[pos_i], gj)
-        out[name] = {"values": vals, "clusters": f_cluster[pos_i]}
+        entry = {"values": np.zeros(0), "ctx_a": np.zeros(0), "ctx_b": np.zeros(0)}
+        if extra:
+            entry.update(extra)
+        if len(pos_i):
+            entry["values"] = _cos(D, f_gidx[pos_i], gj)
+            entry["ctx_a"] = f_context[pos_i]
+            entry["ctx_b"] = all_context[gj]
+        out[name] = entry
 
     n_try = max_comparisons * 3
 
@@ -114,38 +120,38 @@ def group_similarities(delta_df: pd.DataFrame, factor: str, delta_mat: np.ndarra
     keep = (f_context[a] != f_context[b]) & (f_trans[a] != f_trans[b])
     record("same_factor_dt_dc", a[keep][:max_comparisons], f_gidx[b[keep][:max_comparisons]])
 
-    # --- different factor：按共同固定字段判定 same / different context ---
+    # --- different factor：从其他因素联合集合统一抽样（二轮问题 1）---
     meta_cols = ["animal", "environment", "texture", "size", "camera"]
     f_meta = {c: sub[c].to_numpy() for c in meta_cols}
     other_meta = {c: delta_df[c].to_numpy() for c in meta_cols}
-    sc_i, sc_j, dc_i, dc_j = [], [], [], []
-    for g in np.unique(all_factor):
-        if g == factor:
-            continue
-        gpos = np.where(all_factor == g)[0]
-        if not len(gpos):
-            continue
-        common = [c for c in meta_cols
-                  if c in FIXED_COLS[factor] and c in FIXED_COLS[g]]
+    other_pos = np.where(all_factor != factor)[0]
+    if len(other_pos):
         a = rng.integers(0, len(sub), size=n_try)
-        b = rng.choice(gpos, size=n_try)
-        if common:
-            same = np.ones(n_try, dtype=bool)
-            for c in common:
-                same &= f_meta[c][a] == other_meta[c][b]
-        else:
-            same = np.zeros(n_try, dtype=bool)
-        sc_i.append(a[same])
-        sc_j.append(all_gidx[b[same]])
-        dc_i.append(a[~same])
-        dc_j.append(all_gidx[b[~same]])
-    if sc_i:
-        sci = np.concatenate(sc_i)[:max_comparisons]
-        scj = np.concatenate(sc_j)[:max_comparisons]
-        dci = np.concatenate(dc_i)[:max_comparisons]
-        dcj = np.concatenate(dc_j)[:max_comparisons]
-        record("diff_factor_sc", sci, scj)
-        record("diff_factor_dc", dci, dcj)
+        b = rng.choice(other_pos, size=n_try)
+        gb = all_factor[b]
+        same = np.zeros(n_try, dtype=bool)
+        for g in np.unique(gb):
+            m = gb == g
+            common = [c for c in meta_cols
+                      if c in FIXED_COLS[factor] and c in FIXED_COLS[g]]
+            if common:
+                s = np.ones(int(m.sum()), dtype=bool)
+                for c in common:
+                    s &= f_meta[c][a[m]] == other_meta[c][b[m]]
+                same[m] = s
+        asc, bsc = a[same][:max_comparisons], b[same][:max_comparisons]
+        adc, bdc = a[~same][:max_comparisons], b[~same][:max_comparisons]
+
+        def src_counts(sel):
+            if not len(sel):
+                return {}
+            gs, ns = np.unique(all_factor[sel], return_counts=True)
+            return {str(g): int(n) for g, n in zip(gs, ns)}
+
+        record("diff_factor_sc", asc, all_gidx[bsc],
+               extra={"source_counts": src_counts(bsc)})
+        record("diff_factor_dc", adc, all_gidx[bdc],
+               extra={"source_counts": src_counts(bdc)})
     else:
         record("diff_factor_sc", [], [])
         record("diff_factor_dc", [], [])
@@ -161,7 +167,7 @@ def group_similarities(delta_df: pd.DataFrame, factor: str, delta_mat: np.ndarra
 
 def transition_table(delta_df: pd.DataFrame, delta_mat: np.ndarray,
                      max_pairs_per_transition: int, rng) -> pd.DataFrame:
-    """逐 transition 汇总：n_contexts、跨 context 相似度均值。"""
+    """逐 transition 汇总：n_contexts、跨 context 相似度均值（点估计，无 CI）。"""
     rows = []
     for (factor, src, tgt), g in delta_df.groupby(["factor", "source_value", "target_value"]):
         gidx = g["delta_index"].to_numpy()

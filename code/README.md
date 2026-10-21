@@ -49,14 +49,14 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
 | 文件 | 内容 |
 |---|---|
 | e1_results.csv | 按 dataset × factor：2AFC acc + CI、margin、模板方差（§63）；含 `protocol=2afc_self_built` 标记 |
-| e1_factor_gaps.csv | E1 内 dataset 各 factor 两两 Accuracy Gap + bootstrap CI |
+| e1_factor_gaps.csv | E1 内 dataset 各 factor 两两 Accuracy Gap + bootstrap CI（共享图片按图片并集同步重采样） |
 | e1_clevr_filter_stats.json / e1_spar_filter_stats.json | 各过滤原因的候选计数（§20a） |
 | e1_items_clevr/spar.jsonl | 每条 2AFC 样本（正/负内容、图片、factor），可复查 |
-| e1_spar_official.csv | SPAR 官方协议：scene / one_object / one_object_position / two_objects / two_objects_relation / two_objects_attribute × {全候选检索 top1/top5, hard-negative} × {无背景, caption 带背景}（P2-11） |
-| e2_delta_stats.csv | 按因素：Δ 范数（raw/z）、before/after 余弦、nuisance 范数与相似度、分层相似度（raw/z）、Transition Gap + CI、Factor/Nuisance Norm Gap + CI（§64；无后缀列 = normalized 空间，`_raw` = 归一化前空间，审查报告 P2-8） |
+| e1_spar_official.csv | SPAR 官方协议：scene / one_object / one_object_position / two_objects / two_objects_relation / two_objects_attribute × {全候选检索 top1/top5, hard-negative} × {无背景, caption 带背景}（P2-11）。检索候选集只含真实行的正例 caption，role-swap 负例只用于 hard-negative 二选一（二轮问题 7） |
+| e2_delta_stats.csv | 按因素：Δ 范数（raw/z）、before/after 余弦、nuisance 范数与相似度、分层相似度（raw/z）、Transition Gap + CI、Factor/Nuisance Norm Gap + CI（§64；无后缀列 = normalized 空间，`_raw` = 归一化前空间，一轮 P2-8）。diff_factor 基准从其他因素联合均匀抽样，来源计数写入日志（二轮问题 1）；相似度 CI 为双端点 context 聚类 bootstrap（二轮问题 3）；Norm Gap 的因素端按 context、nuisance 端按图像聚类（二轮问题 4） |
 | e2_transition_stats.csv | 逐 transition：(factor, source, target) 的 n_contexts、相似度（raw/z）、Δ 范数（raw/z）；n_contexts<2 时 mean_sim 为 NaN 并在日志报告数量 |
 | e3_cogent.csv | 按 condition × shape_group × negative_type（§65）；CI 按图片聚类 bootstrap |
-| e3_difficulty_gap.csv | A−B：题型等权 accuracy（主指标，图片聚类 bootstrap）+ 旧汇总口径（敏感性对照）；cube/cylinder 主指标 + sphere 对照（P2-9） |
+| e3_difficulty_gap.csv | A−B：题型等权 accuracy（主指标，图片聚类 bootstrap）+ 汇总口径（敏感性对照，CI 同样按图片聚类）；cube/cylinder 主指标 + sphere 对照（一轮 P2-9、二轮问题 5） |
 | e3_cogent_by_combo.csv | 逐 (condition, shape_group, color, shape, negative_type)（含 pooled 行）：n、accuracy、mean_margin（P2-10） |
 | e3_cogent_by_color.csv | 逐 (condition, shape_group, color)：n、accuracy、mean_margin（P2-10） |
 
@@ -83,9 +83,11 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
 8. **E2 配对（59）**：每个 context 按"全局已选次数越少的 transition 权重越高"无放回抽样
    （P2-7）；全量 environment 因素覆盖 2016/2016 transitions、每 transition ≥3 contexts。
 9. **E2 分层（40/41/66）**：same_transition（不同 context 天然成立）、same_factor_dt（分同/异
-   context，dc 组同时要求 transition 不同）、diff_factor（same/different context 按两因素
-   **共同固定字段**是否全部相等判定，P2-6）、random。聚类 bootstrap 的 cluster =
-   除被测因素外的完整 metadata 组合（`cluster_key`，§66）。比较采样直接抽不相等的索引对。
+   context，dc 组同时要求 transition 不同）、diff_factor（d2 从其他因素**联合均匀抽样**，
+   same/different context 按两因素**共同固定字段**是否全部相等判定，一轮 P2-6、二轮问题 1）、
+   random。比较记录两个端点的 context，CI 用双端点聚类 bootstrap（比较权重 = 两端点被抽中
+   次数之积，与端点登记顺序无关，二轮问题 3）。聚类单位 = 完整 metadata 组合
+   （`context_key`，§66）。比较采样直接抽不相等的索引对。
 10. **nuisance（39a）**：同图两个确定性增强视图（crop 0.85–1.0 + JPEG 90/75，seed 由 row_id
     派生）；文本为同内容不同模板。输出 raw/z 两空间的范数与 nuisance delta 两两相似度；
     Factor/Nuisance Norm Gap 附 bootstrap CI（P2-8）。只在内存中产生，不落盘图像。
@@ -93,13 +95,17 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
     image_id 聚类 bootstrap、跨 negative_type 等权平均（P2-9）；结论只写"难度不对称"，
     不写 seen/unseen。
 12. **特征缓存（62）**：`data/cache/<model>/<dataset>_images.npz`（fp16，raw+normalized，
-    raw = projection 后归一化前）；文本按 md5 去重缓存在同目录。**缓存按 id 增量校验**：
-    已有样本跳过、缺失样本补抽后合并写回（P2-12）。SPAR 官方协议特征单独使用
-    Resize(224,224)+ImageNet mean/std 预处理，缓存 key 为 `pug_spar_official`。
+    raw = projection 后归一化前）；文本按**实际编码文本**的 md5 去重缓存（补句号与否
+    进入键，二轮问题 8）。**缓存按 id 增量校验**：已有样本跳过、缺失样本补抽后合并写回
+    （一轮 P2-12）。SPAR 官方协议特征单独使用 Resize(224,224)+ImageNet mean/std 预处理，
+    缓存 key 为 `pug_spar_official`；add_background 的 world 展开按全量 metadata。
 13. **SPAR 官方协议（9，P2-11）**：复现 `facebookresearch/PUG` 的
     `PUG_SPAR/run_eval_vlms_on_spar.py` CLIP 路径（脚本存于 `review/official/`）：
     官方 caption 模板（无句号）、全候选检索 top1/top5 + hard-negative 二选一；
-    官方脚本的 quirk 保留（`character1_pos` 只有 left/below，"bottom/top" 子集为空）。
+    **检索候选集只含真实行的正例 caption**（role-swap 负例仅用于 hard-negative，
+    二轮问题 7）；官方脚本的 quirk 保留（`character1_pos` 只有 left/below，
+    "bottom/top" 子集为空）。hard-negative 平局判错（与自建 2AFC 一致）；
+    官方原脚本按随机换序 + argmax 处理，严格大于口径与其等价（平局除外）。
     自建 2AFC 与官方协议结果分开报告，同名指标含义不同。
 
 ## 许可

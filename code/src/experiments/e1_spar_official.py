@@ -98,19 +98,21 @@ def _retrieval_eval(F_sub, caps, labels, tcache, model, chunk=256):
     return top1 / n, (top5 / n if top5_valid else np.nan)
 
 
-def _hardneg_eval(F_sub, caps, labels, negs, tcache, model):
-    """hard-negative 二选一：sim(pos) > sim(neg) 判对（平局判错，与 2AFC 一致）。"""
-    labels = np.asarray(labels, dtype=np.int64)
-    negs = np.asarray(negs, dtype=np.int64)
-    if not len(labels):
+def _hardneg_eval(F_sub, pos_caps, neg_caps, tcache, model):
+    """hard-negative 二选一：sim(pos) > sim(neg) 判对（平局判错，与 2AFC 一致）。
+
+    与全候选检索的 caption 集合无关：正/负 caption 直接编码（tcache 去重），
+    不要求负例 caption 出现在检索候选集中（二轮审查问题 7）。
+    """
+    pos_caps = list(pos_caps)
+    neg_caps = list(neg_caps)
+    if not pos_caps:
         return np.nan
-    _, txt = tcache.encode(model, caps, ensure_period=False)
-    correct = 0
-    for i in range(len(labels)):
-        s_pos = float(F_sub[i] @ txt[labels[i]])
-        s_neg = float(F_sub[i] @ txt[negs[i]])
-        correct += int(s_pos > s_neg)
-    return correct / len(labels)
+    _, tp = tcache.encode(model, pos_caps, ensure_period=False)
+    _, tn = tcache.encode(model, neg_caps, ensure_period=False)
+    s_pos = np.einsum("ij,ij->i", F_sub, tp)
+    s_neg = np.einsum("ij,ij->i", F_sub, tn)
+    return float(np.mean(s_pos > s_neg))
 
 
 # ---------------- 官方任务 ----------------
@@ -122,6 +124,9 @@ def run(model, paths, logger, smoke=False):
     out_tables = paths["dirs"]["outputs"] / "tables"
 
     meta = build_metadata(paths["datasets"]["pug_spar"])
+    # add_background 候选的 world 展开按全量 metadata（官方脚本用完整 labels.csv，
+    # 不随 smoke 子集缩小，二轮审查问题 7 附带核对项）
+    worlds = sorted(meta["world_name"].unique().tolist())
     if smoke:
         meta = meta.head(3000).reset_index(drop=True)
         logger.info(f"[spar-official] smoke subset: {len(meta)} rows（子集会影响各任务的样本量）")
@@ -135,7 +140,6 @@ def run(model, paths, logger, smoke=False):
         rows = [index[f"{prefix}_{int(r):06d}"] for r in df["row_id"]]
         return feat_all[rows].astype(np.float32)
 
-    worlds = sorted(meta["world_name"].unique().tolist())
     results = []
 
     def add(task, world="all", add_background=False, texture="", pos_pair="",
@@ -221,7 +225,15 @@ def run(model, paths, logger, smoke=False):
             add("one_object_position", world=world, add_background=add_back,
                 texture="Default", pos_pair=f"{r1}/{r2}",
                 n_images=len(st), n_captions=len(caps), top1=top1, top5=top5)
-            hn = _hardneg_eval(F_of(st), caps, labels, negs, tcache, model)
+            pos_caps = [f"This is a photo of a {r['actor']} on the "
+                        f"{(r1 if r['character_name'] != 'blank' else r2)} of the picture"
+                        + (f" in a {r['world_name']} environment" if add_back else "")
+                        for r in st.to_dict("records")]
+            neg_caps = [f"This is a photo of a {r['actor']} on the "
+                        f"{(r2 if r['character_name'] != 'blank' else r1)} of the picture"
+                        + (f" in a {r['world_name']} environment" if add_back else "")
+                        for r in st.to_dict("records")]
+            hn = _hardneg_eval(F_of(st), pos_caps, neg_caps, tcache, model)
             add("one_object_position", world=world, add_background=add_back,
                 texture="Default", pos_pair=f"{r1}/{r2}", hardneg=True,
                 n_images=len(st), n_captions=2, top1=hn)
@@ -254,25 +266,22 @@ def run(model, paths, logger, smoke=False):
                     + ((f" in a {w} environment") if add_back else "")
 
             recs = st.to_dict("records")
-            cap_set = set()
-            for r in recs:
-                w = r["world_name"] if add_back else None
-                cap_set.add(relcap(r["character_name"], r["character2_name"], w))
-                # 负例（动物互换）也纳入候选集：全量数据中该组合本身存在，
-                # 子集运行时保证 caption 集合封闭
-                cap_set.add(relcap(r["character2_name"], r["character_name"], w))
-            caps = sorted(cap_set)
+            # 全候选检索集合只含真实行的正例 caption（官方行为，二轮审查问题 7）；
+            # role-swap 负例只用于 hard-negative 二选一，不进入检索集合
+            caps = sorted({relcap(r["character_name"], r["character2_name"],
+                                  r["world_name"] if add_back else None) for r in recs})
             cap2i = {c: i for i, c in enumerate(caps)}
-            labels, negs = [], []
+            labels, pos_caps, neg_caps = [], [], []
             for r in recs:
                 w = r["world_name"] if add_back else None
                 labels.append(cap2i[relcap(r["character_name"], r["character2_name"], w)])
-                negs.append(cap2i[relcap(r["character2_name"], r["character_name"], w)])
+                pos_caps.append(relcap(r["character_name"], r["character2_name"], w))
+                neg_caps.append(relcap(r["character2_name"], r["character_name"], w))
             top1, top5 = _retrieval_eval(F_of(st), caps, labels, tcache, model)
             add("two_objects_relation", world=world, add_background=add_back,
                 texture="Default", pos_pair=f"{r1}/{r2}",
                 n_images=len(st), n_captions=len(caps), top1=top1, top5=top5)
-            hn = _hardneg_eval(F_of(st), caps, labels, negs, tcache, model)
+            hn = _hardneg_eval(F_of(st), pos_caps, neg_caps, tcache, model)
             add("two_objects_relation", world=world, add_background=add_back,
                 texture="Default", pos_pair=f"{r1}/{r2}", hardneg=True,
                 n_images=len(st), n_captions=2, top1=hn)
@@ -287,27 +296,25 @@ def run(model, paths, logger, smoke=False):
                     + ((f" in a {w} environment") if add_back else "")
 
             recs = st.to_dict("records")
-            cap_set = set()
-            for r in recs:
-                w = r["world_name"] if add_back else None
-                cap_set.add(attrcap(r["character_name"], r["character_texture"],
-                                    r["character2_name"], r["character2_texture"], w))
-                cap_set.add(attrcap(r["character2_name"], r["character_texture"],
-                                    r["character_name"], r["character2_texture"], w))
-            caps = sorted(cap_set)
+            # 检索集合只含真实行正例 caption（官方行为，二轮审查问题 7）
+            caps = sorted({attrcap(r["character_name"], r["character_texture"],
+                                   r["character2_name"], r["character2_texture"],
+                                   r["world_name"] if add_back else None) for r in recs})
             cap2i = {c: i for i, c in enumerate(caps)}
-            labels, negs = [], []
+            labels, pos_caps, neg_caps = [], [], []
             for r in recs:
                 w = r["world_name"] if add_back else None
                 labels.append(cap2i[attrcap(r["character_name"], r["character_texture"],
                                             r["character2_name"], r["character2_texture"], w)])
-                negs.append(cap2i[attrcap(r["character2_name"], r["character_texture"],
-                                          r["character_name"], r["character2_texture"], w)])
+                pos_caps.append(attrcap(r["character_name"], r["character_texture"],
+                                        r["character2_name"], r["character2_texture"], w))
+                neg_caps.append(attrcap(r["character2_name"], r["character_texture"],
+                                        r["character_name"], r["character2_texture"], w))
             top1, top5 = _retrieval_eval(F_of(st), caps, labels, tcache, model)
             add("two_objects_attribute", world=world, add_background=add_back,
                 texture=texture, n_images=len(st), n_captions=len(caps),
                 top1=top1, top5=top5)
-            hn = _hardneg_eval(F_of(st), caps, labels, negs, tcache, model)
+            hn = _hardneg_eval(F_of(st), pos_caps, neg_caps, tcache, model)
             add("two_objects_attribute", world=world, add_background=add_back,
                 texture=texture, hardneg=True, n_images=len(st), n_captions=2, top1=hn)
 

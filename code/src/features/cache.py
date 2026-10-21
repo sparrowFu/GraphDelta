@@ -65,17 +65,19 @@ class TextCache:
     def encode(self, model, texts, ensure_period=True):
         """返回 (raw, normalized) float32，顺序与 texts 一致；缺失部分批量编码后写回。
 
-        ensure_period=False 用于官方协议 caption（无句号，审查报告 P2-11）。
+        缓存键 = **实际编码文本**的 md5：ensure_period=True 时先补句号再计算，
+        同一原文在两种模式下不会互相污染缓存（二轮审查问题 8）。
         """
-        keys = [md5(t) for t in texts]
+        eff = [t if (not ensure_period or t.endswith(".")) else t + "." for t in texts]
+        keys = [md5(t) for t in eff]
         missing_keys, first_text = [], {}
-        for t, k in zip(texts, keys):
+        for t, k in zip(eff, keys):
             if k not in self.index and k not in first_text:
                 first_text[k] = t
                 missing_keys.append(k)
         if missing_keys:
             out = model.encode_texts([first_text[k] for k in missing_keys],
-                                     ensure_period=ensure_period)
+                                     ensure_period=False)
             new_raw = out["raw"].astype(np.float16)
             new_norm = out["normalized"].astype(np.float16)
             if self.keys:

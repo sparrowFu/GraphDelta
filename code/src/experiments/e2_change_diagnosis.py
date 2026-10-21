@@ -20,7 +20,7 @@ from ..data.pug_common import iter_image_batches
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.delta import augment_view, compute_deltas
 from ..features.extract import extract_pug_images
-from ..metrics.bootstrap import cluster_gap_ci, cluster_mean_ci, mean_diff_ci
+from ..metrics.bootstrap import cluster_gap_ci, pair_cluster_gap_ci, pair_cluster_mean_ci
 from ..metrics.delta_stats import build_delta_frame, group_similarities, transition_table
 from ..utils.io import load_config
 
@@ -44,7 +44,7 @@ def _delta_pair_sim(D, rng, k=2000):
 
 
 def _nuisance_visual(model, paths, meta, cfg, logger, smoke, seed):
-    """同图两个增强视图的 Δ，返回 raw 与 normalized 两个空间的 delta 矩阵。"""
+    """同图两个增强视图的 Δ，返回 raw/z 空间的 delta 矩阵与每条的图像 id。"""
     n_cfg = cfg["nuisance"]
     n_img = min(200 if smoke else n_cfg["n_images"], len(meta))
     sel = meta.sample(n=n_img, random_state=seed)
@@ -61,7 +61,9 @@ def _nuisance_visual(model, paths, meta, cfg, logger, smoke, seed):
     logger.info(f"[E2] nuisance visual: {len(v1s)} images x 2 views")
     o1 = model.encode_images(v1s)
     o2 = model.encode_images(v2s)
-    return {"raw": o2["raw"] - o1["raw"], "z": o2["normalized"] - o1["normalized"]}
+    ids = list(sel["sample_id"])
+    return {"raw": o2["raw"] - o1["raw"], "z": o2["normalized"] - o1["normalized"],
+            "ids": ids}
 
 
 def _nuisance_text(model, tcache, meta, cfg, logger, smoke, seed):
@@ -143,6 +145,7 @@ def run(model, paths, logger, smoke=False, seed=None):
         "sim_text_raw": _delta_pair_sim(nu_t["raw"], nu_rng),
         "sim_text_z": _delta_pair_sim(nu_t["z"], nu_rng),
     }
+    nu_v_ids = nu_v["ids"]
     logger.info("[E2] nuisance: " + " ".join(f"{k}={v:.4f}" for k, v in nu_stats.items()))
 
     mc = cfg["similarity"]["max_comparisons_per_group"]
@@ -173,11 +176,15 @@ def run(model, paths, logger, smoke=False, seed=None):
         for s in ("raw", "z"):
             g = groups[s]
             st, dfc = g["same_transition_dc"], g["diff_factor_dc"]
-            st_mean, st_lo, st_hi = cluster_mean_ci(st["values"], st["clusters"],
-                                                    n_boot=n_boot, ci=ci, seed=0)
-            gap, glo, ghi = cluster_gap_ci(st["values"], st["clusters"],
-                                           dfc["values"], dfc["clusters"],
-                                           n_boot=n_boot, ci=ci, seed=0)
+            # 双端点 context 聚类 bootstrap：比较值依赖两个端点，权重 = 两端点
+            # 被抽中次数之积，与端点登记顺序无关（二轮审查问题 3）
+            st_mean, st_lo, st_hi = pair_cluster_mean_ci(
+                st["values"], st["ctx_a"], st["ctx_b"], n_boot=n_boot, ci=ci, seed=0)
+            gap, glo, ghi = pair_cluster_gap_ci(
+                st["values"], st["ctx_a"], st["ctx_b"],
+                dfc["values"], dfc["ctx_a"], dfc["ctx_b"],
+                n_boot=n_boot, ci=ci, seed=0)
+            src_counts = dfc.get("source_counts", {})
 
             def gmean(name):
                 v = g[name]["values"]
@@ -201,11 +208,14 @@ def run(model, paths, logger, smoke=False, seed=None):
                 row.update({"transition_similarity_gap_raw": gap,
                             "gap_raw_ci_low": glo, "gap_raw_ci_high": ghi})
 
-        # Factor / Nuisance Norm Gap（visual nuisance，raw 与 z）
+        # Factor / Nuisance Norm Gap（visual nuisance，raw 与 z）：
+        # 因素端按 context 聚类、nuisance 端按原始图像单位，同步重采样
+        # （二轮审查问题 4：相关 pair 不再当独立样本）
         for s in ("raw", "z"):
-            ng, nlo, nhi = mean_diff_ci(norms_f[s],
-                                        np.linalg.norm(nu_v[s], axis=1),
-                                        n_boot=n_boot, ci=ci, seed=0)
+            ng, nlo, nhi = cluster_gap_ci(
+                norms_f[s], delta_df.loc[fmask, "context_key"].to_numpy(),
+                np.linalg.norm(nu_v[s], axis=1), np.asarray(nu_v_ids),
+                n_boot=n_boot, ci=ci, seed=0)
             key_gap = "norm_gap_visual" if s == "z" else "norm_gap_visual_raw"
             row[key_gap] = ng
             row[f"{key_gap}_ci_low"] = nlo
@@ -228,7 +238,8 @@ def run(model, paths, logger, smoke=False, seed=None):
             f"[E2] {f}: |Δ|raw={row['mean_delta_norm_raw']:.3f} "
             f"same_tr_z={row['same_transition_sim_diff_context']:.4f} "
             f"gap_z={row['transition_similarity_gap']:.4f} "
-            f"[{row['gap_ci_low']:.4f}, {row['gap_ci_high']:.4f}]")
+            f"[{row['gap_ci_low']:.4f}, {row['gap_ci_high']:.4f}] "
+            f"diff_factor 来源={src_counts}")
 
     out = pd.DataFrame(rows)
     path = out_tables / ("e2_delta_stats_smoke.csv" if smoke else "e2_delta_stats.csv")

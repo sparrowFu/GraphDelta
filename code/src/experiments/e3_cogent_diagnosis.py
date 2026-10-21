@@ -14,7 +14,7 @@ from ..data.captions import cogent_color_shape_contents
 from ..data.cogent import condition_image_dir, load_condition_scenes
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.extract import extract_clevr_images
-from ..metrics.bootstrap import cluster_gap_ci_equal_types, diff_proportions_ci
+from ..metrics.bootstrap import cluster_gap_ci, cluster_gap_ci_equal_types
 from ..utils.io import load_config
 from .common import EXPORT_FIELDS, eval_2afc_items, subsample
 
@@ -145,9 +145,10 @@ def run(model, paths, logger, smoke=False, seed=None):
             gap, lo, hi = cluster_gap_ci_equal_types(
                 acc_a, cl_a, ty_a, acc_b, cl_b, ty_b, types,
                 n_boot=bs["n_boot"], ci=bs["ci"], seed=0)
-            # 汇总口径（题型配比不等权）作敏感性对照
-            pooled_gap, plo, phi = diff_proportions_ci(acc_a, acc_b,
-                                                       n_boot=bs["n_boot"], ci=bs["ci"], seed=0)
+            # 汇总口径（题型配比不等权）作敏感性对照；CI 同样按图片聚类
+            # （二轮审查问题 5：pooled CI 不再用独立 item bootstrap）
+            pooled_gap, plo, phi = cluster_gap_ci(acc_a, cl_a, acc_b, cl_b,
+                                                  n_boot=bs["n_boot"], ci=bs["ci"], seed=0)
             gap_rows.append({
                 "shape_group": grp,
                 "acc_A": float(np.mean(acc_a)), "acc_B": float(np.mean(acc_b)),

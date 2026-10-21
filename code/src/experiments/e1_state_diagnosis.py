@@ -30,7 +30,7 @@ from ..data.pug_spar import META_COLUMNS as SPAR_META_COLUMNS
 from ..data.pug_spar import build_metadata as build_spar_metadata
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.extract import extract_clevr_images, extract_pug_images
-from ..metrics.bootstrap import diff_proportions_ci
+from ..metrics.bootstrap import cluster_gap_ci
 from ..utils.io import load_config, write_jsonl
 from .common import EXPORT_FIELDS, cap_per_image, eval_2afc_items, subsample
 
@@ -112,8 +112,11 @@ def build_clevr_items(scenes, factors, rng):
                         push("relation", "sentence", pos, neg)
                         rst["kept"] = rst.get("kept", 0) + 1
 
-        # binding-style：换绑后两个组合不得都在图中
+        # binding-style：换绑后两个组合不得都在图中。
+        # caption 只含 (color, shape)，唯一性按 (color, shape) 组合判定
+        #（完整属性唯一不足以保证 caption 唯一，二轮审查解释边界项）
         if "binding" in factors:
+            cs_counts = clevr.Counter((o["color"], o["shape"]) for o in objs)
             n = len(objs)
             bst = stats["binding"]
             for i in range(n):
@@ -123,7 +126,8 @@ def build_clevr_items(scenes, factors, rng):
                     if a["color"] == b["color"] or a["shape"] == b["shape"]:
                         bst["same_color_or_shape"] = bst.get("same_color_or_shape", 0) + 1
                         continue
-                    if not (unique(a) and unique(b)):
+                    if cs_counts[(a["color"], a["shape"])] > 1 \
+                            or cs_counts[(b["color"], b["shape"])] > 1:
                         bst["nonunique_object"] = bst.get("nonunique_object", 0) + 1
                         continue
                     if (b["color"], a["shape"]) in cs_pairs and (a["color"], b["shape"]) in cs_pairs:
@@ -195,7 +199,7 @@ def run(model, paths, logger, smoke=False, seed=None):
         else cfg["sampling"]["target_per_cell"]
 
     rows = []
-    acc_store = {}       # (dataset, factor) -> item_acc 数组，用于 factor gap CI
+    acc_store = {}       # (dataset, factor) -> (item_acc, image_id)，用于 factor gap CI
 
     # ---- CLEVR val ----
     cl = cfg["clevr"]
@@ -218,7 +222,7 @@ def run(model, paths, logger, smoke=False, seed=None):
                             clusters=[it["image_id"] for it in its])
         rows.append({"dataset": "clevr", "factor": f, "protocol": "2afc_self_built",
                      **{k: m[k] for k in EXPORT_FIELDS}})
-        acc_store[("clevr", f)] = m["item_acc"]
+        acc_store[("clevr", f)] = (m["item_acc"], [it["image_id"] for it in its])
         clevr_all_items.extend(its)
         logger.info(f"[E1] clevr/{f}: n={m['n_samples']} acc={m['accuracy']:.4f}")
     write_jsonl(out_tables / ("e1_items_clevr_smoke.jsonl" if smoke else "e1_items_clevr.jsonl"),
@@ -251,7 +255,7 @@ def run(model, paths, logger, smoke=False, seed=None):
                             clusters=[it["image_id"] for it in its])
         rows.append({"dataset": "pug_spar", "factor": f, "protocol": "2afc_self_built",
                      **{k: m[k] for k in EXPORT_FIELDS}})
-        acc_store[("pug_spar", f)] = m["item_acc"]
+        acc_store[("pug_spar", f)] = (m["item_acc"], [it["image_id"] for it in its])
         spar_all_items.extend(its)
         logger.info(f"[E1] spar/{f}: n={m['n_samples']} acc={m['accuracy']:.4f}")
     write_jsonl(out_tables / ("e1_items_spar_smoke.jsonl" if smoke else "e1_items_spar.jsonl"),
@@ -266,14 +270,17 @@ def run(model, paths, logger, smoke=False, seed=None):
     out.to_csv(path, index=False)
     logger.info(f"[E1] written {path} ({len(out)} rows)")
 
-    # ---- factor 间 Accuracy Gap 的 bootstrap CI（方案 §66，审查报告补项）----
+    # ---- factor 间 Accuracy Gap 的 bootstrap CI（方案 §66）----
+    # 同一图片可同时出现在两个 factor 的样本里：按图片并集同步重采样
+    # （cluster_gap_ci），不把共享图片当独立样本（二轮审查问题 2）
     gap_rows = []
     for dataset in ("clevr", "pug_spar"):
         fs = [f for (d, f) in acc_store if d == dataset]
         for i in range(len(fs)):
             for j in range(i + 1, len(fs)):
-                a, b = acc_store[(dataset, fs[i])], acc_store[(dataset, fs[j])]
-                gap, lo, hi = diff_proportions_ci(a, b, n_boot=bs["n_boot"], ci=bs["ci"], seed=0)
+                (a, cla), (b, clb) = acc_store[(dataset, fs[i])], acc_store[(dataset, fs[j])]
+                gap, lo, hi = cluster_gap_ci(a, cla, b, clb,
+                                             n_boot=bs["n_boot"], ci=bs["ci"], seed=0)
                 gap_rows.append({"dataset": dataset, "factor_a": fs[i], "factor_b": fs[j],
                                  "acc_a": float(np.mean(a)), "acc_b": float(np.mean(b)),
                                  "gap": gap, "gap_ci_low": lo, "gap_ci_high": hi})

@@ -29,9 +29,9 @@
   },
   "binding": {
     "candidates": 6031,
-    "kept": 2931,
+    "nonunique_object": 1335,
     "same_color_or_shape": 2561,
-    "swap_in_scene": 167,
-    "nonunique_object": 372
+    "kept": 2013,
+    "swap_in_scene": 122
   }
 }
