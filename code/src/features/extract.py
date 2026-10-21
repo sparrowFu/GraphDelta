@@ -7,7 +7,7 @@ import numpy as np
 from PIL import Image
 
 from ..data.clevr import image_path
-from ..data.pug_common import iter_image_batches
+from ..data.pug_common import count_rows, iter_image_batches
 
 
 def _pack_save(cache, key, ids, raw_list, norm_list):
@@ -79,12 +79,26 @@ def extract_pug_images(model, cache, dataset_key, parquet_dir, meta_columns, log
                        only_row_ids=None, row_batch=48, id_prefix=None):
     """按全局 row_id 顺序抽取 PUG 图像特征（增量：已缓存的行跳过）。
 
+    进度日志与 CLEVR/CoGenT 统一为 "[extract:key] N/M"（每 2000 张）。
     id_prefix: 生成 sample_id（如 'pug_spar' -> 'pug_spar_000123'）。
     only_row_ids: set[int]，只抽取选中的行（smoke / nuisance 用，不解码其余图像）。
     """
     fmt = (lambda rid: f"{id_prefix}_{rid:06d}") if id_prefix else (lambda rid: str(rid))
     existing_ids = _existing(cache, dataset_key, logger)
     have = set(existing_ids)
+    if only_row_ids is not None:
+        expected_new = sum(1 for r in only_row_ids if fmt(r) not in have)
+    elif have:
+        # 缓存有基础：把需要补抽的行作为 only_row_ids 传给迭代器，
+        # 避免为跳过的行解码图像
+        total_rows = count_rows(parquet_dir)
+        only_row_ids = {r for r in range(total_rows) if fmt(r) not in have}
+        expected_new = len(only_row_ids)
+        if not only_row_ids:
+            logger.info(f"[extract] cache complete, skip: {dataset_key}")
+            return
+    else:
+        expected_new = count_rows(parquet_dir)
     ids, raws, norms = [], [], []
     total = 0
     for row_ids, images, _meta in iter_image_batches(parquet_dir, meta_columns,
@@ -97,9 +111,9 @@ def extract_pug_images(model, cache, dataset_key, parquet_dir, meta_columns, log
         raws.append(out["raw"])
         norms.append(out["normalized"])
         ids.extend(fmt(r) for r, _im in todo)
-        total += len(todo)
-        if total % 9600 < row_batch:
-            logger.info(f"[extract:{dataset_key}] encoded ~{total} images")
+        prev, total = total, total + len(todo)
+        if total // 2000 > prev // 2000:
+            logger.info(f"[extract:{dataset_key}] {total}/{expected_new}")
     if not ids:
         logger.info(f"[extract] cache complete, skip: {dataset_key}")
         return

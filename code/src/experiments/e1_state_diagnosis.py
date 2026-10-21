@@ -12,6 +12,7 @@
 - 每图每 factor 采样上限 per_scene_cap 生效；filter 原因计数写盘（P2-5）。
 """
 import json
+from collections import Counter
 
 import numpy as np
 import pandas as pd
@@ -116,7 +117,7 @@ def build_clevr_items(scenes, factors, rng):
         # caption 只含 (color, shape)，唯一性按 (color, shape) 组合判定
         #（完整属性唯一不足以保证 caption 唯一，二轮审查解释边界项）
         if "binding" in factors:
-            cs_counts = clevr.Counter((o["color"], o["shape"]) for o in objs)
+            cs_counts = Counter((o["color"], o["shape"]) for o in objs)
             n = len(objs)
             bst = stats["binding"]
             for i in range(n):

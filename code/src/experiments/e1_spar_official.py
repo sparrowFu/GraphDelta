@@ -18,7 +18,7 @@ import pandas as pd
 import torch
 from torchvision import transforms
 
-from ..data.pug_common import iter_image_batches
+from ..data.pug_common import count_rows, iter_image_batches
 from ..data.pug_spar import META_COLUMNS, build_metadata
 from ..features.cache import ImageFeatureCache, TextCache
 from ..utils.io import load_config
@@ -27,6 +27,11 @@ IMAGENET_MEAN = [0.485, 0.456, 0.406]
 IMAGENET_STD = [0.229, 0.224, 0.225]
 TEXTURES = ["Default", "Blue", "Grass"]
 POS_PAIRS = [("left", "right"), ("bottom", "top")]
+
+
+def _env_suffix(world):
+    """官方 add_background 版 caption 的环境后缀（world 为 None 时不加）。"""
+    return f" in a {world} environment" if world else ""
 
 
 def _official_transform():
@@ -38,15 +43,29 @@ def _official_transform():
 
 
 def extract_official_features(model, cache, key, parquet_dir, logger, only_row_ids=None):
-    """官方预处理下的 SPAR 图像特征（增量抽取，缓存 id 为 pug_spar_official_%06d）。"""
+    """官方预处理下的 SPAR 图像特征（增量抽取，缓存 id 为 pug_spar_official_%06d）。
+
+    进度日志与 extract.py 统一为 "[extract:key] N/M"（每 2000 张）。
+    """
     existing = set()
     if cache.exists(key):
         eids, _idx, _raw, _norm = cache.arrays(key)
         existing = set(eids.tolist())
-        logger.info(f"[spar-official] cache {key}: {len(existing)} ids present")
+        logger.info(f"[extract] cache {key}: {len(existing)} ids present")
     tf = _official_transform()
     prefix = "pug_spar_official"
     fmt = lambda rid: f"{prefix}_{rid:06d}"
+    if only_row_ids is not None:
+        expected_new = sum(1 for r in only_row_ids if fmt(r) not in existing)
+    elif existing:
+        total_rows = count_rows(parquet_dir)
+        only_row_ids = {r for r in range(total_rows) if fmt(r) not in existing}
+        expected_new = len(only_row_ids)
+        if not only_row_ids:
+            logger.info(f"[extract] cache complete, skip: {key}")
+            return
+    else:
+        expected_new = count_rows(parquet_dir)
     ids, raws, norms = [], [], []
     total = 0
     for row_ids, images, _m in iter_image_batches(parquet_dir, META_COLUMNS,
@@ -60,11 +79,11 @@ def extract_official_features(model, cache, key, parquet_dir, logger, only_row_i
         raws.append(out["raw"])
         norms.append(out["normalized"])
         ids.extend(fmt(r) for r, _im in todo)
-        total += len(todo)
-        if total % 4800 < 48:
-            logger.info(f"[spar-official:{key}] encoded ~{total} images")
+        prev, total = total, total + len(todo)
+        if total // 2000 > prev // 2000:
+            logger.info(f"[extract:{key}] {total}/{expected_new}")
     if not ids:
-        logger.info(f"[spar-official] cache complete, skip: {key}")
+        logger.info(f"[extract] cache complete, skip: {key}")
         return
     if existing:
         eids, _i, eraw, enorm = cache.arrays(key)
@@ -74,7 +93,7 @@ def extract_official_features(model, cache, key, parquet_dir, logger, only_row_i
     raw = np.concatenate(raws, axis=0)
     norm = np.concatenate(norms, axis=0)
     cache.save(key, ids, raw, norm)
-    logger.info(f"[spar-official] saved {total} new / {len(ids)} total -> {cache.path(key)}")
+    logger.info(f"[extract] saved {total} new / {len(ids)} total -> {cache.path(key)}")
 
 
 # ---------------- 评测原语 ----------------
@@ -175,9 +194,6 @@ def run(model, paths, logger, smoke=False):
     if cfg.get("per_world", False):
         env_list += [(w, False) for w in worlds]
 
-    def suffix(world):
-        return f" in a {world} environment"
-
     for world, add_back in env_list:
         ss = single if world == "all" else single[single["world_name"] == world]
         sd = double if world == "all" else double[double["world_name"] == world]
@@ -190,13 +206,13 @@ def run(model, paths, logger, smoke=False):
             st = ss[ss["character_texture"] == texture].reset_index(drop=True)
             chars = sorted({c for c in st["actor"].unique() if c != "blank"})
             if add_back:
-                caps = [f"This is a photo of a {c}" + suffix(w)
+                caps = [f"This is a photo of a {c}" + _env_suffix(w)
                         for c in chars for w in worlds]
             else:
                 caps = [f"This is a photo of a {c}" for c in chars]
             cap2i = {c: i for i, c in enumerate(caps)}
             labels = [cap2i[f"This is a photo of a {r['actor']}"
-                           + (suffix(r["world_name"]) if add_back else "")]
+                           + _env_suffix(r["world_name"] if add_back else None)]
                       for r in st.to_dict("records")]
             top1, top5 = _retrieval_eval(F_of(st), caps, labels, tcache, model)
             add("one_object", world=world, add_background=add_back, texture=texture,
@@ -208,9 +224,9 @@ def run(model, paths, logger, smoke=False):
             st = sr[sr["character1_pos"] == r1].reset_index(drop=True)
             actors = sorted({c for c in st["actor"].unique() if c != "blank"})
             caps = sorted({f"This is a photo of a {a} on the {r} of the picture"
-                           + ((f" in a {w} environment") if add_back else "")
+                           + _env_suffix(w)
                            for a in actors for r in (r1, r2)
-                           for w in (worlds if add_back else [""])})
+                           for w in (worlds if add_back else [None])})
             cap2i = {c: i for i, c in enumerate(caps)}
             labels, negs = [], []
             for r in st.to_dict("records"):
@@ -219,7 +235,7 @@ def run(model, paths, logger, smoke=False):
                     pos, negpos = r1, r2
                 else:
                     pos, negpos = r2, r1
-                tail = f" in a {r['world_name']} environment" if add_back else ""
+                tail = _env_suffix(r["world_name"] if add_back else None)
                 labels.append(cap2i[f"This is a photo of a {r['actor']} on the {pos} of the picture" + tail])
                 negs.append(cap2i[f"This is a photo of a {r['actor']} on the {negpos} of the picture" + tail])
             top1, top5 = _retrieval_eval(F_of(st), caps, labels, tcache, model)
@@ -228,11 +244,11 @@ def run(model, paths, logger, smoke=False):
                 n_images=len(st), n_captions=len(caps), top1=top1, top5=top5)
             pos_caps = [f"This is a photo of a {r['actor']} on the "
                         f"{(r1 if r['character_name'] != 'blank' else r2)} of the picture"
-                        + (f" in a {r['world_name']} environment" if add_back else "")
+                        + _env_suffix(r["world_name"] if add_back else None)
                         for r in st.to_dict("records")]
             neg_caps = [f"This is a photo of a {r['actor']} on the "
                         f"{(r2 if r['character_name'] != 'blank' else r1)} of the picture"
-                        + (f" in a {r['world_name']} environment" if add_back else "")
+                        + _env_suffix(r["world_name"] if add_back else None)
                         for r in st.to_dict("records")]
             hn = _hardneg_eval(F_of(st), pos_caps, neg_caps, tcache, model)
             add("one_object_position", world=world, add_background=add_back,
@@ -244,12 +260,11 @@ def run(model, paths, logger, smoke=False):
             st = sd[sd["character_texture"] == texture].reset_index(drop=True)
             pairs = sorted({tuple(sorted((r["character_name"], r["character2_name"])))
                             for r in st.to_dict("records")})
-            caps = sorted({f"This is a photo of a {a} and a {b}"
-                           + ((f" in a {w} environment") if add_back else "")
-                           for (a, b) in pairs for w in (worlds if add_back else [""])})
+            caps = sorted({f"This is a photo of a {a} and a {b}" + _env_suffix(w)
+                           for (a, b) in pairs for w in (worlds if add_back else [None])})
             cap2i = {c: i for i, c in enumerate(caps)}
             labels = [cap2i[f"This is a photo of a {a} and a {b}"
-                           + ((f" in a {r['world_name']} environment") if add_back else "")]
+                           + _env_suffix(r["world_name"] if add_back else None)]
                       for r in st.to_dict("records")
                       for a, b in [tuple(sorted((r["character_name"], r["character2_name"])))]]
             top1, top5 = _retrieval_eval(F_of(st), caps, labels, tcache, model)
@@ -264,7 +279,7 @@ def run(model, paths, logger, smoke=False):
 
             def relcap(c1, c2, w):
                 return f"This is a photo of a {c1} on the {r1} and a {c2} on the {r2} of the picture" \
-                    + ((f" in a {w} environment") if add_back else "")
+                    + _env_suffix(w)
 
             recs = st.to_dict("records")
             # 全候选检索集合只含真实行的正例 caption（官方行为，二轮审查问题 7）；
@@ -295,7 +310,7 @@ def run(model, paths, logger, smoke=False):
 
             def attrcap(c1, t1, c2, t2, w):
                 return f"This is a photo of a {c1} textured with {t1} and a {c2} textured with {t2}" \
-                    + ((f" in a {w} environment") if add_back else "")
+                    + _env_suffix(w)
 
             recs = st.to_dict("records")
             # 检索集合只含真实行正例 caption（官方行为，二轮审查问题 7）；

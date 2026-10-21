@@ -21,13 +21,6 @@ META_COLUMNS = [
 
 SCALE_TO_SIZE = {0.7: "small", 1.0: "medium", 1.3: "large"}
 
-FACTOR_COLUMNS = {
-    "environment": "environment",   # world_name 的别名
-    "texture": "texture",
-    "size": "size",
-    "camera": "camera",
-}
-
 
 def build_metadata(parquet_dir) -> pd.DataFrame:
     rows = read_metadata(parquet_dir, META_COLUMNS)

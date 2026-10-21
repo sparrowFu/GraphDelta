@@ -26,6 +26,11 @@ def read_metadata(parquet_dir, columns):
     return rows
 
 
+def count_rows(parquet_dir) -> int:
+    """统计全部行数（只读 parquet footer，不解码图像），用于抽取进度分母。"""
+    return sum(pq.ParquetFile(f).metadata.num_rows for f in shard_files(parquet_dir))
+
+
 def decode_image(cell):
     from PIL import Image
 

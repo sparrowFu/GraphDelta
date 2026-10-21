@@ -32,8 +32,8 @@ class CLIPEncoder(BaseVLMEncoder):
         self.processor = AutoProcessor.from_pretrained(model_path)
         self.bs_img = batch_size_image
         self.bs_txt = batch_size_text
-        self._n_img_calls = 0
-        self.log = (lambda msg: logger.info(msg)) if logger else (lambda msg: print(msg))
+        # logger 参数保留给后续 baseline（如 SigLIP2）；本类自身不输出日志，
+        # 抽取/实验进度统一由 features/extract.py 与各实验模块报告
 
     # ---------- image ----------
     def encode_images(self, images):
@@ -50,10 +50,6 @@ class CLIPEncoder(BaseVLMEncoder):
             if not torch.is_tensor(f):          # transformers v5 返回 ModelOutput
                 f = f.pooler_output
             feats.append(f.float().cpu().numpy())
-        self._n_img_calls += 1
-        if self._n_img_calls % 100 == 0 or len(feats) == 0:
-            self.log(f"[{self.name}] encode_images: {self._n_img_calls} calls (~"
-                     f"{self._n_img_calls * self.bs_img} images)")
         return self._pack(np.concatenate(feats, axis=0))
 
     def encode_image_tensors(self, tensors):
