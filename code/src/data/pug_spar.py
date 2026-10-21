@@ -23,6 +23,13 @@ META_COLUMNS = [
 ]
 
 POS_ANTONYM = {"left": "right", "below": "above"}
+# 水平与垂直关系使用不同短语形式，避免 "to the below of" 这类错误
+POS_PHRASE = {
+    "left": "to the left of",
+    "right": "to the right of",
+    "below": "below",
+    "above": "above",
+}
 
 
 def build_metadata(parquet_dir) -> pd.DataFrame:

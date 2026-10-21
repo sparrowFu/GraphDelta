@@ -3,8 +3,11 @@
 - 配对：固定其余因素、只变一个因素；Δ 方向按 canonical 顺序（38）。
 - 主分析单位 transition_key = (factor, source, target)（38/40）。
 - 相似度分层：same_transition / same_factor_dt / diff_factor / random × context（41）。
-- nuisance 基线：同图两个增强视图 + 同内容不同模板（39a）。
-- 统计：Transition Similarity Gap 的聚类 bootstrap（66）。
+- 指标同时输出 raw（projection 后、归一化前）与 normalized 两个特征空间，
+  列名后缀 _raw / _z（审查报告 P2-8；方案 §64 的无后缀字段对应 _z 列）。
+- nuisance 基线：同图两个增强视图 + 同内容不同模板（39a）；除范数外，
+  增加 nuisance delta 两两相似度与 Factor/Nuisance Norm Gap 及其 CI。
+- 统计：Transition Similarity Gap 的同步聚类 bootstrap（66）。
 """
 import numpy as np
 import pandas as pd
@@ -17,15 +20,34 @@ from ..data.pug_common import iter_image_batches
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.delta import augment_view, compute_deltas
 from ..features.extract import extract_pug_images
-from ..metrics.bootstrap import cluster_gap_ci, cluster_mean_ci
+from ..metrics.bootstrap import cluster_gap_ci, cluster_mean_ci, mean_diff_ci
 from ..metrics.delta_stats import build_delta_frame, group_similarities, transition_table
 from ..utils.io import load_config
 
 
-def _nuisance_visual(model, paths, meta, cfg, logger, smoke):
+def _rowwise_cos(A, B):
+    na = np.linalg.norm(A, axis=1)
+    nb = np.linalg.norm(B, axis=1)
+    return (A * B).sum(axis=1) / np.maximum(na * nb, 1e-8)
+
+
+def _delta_pair_sim(D, rng, k=2000):
+    """nuisance delta 之间的两两余弦相似度均值（直接抽不相等的索引对）。"""
+    n = len(D)
+    if n < 2:
+        return np.nan
+    kk = min(k, n * (n - 1) // 2)
+    ia = rng.integers(0, n, size=kk)
+    off = rng.integers(1, n, size=kk)
+    ib = (ia + off) % n
+    return float(np.mean(_rowwise_cos(D[ia], D[ib])))
+
+
+def _nuisance_visual(model, paths, meta, cfg, logger, smoke, seed):
+    """同图两个增强视图的 Δ，返回 raw 与 normalized 两个空间的 delta 矩阵。"""
     n_cfg = cfg["nuisance"]
     n_img = min(200 if smoke else n_cfg["n_images"], len(meta))
-    sel = meta.sample(n=n_img, random_state=0)
+    sel = meta.sample(n=n_img, random_state=seed)
     sel_rows = set(sel["row_id"].tolist())
     smin, smax = n_cfg["crop_scale"]
     q1, q2 = n_cfg["jpeg_quality"]
@@ -39,29 +61,29 @@ def _nuisance_visual(model, paths, meta, cfg, logger, smoke):
     logger.info(f"[E2] nuisance visual: {len(v1s)} images x 2 views")
     o1 = model.encode_images(v1s)
     o2 = model.encode_images(v2s)
-    d = np.linalg.norm(o2["raw"] - o1["raw"], axis=1)
-    return float(np.mean(d)), float(np.median(d))
+    return {"raw": o2["raw"] - o1["raw"], "z": o2["normalized"] - o1["normalized"]}
 
 
-def _nuisance_text(model, tcache, meta, cfg, logger, smoke):
+def _nuisance_text(model, tcache, meta, cfg, logger, smoke, seed):
+    """同内容不同模板的文本 Δ，返回 raw 与 normalized 两个空间的 delta 矩阵。"""
     n_cfg = cfg["nuisance"]
     n_cap = min(200 if smoke else n_cfg["n_captions"], len(meta))
-    sel = meta.sample(n=n_cap, random_state=1)
+    sel = meta.sample(n=n_cap, random_state=seed + 1)
     caps = [pug_animals_caption(r) for r in sel.to_dict("records")]
     ph = templates()["phrase"]
     i0, i1 = n_cfg["text_template_indices"]
-    e0, _ = tcache.encode(model, [wrap(c, ph[i0]) for c in caps])
-    e1, _ = tcache.encode(model, [wrap(c, ph[i1]) for c in caps])
-    d = np.linalg.norm(e0 - e1, axis=1)
+    e0r, e0z = tcache.encode(model, [wrap(c, ph[i0]) for c in caps])
+    e1r, e1z = tcache.encode(model, [wrap(c, ph[i1]) for c in caps])
     logger.info(f"[E2] nuisance text: {len(caps)} captions")
-    return float(np.mean(d)), float(np.median(d))
+    return {"raw": e0r - e1r, "z": e0z - e1z}
 
 
-def run(model, paths, logger, smoke=False):
+def run(model, paths, logger, smoke=False, seed=None):
     cfg = load_config("e2_change")
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
     tcache = TextCache(paths["dirs"]["cache"], model.name)
     out_tables = paths["dirs"]["outputs"] / "tables"
+    pair_seed = cfg.get("seeds", [0])[0] if seed is None else seed
 
     meta = build_animals_metadata(paths["datasets"]["pug_animals"])
     if smoke:
@@ -75,7 +97,8 @@ def run(model, paths, logger, smoke=False):
     max_total = 2000 if smoke else samp["max_total_per_factor"]
     pairs_by_factor = {}
     for f in cfg["factors"]:
-        p = build_factor_pairs(meta, f, orders, samp["max_pairs_per_context"], max_total, seed=0)
+        p = build_factor_pairs(meta, f, orders, samp["max_pairs_per_context"], max_total,
+                               seed=pair_seed)
         pairs_by_factor[f] = p
         logger.info(f"[E2] factor={f}: {len(p)} pairs, {p['context_key'].nunique()} contexts")
 
@@ -97,75 +120,138 @@ def run(model, paths, logger, smoke=False):
         row_index[int(r)] = index[sid]
     delta_raw, delta_norm = compute_deltas(delta_df, row_index, raw, norm)
 
-    nu_v_mean, nu_v_med = _nuisance_visual(model, paths, meta, cfg, logger, smoke)
-    nu_t_mean, nu_t_med = _nuisance_text(model, tcache, meta, cfg, logger, smoke)
-    logger.info(f"[E2] nuisance: visual={nu_v_mean:.4f}/{nu_v_med:.4f} "
-                f"text={nu_t_mean:.4f}/{nu_t_med:.4f} (mean/median)")
+    # 端点特征的对齐视图（before/after cosine 用）
+    ia = delta_df["row_id_a"].map(lambda r: row_index[int(r)]).to_numpy()
+    ib = delta_df["row_id_b"].map(lambda r: row_index[int(r)]).to_numpy()
+    ba_cos = {"raw": _rowwise_cos(raw[ia].astype(np.float32), raw[ib].astype(np.float32)),
+              "z": _rowwise_cos(norm[ia].astype(np.float32), norm[ib].astype(np.float32))}
+    ba_cos_by_factor = {f: {s: float(np.mean(ba_cos[s][
+        (delta_df["factor"].to_numpy() == f)])) for s in ("raw", "z")}
+        for f in cfg["factors"]}
 
-    rng = np.random.default_rng(1)
+    # nuisance（raw / z 两空间）
+    nu_v = _nuisance_visual(model, paths, meta, cfg, logger, smoke, pair_seed)
+    nu_t = _nuisance_text(model, tcache, meta, cfg, logger, smoke, pair_seed)
+    nu_rng = np.random.default_rng(pair_seed + 100)
+    nu_stats = {
+        "norm_visual_raw": float(np.mean(np.linalg.norm(nu_v["raw"], axis=1))),
+        "norm_visual_z": float(np.mean(np.linalg.norm(nu_v["z"], axis=1))),
+        "norm_text_raw": float(np.mean(np.linalg.norm(nu_t["raw"], axis=1))),
+        "norm_text_z": float(np.mean(np.linalg.norm(nu_t["z"], axis=1))),
+        "sim_visual_raw": _delta_pair_sim(nu_v["raw"], nu_rng),
+        "sim_visual_z": _delta_pair_sim(nu_v["z"], nu_rng),
+        "sim_text_raw": _delta_pair_sim(nu_t["raw"], nu_rng),
+        "sim_text_z": _delta_pair_sim(nu_t["z"], nu_rng),
+    }
+    logger.info("[E2] nuisance: " + " ".join(f"{k}={v:.4f}" for k, v in nu_stats.items()))
+
     mc = cfg["similarity"]["max_comparisons_per_group"]
     n_boot, ci = cfg["bootstrap"]["n_boot"], cfg["bootstrap"]["ci"]
 
     rows = []
     for f in cfg["factors"]:
-        groups = group_similarities(delta_df, f, delta_norm, mc, rng)
+        # 同一 rng 种子 + 相同调用序列 → raw 与 z 使用完全相同的比较对
+        groups = {s: group_similarities(delta_df, f, d, mc, np.random.default_rng(1000))
+                  for s, d in (("raw", delta_raw), ("z", delta_norm))}
         fmask = delta_df["factor"].to_numpy() == f
-        d_raw_f = delta_raw[fmask]
-        norms_f = np.linalg.norm(d_raw_f, axis=1)
+        norms_f = {"raw": np.linalg.norm(delta_raw[fmask], axis=1),
+                   "z": np.linalg.norm(delta_norm[fmask], axis=1)}
 
-        st = groups["same_transition_dc"]
-        dfc = groups["diff_factor_dc"]
-        st_mean, st_lo, st_hi = cluster_mean_ci(st["values"], st["clusters"],
-                                                n_boot=n_boot, ci=ci, seed=0)
-        gap, glo, ghi = cluster_gap_ci(st["values"], st["clusters"],
-                                       dfc["values"], dfc["clusters"],
-                                       n_boot=n_boot, ci=ci, seed=0)
-
-        def gmean(name):
-            v = groups[name]["values"]
-            return float(np.mean(v)) if len(v) else np.nan
-
-        rows.append({
+        row = {
             "dataset": "pug_animals",
             "factor": f,
             "n_pairs": int(fmask.sum()),
             "n_contexts": int(delta_df.loc[fmask, "context_key"].nunique()),
-            "mean_delta_norm": float(np.mean(norms_f)),
-            "median_delta_norm": float(np.median(norms_f)),
-            "nuisance_norm_visual": nu_v_mean,
-            "nuisance_norm_text": nu_t_mean,
-            "same_transition_sim_diff_context": st_mean,
-            "same_transition_ci_low": st_lo,
-            "same_transition_ci_high": st_hi,
-            "same_factor_dt_sc_sim": gmean("same_factor_dt_sc"),
-            "same_factor_dt_dc_sim": gmean("same_factor_dt_dc"),
-            "diff_factor_sc_sim": gmean("diff_factor_sc"),
-            "diff_factor_dc_sim": gmean("diff_factor_dc"),
-            "random_similarity": gmean("random"),
-            "transition_similarity_gap": gap,
-            "gap_ci_low": glo,
-            "gap_ci_high": ghi,
-            "factor_over_nuisance_ratio": float(np.mean(norms_f)) / max(nu_v_mean, 1e-8),
+            "mean_delta_norm_raw": float(np.mean(norms_f["raw"])),
+            "median_delta_norm_raw": float(np.median(norms_f["raw"])),
+            "mean_delta_norm_z": float(np.mean(norms_f["z"])),
+            "median_delta_norm_z": float(np.median(norms_f["z"])),
+            "before_after_cos_raw": ba_cos_by_factor[f]["raw"],
+            "before_after_cos_z": ba_cos_by_factor[f]["z"],
+        }
+
+        for s in ("raw", "z"):
+            g = groups[s]
+            st, dfc = g["same_transition_dc"], g["diff_factor_dc"]
+            st_mean, st_lo, st_hi = cluster_mean_ci(st["values"], st["clusters"],
+                                                    n_boot=n_boot, ci=ci, seed=0)
+            gap, glo, ghi = cluster_gap_ci(st["values"], st["clusters"],
+                                           dfc["values"], dfc["clusters"],
+                                           n_boot=n_boot, ci=ci, seed=0)
+
+            def gmean(name):
+                v = g[name]["values"]
+                return float(np.mean(v)) if len(v) else np.nan
+
+            suffix = "" if s == "z" else "_raw"
+            row.update({
+                f"same_transition_sim_diff_context{suffix}": st_mean,
+                f"same_transition_ci_low{suffix}": st_lo,
+                f"same_transition_ci_high{suffix}": st_hi,
+                f"same_factor_dt_sc_sim{suffix}": gmean("same_factor_dt_sc"),
+                f"same_factor_dt_dc_sim{suffix}": gmean("same_factor_dt_dc"),
+                f"diff_factor_sc_sim{suffix}": gmean("diff_factor_sc"),
+                f"diff_factor_dc_sim{suffix}": gmean("diff_factor_dc"),
+                f"random_similarity{suffix}": gmean("random"),
+            })
+            if s == "z":
+                row.update({"transition_similarity_gap": gap,
+                            "gap_ci_low": glo, "gap_ci_high": ghi})
+            else:
+                row.update({"transition_similarity_gap_raw": gap,
+                            "gap_raw_ci_low": glo, "gap_raw_ci_high": ghi})
+
+        # Factor / Nuisance Norm Gap（visual nuisance，raw 与 z）
+        for s in ("raw", "z"):
+            ng, nlo, nhi = mean_diff_ci(norms_f[s],
+                                        np.linalg.norm(nu_v[s], axis=1),
+                                        n_boot=n_boot, ci=ci, seed=0)
+            key_gap = "norm_gap_visual" if s == "z" else "norm_gap_visual_raw"
+            row[key_gap] = ng
+            row[f"{key_gap}_ci_low"] = nlo
+            row[f"{key_gap}_ci_high"] = nhi
+
+        row.update({
+            "nuisance_norm_visual_raw": nu_stats["norm_visual_raw"],
+            "nuisance_norm_visual_z": nu_stats["norm_visual_z"],
+            "nuisance_norm_text_raw": nu_stats["norm_text_raw"],
+            "nuisance_norm_text_z": nu_stats["norm_text_z"],
+            "nuisance_sim_visual_raw": nu_stats["sim_visual_raw"],
+            "nuisance_sim_visual_z": nu_stats["sim_visual_z"],
+            "nuisance_sim_text_raw": nu_stats["sim_text_raw"],
+            "nuisance_sim_text_z": nu_stats["sim_text_z"],
+            "factor_over_nuisance_ratio": float(np.mean(norms_f["raw"]))
+            / max(nu_stats["norm_visual_raw"], 1e-8),
         })
+        rows.append(row)
         logger.info(
-            f"[E2] {f}: |Δ|={np.mean(norms_f):.3f} "
-            f"same_tr={st_mean:.4f} diff_fac={gmean('diff_factor_dc'):.4f} "
-            f"gap={gap:.4f} [{glo:.4f}, {ghi:.4f}]")
+            f"[E2] {f}: |Δ|raw={row['mean_delta_norm_raw']:.3f} "
+            f"same_tr_z={row['same_transition_sim_diff_context']:.4f} "
+            f"gap_z={row['transition_similarity_gap']:.4f} "
+            f"[{row['gap_ci_low']:.4f}, {row['gap_ci_high']:.4f}]")
 
     out = pd.DataFrame(rows)
     path = out_tables / ("e2_delta_stats_smoke.csv" if smoke else "e2_delta_stats.csv")
     out.to_csv(path, index=False)
     logger.info(f"[E2] written {path}")
 
-    # 逐 transition 表（含平均 Delta 范数）
+    # 逐 transition 表（两个空间的 Δ 范数 + 相似度）
     tt = transition_table(delta_df, delta_norm,
                           max_pairs_per_transition=2000, rng=np.random.default_rng(2))
+    tt = tt.rename(columns={"mean_sim": "mean_sim_z"})
+    tt_raw = transition_table(delta_df, delta_raw,
+                              max_pairs_per_transition=2000, rng=np.random.default_rng(2))
+    tt = tt.merge(tt_raw.rename(columns={"mean_sim": "mean_sim_raw"}),
+                  on=["factor", "source_value", "target_value", "n_contexts"], how="left")
     raw_norms = np.linalg.norm(delta_raw, axis=1)
-    tmp = delta_df.assign(delta_norm=raw_norms).groupby(
-        ["factor", "source_value", "target_value"])["delta_norm"].mean().reset_index()
+    z_norms = np.linalg.norm(delta_norm, axis=1)
+    tmp = delta_df.assign(n_raw=raw_norms, n_z=z_norms).groupby(
+        ["factor", "source_value", "target_value"])[["n_raw", "n_z"]].mean().reset_index()
     tt = tt.merge(tmp, on=["factor", "source_value", "target_value"], how="left")
-    tt = tt.rename(columns={"delta_norm": "mean_delta_norm"})
+    tt = tt.rename(columns={"n_raw": "mean_delta_norm_raw", "n_z": "mean_delta_norm_z"})
     path_t = out_tables / ("e2_transition_stats_smoke.csv" if smoke else "e2_transition_stats.csv")
     tt.to_csv(path_t, index=False)
-    logger.info(f"[E2] written {path_t} ({len(tt)} transitions)")
+    low = tt[tt["n_contexts"] < 2]
+    logger.info(f"[E2] written {path_t} ({len(tt)} transitions; "
+                f"{len(low)} with n_contexts<2 → mean_sim=NaN)")
     return out

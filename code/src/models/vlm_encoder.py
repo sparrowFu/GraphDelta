@@ -17,8 +17,15 @@ class BaseVLMEncoder(ABC):
         """list[PIL.Image] -> {"raw": np(N,D) float32, "normalized": np(N,D)}"""
 
     @abstractmethod
-    def encode_texts(self, texts):
-        """list[str] -> {"raw": np(N,D) float32, "normalized": np(N,D)}"""
+    def encode_texts(self, texts, ensure_period=True):
+        """list[str] -> {"raw": np(N,D) float32, "normalized": np(N,D)}
+
+        ensure_period=False 时不补句号（官方协议 caption 用）。
+        """
+
+    def encode_image_tensors(self, tensors):
+        """已预处理 tensor (N,3,H,W) -> 特征 dict；仅官方协议评测需要。"""
+        raise NotImplementedError(f"{type(self).__name__} 不支持 tensor 输入")
 
     def requires_no_grad(self):
         for p in self.model.parameters():

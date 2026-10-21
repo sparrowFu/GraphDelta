@@ -1,0 +1,318 @@
+"""PUG: SPAR 官方协议评测（复现 facebookresearch/PUG 的 run_eval_vlms_on_spar.py
+CLIP 路径；审查报告 P2-11）。
+
+与自建 2AFC（e1_state_diagnosis 的 spar 部分，结果标注 protocol=2afc_self_built）
+相互独立，差异如下：
+- 预处理：官方脚本对所有模型统一 Resize(224,224) + ImageNet mean/std
+  （非 CLIPProcessor），图像特征缓存 key 单独存放；
+- 文本：官方 caption 模板（无句号、无外层模板包装，ensure_period=False）；
+- 指标：全候选检索 top1/top5 + hard-negative 二选一。官方对 hard-negative
+  随机换序以避免坍缩编码器；argmax 下换序不改变判对条件
+  （sim_pos > sim_neg），固定 [pos, neg] 顺序与官方 accuracy 等价；
+- 官方脚本的已知 quirk 按原样保留：character1_pos 只有 left/below，
+  "bottom/top" 子集为空；actor 列表去 blank（官方用 unique()[1:] 近似实现）。
+"""
+import numpy as np
+import pandas as pd
+import torch
+from torchvision import transforms
+
+from ..data.pug_common import iter_image_batches
+from ..data.pug_spar import META_COLUMNS, build_metadata
+from ..features.cache import ImageFeatureCache, TextCache
+from ..utils.io import load_config
+
+IMAGENET_MEAN = [0.485, 0.456, 0.406]
+IMAGENET_STD = [0.229, 0.224, 0.225]
+TEXTURES = ["Default", "Blue", "Grass"]
+POS_PAIRS = [("left", "right"), ("bottom", "top")]
+
+
+def _official_transform():
+    return transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD),
+    ])
+
+
+def extract_official_features(model, cache, key, parquet_dir, logger, only_row_ids=None):
+    """官方预处理下的 SPAR 图像特征（增量抽取，缓存 id 为 pug_spar_official_%06d）。"""
+    existing = set()
+    if cache.exists(key):
+        eids, _idx, _raw, _norm = cache.arrays(key)
+        existing = set(eids.tolist())
+        logger.info(f"[spar-official] cache {key}: {len(existing)} ids present")
+    tf = _official_transform()
+    prefix = "pug_spar_official"
+    fmt = lambda rid: f"{prefix}_{rid:06d}"
+    ids, raws, norms = [], [], []
+    total = 0
+    for row_ids, images, _m in iter_image_batches(parquet_dir, META_COLUMNS,
+                                                  batch_size=48,
+                                                  only_row_ids=only_row_ids):
+        todo = [(r, im) for r, im in zip(row_ids, images) if fmt(r) not in existing]
+        if not todo:
+            continue
+        batch = torch.stack([tf(im) for _r, im in todo])
+        out = model.encode_image_tensors(batch)
+        raws.append(out["raw"])
+        norms.append(out["normalized"])
+        ids.extend(fmt(r) for r, _im in todo)
+        total += len(todo)
+        if total % 4800 < 48:
+            logger.info(f"[spar-official:{key}] encoded ~{total} images")
+    if not ids:
+        logger.info(f"[spar-official] cache complete, skip: {key}")
+        return
+    if existing:
+        eids, _i, eraw, enorm = cache.arrays(key)
+        raws = [eraw.astype(np.float32)] + raws
+        norms = [enorm.astype(np.float32)] + norms
+        ids = eids.tolist() + ids
+    raw = np.concatenate(raws, axis=0)
+    norm = np.concatenate(norms, axis=0)
+    cache.save(key, ids, raw, norm)
+    logger.info(f"[spar-official] saved {total} new / {len(ids)} total -> {cache.path(key)}")
+
+
+# ---------------- 评测原语 ----------------
+
+def _retrieval_eval(F_sub, caps, labels, tcache, model, chunk=256):
+    """全候选检索：top1 = argmax 命中率；top5 = 前 5 含正例比例（候选 <5 时 NaN）。"""
+    labels = np.asarray(labels, dtype=np.int64)
+    n = len(labels)
+    if n == 0 or not caps:
+        return np.nan, np.nan
+    _, txt = tcache.encode(model, caps, ensure_period=False)
+    top1 = 0
+    top5 = 0
+    top5_valid = len(caps) >= 5
+    for i0 in range(0, n, chunk):
+        sims = F_sub[i0:i0 + chunk] @ txt.T
+        top1 += int(np.sum(np.argmax(sims, axis=1) == labels[i0:i0 + chunk]))
+        if top5_valid:
+            k5 = np.argpartition(-sims, 4, axis=1)[:, :5]
+            for r, ki in enumerate(k5):
+                top5 += int(labels[i0 + r] in ki)
+    return top1 / n, (top5 / n if top5_valid else np.nan)
+
+
+def _hardneg_eval(F_sub, caps, labels, negs, tcache, model):
+    """hard-negative 二选一：sim(pos) > sim(neg) 判对（平局判错，与 2AFC 一致）。"""
+    labels = np.asarray(labels, dtype=np.int64)
+    negs = np.asarray(negs, dtype=np.int64)
+    if not len(labels):
+        return np.nan
+    _, txt = tcache.encode(model, caps, ensure_period=False)
+    correct = 0
+    for i in range(len(labels)):
+        s_pos = float(F_sub[i] @ txt[labels[i]])
+        s_neg = float(F_sub[i] @ txt[negs[i]])
+        correct += int(s_pos > s_neg)
+    return correct / len(labels)
+
+
+# ---------------- 官方任务 ----------------
+
+def run(model, paths, logger, smoke=False):
+    cfg = load_config("e1_state").get("spar_official", {})
+    cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
+    tcache = TextCache(paths["dirs"]["cache"], model.name)
+    out_tables = paths["dirs"]["outputs"] / "tables"
+
+    meta = build_metadata(paths["datasets"]["pug_spar"])
+    if smoke:
+        meta = meta.head(3000).reset_index(drop=True)
+        logger.info(f"[spar-official] smoke subset: {len(meta)} rows（子集会影响各任务的样本量）")
+    key = "pug_spar_official_smoke" if smoke else "pug_spar_official"
+    extract_official_features(model, cache, key, paths["datasets"]["pug_spar"], logger,
+                              only_row_ids=set(meta["row_id"]) if smoke else None)
+    _ids, index, _raw, feat_all = cache.arrays(key)
+    prefix = "pug_spar_official"
+
+    def F_of(df):
+        rows = [index[f"{prefix}_{int(r):06d}"] for r in df["row_id"]]
+        return feat_all[rows].astype(np.float32)
+
+    worlds = sorted(meta["world_name"].unique().tolist())
+    results = []
+
+    def add(task, world="all", add_background=False, texture="", pos_pair="",
+            hardneg=False, n_images=0, n_captions=0, top1=np.nan, top5=np.nan):
+        results.append({"task": task, "world": world, "add_background": add_background,
+                        "texture": texture, "pos_pair": pos_pair, "hardneg": hardneg,
+                        "n_images": n_images, "n_captions": n_captions,
+                        "top1": top1, "top5": top5})
+
+    # ---- 1. scene recognition（官方：blank-blank 前 10 行）----
+    sub = meta[(meta["character_name"] == "blank")
+               & (meta["character2_name"] == "blank")].head(10)
+    sub_worlds = sorted(sub["world_name"].unique().tolist())
+    caps = [f"This is a photo in a {w} environment" for w in sub_worlds]
+    w2i = {c: i for i, c in enumerate(caps)}
+    labels = [w2i[f"This is a photo in a {w} environment"] for w in sub["world_name"]]
+    top1, top5 = _retrieval_eval(F_of(sub), caps, labels, tcache, model)
+    add("scene_backgrounds", n_images=len(sub), n_captions=len(caps), top1=top1, top5=top5)
+    logger.info(f"[spar-official] scene: n={len(sub)} top1={top1:.4f}")
+
+    # 单 / 双动物子集（actor 列：blank 侧取另一列）
+    single = pd.concat([
+        meta[(meta["character_name"] == "blank") & (meta["character2_name"] != "blank")],
+        meta[(meta["character2_name"] == "blank") & (meta["character_name"] != "blank")],
+    ]).reset_index(drop=True)
+    single["actor"] = np.where(single["character_name"] != "blank",
+                               single["character_name"], single["character2_name"])
+    double = meta[(meta["character_name"] != "blank")
+                  & (meta["character2_name"] != "blank")].reset_index(drop=True)
+
+    env_list = [("all", False), ("all", True)]
+    if cfg.get("per_world", False):
+        env_list += [(w, False) for w in worlds]
+
+    def suffix(world):
+        return f" in a {world} environment"
+
+    for world, add_back in env_list:
+        ss = single if world == "all" else single[single["world_name"] == world]
+        sd = double if world == "all" else double[double["world_name"] == world]
+        ss = ss.reset_index(drop=True)
+        sd = sd.reset_index(drop=True)
+        # add_back=True 时候选 caption 覆盖全部 world（官方行为），见下方各任务
+
+        # ---- 2. 单动物识别（按 texture）----
+        for texture in TEXTURES:
+            st = ss[ss["character_texture"] == texture].reset_index(drop=True)
+            chars = sorted({c for c in st["actor"].unique() if c != "blank"})
+            if add_back:
+                caps = [f"This is a photo of a {c}" + suffix(w)
+                        for c in chars for w in worlds]
+            else:
+                caps = [f"This is a photo of a {c}" for c in chars]
+            cap2i = {c: i for i, c in enumerate(caps)}
+            labels = [cap2i[f"This is a photo of a {r['actor']}"
+                           + (suffix(r["world_name"]) if add_back else "")]
+                      for r in st.to_dict("records")]
+            top1, top5 = _retrieval_eval(F_of(st), caps, labels, tcache, model)
+            add("one_object", world=world, add_background=add_back, texture=texture,
+                n_images=len(st), n_captions=len(caps), top1=top1, top5=top5)
+
+        # ---- 3. 单动物位置（Default；官方 quirk：bottom/top 子集为空）----
+        sr = ss[ss["character_texture"] == "Default"]
+        for r1, r2 in POS_PAIRS:
+            st = sr[sr["character1_pos"] == r1].reset_index(drop=True)
+            actors = sorted({c for c in st["actor"].unique() if c != "blank"})
+            caps = sorted({f"This is a photo of a {a} on the {r} of the picture"
+                           + ((f" in a {w} environment") if add_back else "")
+                           for a in actors for r in (r1, r2)
+                           for w in (worlds if add_back else [""])})
+            cap2i = {c: i for i, c in enumerate(caps)}
+            labels, negs = [], []
+            for r in st.to_dict("records"):
+                # char1 非空白侧位于 r1 方向；char2 非空白侧位于 r2 方向
+                if r["character_name"] != "blank":
+                    pos, negpos = r1, r2
+                else:
+                    pos, negpos = r2, r1
+                tail = f" in a {r['world_name']} environment" if add_back else ""
+                labels.append(cap2i[f"This is a photo of a {r['actor']} on the {pos} of the picture" + tail])
+                negs.append(cap2i[f"This is a photo of a {r['actor']} on the {negpos} of the picture" + tail])
+            top1, top5 = _retrieval_eval(F_of(st), caps, labels, tcache, model)
+            add("one_object_position", world=world, add_background=add_back,
+                texture="Default", pos_pair=f"{r1}/{r2}",
+                n_images=len(st), n_captions=len(caps), top1=top1, top5=top5)
+            hn = _hardneg_eval(F_of(st), caps, labels, negs, tcache, model)
+            add("one_object_position", world=world, add_background=add_back,
+                texture="Default", pos_pair=f"{r1}/{r2}", hardneg=True,
+                n_images=len(st), n_captions=2, top1=hn)
+
+        # ---- 4. 双动物识别（按 texture；官方按排序后的动物对）----
+        for texture in TEXTURES:
+            st = sd[sd["character_texture"] == texture].reset_index(drop=True)
+            pairs = sorted({tuple(sorted((r["character_name"], r["character2_name"])))
+                            for r in st.to_dict("records")})
+            caps = sorted({f"This is a photo of a {a} and a {b}"
+                           + ((f" in a {w} environment") if add_back else "")
+                           for (a, b) in pairs for w in (worlds if add_back else [""])})
+            cap2i = {c: i for i, c in enumerate(caps)}
+            labels = [cap2i[f"This is a photo of a {a} and a {b}"
+                           + ((f" in a {r['world_name']} environment") if add_back else "")]
+                      for r in st.to_dict("records")
+                      for a, b in [tuple(sorted((r["character_name"], r["character2_name"])))]]
+            top1, top5 = _retrieval_eval(F_of(st), caps, labels, tcache, model)
+            add("two_objects", world=world, add_background=add_back, texture=texture,
+                n_images=len(st), n_captions=len(caps), top1=top1, top5=top5)
+
+        # ---- 5. 双动物关系（Default；官方过滤同种动物）----
+        sr = sd[sd["character_texture"] == "Default"]
+        for r1, r2 in POS_PAIRS:
+            st = sr[(sr["character1_pos"] == r1)
+                    & (sr["character_name"] != sr["character2_name"])].reset_index(drop=True)
+
+            def relcap(c1, c2, w):
+                return f"This is a photo of a {c1} on the {r1} and a {c2} on the {r2} of the picture" \
+                    + ((f" in a {w} environment") if add_back else "")
+
+            recs = st.to_dict("records")
+            cap_set = set()
+            for r in recs:
+                w = r["world_name"] if add_back else None
+                cap_set.add(relcap(r["character_name"], r["character2_name"], w))
+                # 负例（动物互换）也纳入候选集：全量数据中该组合本身存在，
+                # 子集运行时保证 caption 集合封闭
+                cap_set.add(relcap(r["character2_name"], r["character_name"], w))
+            caps = sorted(cap_set)
+            cap2i = {c: i for i, c in enumerate(caps)}
+            labels, negs = [], []
+            for r in recs:
+                w = r["world_name"] if add_back else None
+                labels.append(cap2i[relcap(r["character_name"], r["character2_name"], w)])
+                negs.append(cap2i[relcap(r["character2_name"], r["character_name"], w)])
+            top1, top5 = _retrieval_eval(F_of(st), caps, labels, tcache, model)
+            add("two_objects_relation", world=world, add_background=add_back,
+                texture="Default", pos_pair=f"{r1}/{r2}",
+                n_images=len(st), n_captions=len(caps), top1=top1, top5=top5)
+            hn = _hardneg_eval(F_of(st), caps, labels, negs, tcache, model)
+            add("two_objects_relation", world=world, add_background=add_back,
+                texture="Default", pos_pair=f"{r1}/{r2}", hardneg=True,
+                n_images=len(st), n_captions=2, top1=hn)
+
+        # ---- 6. 双动物属性（Blue/Grass；官方过滤同种动物，动物互换纹理不动）----
+        for texture in ["Blue", "Grass"]:
+            st = sd[(sd["character_texture"] == texture)
+                    & (sd["character_name"] != sd["character2_name"])].reset_index(drop=True)
+
+            def attrcap(c1, t1, c2, t2, w):
+                return f"This is a photo of a {c1} textured with {t1} and a {c2} textured with {t2}" \
+                    + ((f" in a {w} environment") if add_back else "")
+
+            recs = st.to_dict("records")
+            cap_set = set()
+            for r in recs:
+                w = r["world_name"] if add_back else None
+                cap_set.add(attrcap(r["character_name"], r["character_texture"],
+                                    r["character2_name"], r["character2_texture"], w))
+                cap_set.add(attrcap(r["character2_name"], r["character_texture"],
+                                    r["character_name"], r["character2_texture"], w))
+            caps = sorted(cap_set)
+            cap2i = {c: i for i, c in enumerate(caps)}
+            labels, negs = [], []
+            for r in recs:
+                w = r["world_name"] if add_back else None
+                labels.append(cap2i[attrcap(r["character_name"], r["character_texture"],
+                                            r["character2_name"], r["character2_texture"], w)])
+                negs.append(cap2i[attrcap(r["character2_name"], r["character_texture"],
+                                          r["character_name"], r["character2_texture"], w)])
+            top1, top5 = _retrieval_eval(F_of(st), caps, labels, tcache, model)
+            add("two_objects_attribute", world=world, add_background=add_back,
+                texture=texture, n_images=len(st), n_captions=len(caps),
+                top1=top1, top5=top5)
+            hn = _hardneg_eval(F_of(st), caps, labels, negs, tcache, model)
+            add("two_objects_attribute", world=world, add_background=add_back,
+                texture=texture, hardneg=True, n_images=len(st), n_captions=2, top1=hn)
+
+    out = pd.DataFrame(results)
+    path = out_tables / ("e1_spar_official_smoke.csv" if smoke else "e1_spar_official.csv")
+    out.to_csv(path, index=False)
+    logger.info(f"[spar-official] written {path} ({len(out)} rows)")
+    return out

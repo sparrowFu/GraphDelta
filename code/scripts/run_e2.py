@@ -16,12 +16,14 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="clip_vitl14")
     ap.add_argument("--smoke", action="store_true", help="小样本快速自检")
+    ap.add_argument("--seed", type=int, default=None,
+                    help="配对与 nuisance 采样种子（默认取配置 seeds[0]）")
     args = ap.parse_args()
 
     paths = load_paths()
     logger = get_logger("run_e2", paths["dirs"]["outputs"] / "logs")
     model = build_encoder(args.model, paths, logger)
-    e2_change_diagnosis.run(model, paths, logger, smoke=args.smoke)
+    e2_change_diagnosis.run(model, paths, logger, smoke=args.smoke, seed=args.seed)
 
 
 if __name__ == "__main__":

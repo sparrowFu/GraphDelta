@@ -1,14 +1,16 @@
-"""PUG: Animals 单因素配对器（方案 §12 / §59）。
+"""PUG: Animals 单因素配对器（方案 §12 / §59 / §66）。
 
 对每个 factor：
 - 固定其余因素（context），只改变该 factor；
 - 每个无序值对只保留 canonical 方向上的一个 transition（Δ = target − source）；
-- 限制每个 context 的 transition 数与该 factor 的总 pair 数。
+- 每个 context 内按"全局已选次数越少的 transition 权重越高"做无放回加权抽样，
+  保证 transition 覆盖（审查报告 P2-7）；
+- 输出全部 5 个 metadata 列（变化因素记为 "src->tgt"），供跨因素
+  same/different-context 判定使用（审查报告 P2-6）。
 
 键的定义：
 - context_key：factor + 其余 metadata 组合（within-factor 的 context 身份）
-- ae_key：animal|environment。factor=environment 时 environment 本身在变，记为 animal|*
-  （跨因素比较与聚类 bootstrap 用，方案 §66）
+- cluster_key：除被测因素外的完整 metadata 组合（聚类 bootstrap 的单位，§66）
 """
 import numpy as np
 import pandas as pd
@@ -19,6 +21,8 @@ FIXED_COLS = {
     "size": ["animal", "environment", "texture", "camera"],
     "camera": ["animal", "environment", "texture", "size"],
 }
+
+META_COLS = ["animal", "environment", "texture", "size", "camera"]
 
 
 def canonical_values(factor, observed, orders):
@@ -34,9 +38,16 @@ def build_factor_pairs(df: pd.DataFrame, factor: str, orders: dict,
                        max_pairs_per_context: int, max_total: int, seed: int) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
     group_cols = FIXED_COLS[factor]
+
+    # context 顺序随机化 + 在线 transition 计数：同轮中后处理的 context 更倾向
+    # 选尚未被覆盖过的 transition，避免 2016 个 environment transition 漏覆盖
+    ctx_groups = list(df.groupby(group_cols, sort=False))
+    ctx_order = rng.permutation(len(ctx_groups))
+    counts = {}          # transition (src, tgt) -> 全局已选次数
     records = []
 
-    for ctx_key, grp in df.groupby(group_cols, sort=False):
+    for gi in ctx_order:
+        ctx_key, grp = ctx_groups[int(gi)]
         if not isinstance(ctx_key, tuple):
             ctx_key = (ctx_key,)
         ctx_dict = dict(zip(group_cols, ctx_key))
@@ -44,21 +55,20 @@ def build_factor_pairs(df: pd.DataFrame, factor: str, orders: dict,
 
         by_val = {r[factor]: r for r in grp.to_dict("records")}
         vals = canonical_values(factor, by_val.keys(), orders)
-        cand = [(vals[i], vals[j]) for i in range(len(vals)) for j in range(i + 1, len(vals))]
-        if len(cand) > max_pairs_per_context:
-            keep = rng.choice(len(cand), size=max_pairs_per_context, replace=False)
-            cand = [cand[k] for k in sorted(keep.tolist())]
+        avail = [(vals[i], vals[j]) for i in range(len(vals)) for j in range(i + 1, len(vals))]
+        n_take = min(max_pairs_per_context, len(avail))
+        chosen = []
+        pool = list(avail)
+        for _ in range(n_take):
+            w = np.array([1.0 / (1 + counts.get(t, 0)) ** 2 for t in pool])
+            idx = int(rng.choice(len(pool), p=w / w.sum()))
+            chosen.append(pool.pop(idx))
+        for t in chosen:
+            counts[t] = counts.get(t, 0) + 1
 
-        animal = str(ctx_dict["animal"])
-        if factor == "environment":
-            env_field, ae_key = "*", f"{animal}|*"
-        else:
-            env_field = str(ctx_dict["environment"])
-            ae_key = f"{animal}|{env_field}"
-
-        for src, tgt in cand:
+        for src, tgt in chosen:
             ra, rb = by_val[src], by_val[tgt]
-            records.append({
+            rec = {
                 "factor": factor,
                 "source_value": src,
                 "target_value": tgt,
@@ -67,10 +77,11 @@ def build_factor_pairs(df: pd.DataFrame, factor: str, orders: dict,
                 "sample_id_a": ra["sample_id"],
                 "sample_id_b": rb["sample_id"],
                 "context_key": f"{factor}|{ctx_key_str}",
-                "ae_key": ae_key,
-                "animal": animal,
-                "environment": env_field if factor != "environment" else f"{src}->{tgt}",
-            })
+            }
+            for c in META_COLS:
+                rec[c] = f"{src}->{tgt}" if c == factor else str(ctx_dict[c])
+            rec["cluster_key"] = "|".join(rec[c] for c in META_COLS if c != factor)
+            records.append(rec)
 
     out = pd.DataFrame(records)
     if len(out) > max_total:

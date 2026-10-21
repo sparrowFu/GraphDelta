@@ -5,7 +5,7 @@
 - sentence 类：relation / position
 """
 from .clevr import REL_ANTONYM, REL_PHRASE, obj_full_desc, obj_full_desc_with
-from .pug_spar import POS_ANTONYM
+from .pug_spar import POS_ANTONYM, POS_PHRASE
 from ..utils.io import load_config
 
 _TEMPLATES = None
@@ -76,8 +76,8 @@ def spar_position_contents(row):
     c1, c2 = row["character_name"], row["character2_name"]
     rel = row["character1_pos"]              # left / below
     anti = POS_ANTONYM[rel]                  # right / above
-    pos = f"the {c1} is to the {rel} of the {c2}"
-    neg = f"the {c1} is to the {anti} of the {c2}"
+    pos = f"the {c1} is {POS_PHRASE[rel]} the {c2}"
+    neg = f"the {c1} is {POS_PHRASE[anti]} the {c2}"
     return pos, neg
 
 
@@ -93,8 +93,8 @@ def spar_relation_contents(row):
     """role swap：主客体互换，方位词不变。"""
     c1, c2 = row["character_name"], row["character2_name"]
     rel = row["character1_pos"]
-    pos = f"the {c1} is to the {rel} of the {c2}"
-    neg = f"the {c2} is to the {rel} of the {c1}"
+    pos = f"the {c1} is {POS_PHRASE[rel]} the {c2}"
+    neg = f"the {c2} is {POS_PHRASE[rel]} the {c1}"
     return pos, neg
 
 

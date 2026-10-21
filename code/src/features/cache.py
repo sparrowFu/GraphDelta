@@ -62,8 +62,11 @@ class TextCache:
         self.index = {k: i for i, k in enumerate(self.keys)}
         self.raw, self.norm = z["raw"], z["normalized"]
 
-    def encode(self, model, texts):
-        """返回 (raw, normalized) float32，顺序与 texts 一致；缺失部分批量编码后写回。"""
+    def encode(self, model, texts, ensure_period=True):
+        """返回 (raw, normalized) float32，顺序与 texts 一致；缺失部分批量编码后写回。
+
+        ensure_period=False 用于官方协议 caption（无句号，审查报告 P2-11）。
+        """
         keys = [md5(t) for t in texts]
         missing_keys, first_text = [], {}
         for t, k in zip(texts, keys):
@@ -71,7 +74,8 @@ class TextCache:
                 first_text[k] = t
                 missing_keys.append(k)
         if missing_keys:
-            out = model.encode_texts([first_text[k] for k in missing_keys])
+            out = model.encode_texts([first_text[k] for k in missing_keys],
+                                     ensure_period=ensure_period)
             new_raw = out["raw"].astype(np.float16)
             new_norm = out["normalized"].astype(np.float16)
             if self.keys:

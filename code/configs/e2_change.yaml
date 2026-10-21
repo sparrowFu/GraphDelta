@@ -1,4 +1,5 @@
 # E2: Single-Factor Representation Response Diagnosis（PUG: Animals 全量 215,040）
+seeds: [0, 1, 2]
 factors: [environment, texture, size, camera]
 
 # canonical 顺序只用于统一 Δ 的方向（方案 §38），不解释为语义顺序。

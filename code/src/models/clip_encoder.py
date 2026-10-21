@@ -56,12 +56,34 @@ class CLIPEncoder(BaseVLMEncoder):
                      f"{self._n_img_calls * self.bs_img} images)")
         return self._pack(np.concatenate(feats, axis=0))
 
+    def encode_image_tensors(self, tensors):
+        """输入为已预处理的 float tensor (N,3,224,224)，跳过 CLIPProcessor。
+
+        PUG:SPAR 官方协议（run_eval_vlms_on_spar.py）对全部模型统一使用
+        Resize(224,224) + ImageNet mean/std 预处理，与 CLIPProcessor 不同，
+        因此官方评测单独走此入口（审查报告 P2-11）。
+        """
+        feats = []
+        for i in range(0, len(tensors), self.bs_img):
+            pixel = tensors[i:i + self.bs_img].to(self.device)
+            if self.fp16:
+                pixel = pixel.half()
+            with torch.no_grad():
+                f = self.model.get_image_features(pixel_values=pixel)
+            if not torch.is_tensor(f):
+                f = f.pooler_output
+            feats.append(f.float().cpu().numpy())
+        return self._pack(np.concatenate(feats, axis=0))
+
     # ---------- text ----------
-    def encode_texts(self, texts):
+    def encode_texts(self, texts, ensure_period=True):
         feats = []
         n = len(texts)
         for i in range(0, n, self.bs_txt):
-            batch = [t if t.endswith(".") else t + "." for t in texts[i:i + self.bs_txt]]
+            if ensure_period:
+                batch = [t if t.endswith(".") else t + "." for t in texts[i:i + self.bs_txt]]
+            else:
+                batch = texts[i:i + self.bs_txt]
             enc = self.processor(text=batch, padding=True, truncation=True,
                                  return_tensors="pt", max_length=77)
             enc = {k: v.to(self.device) for k, v in enc.items() if k in ("input_ids", "attention_mask")}
