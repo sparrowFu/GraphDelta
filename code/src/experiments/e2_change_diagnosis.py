@@ -85,6 +85,7 @@ def run(model, paths, logger, smoke=False, seed=None):
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
     tcache = TextCache(paths["dirs"]["cache"], model.name)
     out_tables = paths["dirs"]["outputs"] / "tables"
+    out_tables.mkdir(parents=True, exist_ok=True)
     pair_seed = cfg.get("seeds", [0])[0] if seed is None else seed
 
     meta = build_animals_metadata(paths["datasets"]["pug_animals"])

@@ -193,6 +193,7 @@ def run(model, paths, logger, smoke=False, seed=None):
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
     tcache = TextCache(paths["dirs"]["cache"], model.name)
     out_tables = paths["dirs"]["outputs"] / "tables"
+    out_tables.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(cfg["seeds"][0] if seed is None else seed)
     bs = cfg["bootstrap"]
     cap = cfg["sampling"].get("per_scene_cap", 1)

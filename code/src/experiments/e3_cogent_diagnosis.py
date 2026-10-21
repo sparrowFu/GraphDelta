@@ -71,6 +71,7 @@ def run(model, paths, logger, smoke=False, seed=None):
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
     tcache = TextCache(paths["dirs"]["cache"], model.name)
     out_tables = paths["dirs"]["outputs"] / "tables"
+    out_tables.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(cfg["seeds"][0] if seed is None else seed)
     bs = cfg["bootstrap"]
     target = min(300, cfg["sampling"]["target_per_condition_shape"]) if smoke \

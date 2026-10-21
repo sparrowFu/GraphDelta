@@ -142,6 +142,7 @@ def run(model, paths, logger, smoke=False):
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
     tcache = TextCache(paths["dirs"]["cache"], model.name)
     out_tables = paths["dirs"]["outputs"] / "tables"
+    out_tables.mkdir(parents=True, exist_ok=True)
 
     meta = build_metadata(paths["datasets"]["pug_spar"])
     # add_background 候选的 world 展开按全量 metadata（官方脚本用完整 labels.csv，
