@@ -3,7 +3,9 @@
 场景 JSON 为单个文件 {"scenes": [...]}，每个 scene 含：
   image_filename / objects / relationships / image_index
 关系负例直接使用官方 relationships 字段（不自行从坐标推导），键为
-left / right / front / behind，值为 [i, j]（第 i 个对象在第 j 个对象的该方位）。
+left / right / front / behind，邻接表 j ∈ relationships[rel][i] 表示
+**第 j 个对象在第 i 个对象的 rel 方向**（官方生成器 compute_all_relationships
+的方向约定，已用 directions 三维向量逐条验证）。
 """
 import json
 from collections import Counter

@@ -8,7 +8,8 @@ CLIP 路径；审查报告 P2-11）。
 - 文本：官方 caption 模板（无句号、无外层模板包装，ensure_period=False）；
 - 指标：全候选检索 top1/top5 + hard-negative 二选一。官方对 hard-negative
   随机换序以避免坍缩编码器；argmax 下换序不改变判对条件
-  （sim_pos > sim_neg），固定 [pos, neg] 顺序与官方 accuracy 等价；
+  （sim_pos > sim_neg），固定 [pos, neg] 顺序与官方 accuracy 等价
+  （平局除外：本实现平局判错，与方案 2AFC 规则一致）；
 - 官方脚本的已知 quirk 按原样保留：character1_pos 只有 left/below，
   "bottom/top" 子集为空；actor 列表去 blank（官方用 unique()[1:] 近似实现）。
 """
@@ -267,9 +268,10 @@ def run(model, paths, logger, smoke=False):
 
             recs = st.to_dict("records")
             # 全候选检索集合只含真实行的正例 caption（官方行为，二轮审查问题 7）；
-            # role-swap 负例只用于 hard-negative 二选一，不进入检索集合
-            caps = sorted({relcap(r["character_name"], r["character2_name"],
-                                  r["world_name"] if add_back else None) for r in recs})
+            # add_back 时每个正例组合按全部 world 展开（官方 for w in list_worlds，
+            # 三轮审查问题 2）；role-swap 负例只用于 hard-negative 二选一，不进入检索集合
+            caps = sorted({relcap(r["character_name"], r["character2_name"], w)
+                           for r in recs for w in (worlds if add_back else [None])})
             cap2i = {c: i for i, c in enumerate(caps)}
             labels, pos_caps, neg_caps = [], [], []
             for r in recs:
@@ -296,10 +298,11 @@ def run(model, paths, logger, smoke=False):
                     + ((f" in a {w} environment") if add_back else "")
 
             recs = st.to_dict("records")
-            # 检索集合只含真实行正例 caption（官方行为，二轮审查问题 7）
+            # 检索集合只含真实行正例 caption（官方行为，二轮审查问题 7）；
+            # add_back 时每个组合按全部 world 展开（三轮审查问题 2）
             caps = sorted({attrcap(r["character_name"], r["character_texture"],
-                                   r["character2_name"], r["character2_texture"],
-                                   r["world_name"] if add_back else None) for r in recs})
+                                   r["character2_name"], r["character2_texture"], w)
+                           for r in recs for w in (worlds if add_back else [None])})
             cap2i = {c: i for i, c in enumerate(caps)}
             labels, pos_caps, neg_caps = [], [], []
             for r in recs:

@@ -86,8 +86,9 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
    context，dc 组同时要求 transition 不同）、diff_factor（d2 从其他因素**联合均匀抽样**，
    same/different context 按两因素**共同固定字段**是否全部相等判定，一轮 P2-6、二轮问题 1）、
    random。比较记录两个端点的 context，CI 用双端点聚类 bootstrap（比较权重 = 两端点被抽中
-   次数之积，与端点登记顺序无关，二轮问题 3）。聚类单位 = 完整 metadata 组合
-   （`context_key`，§66）。比较采样直接抽不相等的索引对。
+   次数之积，与端点登记顺序无关，二轮问题 3）；全部聚类 bootstrap 保证 n_boot 次**有效**
+   重采样，不足时 CI 置 NaN 而非静默返回低精度区间（三轮问题 1）。聚类单位 = 完整 metadata
+   组合（`context_key`，§66）。比较采样直接抽不相等的索引对。
 10. **nuisance（39a）**：同图两个确定性增强视图（crop 0.85–1.0 + JPEG 90/75，seed 由 row_id
     派生）；文本为同内容不同模板。输出 raw/z 两空间的范数与 nuisance delta 两两相似度；
     Factor/Nuisance Norm Gap 附 bootstrap CI（P2-8）。只在内存中产生，不落盘图像。
@@ -103,10 +104,12 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
     `PUG_SPAR/run_eval_vlms_on_spar.py` CLIP 路径（脚本存于 `review/official/`）：
     官方 caption 模板（无句号）、全候选检索 top1/top5 + hard-negative 二选一；
     **检索候选集只含真实行的正例 caption**（role-swap 负例仅用于 hard-negative，
-    二轮问题 7）；官方脚本的 quirk 保留（`character1_pos` 只有 left/below，
-    "bottom/top" 子集为空）。hard-negative 平局判错（与自建 2AFC 一致）；
-    官方原脚本按随机换序 + argmax 处理，严格大于口径与其等价（平局除外）。
-    自建 2AFC 与官方协议结果分开报告，同名指标含义不同。
+    二轮问题 7）；add_background=True 时每个正例组合按**全部 world** 展开候选、
+    图片的正标签与 hard-negative 仍用图片自身 world（三轮问题 2）；官方脚本的
+    quirk 保留（`character1_pos` 只有 left/below，"bottom/top" 子集为空）。
+    hard-negative 平局判错（与自建 2AFC 一致）；官方原脚本按随机换序 + argmax
+    处理，严格大于口径与其等价（平局除外）。自建 2AFC 与官方协议结果分开报告，
+    同名指标含义不同。
 
 ## 许可
 

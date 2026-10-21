@@ -34,10 +34,11 @@ def _cluster_sums(values, clusters):
     return uniq, sums, counts
 
 
-def _ci(boots, point, ci):
+def _ci(boots, point, ci, target=None):
+    """有效重采样不足目标次数时 CI 置 NaN（显式失败，不静默返回低精度区间）。"""
     boots = np.asarray(boots, dtype=np.float64)
-    if not len(boots):
-        return np.nan, np.nan, np.nan
+    if not len(boots) or (target is not None and len(boots) < target):
+        return point, np.nan, np.nan
     lo = (1 - ci) / 2 * 100
     return point, float(np.percentile(boots, lo)), float(np.percentile(boots, 100 - lo))
 
@@ -63,7 +64,7 @@ def cluster_mean_ci(values, clusters, n_boot=1000, ci=0.95, seed=0):
         take = vals[:n_boot - filled]
         boots[filled:filled + len(take)] = take
         filled += len(take)
-    return _ci(boots, float(values.mean()), ci)
+    return _ci(boots, float(values.mean()), ci, target=n_boot)
 
 
 def cluster_gap_ci(values_a, clusters_a, values_b, clusters_b, n_boot=1000, ci=0.95, seed=0):
@@ -111,7 +112,7 @@ def cluster_gap_ci(values_a, clusters_a, values_b, clusters_b, n_boot=1000, ci=0
             - sb[draw].sum(axis=1) / np.maximum(cb_d, 1)
         boots.extend(vals[ok][:n_boot - len(boots)].tolist())
     gap = float(values_a.mean() - values_b.mean())
-    return _ci(boots, gap, ci)
+    return _ci(boots, gap, ci, target=n_boot)
 
 
 def pair_cluster_mean_ci(values, ctx_a, ctx_b, n_boot=1000, ci=0.95, seed=0):
@@ -130,19 +131,18 @@ def pair_cluster_mean_ci(values, ctx_a, ctx_b, n_boot=1000, ci=0.95, seed=0):
     ib = inv[len(values):]
     k = len(uniq)
     rng = np.random.default_rng(seed)
-    chunk = _chunk_size(k, n_boot)
     boots = []
     attempts = 0
-    max_attempts = n_boot * 50 + 10 * chunk
+    max_attempts = n_boot * 50 + 200
     while len(boots) < n_boot and attempts < max_attempts:
-        attempts += chunk
+        attempts += 1                     # 每轮只生成 1 个重采样（三轮审查问题 1）
         m = np.bincount(rng.integers(0, k, size=k), minlength=k)  # 每个 context 被抽中次数
         w = (m[ia] * m[ib]).astype(np.float64)
         sw = w.sum()
         if sw <= 0:
             continue
         boots.append(float((w * values).sum() / sw))
-    return _ci(boots, float(values.mean()), ci)
+    return _ci(boots, float(values.mean()), ci, target=n_boot)
 
 
 def pair_cluster_gap_ci(values_a, ctx_a_a, ctx_b_a, values_b, ctx_a_b, ctx_b_b,
@@ -177,7 +177,7 @@ def pair_cluster_gap_ci(values_a, ctx_a_a, ctx_b_a, values_b, ctx_a_b, ctx_b_b,
             continue
         boots.append(float((wa * values_a).sum() / swa - (wb * values_b).sum() / swb))
     gap = float(values_a.mean() - values_b.mean())
-    return _ci(boots, gap, ci)
+    return _ci(boots, gap, ci, target=n_boot)
 
 
 def diff_proportions_ci(correct_a, correct_b, n_boot=1000, ci=0.95, seed=0):
@@ -250,4 +250,4 @@ def cluster_gap_ci_equal_types(acc_a, cl_a, ty_a, acc_b, cl_b, ty_b, types,
             continue
         boots.append(pooled(ta, na, da) - pooled(tb, nb, db))
     point = pooled(ta, na) - pooled(tb, nb)
-    return _ci(boots, point, ci)
+    return _ci(boots, point, ci, target=n_boot)
