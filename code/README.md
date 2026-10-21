@@ -52,7 +52,7 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
 | e1_factor_gaps.csv | E1 内 dataset 各 factor 两两 Accuracy Gap + bootstrap CI（共享图片按图片并集同步重采样） |
 | e1_clevr_filter_stats.json / e1_spar_filter_stats.json | 各过滤原因的候选计数（§20a） |
 | e1_items_clevr/spar.jsonl | 每条 2AFC 样本（正/负内容、图片、factor），可复查 |
-| e1_spar_official.csv | SPAR 官方协议：scene / one_object / one_object_position / two_objects / two_objects_relation / two_objects_attribute × {全候选检索 top1/top5, hard-negative} × {无背景, caption 带背景}（P2-11）。检索候选集只含真实行的正例 caption，role-swap 负例只用于 hard-negative 二选一（二轮问题 7）。评测子集按 `spar_official.max_per_task=2000` 种子随机抽样（与自建 E1 的 n 对齐；设 null 恢复官方全量；scene 保留官方 10 行 quirk） |
+| e1_spar_official.csv | SPAR 官方协议：scene / one_object / one_object_position / two_objects / two_objects_relation / two_objects_attribute × {全候选检索 top1/top5, hard-negative} × {无背景, caption 带背景}（P2-11）。检索候选集只含真实行的正例 caption，role-swap 负例只用于 hard-negative 二选一（二轮问题 7）。查询图片按 `spar_official.max_per_task=2000` 种子随机抽样（与自建 E1 的 n 对齐；候选池仍取完整子集，bg/no-bg 复用同一组查询图片；设 null 恢复官方全量；scene 保留官方 10 行 quirk） |
 | e2_delta_stats.csv | 按因素：Δ 范数（raw/z）、before/after 余弦、nuisance 范数与相似度、分层相似度（raw/z）、Transition Gap + CI、Factor/Nuisance Norm Gap + CI（§64；无后缀列 = normalized 空间，`_raw` = 归一化前空间，一轮 P2-8）。diff_factor 基准从其他因素联合均匀抽样，来源计数写入日志（二轮问题 1）；相似度 CI 为双端点 context 聚类 bootstrap（二轮问题 3）；Norm Gap 的因素端按 context、nuisance 端按图像聚类（二轮问题 4） |
 | e2_transition_stats.csv | 逐 transition：(factor, source, target) 的 n_contexts、相似度（raw/z）、Δ 范数（raw/z）；n_contexts<2 时 mean_sim 为 NaN 并在日志报告数量 |
 | e3_cogent.csv | 按 condition × shape_group × negative_type（§65）；CI 按图片聚类 bootstrap |
@@ -110,9 +110,11 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
     quirk 保留（`character1_pos` 只有 left/below，"bottom/top" 子集为空）。
     hard-negative 平局判错（与自建 2AFC 一致）；官方原脚本按随机换序 + argmax
     处理，严格大于口径与其等价（平局除外）。自建 2AFC 与官方协议结果分开报告，
-    同名指标含义不同。评测子集按 `spar_official.max_per_task`（默认 2000，
-    seeds[0]）随机抽样，与自建 E1 的 `target_per_cell` 对齐；此时数值不再与官方
-    发布结果直接可比，设 null 恢复官方全量；scene 任务的 10 行 quirk 不抽样。
+    同名指标含义不同。查询图片按 `spar_official.max_per_task`（默认 2000，
+    seeds[0]）随机抽样，与自建 E1 的 `target_per_cell` 对齐；检索候选池始终由
+    完整任务子集生成，不随抽样缩减，bg 与 no-bg 两轮复用同一组查询图片（五轮
+    P2-1）；此时数值不再与官方发布结果直接可比，设 null 恢复官方全量；scene
+    任务的 10 行 quirk 不抽样。
 
 ## 许可
 

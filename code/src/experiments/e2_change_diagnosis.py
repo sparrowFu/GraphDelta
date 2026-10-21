@@ -44,24 +44,29 @@ def _delta_pair_sim(D, rng, k=2000):
 
 
 def _nuisance_visual(model, paths, meta, cfg, logger, smoke, seed):
-    """同图两个增强视图的 Δ，返回 raw/z 空间的 delta 矩阵与每条的图像 id。"""
+    """同图两个增强视图的 Δ，返回 raw/z 空间的 delta 矩阵与每条的图像 id。
+
+    ids 按解码顺序追加（iter_image_batches 按全局 row_id 顺序产出），与 delta
+    行一一对应（五轮 P3）；不能改用 sel 的抽样顺序。
+    """
     n_cfg = cfg["nuisance"]
     n_img = min(200 if smoke else n_cfg["n_images"], len(meta))
     sel = meta.sample(n=n_img, random_state=seed)
+    row_to_sid = dict(zip(sel["row_id"].astype(int), sel["sample_id"]))
     sel_rows = set(sel["row_id"].tolist())
     smin, smax = n_cfg["crop_scale"]
     q1, q2 = n_cfg["jpeg_quality"]
-    v1s, v2s = [], []
+    v1s, v2s, ids = [], [], []
     for row_ids, images, _m in iter_image_batches(paths["datasets"]["pug_animals"],
                                                   ANIMALS_META_COLUMNS,
                                                   only_row_ids=sel_rows):
         for rid, img in zip(row_ids, images):
             v1s.append(augment_view(img, 100000 + rid, smin, smax, q1))
             v2s.append(augment_view(img, 200000 + rid, smin, smax, q2))
+            ids.append(row_to_sid[int(rid)])
     logger.info(f"[E2] nuisance visual: {len(v1s)} images x 2 views")
     o1 = model.encode_images(v1s)
     o2 = model.encode_images(v2s)
-    ids = list(sel["sample_id"])
     return {"raw": o2["raw"] - o1["raw"], "z": o2["normalized"] - o1["normalized"],
             "ids": ids}
 

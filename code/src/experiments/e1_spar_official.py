@@ -12,13 +12,16 @@ CLIP 路径；审查报告 P2-11）。
   （平局除外：本实现平局判错，与方案 2AFC 规则一致）；
 - 官方脚本的已知 quirk 按原样保留：character1_pos 只有 left/below，
   "bottom/top" 子集为空；actor 列表去 blank（官方用 unique()[1:] 近似实现）；
-- 抽样：spar_official.max_per_task 限制每个评测子集的图片数（按 seeds[0] 随机
-  抽样，与自建 E1 的 target_per_cell 对齐）。此时偏离官方全量子集，数值不再与
-  官方发布结果直接可比；配置缺省（null）保持官方全量；scene 保留官方 10 行。
+- 抽样：spar_official.max_per_task 限制每个评测子集的查询图片数（按 seeds[0] 随机
+  抽样，与自建 E1 的 target_per_cell 对齐）。检索候选池始终由完整子集生成，不随
+  查询抽样缩减；bg 与 no-bg 两轮复用同一组查询图片（五轮 P2-1）。此时偏离官方
+  全量子集，数值不再与官方发布结果直接可比；配置缺省（null）保持官方全量；
+  scene 保留官方 10 行。
 """
 import numpy as np
 import pandas as pd
 import torch
+import zlib
 from torchvision import transforms
 
 from ..data.pug_common import count_rows, iter_image_batches
@@ -37,10 +40,23 @@ def _env_suffix(world):
     return f" in a {world} environment" if world else ""
 
 
-def _cap_rows(df, cap, rng):
-    """子集超过 cap 时按 rng 随机抽样到 cap 行（cap 为 None 时原样返回）。"""
+def _stable_seed(base, *key):
+    """(base, *key) → 跨进程稳定的整数种子（crc32，不受 PYTHONHASHSEED 影响）。"""
+    s = str(base)
+    for k in key:
+        s = f"{s}|{k}"
+    return zlib.crc32(s.encode("utf-8"))
+
+
+def _sample_query(df, cap, base_seed, *key):
+    """仅对查询图片下采样到 cap 行；检索候选池始终由完整子集生成（五轮 P2-1）。
+
+    抽样按 (base_seed, *key) 独立播种：bg 与 no-bg 两轮对同一 (任务, world, 标签)
+    得到同一组查询图片，二者差值只反映背景文本的作用。
+    """
     if cap is None or len(df) <= cap:
         return df
+    rng = np.random.default_rng(_stable_seed(base_seed, *key))
     return df.iloc[rng.permutation(len(df))[:cap]].reset_index(drop=True)
 
 
@@ -159,7 +175,7 @@ def run(model, paths, logger, smoke=False, seed=None):
     out_tables = paths["dirs"]["outputs"] / "tables"
     out_tables.mkdir(parents=True, exist_ok=True)
     max_per_task = cfg.get("max_per_task")   # null：官方全量（历史行为）
-    rng = np.random.default_rng(full.get("seeds", [0])[0] if seed is None else seed)
+    base_seed = full.get("seeds", [0])[0] if seed is None else seed
 
     meta = build_metadata(paths["datasets"]["pug_spar"])
     # add_background 候选的 world 展开按全量 metadata（官方脚本用完整 labels.csv，
@@ -228,9 +244,11 @@ def run(model, paths, logger, smoke=False, seed=None):
 
         # ---- 2. 单动物识别（按 texture）----
         for texture in TEXTURES:
-            st = _cap_rows(ss[ss["character_texture"] == texture].reset_index(drop=True),
-                           max_per_task, rng)
-            chars = sorted({c for c in st["actor"].unique() if c != "blank"})
+            full = ss[ss["character_texture"] == texture].reset_index(drop=True)
+            st = _sample_query(full, max_per_task, base_seed,
+                               "one_object", str(world), texture)
+            # 候选池取完整子集，不随查询抽样缩减（五轮 P2-1）
+            chars = sorted({c for c in full["actor"].unique() if c != "blank"})
             if add_back:
                 caps = [f"This is a photo of a {c}" + _env_suffix(w)
                         for c in chars for w in worlds]
@@ -247,9 +265,10 @@ def run(model, paths, logger, smoke=False, seed=None):
         # ---- 3. 单动物位置（Default；官方 quirk：bottom/top 子集为空）----
         sr = ss[ss["character_texture"] == "Default"]
         for r1, r2 in POS_PAIRS:
-            st = _cap_rows(sr[sr["character1_pos"] == r1].reset_index(drop=True),
-                           max_per_task, rng)
-            actors = sorted({c for c in st["actor"].unique() if c != "blank"})
+            full = sr[sr["character1_pos"] == r1].reset_index(drop=True)
+            st = _sample_query(full, max_per_task, base_seed,
+                               "one_object_position", str(world), f"{r1}_{r2}")
+            actors = sorted({c for c in full["actor"].unique() if c != "blank"})
             caps = sorted({f"This is a photo of a {a} on the {r} of the picture"
                            + _env_suffix(w)
                            for a in actors for r in (r1, r2)
@@ -284,10 +303,11 @@ def run(model, paths, logger, smoke=False, seed=None):
 
         # ---- 4. 双动物识别（按 texture；官方按排序后的动物对）----
         for texture in TEXTURES:
-            st = _cap_rows(sd[sd["character_texture"] == texture].reset_index(drop=True),
-                           max_per_task, rng)
+            full = sd[sd["character_texture"] == texture].reset_index(drop=True)
+            st = _sample_query(full, max_per_task, base_seed,
+                               "two_objects", str(world), texture)
             pairs = sorted({tuple(sorted((r["character_name"], r["character2_name"])))
-                            for r in st.to_dict("records")})
+                            for r in full.to_dict("records")})
             caps = sorted({f"This is a photo of a {a} and a {b}" + _env_suffix(w)
                            for (a, b) in pairs for w in (worlds if add_back else [None])})
             cap2i = {c: i for i, c in enumerate(caps)}
@@ -302,9 +322,10 @@ def run(model, paths, logger, smoke=False, seed=None):
         # ---- 5. 双动物关系（Default；官方过滤同种动物）----
         sr = sd[sd["character_texture"] == "Default"]
         for r1, r2 in POS_PAIRS:
-            st = _cap_rows(sr[(sr["character1_pos"] == r1)
-                              & (sr["character_name"] != sr["character2_name"])]
-                           .reset_index(drop=True), max_per_task, rng)
+            full = sr[(sr["character1_pos"] == r1)
+                      & (sr["character_name"] != sr["character2_name"])].reset_index(drop=True)
+            st = _sample_query(full, max_per_task, base_seed,
+                               "two_objects_relation", str(world), f"{r1}_{r2}")
 
             def relcap(c1, c2, w):
                 return f"This is a photo of a {c1} on the {r1} and a {c2} on the {r2} of the picture" \
@@ -313,9 +334,11 @@ def run(model, paths, logger, smoke=False, seed=None):
             recs = st.to_dict("records")
             # 全候选检索集合只含真实行的正例 caption（官方行为，二轮审查问题 7）；
             # add_back 时每个正例组合按全部 world 展开（官方 for w in list_worlds，
-            # 三轮审查问题 2）；role-swap 负例只用于 hard-negative 二选一，不进入检索集合
+            # 三轮审查问题 2）；role-swap 负例只用于 hard-negative 二选一，不进入检索集合；
+            # 候选池由完整子集 recs_full 生成，不随查询抽样缩减（五轮 P2-1）
+            recs_full = full.to_dict("records")
             caps = sorted({relcap(r["character_name"], r["character2_name"], w)
-                           for r in recs for w in (worlds if add_back else [None])})
+                           for r in recs_full for w in (worlds if add_back else [None])})
             cap2i = {c: i for i, c in enumerate(caps)}
             labels, pos_caps, neg_caps = [], [], []
             for r in recs:
@@ -334,9 +357,10 @@ def run(model, paths, logger, smoke=False, seed=None):
 
         # ---- 6. 双动物属性（Blue/Grass；官方过滤同种动物，动物互换纹理不动）----
         for texture in ["Blue", "Grass"]:
-            st = _cap_rows(sd[(sd["character_texture"] == texture)
-                              & (sd["character_name"] != sd["character2_name"])]
-                           .reset_index(drop=True), max_per_task, rng)
+            full = sd[(sd["character_texture"] == texture)
+                      & (sd["character_name"] != sd["character2_name"])].reset_index(drop=True)
+            st = _sample_query(full, max_per_task, base_seed,
+                               "two_objects_attribute", str(world), texture)
 
             def attrcap(c1, t1, c2, t2, w):
                 return f"This is a photo of a {c1} textured with {t1} and a {c2} textured with {t2}" \
@@ -344,10 +368,12 @@ def run(model, paths, logger, smoke=False, seed=None):
 
             recs = st.to_dict("records")
             # 检索集合只含真实行正例 caption（官方行为，二轮审查问题 7）；
-            # add_back 时每个组合按全部 world 展开（三轮审查问题 2）
+            # add_back 时每个组合按全部 world 展开（三轮审查问题 2）；
+            # 候选池由完整子集 recs_full 生成，不随查询抽样缩减（五轮 P2-1）
+            recs_full = full.to_dict("records")
             caps = sorted({attrcap(r["character_name"], r["character_texture"],
                                    r["character2_name"], r["character2_texture"], w)
-                           for r in recs for w in (worlds if add_back else [None])})
+                           for r in recs_full for w in (worlds if add_back else [None])})
             cap2i = {c: i for i, c in enumerate(caps)}
             labels, pos_caps, neg_caps = [], [], []
             for r in recs:
