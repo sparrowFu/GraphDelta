@@ -11,9 +11,12 @@ code/data/cache/
 # 生成的 manifest（由 build_manifests.py 再生）
 code/data/manifests/
 
+# 运行结果
+code/outputs/
+
 # 运行日志
-code/outputs/logs/
-*.log
+# code/outputs/logs/
+# *.log
 
 # 结果表和图保留版本控制（如不想提交结果，把下面两行也加 # 注释掉改为忽略）
 # code/outputs/tables/
