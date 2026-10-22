@@ -1,0 +1,22 @@
+2026-10-21 17:22:35,219 | INFO | extract_pug_spar | [extract:pug_spar] 2013/43560
+2026-10-21 17:22:58,958 | INFO | extract_pug_spar | [extract:pug_spar] 4023/43560
+2026-10-21 17:23:22,076 | INFO | extract_pug_spar | [extract:pug_spar] 6036/43560
+2026-10-21 17:23:47,593 | INFO | extract_pug_spar | [extract:pug_spar] 8046/43560
+2026-10-21 17:24:10,475 | INFO | extract_pug_spar | [extract:pug_spar] 10008/43560
+2026-10-21 17:24:34,149 | INFO | extract_pug_spar | [extract:pug_spar] 12021/43560
+2026-10-21 17:24:54,731 | INFO | extract_pug_spar | [extract:pug_spar] 14031/43560
+2026-10-21 17:25:15,070 | INFO | extract_pug_spar | [extract:pug_spar] 16044/43560
+2026-10-21 17:25:38,698 | INFO | extract_pug_spar | [extract:pug_spar] 18006/43560
+2026-10-21 17:25:58,954 | INFO | extract_pug_spar | [extract:pug_spar] 20016/43560
+2026-10-21 17:26:23,176 | INFO | extract_pug_spar | [extract:pug_spar] 22029/43560
+2026-10-21 17:26:49,661 | INFO | extract_pug_spar | [extract:pug_spar] 24039/43560
+2026-10-21 17:27:30,203 | INFO | extract_pug_spar | [extract:pug_spar] 26004/43560
+2026-10-21 17:27:52,967 | INFO | extract_pug_spar | [extract:pug_spar] 28012/43560
+2026-10-21 17:28:14,940 | INFO | extract_pug_spar | [extract:pug_spar] 30020/43560
+2026-10-21 17:28:37,543 | INFO | extract_pug_spar | [extract:pug_spar] 32032/43560
+2026-10-21 17:29:02,177 | INFO | extract_pug_spar | [extract:pug_spar] 34040/43560
+2026-10-21 17:29:27,074 | INFO | extract_pug_spar | [extract:pug_spar] 36004/43560
+2026-10-21 17:29:51,775 | INFO | extract_pug_spar | [extract:pug_spar] 38012/43560
+2026-10-21 17:30:14,456 | INFO | extract_pug_spar | [extract:pug_spar] 40020/43560
+2026-10-21 17:30:42,871 | INFO | extract_pug_spar | [extract:pug_spar] 42032/43560
+2026-10-21 17:31:00,622 | INFO | extract_pug_spar | [extract] saved 43560 new / 43560 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitl14/pug_spar_images.npz

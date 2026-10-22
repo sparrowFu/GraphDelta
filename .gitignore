@@ -12,7 +12,7 @@ code/data/cache/
 code/data/manifests/
 
 # 运行结果
-code/outputs/
+# code/outputs/
 
 # 运行日志
 # code/outputs/logs/

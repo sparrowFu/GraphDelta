@@ -1,0 +1,15 @@
+2026-10-22 09:47:13,639 | INFO | run_e2 | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-22 09:47:28,971 | INFO | run_e2 | [E2] factor=texture: 30000 pairs, 24270 contexts
+2026-10-22 09:47:48,354 | INFO | run_e2 | [E2] factor=size: 30000 pairs, 26045 contexts
+2026-10-22 09:48:04,454 | INFO | run_e2 | [E2] factor=camera: 30000 pairs, 24270 contexts
+2026-10-22 09:48:05,258 | INFO | run_e2 | [extract] cache pug_animals: 215040 ids present
+2026-10-22 09:48:05,326 | INFO | run_e2 | [extract] cache complete, skip: pug_animals
+2026-10-22 09:50:18,552 | INFO | run_e2 | [E2] nuisance visual: 2000 images x 2 views
+2026-10-22 09:50:43,824 | INFO | run_e2 | [E2] nuisance text: 1000 captions
+2026-10-22 09:50:43,840 | INFO | run_e2 | [E2] nuisance: norm_visual_raw=5.1816 norm_visual_z=0.2951 norm_text_raw=1.8657 norm_text_z=0.1417 sim_visual_raw=0.0874 sim_visual_z=0.0851 sim_text_raw=0.6315 sim_text_z=0.6276
+2026-10-22 09:50:45,425 | INFO | run_e2 | [E2] pug_animals/environment: |Δ|raw=12.856 same_tr_z=0.6433 gap_z=0.6426 [0.6381, 0.6474] diff_factor_src={'camera': 6690, 'size': 6690, 'texture': 6620}
+2026-10-22 09:50:47,306 | INFO | run_e2 | [E2] pug_animals/texture: |Δ|raw=5.159 same_tr_z=0.1155 gap_z=0.1134 [0.1095, 0.1171] diff_factor_src={'camera': 8221, 'environment': 3657, 'size': 8122}
+2026-10-22 09:50:49,193 | INFO | run_e2 | [E2] pug_animals/size: |Δ|raw=4.822 same_tr_z=0.0548 gap_z=0.0504 [0.0470, 0.0537] diff_factor_src={'camera': 8244, 'environment': 3604, 'texture': 8152}
+2026-10-22 09:50:51,032 | INFO | run_e2 | [E2] pug_animals/camera: |Δ|raw=7.279 same_tr_z=0.0153 gap_z=0.0172 [0.0142, 0.0202] diff_factor_src={'environment': 3662, 'size': 8219, 'texture': 8119}
+2026-10-22 09:50:51,035 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_delta_stats.csv (4 rows)
+2026-10-22 09:50:51,705 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)

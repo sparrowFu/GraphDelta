@@ -1,0 +1,14 @@
+2026-10-22 09:46:50,913 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-22 09:46:50,970 | INFO | run_e3 | [extract] cache cogent_valA: 15000 ids present
+2026-10-22 09:46:50,975 | INFO | run_e3 | [extract] cache complete, skip: cogent_valA
+2026-10-22 09:46:51,929 | INFO | run_e3 | [E3] A/cube_cylinder: n=3000 acc=0.6570
+2026-10-22 09:46:52,181 | INFO | run_e3 | [E3] A/sphere: n=3000 acc=0.7373
+2026-10-22 09:46:52,986 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-22 09:46:53,041 | INFO | run_e3 | [extract] cache cogent_valB: 15000 ids present
+2026-10-22 09:46:53,046 | INFO | run_e3 | [extract] cache complete, skip: cogent_valB
+2026-10-22 09:46:53,444 | INFO | run_e3 | [E3] B/cube_cylinder: n=3000 acc=0.6653
+2026-10-22 09:46:53,696 | INFO | run_e3 | [E3] B/sphere: n=3000 acc=0.7369
+2026-10-22 09:46:53,698 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e3_cogent.csv (12 rows)
+2026-10-22 09:46:53,887 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e3_difficulty_gap.csv (2 rows)
+2026-10-22 09:46:53,904 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e3_cogent_by_combo.csv (96 rows)
+2026-10-22 09:46:53,905 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e3_cogent_by_color.csv (32 rows)
