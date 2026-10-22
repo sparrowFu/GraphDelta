@@ -8,6 +8,7 @@ datasets:
 
 models:
   clip_vitl14: /mnt/disk1/xpfu/PreTrainedModels/clip-vit-large-patch14
+  siglip2_so400m: /mnt/disk1/xpfu/PreTrainedModels/siglip2-so400m-patch14-384-v5
 
 dirs:
   manifests: data/manifests

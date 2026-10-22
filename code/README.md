@@ -25,15 +25,25 @@ conda run -n CudaVersion128Fuxp python scripts/extract_embeddings.py --dataset c
 conda run -n CudaVersion128Fuxp python scripts/extract_embeddings.py --dataset cogent_valB
 conda run -n CudaVersion128Fuxp python scripts/extract_embeddings.py --dataset pug_animals
 
-# 2) 四个实验
+# 2) 四个实验（默认 CLIP ViT-L/14；SigLIP2 对照加 `--model siglip2_so400m`）
 conda run -n CudaVersion128Fuxp python scripts/run_e1.py                 # SPAR + CLEVR 自建 2AFC
 conda run -n CudaVersion128Fuxp python scripts/run_e1_spar_official.py   # SPAR 官方协议（P2-11）
 conda run -n CudaVersion128Fuxp python scripts/run_e3.py                 # CoGenT 难度不对称 + sphere 对照
 conda run -n CudaVersion128Fuxp python scripts/run_e2.py                 # PUG: Animals 单因素响应（最重，最后跑）
+# 例：SigLIP2 第一阶段对照（特征按模型分目录缓存，互不影响）
+conda run -n CudaVersion128Fuxp python scripts/run_e1.py --model siglip2_so400m
 
 # 检验多次采样稳定性（方案 seeds 0/1/2）：
 conda run -n CudaVersion128Fuxp python scripts/run_e1.py --seed 1   # e2/e3 同理，覆盖 outputs 前自行备份
+# 收尾脚本（2026-10-22 已按此跑完 seeds 0/1/2）：
+conda run -n CudaVersion128Fuxp python scripts/analyze_e3_units.py        # E3 逐单元 gap（读 e3_items_cogent.jsonl）
+conda run -n CudaVersion128Fuxp python scripts/summarize_seed_stability.py # 三种子判定稳定性汇总
+conda run -n CudaVersion128Fuxp python scripts/make_figures.py            # §67 五图（PNG + 合并 PDF）
 ```
+
+种子目录约定：`outputs/tables` 恒为预注册 seed 0（`seeds[0]`）的结果；
+`outputs/tables_seed{0,1,2}` 为三份全量快照。阶段总结见
+`outputs/STAGE1_SUMMARY.md`。
 
 快速自检（小样本，输出带 `_smoke` 后缀）：
 
@@ -59,11 +69,27 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
 | e3_difficulty_gap.csv | A−B：题型等权 accuracy（主指标，图片聚类 bootstrap）+ 汇总口径（敏感性对照，CI 同样按图片聚类）；cube/cylinder 主指标 + sphere 对照（一轮 P2-9、二轮问题 5） |
 | e3_cogent_by_combo.csv | 逐 (condition, shape_group, color, shape, negative_type)（含 pooled 行）：n、accuracy、mean_margin（P2-10） |
 | e3_cogent_by_color.csv | 逐 (condition, shape_group, color)：n、accuracy、mean_margin（P2-10） |
+| e3_items_cogent.jsonl | E3 每条 item 级结果（image_id、condition、shape_group、negative_type、color、shape、item_acc、item_margin），供逐单元分析复查 |
+| e3_unit_gaps.csv | 逐 (shape_group, color) 主单元 A−B 题型等权 gap + 图片聚类 bootstrap CI（`pooled_equal_type` 行）+ 逐题型明细行；单元级效应方向沿 CoGenT 调色板分裂，详见 `analyze_e3_units.py` 与 STAGE1_SUMMARY §3 |
+| seed_stability.csv | seeds 0/1/2 三种子关键判定（E1 CI-vs-0.5、gap 符号、SPAR 官方最大差、E2 CI 符号、E3 总/单元 gap）稳定性汇总 |
+| figures/ | §67 五图：fig1 2AFC accuracy、fig2 margin、fig3 Δ 范数 vs nuisance、fig4 相似性阶梯、fig5 CoGenT A/B + 逐单元 gap（PNG 300dpi + 合并 PDF） |
 
 ## 关键实现约定（与方案对应）
 
 1. **Split（16a）**：CLEVR 只用 val；CoGenT 只用 valA/valB；PUG: Animals 全量 215,040；
    SPAR 全量 43,560。
+1a. **多 baseline（§84-2/§84-22）**：`--model` 选择冻结 baseline（`clip_vitl14` /
+   `siglip2_so400m`），按 `configs/<model>.yaml` 的 `model_type` 分发到各自 encoder；
+   特征缓存按模型分目录（`data/cache/<model>/`），不同模型不跨模型计算 cosine。
+   SigLIP2 so400m 权重需先用 `scripts/convert_siglip2_checkpoint.py` 一次性转换
+   （transformers 5.13 重构了 Siglip2：Conv→Linear patch 嵌入，权重需按
+   (P,P,C) 顺序重排——Siglip2ImageProcessor 的 patch 向量实测按 (P,P,C) 展平；
+   产物在原目录旁的 `-v5/`，paths.yaml 指向它）。SigLIP2 实现要点：文本
+   `padding="max_length"`（池化取序列末位置，官方要求）；processor 走
+   `image_processor`/`tokenizer` 直调（transformers 5.13 的
+   `Siglip2Processor.__call__` 会用默认 patch 16/256 覆盖实例属性）；SPAR 官方
+   协议对其使用自身 384 预处理（§84-22），故 SigLIP2 官方协议数字不复现任何
+   官方发布值，只作 backbone 对照。
 2. **PUG 行号**：按分片文件名字典序累计的全局 row_id；sample_id = `pug_{data}_{row_id:06d}`。
 3. **CLEVR 关系**：直接用场景 JSON 的官方 `relationships` 字段（left/right/front/behind），
    不从坐标自行推导。语义（官方生成器）：`j ∈ relationships[rel][i]` 表示 **objs[j] 在
@@ -128,5 +154,6 @@ PUG 系列为 CC-BY-NC（禁止用于训练生成式模型）；本流水线只�
   一条样本（P2-5）。E3 每图最多 2 对象 × 2 题型，CI 按图片聚类。
 - SPAR 官方协议 smoke 模式只取前 3000 行，部分任务样本少或为空（如 blank-blank 场景
   识别）；全量运行才有可与论文对齐的数字。
-- SigLIP2 为第二轮对照：本地无权重，`siglip_encoder.py` 为占位。
-- §67 的结果图未生成（汇总图，非核心算法）；如需可从 CSV 直接绘制。
+- SigLIP2 已实现（`siglip_encoder.py` + `convert_siglip2_checkpoint.py`）；
+  尚未跑全量对照（需重抽约 35 万张图特征，与 BindRepair 并行安排）。
+- §67 五图已生成（`scripts/make_figures.py` → `outputs/figures/`）。

@@ -1,0 +1,69 @@
+2026-10-22 14:24:26,270 | INFO | analyze_e3_units | [E3-units] tables dir: /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables
+2026-10-22 14:24:26,297 | INFO | analyze_e3_units | [E3-units] loaded 12000 items
+2026-10-22 14:24:26,342 | INFO | analyze_e3_units | [E3-units] total gap cube_cylinder: recomputed=-0.006510 report=-0.006510 |diff|=1.73e-17
+2026-10-22 14:24:26,386 | INFO | analyze_e3_units | [E3-units] total gap sphere: recomputed=0.002597 report=0.002597 |diff|=3.51e-17
+2026-10-22 14:24:26,791 | INFO | analyze_e3_units | [E3-units] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e3_unit_gaps.csv (48 rows)
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units] summary pooled_equal_type: n_units=16 sig_pos=6 sig_neg=6 gap_std=0.2435 gap_min=-0.5521 gap_max=+0.4306
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units] + cube_cylinder gray   gap=+0.1292 CI=[+0.0832,+0.1749] acc_A=0.796 acc_B=0.672
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units] + cube_cylinder blue   gap=+0.3888 CI=[+0.3367,+0.4384] acc_A=0.851 acc_B=0.458
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units] + cube_cylinder brown  gap=+0.1221 CI=[+0.0633,+0.1871] acc_A=0.637 acc_B=0.524
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units] + cube_cylinder yellow gap=+0.4306 CI=[+0.3809,+0.4774] acc_A=0.943 acc_B=0.508
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units] - cube_cylinder red    gap=-0.5521 CI=[-0.6028,-0.4999] acc_A=0.254 acc_B=0.796
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units]   cube_cylinder green  gap=-0.0386 CI=[-0.1000,+0.0205] acc_A=0.667 acc_B=0.707
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units] - cube_cylinder purple gap=-0.2946 CI=[-0.3443,-0.2460] acc_A=0.563 acc_B=0.863
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units] - cube_cylinder cyan   gap=-0.2910 CI=[-0.3384,-0.2385] acc_A=0.527 acc_B=0.802
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units]   sphere        gray   gap=+0.0404 CI=[-0.0020,+0.0847] acc_A=0.856 acc_B=0.810
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units]   sphere        blue   gap=+0.0355 CI=[-0.0275,+0.0940] acc_A=0.695 acc_B=0.666
+2026-10-22 14:24:26,792 | INFO | analyze_e3_units | [E3-units] + sphere        brown  gap=+0.0668 CI=[+0.0196,+0.1134] acc_A=0.856 acc_B=0.787
+2026-10-22 14:24:26,793 | INFO | analyze_e3_units | [E3-units] + sphere        yellow gap=+0.1259 CI=[+0.0636,+0.1812] acc_A=0.721 acc_B=0.599
+2026-10-22 14:24:26,793 | INFO | analyze_e3_units | [E3-units] - sphere        red    gap=-0.1014 CI=[-0.1626,-0.0442] acc_A=0.666 acc_B=0.767
+2026-10-22 14:24:26,793 | INFO | analyze_e3_units | [E3-units]   sphere        green  gap=-0.0108 CI=[-0.0761,+0.0586] acc_A=0.538 acc_B=0.551
+2026-10-22 14:24:26,793 | INFO | analyze_e3_units | [E3-units] - sphere        purple gap=-0.0627 CI=[-0.1091,-0.0148] acc_A=0.759 acc_B=0.834
+2026-10-22 14:24:26,793 | INFO | analyze_e3_units | [E3-units] - sphere        cyan   gap=-0.0783 CI=[-0.1215,-0.0315] acc_A=0.789 acc_B=0.874
+2026-10-22 14:24:26,793 | INFO | analyze_e3_units | [E3-units] 注意：16 个主单元各报 95% CI，属多重比较，只做描述、不做联合检验。
+2026-10-22 14:26:19,389 | INFO | analyze_e3_units | [E3-units] tables dir: /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables
+2026-10-22 14:26:19,414 | INFO | analyze_e3_units | [E3-units] loaded 12000 items
+2026-10-22 14:26:19,459 | INFO | analyze_e3_units | [E3-units] total gap cube_cylinder: recomputed=-0.009257 report=-0.009257 |diff|=5.20e-17
+2026-10-22 14:26:19,503 | INFO | analyze_e3_units | [E3-units] total gap sphere: recomputed=-0.005913 report=-0.005913 |diff|=2.26e-17
+2026-10-22 14:26:19,916 | INFO | analyze_e3_units | [E3-units] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e3_unit_gaps.csv (48 rows)
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units] summary pooled_equal_type: n_units=16 sig_pos=5 sig_neg=6 gap_std=0.2459 gap_min=-0.5647 gap_max=+0.4266
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units] + cube_cylinder gray   gap=+0.1985 CI=[+0.1557,+0.2448] acc_A=0.810 acc_B=0.611
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units] + cube_cylinder blue   gap=+0.4266 CI=[+0.3785,+0.4768] acc_A=0.866 acc_B=0.433
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units] + cube_cylinder brown  gap=+0.1067 CI=[+0.0482,+0.1641] acc_A=0.652 acc_B=0.535
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units] + cube_cylinder yellow gap=+0.4161 CI=[+0.3665,+0.4668] acc_A=0.921 acc_B=0.496
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units] - cube_cylinder red    gap=-0.5647 CI=[-0.6147,-0.5124] acc_A=0.253 acc_B=0.828
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units] - cube_cylinder green  gap=-0.0951 CI=[-0.1546,-0.0419] acc_A=0.657 acc_B=0.742
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units] - cube_cylinder purple gap=-0.2989 CI=[-0.3424,-0.2555] acc_A=0.566 acc_B=0.875
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units] - cube_cylinder cyan   gap=-0.2432 CI=[-0.2947,-0.1911] acc_A=0.548 acc_B=0.789
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units]   sphere        gray   gap=+0.0351 CI=[-0.0057,+0.0783] acc_A=0.867 acc_B=0.833
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units]   sphere        blue   gap=+0.0344 CI=[-0.0213,+0.0927] acc_A=0.689 acc_B=0.655
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units]   sphere        brown  gap=+0.0189 CI=[-0.0245,+0.0653] acc_A=0.842 acc_B=0.822
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units] + sphere        yellow gap=+0.0858 CI=[+0.0234,+0.1506] acc_A=0.686 acc_B=0.600
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units] - sphere        red    gap=-0.1002 CI=[-0.1538,-0.0444] acc_A=0.658 acc_B=0.761
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units]   sphere        green  gap=-0.0311 CI=[-0.0927,+0.0374] acc_A=0.507 acc_B=0.540
+2026-10-22 14:26:19,917 | INFO | analyze_e3_units | [E3-units]   sphere        purple gap=-0.0452 CI=[-0.0955,+0.0079] acc_A=0.795 acc_B=0.842
+2026-10-22 14:26:19,918 | INFO | analyze_e3_units | [E3-units] - sphere        cyan   gap=-0.0490 CI=[-0.0951,-0.0044] acc_A=0.820 acc_B=0.866
+2026-10-22 14:26:19,918 | INFO | analyze_e3_units | [E3-units] 注意：16 个主单元各报 95% CI，属多重比较，只做描述、不做联合检验。
+2026-10-22 14:30:43,544 | INFO | analyze_e3_units | [E3-units] tables dir: /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables
+2026-10-22 14:30:43,569 | INFO | analyze_e3_units | [E3-units] loaded 12000 items
+2026-10-22 14:30:43,614 | INFO | analyze_e3_units | [E3-units] total gap cube_cylinder: recomputed=0.007326 report=0.007326 |diff|=2.69e-17
+2026-10-22 14:30:43,656 | INFO | analyze_e3_units | [E3-units] total gap sphere: recomputed=0.001401 report=0.001401 |diff|=3.53e-17
+2026-10-22 14:30:44,059 | INFO | analyze_e3_units | [E3-units] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e3_unit_gaps.csv (48 rows)
+2026-10-22 14:30:44,059 | INFO | analyze_e3_units | [E3-units] summary pooled_equal_type: n_units=16 sig_pos=7 sig_neg=6 gap_std=0.2481 gap_min=-0.5216 gap_max=+0.4499
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] + cube_cylinder gray   gap=+0.1765 CI=[+0.1298,+0.2281] acc_A=0.800 acc_B=0.616
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] + cube_cylinder blue   gap=+0.4499 CI=[+0.4027,+0.4976] acc_A=0.901 acc_B=0.446
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] + cube_cylinder brown  gap=+0.0766 CI=[+0.0149,+0.1362] acc_A=0.629 acc_B=0.548
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] + cube_cylinder yellow gap=+0.4444 CI=[+0.3987,+0.4887] acc_A=0.935 acc_B=0.497
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] - cube_cylinder red    gap=-0.5216 CI=[-0.5723,-0.4693] acc_A=0.278 acc_B=0.799
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units]   cube_cylinder green  gap=-0.0266 CI=[-0.0822,+0.0276] acc_A=0.704 acc_B=0.718
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] - cube_cylinder purple gap=-0.3069 CI=[-0.3511,-0.2626] acc_A=0.571 acc_B=0.876
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] - cube_cylinder cyan   gap=-0.2769 CI=[-0.3300,-0.2252] acc_A=0.515 acc_B=0.801
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units]   sphere        gray   gap=+0.0100 CI=[-0.0332,+0.0496] acc_A=0.854 acc_B=0.832
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] + sphere        blue   gap=+0.0632 CI=[+0.0056,+0.1240] acc_A=0.723 acc_B=0.656
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] + sphere        brown  gap=+0.0482 CI=[+0.0034,+0.0924] acc_A=0.845 acc_B=0.796
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] + sphere        yellow gap=+0.1407 CI=[+0.0852,+0.2048] acc_A=0.739 acc_B=0.598
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] - sphere        red    gap=-0.0895 CI=[-0.1434,-0.0301] acc_A=0.635 acc_B=0.731
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units]   sphere        green  gap=-0.0268 CI=[-0.0889,+0.0363] acc_A=0.502 acc_B=0.528
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] - sphere        purple gap=-0.0514 CI=[-0.0976,-0.0013] acc_A=0.775 acc_B=0.822
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] - sphere        cyan   gap=-0.0707 CI=[-0.1161,-0.0239] acc_A=0.803 acc_B=0.877
+2026-10-22 14:30:44,060 | INFO | analyze_e3_units | [E3-units] 注意：16 个主单元各报 95% CI，属多重比较，只做描述、不做联合检验。

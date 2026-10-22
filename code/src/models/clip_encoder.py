@@ -3,6 +3,7 @@
 - 官方 preprocess（224，短边 resize + center crop）与 tokenizer；
 - get_image_features / get_text_features 返回 projection 后、归一化前的特征，即方案 §37 的 h；
 - fp16 推理；不训练任何参数。
+- official_preprocess 用基类默认（PUG 官方脚本的统一 224 + ImageNet 口径）。
 """
 import numpy as np
 import torch
@@ -15,8 +16,9 @@ from .vlm_encoder import BaseVLMEncoder
 class CLIPEncoder(BaseVLMEncoder):
 
     def __init__(self, model_path: str, device: str = "auto", fp16: bool = True,
-                 batch_size_image: int = 512, batch_size_text: int = 512, logger=None):
-        self.name = "clip_vitl14"
+                 batch_size_image: int = 512, batch_size_text: int = 512, logger=None,
+                 name: str = "clip_vitl14"):
+        self.name = name
         if device == "auto":
             device = "cuda" if torch.cuda.is_available() else "cpu"
         self.device = device

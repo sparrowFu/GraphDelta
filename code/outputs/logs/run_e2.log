@@ -13,3 +13,63 @@
 2026-10-22 09:50:51,032 | INFO | run_e2 | [E2] pug_animals/camera: |Δ|raw=7.279 same_tr_z=0.0153 gap_z=0.0172 [0.0142, 0.0202] diff_factor_src={'environment': 3662, 'size': 8219, 'texture': 8119}
 2026-10-22 09:50:51,035 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_delta_stats.csv (4 rows)
 2026-10-22 09:50:51,705 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-22 14:26:31,275 | INFO | run_e2 | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-22 14:26:46,830 | INFO | run_e2 | [E2] factor=texture: 30000 pairs, 24225 contexts
+2026-10-22 14:27:06,411 | INFO | run_e2 | [E2] factor=size: 30000 pairs, 26005 contexts
+2026-10-22 14:27:22,294 | INFO | run_e2 | [E2] factor=camera: 30000 pairs, 24225 contexts
+2026-10-22 14:27:23,140 | INFO | run_e2 | [extract] cache pug_animals: 215040 ids present
+2026-10-22 14:27:23,202 | INFO | run_e2 | [extract] cache complete, skip: pug_animals
+2026-10-22 14:29:40,943 | INFO | run_e2 | [E2] nuisance visual: 2000 images x 2 views
+2026-10-22 14:30:05,003 | INFO | run_e2 | [E2] nuisance text: 1000 captions
+2026-10-22 14:30:05,018 | INFO | run_e2 | [E2] nuisance: norm_visual_raw=5.2019 norm_visual_z=0.2964 norm_text_raw=1.8698 norm_text_z=0.1419 sim_visual_raw=0.0795 sim_visual_z=0.0818 sim_text_raw=0.6278 sim_text_z=0.6252
+2026-10-22 14:30:06,546 | INFO | run_e2 | [E2] pug_animals/environment: |Δ|raw=12.874 same_tr_z=0.6456 gap_z=0.6444 [0.6397, 0.6490] diff_factor_src={'camera': 6678, 'size': 6689, 'texture': 6633}
+2026-10-22 14:30:08,438 | INFO | run_e2 | [E2] pug_animals/texture: |Δ|raw=5.161 same_tr_z=0.1145 gap_z=0.1096 [0.1053, 0.1136] diff_factor_src={'camera': 8220, 'environment': 3664, 'size': 8116}
+2026-10-22 14:30:10,328 | INFO | run_e2 | [E2] pug_animals/size: |Δ|raw=4.827 same_tr_z=0.0557 gap_z=0.0519 [0.0485, 0.0554] diff_factor_src={'camera': 8244, 'environment': 3608, 'texture': 8148}
+2026-10-22 14:30:12,160 | INFO | run_e2 | [E2] pug_animals/camera: |Δ|raw=7.285 same_tr_z=0.0155 gap_z=0.0160 [0.0127, 0.0193] diff_factor_src={'environment': 3666, 'size': 8220, 'texture': 8114}
+2026-10-22 14:30:12,162 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_delta_stats.csv (4 rows)
+2026-10-22 14:30:12,851 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-22 14:30:55,451 | INFO | run_e2 | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-22 14:31:11,076 | INFO | run_e2 | [E2] factor=texture: 30000 pairs, 24267 contexts
+2026-10-22 14:31:30,719 | INFO | run_e2 | [E2] factor=size: 30000 pairs, 26002 contexts
+2026-10-22 14:31:46,676 | INFO | run_e2 | [E2] factor=camera: 30000 pairs, 24267 contexts
+2026-10-22 14:31:47,505 | INFO | run_e2 | [extract] cache pug_animals: 215040 ids present
+2026-10-22 14:31:47,586 | INFO | run_e2 | [extract] cache complete, skip: pug_animals
+2026-10-22 14:34:02,022 | INFO | run_e2 | [E2] nuisance visual: 2000 images x 2 views
+2026-10-22 14:34:31,812 | INFO | run_e2 | [E2] nuisance text: 1000 captions
+2026-10-22 14:34:31,829 | INFO | run_e2 | [E2] nuisance: norm_visual_raw=5.2248 norm_visual_z=0.2977 norm_text_raw=1.8724 norm_text_z=0.1418 sim_visual_raw=0.0800 sim_visual_z=0.0821 sim_text_raw=0.6329 sim_text_z=0.6314
+2026-10-22 14:34:33,352 | INFO | run_e2 | [E2] pug_animals/environment: |Δ|raw=12.866 same_tr_z=0.6437 gap_z=0.6422 [0.6374, 0.6468] diff_factor_src={'camera': 6672, 'size': 6685, 'texture': 6643}
+2026-10-22 14:34:35,258 | INFO | run_e2 | [E2] pug_animals/texture: |Δ|raw=5.132 same_tr_z=0.1150 gap_z=0.1113 [0.1074, 0.1151] diff_factor_src={'camera': 8228, 'environment': 3658, 'size': 8114}
+2026-10-22 14:34:37,245 | INFO | run_e2 | [E2] pug_animals/size: |Δ|raw=4.825 same_tr_z=0.0566 gap_z=0.0524 [0.0490, 0.0559] diff_factor_src={'camera': 8240, 'environment': 3610, 'texture': 8150}
+2026-10-22 14:34:39,209 | INFO | run_e2 | [E2] pug_animals/camera: |Δ|raw=7.275 same_tr_z=0.0148 gap_z=0.0164 [0.0133, 0.0198] diff_factor_src={'environment': 3658, 'size': 8229, 'texture': 8113}
+2026-10-22 14:34:39,213 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_delta_stats.csv (4 rows)
+2026-10-22 14:34:39,927 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-22 15:45:02,482 | INFO | run_e2 | [E2] pug_animals smoke subset: 1728 rows
+2026-10-22 15:45:02,554 | INFO | run_e2 | [E2] factor=environment: 1152 pairs, 288 contexts
+2026-10-22 15:45:02,655 | INFO | run_e2 | [E2] factor=texture: 1728 pairs, 432 contexts
+2026-10-22 15:45:02,783 | INFO | run_e2 | [E2] factor=size: 1728 pairs, 576 contexts
+2026-10-22 15:45:02,887 | INFO | run_e2 | [E2] factor=camera: 1728 pairs, 432 contexts
+2026-10-22 15:47:32,016 | INFO | run_e2 | [extract] saved 1728 new / 1728 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/siglip2_so400m/pug_animals_smoke_images.npz
+2026-10-22 15:49:26,142 | INFO | run_e2 | [E2] nuisance visual: 200 images x 2 views
+2026-10-22 15:49:29,001 | INFO | run_e2 | [E2] nuisance text: 200 captions
+2026-10-22 15:49:29,016 | INFO | run_e2 | [E2] nuisance: norm_visual_raw=2.7722 norm_visual_z=0.1496 norm_text_raw=4.3515 norm_text_z=0.1738 sim_visual_raw=0.0053 sim_visual_z=0.0067 sim_text_raw=0.3228 sim_text_z=0.3255
+2026-10-22 15:49:30,039 | INFO | run_e2 | [E2] pug_animals/environment: |Δ|raw=7.823 same_tr_z=0.6621 gap_z=0.6595 [0.6461, 0.6723] diff_factor_src={'camera': 6736, 'size': 6627, 'texture': 6637}
+2026-10-22 15:49:31,032 | INFO | run_e2 | [E2] pug_animals/texture: |Δ|raw=1.814 same_tr_z=0.0292 gap_z=0.0286 [0.0225, 0.0352] diff_factor_src={'camera': 7587, 'environment': 4886, 'size': 7527}
+2026-10-22 15:49:32,025 | INFO | run_e2 | [E2] pug_animals/size: |Δ|raw=2.263 same_tr_z=0.0510 gap_z=0.0478 [0.0396, 0.0550] diff_factor_src={'camera': 7579, 'environment': 4931, 'texture': 7490}
+2026-10-22 15:49:33,014 | INFO | run_e2 | [E2] pug_animals/camera: |Δ|raw=4.558 same_tr_z=0.1192 gap_z=0.1272 [0.1174, 0.1377] diff_factor_src={'environment': 4883, 'size': 7613, 'texture': 7504}
+2026-10-22 15:49:33,016 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_delta_stats_smoke.csv (4 rows)
+2026-10-22 15:49:33,239 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_transition_stats_smoke.csv (30 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-22 16:07:58,658 | INFO | run_e2 | [E2] pug_animals smoke subset: 1728 rows
+2026-10-22 16:07:58,735 | INFO | run_e2 | [E2] factor=environment: 1152 pairs, 288 contexts
+2026-10-22 16:07:58,844 | INFO | run_e2 | [E2] factor=texture: 1728 pairs, 432 contexts
+2026-10-22 16:07:58,980 | INFO | run_e2 | [E2] factor=size: 1728 pairs, 576 contexts
+2026-10-22 16:07:59,088 | INFO | run_e2 | [E2] factor=camera: 1728 pairs, 432 contexts
+2026-10-22 16:10:26,384 | INFO | run_e2 | [extract] saved 1728 new / 1728 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/siglip2_so400m/pug_animals_smoke_images.npz
+2026-10-22 16:12:22,425 | INFO | run_e2 | [E2] nuisance visual: 200 images x 2 views
+2026-10-22 16:12:26,895 | INFO | run_e2 | [E2] nuisance text: 200 captions
+2026-10-22 16:12:26,909 | INFO | run_e2 | [E2] nuisance: norm_visual_raw=5.8211 norm_visual_z=0.3688 norm_text_raw=5.9179 norm_text_z=0.1704 sim_visual_raw=0.4048 sim_visual_z=0.4004 sim_text_raw=0.5338 sim_text_z=0.5382
+2026-10-22 16:12:27,971 | INFO | run_e2 | [E2] pug_animals/environment: |Δ|raw=10.147 same_tr_z=0.7676 gap_z=0.7654 [0.7560, 0.7731] diff_factor_src={'camera': 6736, 'size': 6627, 'texture': 6637}
+2026-10-22 16:12:28,966 | INFO | run_e2 | [E2] pug_animals/texture: |Δ|raw=3.825 same_tr_z=0.2807 gap_z=0.2754 [0.2630, 0.2902] diff_factor_src={'camera': 7587, 'environment': 4886, 'size': 7527}
+2026-10-22 16:12:30,013 | INFO | run_e2 | [E2] pug_animals/size: |Δ|raw=3.115 same_tr_z=0.1222 gap_z=0.1164 [0.1110, 0.1222] diff_factor_src={'camera': 7579, 'environment': 4931, 'texture': 7490}
+2026-10-22 16:12:31,069 | INFO | run_e2 | [E2] pug_animals/camera: |Δ|raw=4.693 same_tr_z=0.0891 gap_z=0.0951 [0.0887, 0.1018] diff_factor_src={'environment': 4883, 'size': 7613, 'texture': 7504}
+2026-10-22 16:12:31,071 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_delta_stats_smoke.csv (4 rows)
+2026-10-22 16:12:31,291 | INFO | run_e2 | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/tables/e2_transition_stats_smoke.csv (30 transitions; 0 with n_contexts<2 → mean_sim=NaN)

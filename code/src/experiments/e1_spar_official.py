@@ -20,17 +20,13 @@ CLIP 路径；审查报告 P2-11）。
 """
 import numpy as np
 import pandas as pd
-import torch
 import zlib
-from torchvision import transforms
 
 from ..data.pug_common import count_rows, iter_image_batches
 from ..data.pug_spar import META_COLUMNS, build_metadata
 from ..features.cache import ImageFeatureCache, TextCache
 from ..utils.io import load_config
 
-IMAGENET_MEAN = [0.485, 0.456, 0.406]
-IMAGENET_STD = [0.229, 0.224, 0.225]
 TEXTURES = ["Default", "Blue", "Grass"]
 POS_PAIRS = [("left", "right"), ("bottom", "top")]
 
@@ -64,14 +60,6 @@ def _fmt(v):
     return f"{v:.4f}" if v == v else "nan"
 
 
-def _official_transform():
-    return transforms.Compose([
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD),
-    ])
-
-
 def extract_official_features(model, cache, key, parquet_dir, logger, only_row_ids=None):
     """官方预处理下的 SPAR 图像特征（增量抽取，缓存 id 为 pug_spar_official_%06d）。
 
@@ -82,7 +70,6 @@ def extract_official_features(model, cache, key, parquet_dir, logger, only_row_i
         eids, _idx, _raw, _norm = cache.arrays(key)
         existing = set(eids.tolist())
         logger.info(f"[extract] cache {key}: {len(existing)} ids present")
-    tf = _official_transform()
     prefix = "pug_spar_official"
     fmt = lambda rid: f"{prefix}_{rid:06d}"
     if only_row_ids is not None:
@@ -104,7 +91,7 @@ def extract_official_features(model, cache, key, parquet_dir, logger, only_row_i
         todo = [(r, im) for r, im in zip(row_ids, images) if fmt(r) not in existing]
         if not todo:
             continue
-        batch = torch.stack([tf(im) for _r, im in todo])
+        batch = model.official_preprocess([im for _r, im in todo])
         out = model.encode_image_tensors(batch)
         raws.append(out["raw"])
         norms.append(out["normalized"])

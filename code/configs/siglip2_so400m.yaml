@@ -1,0 +1,8 @@
+# SigLIP2 so400m-patch14-384（第一阶段第二轮对照 baseline，方案 §84-2/§84-22）
+name: siglip2_so400m
+model_type: siglip2
+device: auto          # auto / cuda / cpu
+fp16: true
+batch_size_image: 256 # 384² 输入，比 CLIP 224 显存占用高，批量减半
+batch_size_text: 512
+num_workers: 8

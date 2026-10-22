@@ -15,7 +15,7 @@ from ..data.cogent import condition_image_dir, load_condition_scenes
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.extract import extract_clevr_images
 from ..metrics.bootstrap import cluster_gap_ci, cluster_gap_ci_equal_types
-from ..utils.io import load_config
+from ..utils.io import load_config, write_jsonl
 from .common import EXPORT_FIELDS, eval_2afc_items, subsample
 
 
@@ -185,4 +185,9 @@ def run(model, paths, logger, smoke=False, seed=None):
     by_color.to_csv(path_b, index=False)
     logger.info(f"[E3] written {path_c} ({len(combo)} rows)")
     logger.info(f"[E3] written {path_b} ({len(by_color)} rows)")
+
+    # item 级结果落盘（与 E1 的 e1_items_*.jsonl 约定一致，供逐单元分析复查）
+    items_path = out_tables / ("e3_items_cogent_smoke.jsonl" if smoke else "e3_items_cogent.jsonl")
+    write_jsonl(items_path, all_items)
+    logger.info(f"[E3] written {items_path} ({len(all_items)} items)")
     return out
