@@ -1,0 +1,124 @@
+#!/usr/bin/env python
+"""E3 逐单元分析（方案 §71 情况 C 排查）。
+
+用 e3_items_cogent.jsonl 的 item 级结果，按 (shape_group, color) 单元计算
+A−B 难度差 + 图片聚类 bootstrap CI，检验"逐组合效应方向不一致、被等权
+平均抵消"的怀疑。口径与主指标一致：题型等权（cluster_gap_ci_equal_types）；
+明细行（含题型拆分）用 cluster_gap_ci。
+
+- 16 个主单元各报 95% CI，属多重比较，只做描述、不做联合检验。
+- 先用全部 items 复算一次总 gap，与 e3_difficulty_gap.csv 主指标对照
+  （同一函数、同一数据，应一致到数值精度）。
+"""
+import argparse
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from src.metrics.bootstrap import cluster_gap_ci, cluster_gap_ci_equal_types
+from src.utils.io import load_config, load_paths
+from src.utils.logging import get_logger
+
+
+def load_items(path):
+    records = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+    return pd.DataFrame(records)
+
+
+def split_condition(sub, cond):
+    s = sub[sub["condition"] == cond]
+    return (s["item_acc"].to_numpy(dtype=np.float64),
+            s["image_id"].to_numpy(), s["negative_type"].to_numpy())
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--tables-dir", default=None,
+                    help="items 所在目录（默认 outputs/tables；多种子校验时指向 tables_seed{k}）")
+    args = ap.parse_args()
+
+    paths = load_paths()
+    cfg = load_config("e3_cogent")
+    bs = cfg["bootstrap"]
+    types = cfg["sampling"]["negative_types"]
+    tables = Path(args.tables_dir) if args.tables_dir else paths["dirs"]["outputs"] / "tables"
+    logger = get_logger("analyze_e3_units", paths["dirs"]["outputs"] / "logs")
+    logger.info(f"[E3-units] tables dir: {tables}")
+
+    df = load_items(tables / "e3_items_cogent.jsonl")
+    logger.info(f"[E3-units] loaded {len(df)} items")
+
+    # 总 gap 复算（强校验：应与 e3_difficulty_gap.csv 主指标一致到数值精度）
+    ref_path = tables / "e3_difficulty_gap.csv"
+    if ref_path.exists():
+        ref = pd.read_csv(ref_path).set_index("shape_group")
+        for grp in ["cube_cylinder", "sphere"]:
+            sub = df[df["shape_group"] == grp]
+            acc_a, cl_a, ty_a = split_condition(sub, "A")
+            acc_b, cl_b, ty_b = split_condition(sub, "B")
+            gap, lo, hi = cluster_gap_ci_equal_types(
+                acc_a, cl_a, ty_a, acc_b, cl_b, ty_b, types,
+                n_boot=bs["n_boot"], ci=bs["ci"], seed=0)
+            r_gap = float(ref.loc[grp, "difficulty_gap"])
+            logger.info(f"[E3-units] total gap {grp}: recomputed={gap:.6f} "
+                        f"report={r_gap:.6f} |diff|={abs(gap - r_gap):.2e}")
+
+    rows = []
+    for grp in ["cube_cylinder", "sphere"]:
+        for color in cfg["colors"]:
+            sub = df[(df["shape_group"] == grp) & (df["color"] == color)]
+            acc_a, cl_a, ty_a = split_condition(sub, "A")
+            acc_b, cl_b, ty_b = split_condition(sub, "B")
+            # 主单元：题型等权（与主指标同口径）；缺整类题型 → NaN
+            gap, lo, hi = cluster_gap_ci_equal_types(
+                acc_a, cl_a, ty_a, acc_b, cl_b, ty_b, types,
+                n_boot=bs["n_boot"], ci=bs["ci"], seed=0)
+            rows.append({"shape_group": grp, "color": color,
+                         "negative_type": "pooled_equal_type",
+                         "n_A": len(acc_a), "n_B": len(acc_b),
+                         "acc_A": float(acc_a.mean()), "acc_B": float(acc_b.mean()),
+                         "gap": gap, "ci_low": lo, "ci_high": hi})
+            # 明细：逐题型（A/B 图片不相交，普通两样本聚类差值）
+            for t in types:
+                sa = sub[(sub["condition"] == "A") & (sub["negative_type"] == t)]
+                sb = sub[(sub["condition"] == "B") & (sub["negative_type"] == t)]
+                va, ca, _ = split_condition(sa, "A")
+                vb, cb, _ = split_condition(sb, "B")
+                gap, lo, hi = cluster_gap_ci(
+                    va, ca, vb, cb, n_boot=bs["n_boot"], ci=bs["ci"], seed=0)
+                rows.append({"shape_group": grp, "color": color, "negative_type": t,
+                             "n_A": len(va), "n_B": len(vb),
+                             "acc_A": float(va.mean()), "acc_B": float(vb.mean()),
+                             "gap": gap, "ci_low": lo, "ci_high": hi})
+
+    out = pd.DataFrame(rows)
+    path_out = tables / "e3_unit_gaps.csv"
+    out.to_csv(path_out, index=False)
+    logger.info(f"[E3-units] written {path_out} ({len(out)} rows)")
+
+    # 摘要：主单元 16 个（CI 不含 0 的按方向计数 + 离散度）
+    pooled = out[out["negative_type"] == "pooled_equal_type"]
+    sig_pos = pooled[pooled["ci_low"] > 0]
+    sig_neg = pooled[pooled["ci_high"] < 0]
+    logger.info(
+        f"[E3-units] summary pooled_equal_type: n_units={len(pooled)} "
+        f"sig_pos={len(sig_pos)} sig_neg={len(sig_neg)} "
+        f"gap_std={float(pooled['gap'].std(ddof=1)):.4f} "
+        f"gap_min={float(pooled['gap'].min()):+.4f} "
+        f"gap_max={float(pooled['gap'].max()):+.4f}")
+    for _, r in pooled.iterrows():
+        flag = ("+" if r["ci_low"] > 0 else "-" if r["ci_high"] < 0 else " ")
+        logger.info(f"[E3-units] {flag} {r['shape_group']:13s} {r['color']:6s} "
+                    f"gap={r['gap']:+.4f} CI=[{r['ci_low']:+.4f},{r['ci_high']:+.4f}] "
+                    f"acc_A={r['acc_A']:.3f} acc_B={r['acc_B']:.3f}")
+    logger.info("[E3-units] 注意：16 个主单元各报 95% CI，属多重比较，"
+                "只做描述、不做联合检验。")
+
+
+if __name__ == "__main__":
+    main()
