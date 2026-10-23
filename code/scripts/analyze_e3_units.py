@@ -21,7 +21,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.metrics.bootstrap import cluster_gap_ci, cluster_gap_ci_equal_types
-from src.utils.io import load_config, load_paths
+from src.utils.io import load_config, load_paths, verify_run_meta
 from src.utils.logging import get_logger
 
 
@@ -52,6 +52,7 @@ def main():
     if args.tables_dir:
         tables = Path(args.tables_dir)
     elif (default_new / "e3_items_cogent.jsonl").exists():
+        verify_run_meta(default_new, "clip_vitl14", 0)
         tables = default_new
     else:
         tables = out / "tables"      # 旧布局（R2 隔离修复前的历史结果）

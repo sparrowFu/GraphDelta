@@ -118,3 +118,25 @@
 2026-10-23 11:48:57,407 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_spar_filter_stats_smoke.json (6 factors)
 2026-10-23 11:48:57,408 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_results_smoke.csv (10 rows)
 2026-10-23 11:48:57,437 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_factor_gaps_smoke.csv (21 pairs)
+2026-10-23 13:53:18,163 | INFO | run_e1 | [E1] clevr smoke subset: 300 scenes
+2026-10-23 13:53:18,164 | INFO | run_e1 | [extract] cache clevr_val_smoke: 300 ids present
+2026-10-23 13:53:18,164 | INFO | run_e1 | [extract] cache complete, skip: clevr_val_smoke
+2026-10-23 13:53:18,224 | INFO | run_e1 | [E1] clevr/object: n=200 acc=0.5964
+2026-10-23 13:53:18,232 | INFO | run_e1 | [E1] clevr/color: n=200 acc=0.7071
+2026-10-23 13:53:18,240 | INFO | run_e1 | [E1] clevr/size: n=200 acc=0.5393
+2026-10-23 13:53:18,248 | INFO | run_e1 | [E1] clevr/material: n=200 acc=0.5571
+2026-10-23 13:53:18,260 | INFO | run_e1 | [E1] clevr/relation: n=200 acc=0.4857
+2026-10-23 13:53:18,269 | INFO | run_e1 | [E1] clevr/binding: n=200 acc=0.5036
+2026-10-23 13:53:18,271 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_items_clevr_smoke.jsonl (1200 items)
+2026-10-23 13:53:18,272 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_clevr_filter_stats_smoke.json (5 factors)
+2026-10-23 13:53:18,479 | INFO | run_e1 | [E1] spar smoke subset: 1500 rows
+2026-10-23 13:53:18,482 | INFO | run_e1 | [extract] cache pug_spar_smoke: 1500 ids present
+2026-10-23 13:53:36,852 | INFO | run_e1 | [extract] cache complete, skip: pug_spar_smoke
+2026-10-23 13:53:36,868 | INFO | run_e1 | [E1] spar/scene: n=200 acc=0.8700
+2026-10-23 13:53:36,877 | INFO | run_e1 | [E1] spar/position: n=200 acc=0.4743
+2026-10-23 13:53:36,884 | INFO | run_e1 | [E1] spar/attribute: n=200 acc=0.6136
+2026-10-23 13:53:36,893 | INFO | run_e1 | [E1] spar/relation: n=200 acc=0.4957
+2026-10-23 13:53:36,894 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_items_spar_smoke.jsonl (800 items)
+2026-10-23 13:53:36,894 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_spar_filter_stats_smoke.json (6 factors)
+2026-10-23 13:53:36,896 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_results_smoke.csv (10 rows)
+2026-10-23 13:53:36,926 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_factor_gaps_smoke.csv (21 pairs)

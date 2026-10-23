@@ -1,4 +1,11 @@
-"""特征缓存（方案 §62）：图像特征按 dataset 存一份；文本特征按内容哈希去重缓存。"""
+"""特征缓存（方案 §62）：图像特征按 dataset 存一份；文本特征按内容哈希去重缓存。
+
+缓存按 ID / 文本键命中，不含任何预处理语义信息：encoder 的图像预处理或文本
+预处理变更后（如 R1 的 FixRes 恢复、R4 的小写化），旧缓存会被静默命中、绕过
+新 encoder（审查报告 §3.8）。因此每个 encoder 声明 cache_protocol 指纹，
+缓存目录内用 protocol.json 记录；指纹不一致时直接报错，要求删除后重抽。
+"""
+import json
 from pathlib import Path
 
 import numpy as np
@@ -6,10 +13,26 @@ import numpy as np
 from ..utils.io import md5
 
 
+def _check_protocol(model_dir: Path, protocol: str):
+    """校验/登记缓存目录的 encoder 协议指纹；不一致即报错（审查报告 §3.8）。"""
+    pf = model_dir / "protocol.json"
+    if pf.exists():
+        stored = json.loads(pf.read_text()).get("protocol")
+        if stored != protocol:
+            raise RuntimeError(
+                f"缓存协议不匹配：{model_dir} 记录 protocol={stored!r}，"
+                f"当前 encoder 要求 {protocol!r}。encoder 语义已变化，旧特征不能"
+                f"复用——请删除整个目录后重抽：rm -rf {model_dir}")
+    else:
+        pf.write_text(json.dumps({"protocol": protocol}))
+
+
 class ImageFeatureCache:
-    def __init__(self, cache_dir, model_name: str):
+    def __init__(self, cache_dir, model_name: str, protocol: str = None):
         self.dir = Path(cache_dir) / model_name
         self.dir.mkdir(parents=True, exist_ok=True)
+        if protocol is not None:
+            _check_protocol(self.dir, protocol)
         self._loaded = {}
 
     def path(self, dataset_key: str) -> Path:
@@ -42,11 +65,17 @@ class ImageFeatureCache:
 
 
 class TextCache:
-    """文本特征按 md5(text) 去重，跨实验复用。"""
+    """文本特征按 md5(text) 去重，跨实验复用。
 
-    def __init__(self, cache_dir, model_name: str):
+    注意缓存键是**传入时**的文本（含大小写）；encoder 内部的小写化等预处理
+    变化不会改变键（R4 教训），因此同样依赖 protocol 指纹失效旧缓存。
+    """
+
+    def __init__(self, cache_dir, model_name: str, protocol: str = None):
         self.dir = Path(cache_dir) / model_name
         self.dir.mkdir(parents=True, exist_ok=True)
+        if protocol is not None:
+            _check_protocol(self.dir, protocol)
         self.path = self.dir / "text_cache.npz"
         self.keys = []
         self.index = {}

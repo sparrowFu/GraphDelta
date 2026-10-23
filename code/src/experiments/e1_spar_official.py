@@ -159,8 +159,8 @@ def _hardneg_eval(F_sub, pos_caps, neg_caps, tcache, model):
 def run(model, paths, logger, smoke=False, seed=None):
     full = load_config("e1_state")
     cfg = full.get("spar_official", {})
-    cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
-    tcache = TextCache(paths["dirs"]["cache"], model.name)
+    cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
+    tcache = TextCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     max_per_task = cfg.get("max_per_task")   # null：官方全量（历史行为）
     base_seed = full.get("seeds", [0])[0] if seed is None else seed
     out_tables = output_tables_dir(paths, model.name, base_seed)  # R2：按模型/种子隔离

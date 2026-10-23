@@ -34,6 +34,10 @@ from .vlm_encoder import BaseVLMEncoder
 
 TEXT_MAX_LENGTH = 64  # siglip2-so400m 官方文本上限
 
+# R1（NaFlex→FixRes）与 R4（小写化）都改变了预处理语义；此前按 NaFlex +
+# 原大小写编码的缓存一律失效
+CACHE_PROTOCOL = "siglip2-fixres-lowercase-v1"
+
 
 def _unwrap_feat(f):
     """v5 的 get_*_features 可能返回 tensor / tuple / ModelOutput，统一取 tensor。"""
@@ -47,6 +51,8 @@ def _unwrap_feat(f):
 
 
 class SigLIP2Encoder(BaseVLMEncoder):
+
+    cache_protocol = CACHE_PROTOCOL
 
     def __init__(self, model_path: str, device: str = "auto", fp16: bool = True,
                  batch_size_image: int = 256, batch_size_text: int = 512, logger=None,

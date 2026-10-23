@@ -68,8 +68,8 @@ def check_palette(scenes, condition, cfg, logger):
 
 def run(model, paths, logger, smoke=False, seed=None):
     cfg = load_config("e3_cogent")
-    cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
-    tcache = TextCache(paths["dirs"]["cache"], model.name)
+    cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
+    tcache = TextCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     eff_seed = cfg["seeds"][0] if seed is None else seed
     out_tables = output_tables_dir(paths, model.name, eff_seed)   # R2：按模型/种子隔离
     rng = np.random.default_rng(eff_seed)

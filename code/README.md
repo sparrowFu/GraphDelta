@@ -43,10 +43,19 @@ conda run -n CudaVersion128Fuxp python scripts/make_figures.py            # §67
 ```
 
 结果目录约定（R2 隔离）：每个运行写入 `outputs/<model>/seed_<k>/tables/`，
-切换 `--model` / `--seed` 不再互相覆盖。旧布局 `outputs/tables`（seed 0）与
-`outputs/tables_seed{1,2}` 是 2026-10-22 三种子运行的历史快照，只读保留；
-`summarize_seed_stability.py` / `make_figures.py` / `analyze_e3_units.py`
-在新布局不存在时自动回退旧布局。阶段总结见 `outputs/STAGE1_SUMMARY.md`。
+切换 `--model` / `--seed` 不再互相覆盖；目录内 `run_meta.json` 记录 model/seed，
+`summarize_seed_stability.py` / `make_figures.py` / `analyze_e3_units.py` 读取时
+校验身份。旧布局 `outputs/tables`（seed 0）与 `outputs/tables_seed{1,2}` 是
+2026-10-22 **clip_vitl14** 三种子运行的历史快照，只读保留；读取端仅对
+clip_vitl14（及 seed 0 绘图）允许回退旧布局，其他模型缺少新结果时直接报错，
+不会把历史 CLIP-L/14 数据错当其他模型的结果（R2/R7）。阶段总结见
+`outputs/STAGE1_SUMMARY.md`。
+
+特征缓存约定（审查 §3.8）：`data/cache/<model>/` 内 `protocol.json` 记录该
+encoder 的预处理语义指纹（`cache_protocol`，随 encoder 类声明）。encoder 的
+图像/文本预处理变更时指纹更新，旧缓存立即报错失效（提示删除重抽），不会按
+ID/文本键静默复用旧特征；siglip2_so400m 当前指纹为
+`siglip2-fixres-lowercase-v1`（R1 FixRes + R4 小写化），旧缓存已删除。
 
 快速自检（小样本，输出带 `_smoke` 后缀）：
 

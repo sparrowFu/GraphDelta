@@ -21,7 +21,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.utils.io import load_paths
+from src.utils.io import load_paths, verify_run_meta
 from src.utils.logging import get_logger
 
 
@@ -51,20 +51,29 @@ def main():
 
     paths = load_paths()
     out_dir = paths["dirs"]["outputs"]
-    tabs = {}
+    tabs, layouts = {}, {}
+    LEGACY_MODEL = "clip_vitl14"   # 旧布局 outputs/tables* 的唯一来源模型（R2）
     for s in [0, 1, 2]:
         new = out_dir / args.model / f"seed_{s}" / "tables"
         legacy = out_dir / ("tables" if s == 0 else f"tables_seed{s}")
         # 以全量结果文件判定（只有 _smoke 文件的新目录不误选）
         if (new / "e1_results.csv").exists():
-            tabs[s] = new
-        elif (legacy / "e1_results.csv").exists():
-            tabs[s] = legacy       # R2 隔离修复前跑出的历史结果
+            verify_run_meta(new, args.model, s)
+            tabs[s], layouts[s] = new, "new"
+        elif args.model == LEGACY_MODEL and (legacy / "e1_results.csv").exists():
+            tabs[s], layouts[s] = legacy, "legacy"   # 仅历史属主模型可回退
         else:
-            raise SystemExit(f"missing full results in both {new} and {legacy}")
+            raise SystemExit(
+                f"model={args.model} seed {s} 缺少全量结果：{new} 不存在；"
+                f"旧布局 outputs/tables* 属于 {LEGACY_MODEL}，不能作为 "
+                f"{args.model} 的数据源。请先跑全量（run_e1/e2/e3/spar_official "
+                f"--model {args.model} --seed {s}）。")
     logger = get_logger("seed_stability", out_dir / "logs")
     for s, d in tabs.items():
-        logger.info(f"[seeds] seed {s} tables: {d}")
+        logger.info(f"[seeds] seed {s} tables: {d} ({layouts[s]})")
+    if len(set(layouts.values())) > 1:
+        logger.warning("[seeds] 三种子混用新旧布局：新布局为 R3/R6 修复后数据、"
+                       "旧布局为修复前数据，两套口径不可直接比较——建议补齐重跑")
 
     def read(seed, name):
         return pd.read_csv(tabs[seed] / name)

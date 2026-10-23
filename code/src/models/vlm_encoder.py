@@ -21,6 +21,9 @@ IMAGENET_STD = [0.229, 0.224, 0.225]
 
 class BaseVLMEncoder(ABC):
     name: str = "base"
+    # 图像/文本预处理语义的指纹，写入模型缓存目录 protocol.json（审查 §3.8）。
+    # encoder 预处理语义变更时必须更新，使旧缓存报错失效而非静默复用。
+    cache_protocol = "v1"
 
     @abstractmethod
     def encode_images(self, images):

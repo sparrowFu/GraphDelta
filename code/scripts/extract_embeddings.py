@@ -34,7 +34,7 @@ def main():
     paths = load_paths()
     logger = get_logger(f"extract_{args.dataset}", paths["dirs"]["outputs"] / "logs")
     model = build_encoder(args.model, paths, logger)
-    cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
+    cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
 
     if args.force and cache.exists(args.dataset):
         cache.path(args.dataset).unlink()
