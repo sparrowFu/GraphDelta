@@ -1,0 +1,771 @@
+{
+  "e1_clevr_audit": {
+    "object": {
+      "n": 2000,
+      "unique_images": 2000,
+      "identical_positive_negative": 0,
+      "blank_in_positive": 0,
+      "blank_in_negative": 0,
+      "positive_directions": {
+        "other": 2000
+      }
+    },
+    "color": {
+      "n": 2000,
+      "unique_images": 2000,
+      "identical_positive_negative": 0,
+      "blank_in_positive": 0,
+      "blank_in_negative": 0,
+      "positive_directions": {
+        "other": 2000
+      }
+    },
+    "size": {
+      "n": 2000,
+      "unique_images": 2000,
+      "identical_positive_negative": 0,
+      "blank_in_positive": 0,
+      "blank_in_negative": 0,
+      "positive_directions": {
+        "other": 2000
+      }
+    },
+    "material": {
+      "n": 2000,
+      "unique_images": 2000,
+      "identical_positive_negative": 0,
+      "blank_in_positive": 0,
+      "blank_in_negative": 0,
+      "positive_directions": {
+        "other": 2000
+      }
+    },
+    "relation": {
+      "n": 2000,
+      "unique_images": 2000,
+      "identical_positive_negative": 0,
+      "blank_in_positive": 0,
+      "blank_in_negative": 0,
+      "positive_directions": {
+        "behind": 508,
+        "right": 489,
+        "front": 517,
+        "left": 486
+      }
+    },
+    "binding": {
+      "n": 2000,
+      "unique_images": 2000,
+      "identical_positive_negative": 0,
+      "blank_in_positive": 0,
+      "blank_in_negative": 0,
+      "positive_directions": {
+        "other": 2000
+      }
+    }
+  },
+  "e1_spar_audit": {
+    "scene": {
+      "n": 2000,
+      "unique_images": 2000,
+      "identical_positive_negative": 0,
+      "blank_in_positive": 64,
+      "blank_in_negative": 59,
+      "positive_directions": {
+        "other": 2000
+      }
+    },
+    "position": {
+      "n": 2000,
+      "unique_images": 2000,
+      "identical_positive_negative": 0,
+      "blank_in_positive": 62,
+      "blank_in_negative": 62,
+      "positive_directions": {
+        "left": 1504,
+        "below": 496
+      }
+    },
+    "attribute": {
+      "n": 2000,
+      "unique_images": 2000,
+      "identical_positive_negative": 0,
+      "blank_in_positive": 68,
+      "blank_in_negative": 68,
+      "positive_directions": {
+        "other": 2000
+      }
+    },
+    "relation": {
+      "n": 2000,
+      "unique_images": 2000,
+      "identical_positive_negative": 0,
+      "blank_in_positive": 62,
+      "blank_in_negative": 62,
+      "positive_directions": {
+        "left": 1507,
+        "below": 493
+      }
+    }
+  },
+  "e1_template_sd_pp": {
+    "clevr/object": 0.622399351205438,
+    "clevr/color": 0.5742489919554973,
+    "clevr/size": 0.1546886273407691,
+    "clevr/material": 0.2907297878164676,
+    "clevr/relation": 0.5669467095138411,
+    "clevr/binding": 0.49195915432463533,
+    "pug_spar/scene": 0.4896548833228407,
+    "pug_spar/position": 6.853518387347772,
+    "pug_spar/attribute": 1.649242250247064,
+    "pug_spar/relation": 1.7192190918303578
+  },
+  "e2_transition_summary": {
+    "camera": {
+      "n_transitions": 6,
+      "contexts_min": 4938,
+      "contexts_median": 4992.5,
+      "contexts_max": 5097,
+      "sim_mean_unweighted": 0.014759935710268684,
+      "sim_median": 0.0167915453203022,
+      "sim_min": 0.0022352223750203,
+      "sim_max": 0.0234989020973444,
+      "positive_sim_transitions": 6,
+      "lowest": [
+        {
+          "factor": "camera",
+          "source_value": "225",
+          "target_value": "315",
+          "n_contexts": 4938,
+          "mean_sim_z": 0.0022352223750203,
+          "mean_sim_raw": 0.0022439863532781,
+          "mean_delta_norm_raw": 6.752957,
+          "mean_delta_norm_z": 0.38693962
+        },
+        {
+          "factor": "camera",
+          "source_value": "45",
+          "target_value": "225",
+          "n_contexts": 4968,
+          "mean_sim_z": 0.0086891772225499,
+          "mean_sim_raw": 0.0087876059114933,
+          "mean_delta_norm_raw": 7.998901,
+          "mean_delta_norm_z": 0.45812398
+        },
+        {
+          "factor": "camera",
+          "source_value": "45",
+          "target_value": "315",
+          "n_contexts": 5012,
+          "mean_sim_z": 0.0148855308070778,
+          "mean_sim_raw": 0.0148716792464256,
+          "mean_delta_norm_raw": 7.247655,
+          "mean_delta_norm_z": 0.41431624
+        }
+      ],
+      "highest": [
+        {
+          "factor": "camera",
+          "source_value": "0",
+          "target_value": "225",
+          "n_contexts": 4986,
+          "mean_sim_z": 0.0234989020973444,
+          "mean_sim_raw": 0.0234758872538805,
+          "mean_delta_norm_raw": 7.9353456,
+          "mean_delta_norm_z": 0.45332944
+        },
+        {
+          "factor": "camera",
+          "source_value": "0",
+          "target_value": "45",
+          "n_contexts": 4999,
+          "mean_sim_z": 0.0205532219260931,
+          "mean_sim_raw": 0.0204389542341232,
+          "mean_delta_norm_raw": 6.8952503,
+          "mean_delta_norm_z": 0.3934374
+        },
+        {
+          "factor": "camera",
+          "source_value": "0",
+          "target_value": "315",
+          "n_contexts": 5097,
+          "mean_sim_z": 0.0186975598335266,
+          "mean_sim_raw": 0.0184533689171075,
+          "mean_delta_norm_raw": 6.8514504,
+          "mean_delta_norm_z": 0.39140347
+        }
+      ]
+    },
+    "environment": {
+      "n_transitions": 2016,
+      "contexts_min": 3,
+      "contexts_median": 7.0,
+      "contexts_max": 11,
+      "sim_mean_unweighted": 0.6432592396047854,
+      "sim_median": 0.6534460484981537,
+      "sim_min": 0.1405822932720184,
+      "sim_max": 0.8543262481689453,
+      "positive_sim_transitions": 2016,
+      "lowest": [
+        {
+          "factor": "environment",
+          "source_value": "Hallway",
+          "target_value": "TrashRoom",
+          "n_contexts": 8,
+          "mean_sim_z": 0.1405822932720184,
+          "mean_sim_raw": 0.1373631507158279,
+          "mean_delta_norm_raw": 8.106665,
+          "mean_delta_norm_z": 0.47615063
+        },
+        {
+          "factor": "environment",
+          "source_value": "RuralAustralia",
+          "target_value": "ShadyRoad",
+          "n_contexts": 8,
+          "mean_sim_z": 0.2725036144256592,
+          "mean_sim_raw": 0.2731764912605285,
+          "mean_delta_norm_raw": 8.421644,
+          "mean_delta_norm_z": 0.46836102
+        },
+        {
+          "factor": "environment",
+          "source_value": "ConferenceRoom",
+          "target_value": "SpaceHangar",
+          "n_contexts": 6,
+          "mean_sim_z": 0.3069921135902405,
+          "mean_sim_raw": 0.3086694180965423,
+          "mean_delta_norm_raw": 9.8428955,
+          "mean_delta_norm_z": 0.5829242
+        }
+      ],
+      "highest": [
+        {
+          "factor": "environment",
+          "source_value": "Arena",
+          "target_value": "Restaurant",
+          "n_contexts": 4,
+          "mean_sim_z": 0.8543262481689453,
+          "mean_sim_raw": 0.8548455238342285,
+          "mean_delta_norm_raw": 12.814792,
+          "mean_delta_norm_z": 0.72918653
+        },
+        {
+          "factor": "environment",
+          "source_value": "Arena",
+          "target_value": "BoxingRing",
+          "n_contexts": 5,
+          "mean_sim_z": 0.8253990411758423,
+          "mean_sim_raw": 0.8247997164726257,
+          "mean_delta_norm_raw": 12.520891,
+          "mean_delta_norm_z": 0.7242465
+        },
+        {
+          "factor": "environment",
+          "source_value": "AmusementPark",
+          "target_value": "Gallery",
+          "n_contexts": 6,
+          "mean_sim_z": 0.8178442716598511,
+          "mean_sim_raw": 0.8157035112380981,
+          "mean_delta_norm_raw": 15.991033,
+          "mean_delta_norm_z": 0.900918
+        }
+      ]
+    },
+    "size": {
+      "n_transitions": 3,
+      "contexts_min": 9890,
+      "contexts_median": 10019.0,
+      "contexts_max": 10091,
+      "sim_mean_unweighted": 0.05523096770048136,
+      "sim_median": 0.0513302981853485,
+      "sim_min": 0.0297398790717124,
+      "sim_max": 0.0846227258443832,
+      "positive_sim_transitions": 3,
+      "lowest": [
+        {
+          "factor": "size",
+          "source_value": "medium",
+          "target_value": "large",
+          "n_contexts": 9890,
+          "mean_sim_z": 0.0297398790717124,
+          "mean_sim_raw": 0.0301435552537441,
+          "mean_delta_norm_raw": 4.198581,
+          "mean_delta_norm_z": 0.24026956
+        },
+        {
+          "factor": "size",
+          "source_value": "small",
+          "target_value": "medium",
+          "n_contexts": 10019,
+          "mean_sim_z": 0.0513302981853485,
+          "mean_sim_raw": 0.0518051721155643,
+          "mean_delta_norm_raw": 4.4714055,
+          "mean_delta_norm_z": 0.25485972
+        },
+        {
+          "factor": "size",
+          "source_value": "small",
+          "target_value": "large",
+          "n_contexts": 10091,
+          "mean_sim_z": 0.0846227258443832,
+          "mean_sim_raw": 0.0855680555105209,
+          "mean_delta_norm_raw": 5.7814913,
+          "mean_delta_norm_z": 0.3300652
+        }
+      ],
+      "highest": [
+        {
+          "factor": "size",
+          "source_value": "small",
+          "target_value": "large",
+          "n_contexts": 10091,
+          "mean_sim_z": 0.0846227258443832,
+          "mean_sim_raw": 0.0855680555105209,
+          "mean_delta_norm_raw": 5.7814913,
+          "mean_delta_norm_z": 0.3300652
+        },
+        {
+          "factor": "size",
+          "source_value": "small",
+          "target_value": "medium",
+          "n_contexts": 10019,
+          "mean_sim_z": 0.0513302981853485,
+          "mean_sim_raw": 0.0518051721155643,
+          "mean_delta_norm_raw": 4.4714055,
+          "mean_delta_norm_z": 0.25485972
+        },
+        {
+          "factor": "size",
+          "source_value": "medium",
+          "target_value": "large",
+          "n_contexts": 9890,
+          "mean_sim_z": 0.0297398790717124,
+          "mean_sim_raw": 0.0301435552537441,
+          "mean_delta_norm_raw": 4.198581,
+          "mean_delta_norm_z": 0.24026956
+        }
+      ]
+    },
+    "texture": {
+      "n_transitions": 6,
+      "contexts_min": 4938,
+      "contexts_median": 4992.5,
+      "contexts_max": 5097,
+      "sim_mean_unweighted": 0.11483510211110111,
+      "sim_median": 0.1202386915683746,
+      "sim_min": 0.0355126708745956,
+      "sim_max": 0.1718132197856903,
+      "positive_sim_transitions": 6,
+      "lowest": [
+        {
+          "factor": "texture",
+          "source_value": "Asphalt",
+          "target_value": "Default",
+          "n_contexts": 4999,
+          "mean_sim_z": 0.0355126708745956,
+          "mean_sim_raw": 0.035676285624504,
+          "mean_delta_norm_raw": 4.6164484,
+          "mean_delta_norm_z": 0.2631603
+        },
+        {
+          "factor": "texture",
+          "source_value": "Default",
+          "target_value": "Sky",
+          "n_contexts": 5012,
+          "mean_sim_z": 0.0745138600468635,
+          "mean_sim_raw": 0.0742417201399803,
+          "mean_delta_norm_raw": 5.186885,
+          "mean_delta_norm_z": 0.29592535
+        },
+        {
+          "factor": "texture",
+          "source_value": "Asphalt",
+          "target_value": "Sky",
+          "n_contexts": 5097,
+          "mean_sim_z": 0.1155741140246391,
+          "mean_sim_raw": 0.1149164587259292,
+          "mean_delta_norm_raw": 5.326388,
+          "mean_delta_norm_z": 0.30374965
+        }
+      ],
+      "highest": [
+        {
+          "factor": "texture",
+          "source_value": "Asphalt",
+          "target_value": "Grass",
+          "n_contexts": 4986,
+          "mean_sim_z": 0.1718132197856903,
+          "mean_sim_raw": 0.1710696965456009,
+          "mean_delta_norm_raw": 5.132193,
+          "mean_delta_norm_z": 0.29347113
+        },
+        {
+          "factor": "texture",
+          "source_value": "Grass",
+          "target_value": "Sky",
+          "n_contexts": 4938,
+          "mean_sim_z": 0.1666934788227081,
+          "mean_sim_raw": 0.1660376340150833,
+          "mean_delta_norm_raw": 5.206085,
+          "mean_delta_norm_z": 0.29820555
+        },
+        {
+          "factor": "texture",
+          "source_value": "Default",
+          "target_value": "Grass",
+          "n_contexts": 4968,
+          "mean_sim_z": 0.1249032691121101,
+          "mean_sim_raw": 0.1237486004829406,
+          "mean_delta_norm_raw": 5.487848,
+          "mean_delta_norm_z": 0.3141859
+        }
+      ]
+    }
+  },
+  "e2_raw_z_differences": {
+    "max_transition_gap_abs_diff": 0.0006015164766057998,
+    "max_same_transition_abs_diff": 0.0005732308092885954
+  },
+  "e3_color_ranges": [
+    {
+      "condition": "A",
+      "shape_group": "cube_cylinder",
+      "min_acc": 0.254425689584191,
+      "max_acc": 0.942537909018356,
+      "color_macro_acc": 0.6547128292072535
+    },
+    {
+      "condition": "A",
+      "shape_group": "sphere",
+      "min_acc": 0.5382653061224489,
+      "max_acc": 0.856396866840731,
+      "color_macro_acc": 0.7350895378082621
+    },
+    {
+      "condition": "B",
+      "shape_group": "cube_cylinder",
+      "min_acc": 0.4580745341614907,
+      "max_acc": 0.8631130063965886,
+      "color_macro_acc": 0.6662750554888048
+    },
+    {
+      "condition": "B",
+      "shape_group": "sphere",
+      "min_acc": 0.550915750915751,
+      "max_acc": 0.8737793851717903,
+      "color_macro_acc": 0.7360887407067129
+    }
+  ],
+  "e3_cc_color_gaps": [
+    {
+      "color": "blue",
+      "A": 0.8506838905775075,
+      "B": 0.4580745341614907,
+      "gap_A_minus_B_pp": 39.26093564160168
+    },
+    {
+      "color": "brown",
+      "A": 0.6373926619828258,
+      "B": 0.5235478806907378,
+      "gap_A_minus_B_pp": 11.384478129208809
+    },
+    {
+      "color": "cyan",
+      "A": 0.5266034985422741,
+      "B": 0.8019985196150999,
+      "gap_A_minus_B_pp": -27.539502107282587
+    },
+    {
+      "color": "gray",
+      "A": 0.7959680222453945,
+      "B": 0.6722065063649222,
+      "gap_A_minus_B_pp": 12.376151588047236
+    },
+    {
+      "color": "green",
+      "A": 0.6672124437167417,
+      "B": 0.7074829931972789,
+      "gap_A_minus_B_pp": -4.0270549480537206
+    },
+    {
+      "color": "purple",
+      "A": 0.5628785179907375,
+      "B": 0.8631130063965886,
+      "gap_A_minus_B_pp": -30.02344884058511
+    },
+    {
+      "color": "red",
+      "A": 0.254425689584191,
+      "B": 0.7955865272938443,
+      "gap_A_minus_B_pp": -54.11608377096533
+    },
+    {
+      "color": "yellow",
+      "A": 0.942537909018356,
+      "B": 0.5081904761904762,
+      "gap_A_minus_B_pp": 43.43474328278798
+    }
+  ],
+  "e3_combo_columns": [
+    "condition",
+    "shape_group",
+    "color",
+    "shape",
+    "negative_type",
+    "n",
+    "accuracy",
+    "mean_margin"
+  ],
+  "e3_combo_extremes": [
+    {
+      "condition": "A",
+      "shape_group": "cube_cylinder",
+      "color": "red",
+      "shape": "cylinder",
+      "negative_type": "pooled",
+      "n": 347,
+      "accuracy": 0.254425689584191,
+      "mean_margin": -0.0135574080984333
+    },
+    {
+      "condition": "B",
+      "shape_group": "cube_cylinder",
+      "color": "blue",
+      "shape": "cylinder",
+      "negative_type": "pooled",
+      "n": 368,
+      "accuracy": 0.4580745341614907,
+      "mean_margin": -0.0021462868871426
+    },
+    {
+      "condition": "B",
+      "shape_group": "cube_cylinder",
+      "color": "yellow",
+      "shape": "cylinder",
+      "negative_type": "pooled",
+      "n": 375,
+      "accuracy": 0.5081904761904762,
+      "mean_margin": 0.0011916460593929
+    },
+    {
+      "condition": "B",
+      "shape_group": "cube_cylinder",
+      "color": "brown",
+      "shape": "cylinder",
+      "negative_type": "pooled",
+      "n": 364,
+      "accuracy": 0.5235478806907378,
+      "mean_margin": 0.0028507342044926
+    },
+    {
+      "condition": "A",
+      "shape_group": "sphere",
+      "color": "brown",
+      "shape": "sphere",
+      "negative_type": "pooled",
+      "n": 383,
+      "accuracy": 0.856396866840731,
+      "mean_margin": 0.0166445672553848
+    },
+    {
+      "condition": "B",
+      "shape_group": "cube_cylinder",
+      "color": "purple",
+      "shape": "cube",
+      "negative_type": "pooled",
+      "n": 335,
+      "accuracy": 0.8631130063965886,
+      "mean_margin": 0.0189779687529289
+    },
+    {
+      "condition": "B",
+      "shape_group": "sphere",
+      "color": "cyan",
+      "shape": "sphere",
+      "negative_type": "pooled",
+      "n": 395,
+      "accuracy": 0.8737793851717903,
+      "mean_margin": 0.0172952377251931
+    },
+    {
+      "condition": "A",
+      "shape_group": "cube_cylinder",
+      "color": "yellow",
+      "shape": "cube",
+      "negative_type": "pooled",
+      "n": 358,
+      "accuracy": 0.942537909018356,
+      "mean_margin": 0.0274659875019894
+    }
+  ],
+  "e3_shape_summary": [
+    {
+      "condition": "A",
+      "shape": "cube",
+      "negative_type": "color",
+      "n": 757,
+      "accuracy": 0.7327797697678806
+    },
+    {
+      "condition": "A",
+      "shape": "cube",
+      "negative_type": "pooled",
+      "n": 1511,
+      "accuracy": 0.8058995934575022
+    },
+    {
+      "condition": "A",
+      "shape": "cube",
+      "negative_type": "shape",
+      "n": 754,
+      "accuracy": 0.8793103448275862
+    },
+    {
+      "condition": "A",
+      "shape": "cylinder",
+      "negative_type": "color",
+      "n": 755,
+      "accuracy": 0.6749290444654683
+    },
+    {
+      "condition": "A",
+      "shape": "cylinder",
+      "negative_type": "pooled",
+      "n": 1489,
+      "accuracy": 0.5059004125491702
+    },
+    {
+      "condition": "A",
+      "shape": "cylinder",
+      "negative_type": "shape",
+      "n": 734,
+      "accuracy": 0.3320358115998443
+    },
+    {
+      "condition": "A",
+      "shape": "sphere",
+      "negative_type": "color",
+      "n": 1501,
+      "accuracy": 0.7738650423527172
+    },
+    {
+      "condition": "A",
+      "shape": "sphere",
+      "negative_type": "pooled",
+      "n": 3000,
+      "accuracy": 0.7372857142857143
+    },
+    {
+      "condition": "A",
+      "shape": "sphere",
+      "negative_type": "shape",
+      "n": 1499,
+      "accuracy": 0.7006575812446393
+    },
+    {
+      "condition": "B",
+      "shape": "cube",
+      "negative_type": "color",
+      "n": 791,
+      "accuracy": 0.7052555535488532
+    },
+    {
+      "condition": "B",
+      "shape": "cube",
+      "negative_type": "pooled",
+      "n": 1489,
+      "accuracy": 0.7888323899069365
+    },
+    {
+      "condition": "B",
+      "shape": "cube",
+      "negative_type": "shape",
+      "n": 698,
+      "accuracy": 0.8835448219402373
+    },
+    {
+      "condition": "B",
+      "shape": "cylinder",
+      "negative_type": "color",
+      "n": 759,
+      "accuracy": 0.751176359872012
+    },
+    {
+      "condition": "B",
+      "shape": "cylinder",
+      "negative_type": "pooled",
+      "n": 1511,
+      "accuracy": 0.5435378651791622
+    },
+    {
+      "condition": "B",
+      "shape": "cylinder",
+      "negative_type": "shape",
+      "n": 752,
+      "accuracy": 0.3339665653495441
+    },
+    {
+      "condition": "B",
+      "shape": "sphere",
+      "negative_type": "color",
+      "n": 1557,
+      "accuracy": 0.7923662721350583
+    },
+    {
+      "condition": "B",
+      "shape": "sphere",
+      "negative_type": "pooled",
+      "n": 3000,
+      "accuracy": 0.7368571428571428
+    },
+    {
+      "condition": "B",
+      "shape": "sphere",
+      "negative_type": "shape",
+      "n": 1443,
+      "accuracy": 0.676962676962677
+    }
+  ],
+  "table_files": {
+    "e1_factor_gaps.csv": {
+      "rows": 21,
+      "bytes": 2597
+    },
+    "e1_results.csv": {
+      "rows": 10,
+      "bytes": 2355
+    },
+    "e1_spar_official.csv": {
+      "rows": 37,
+      "bytes": 2446
+    },
+    "e2_delta_stats.csv": {
+      "rows": 4,
+      "bytes": 4542
+    },
+    "e2_transition_stats.csv": {
+      "rows": 2031,
+      "bytes": 191159
+    },
+    "e3_cogent.csv": {
+      "rows": 12,
+      "bytes": 2641
+    },
+    "e3_cogent_by_color.csv": {
+      "rows": 32,
+      "bytes": 2061
+    },
+    "e3_cogent_by_combo.csv": {
+      "rows": 96,
+      "bytes": 7405
+    },
+    "e3_difficulty_gap.csv": {
+      "rows": 2,
+      "bytes": 636
+    }
+  },
+  "limitations": [
+    "Local source images, manifests and feature caches are not present in this checkout.",
+    "Original CSVs and JSONL files contain no model revision, run seed or source commit columns."
+  ]
+}
