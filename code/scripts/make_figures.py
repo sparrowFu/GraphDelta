@@ -20,7 +20,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.utils.io import load_paths
+from src.utils.io import load_config, load_paths
 
 # 调色板（dataviz 默认参考实例，浅色模式）
 BLUE, ORANGE, RED = "#2a78d6", "#eb6834", "#e34948"
@@ -55,9 +55,10 @@ def err(ax, xs, ys, los, his, color, lw=1.4, cap=2.5):
 
 
 # ---------------------------------------------------------------- Figure 1/2
-def fig_e1(tables, metric_kind, path, pdf):
+def fig_e1(tables, metric_kind, path, pdf, model_label, seed):
     """metric_kind='acc' → Figure 1；'margin' → Figure 2。按 dataset 分面板，
-    factor 按值降序；bar + 图片聚类 bootstrap CI；随机线 0.5（acc）。"""
+    factor 按值降序；bar + 图片聚类 bootstrap CI；随机线 0.5（acc）。
+    标题标注实际模型与种子（R7，不再写死）。"""
     df = pd.read_csv(tables / "e1_results.csv")
     df = df[df.protocol == "2afc_self_built"]
     datasets = ["clevr", "pug_spar"]
@@ -84,7 +85,7 @@ def fig_e1(tables, metric_kind, path, pdf):
         ax.set_title(titles[ds])
         style_axes(ax)
     ylab = "2AFC accuracy" if metric_kind == "acc" else "Mean matching margin"
-    fig.suptitle(f"{ylab} by structural factor (CLIP ViT-L/14, seed 0)",
+    fig.suptitle(f"{ylab} by structural factor ({model_label}, seed {seed})",
                  fontsize=11, y=1.06)
     axes[0].set_ylabel(ylab)
     fig.savefig(path, dpi=300, bbox_inches="tight")
@@ -227,16 +228,40 @@ def fig_cogent(tables, path, pdf):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tables-dir", default=None, help="默认 outputs/tables（seed 0）")
+    ap.add_argument("--model", default="clip_vitl14",
+                    help="结果所属模型：定位 tables 目录与图标题（R2/R7）")
+    ap.add_argument("--seed", type=int, default=0,
+                    help="结果所属种子：定位 tables 目录与图标题")
+    ap.add_argument("--tables-dir", default=None,
+                    help="直接指定 tables 目录（默认 outputs/<model>/seed_<seed>/tables，"
+                         "不存在时回退旧布局 outputs/tables）")
     args = ap.parse_args()
     paths = load_paths()
-    tables = Path(args.tables_dir) if args.tables_dir else paths["dirs"]["outputs"] / "tables"
-    figdir = paths["dirs"]["outputs"] / "figures"
+    out = paths["dirs"]["outputs"]
+    # 以所需的全量结果文件（而非目录存在）判定：只有 _smoke 文件的新目录不误选
+    new_tables = out / args.model / f"seed_{args.seed}" / "tables"
+    if args.tables_dir:
+        tables = Path(args.tables_dir)
+    elif (new_tables / "e1_results.csv").exists():
+        tables = new_tables
+    elif (out / "tables" / "e1_results.csv").exists():
+        tables = out / "tables"      # 旧布局（R2 隔离修复前的历史结果）
+    else:
+        raise SystemExit(f"找不到全量结果：{new_tables / 'e1_results.csv'} 与旧布局均缺失，"
+                         f"请先跑全量或用 --tables-dir 指定")
+    model_label = load_config(args.model).get("label", args.model)
+    # 默认组合（clip_vitl14, seed 0）沿用 outputs/figures 保持文件名兼容；
+    # 其他模型/种子写入独立子目录，互不覆盖（R2/R7）
+    if args.model == "clip_vitl14" and args.seed == 0 and not args.tables_dir:
+        figdir = out / "figures"
+    else:
+        figdir = out / "figures" / f"{args.model}_seed{args.seed}"
     figdir.mkdir(parents=True, exist_ok=True)
+    print(f"tables={tables} | model={model_label} | seed={args.seed} | figures={figdir}")
 
     with PdfPages(figdir / "GraphDelta_stage1_figures.pdf") as pdf:
-        fig_e1(tables, "acc", figdir / "fig1_2afc_accuracy.png", pdf)
-        fig_e1(tables, "margin", figdir / "fig2_matching_margin.png", pdf)
+        fig_e1(tables, "acc", figdir / "fig1_2afc_accuracy.png", pdf, model_label, args.seed)
+        fig_e1(tables, "margin", figdir / "fig2_matching_margin.png", pdf, model_label, args.seed)
         fig_delta_magnitude(tables, figdir / "fig3_delta_magnitude.png", pdf)
         fig_ladder(tables, figdir / "fig4_delta_similarity_ladder.png", pdf)
         fig_cogent(tables, figdir / "fig5_cogent_ab.png", pdf)

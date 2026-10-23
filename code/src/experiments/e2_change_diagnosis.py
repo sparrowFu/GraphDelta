@@ -22,7 +22,7 @@ from ..features.delta import augment_view, compute_deltas
 from ..features.extract import extract_pug_images
 from ..metrics.bootstrap import cluster_gap_ci, pair_cluster_gap_ci, pair_cluster_mean_ci
 from ..metrics.delta_stats import build_delta_frame, group_similarities, transition_table
-from ..utils.io import load_config
+from ..utils.io import load_config, output_tables_dir
 
 
 def _rowwise_cos(A, B):
@@ -89,9 +89,8 @@ def run(model, paths, logger, smoke=False, seed=None):
     cfg = load_config("e2_change")
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
     tcache = TextCache(paths["dirs"]["cache"], model.name)
-    out_tables = paths["dirs"]["outputs"] / "tables"
-    out_tables.mkdir(parents=True, exist_ok=True)
     pair_seed = cfg.get("seeds", [0])[0] if seed is None else seed
+    out_tables = output_tables_dir(paths, model.name, pair_seed)  # R2：按模型/种子隔离
 
     meta = build_animals_metadata(paths["datasets"]["pug_animals"])
     if smoke:

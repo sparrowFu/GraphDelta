@@ -60,15 +60,17 @@ def _lower(tex):
 
 
 def spar_scene_contents(row, other_animal):
-    c1 = row["character_name"]
+    """scene 正例描述实际存在的动物（R3：blank 可能在任意一侧；
+    双侧均 blank 的纯背景行由 build_spar_items 上游跳过，不进入本函数）。"""
+    c1, c2 = row["character_name"], row["character2_name"]
     world = row["world_name"]
-    if row["character2_name"] == "blank":
-        pos = f"a {c1} in the {world}"
-        neg = f"a {other_animal} in the {world}"
-    else:
-        c2 = row["character2_name"]
+    if c1 != "blank" and c2 != "blank":
         pos = f"a {c1} and a {c2} in the {world}"
         neg = f"a {c1} and a {other_animal} in the {world}"
+    else:
+        sole = c1 if c1 != "blank" else c2
+        pos = f"a {sole} in the {world}"
+        neg = f"a {other_animal} in the {world}"
     return pos, neg
 
 

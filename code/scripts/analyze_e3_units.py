@@ -39,14 +39,22 @@ def split_condition(sub, cond):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tables-dir", default=None,
-                    help="items 所在目录（默认 outputs/tables；多种子校验时指向 tables_seed{k}）")
+                    help="items 所在目录（默认 outputs/clip_vitl14/seed_0/tables，"
+                         "不存在时回退旧布局 outputs/tables；多种子校验时显式指向对应目录）")
     args = ap.parse_args()
 
     paths = load_paths()
     cfg = load_config("e3_cogent")
     bs = cfg["bootstrap"]
     types = cfg["sampling"]["negative_types"]
-    tables = Path(args.tables_dir) if args.tables_dir else paths["dirs"]["outputs"] / "tables"
+    out = paths["dirs"]["outputs"]
+    default_new = out / "clip_vitl14" / "seed_0" / "tables"
+    if args.tables_dir:
+        tables = Path(args.tables_dir)
+    elif (default_new / "e3_items_cogent.jsonl").exists():
+        tables = default_new
+    else:
+        tables = out / "tables"      # 旧布局（R2 隔离修复前的历史结果）
     logger = get_logger("analyze_e3_units", paths["dirs"]["outputs"] / "logs")
     logger.info(f"[E3-units] tables dir: {tables}")
 

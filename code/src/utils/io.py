@@ -36,6 +36,17 @@ def resolve(path_str):
     return p if p.is_absolute() else ROOT / p
 
 
+def output_tables_dir(paths, model_name: str, seed: int) -> Path:
+    """结果目录按模型与种子隔离（审查报告 R2）：outputs/<model>/seed_<seed>/tables/。
+
+    切换 --model / --seed 不再互相覆盖；旧布局 outputs/tables、outputs/tables_seed{k}
+    为历史结果，只读保留（summarize_seed_stability / make_figures 有回退逻辑）。
+    """
+    d = paths["dirs"]["outputs"] / model_name / f"seed_{seed}" / "tables"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
 def md5(s: str) -> str:
     return hashlib.md5(s.encode("utf-8")).hexdigest()
 

@@ -15,7 +15,7 @@ clevr:
 
 spar:
   factors: [scene, position, attribute, relation]
-  two_object_only: [position, attribute, relation]   # 需过滤 character2_name == "blank"
+  two_object_only: [position, attribute, relation]   # 双对象任务：两侧动物均非 blank（R3）
   attribute_require_diff_texture: true               # tex1 != tex2 才有效
   same_animal_filter: true                           # 双对象同种动物场景整体过滤（P1-2）
 

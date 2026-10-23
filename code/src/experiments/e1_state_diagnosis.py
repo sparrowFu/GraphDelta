@@ -5,9 +5,10 @@
   语义为 [i,j] ∈ relationships[rel] ⟺ objs[j] 在 objs[i] 的 rel 方向
   （审查报告 P1-1：主语取 objs[j]，参考对象取 objs[i]）。
 - SPAR：scene/position/attribute/relation 四类；过滤双对象同种动物场景
-  （正负文本可能相同或同时为真，审查报告 P1-2）；position/attribute/relation
-  另过滤 character2_name == "blank"。协议为自建 2AFC，官方检索协议见
-  e1_spar_official.py（审查报告 P2-11）。
+  （正负文本可能相同或同时为真，审查报告 P1-2）；双对象判定要求两侧动物
+  均非 blank（R3：character_name 也可能为 blank，不能只看 character2）；
+  双侧均 blank 的纯背景行不进入动物描述任务。协议为自建 2AFC，官方检索
+  协议见 e1_spar_official.py（审查报告 P2-11）。
 - 只做 image → (T+, T-) 方向（29a）。
 - 每图每 factor 采样上限 per_scene_cap 生效；filter 原因计数写盘（P2-5）。
 """
@@ -32,7 +33,7 @@ from ..data.pug_spar import build_metadata as build_spar_metadata
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.extract import extract_clevr_images, extract_pug_images
 from ..metrics.bootstrap import cluster_gap_ci
-from ..utils.io import load_config, write_jsonl
+from ..utils.io import load_config, output_tables_dir, write_jsonl
 from .common import EXPORT_FIELDS, cap_per_image, eval_2afc_items, subsample
 
 
@@ -143,24 +144,31 @@ def build_clevr_items(scenes, factors, rng):
 # ---------------- SPAR items ----------------
 
 def build_spar_items(meta, factors, rng, two_object_only, require_diff_texture):
-    """返回 (items, stats)。双对象同种动物场景整体过滤（审查报告 P1-2）。"""
+    """返回 (items, stats)。双对象同种动物场景整体过滤（审查报告 P1-2）；
+    双对象判定要求两侧动物均非 blank，纯背景行整体跳过（审查报告 R3）。"""
     animals = sorted((set(meta["character_name"]) | set(meta["character2_name"])) - {"blank"})
     items = {f: [] for f in factors}
-    stats = {"rows": len(meta), "same_animal_filtered": 0, "blank_two_object_skipped": 0,
-             "attribute_same_texture_filtered": 0, "scene_no_candidate": 0}
+    stats = {"rows": len(meta), "background_skipped": 0, "same_animal_filtered": 0,
+             "single_animal_rows": 0, "attribute_same_texture_filtered": 0,
+             "scene_no_candidate": 0}
 
     def push(factor, kind, rid, pos, neg):
         items[factor].append({"image_id": rid, "factor": factor,
                               "content_pos": pos, "content_neg": neg, "kind": kind})
 
     for row in meta.to_dict("records"):
-        two = row["character2_name"] != "blank"
+        c1, c2 = row["character_name"], row["character2_name"]
+        has1, has2 = c1 != "blank", c2 != "blank"
         rid = row["sample_id"]
-        if two and row["character_name"] == row["character2_name"]:
+        if not (has1 or has2):
+            stats["background_skipped"] += 1       # 纯背景：动物描述任务不适用（R3）
+            continue
+        two = has1 and has2
+        if two and c1 == c2:
             stats["same_animal_filtered"] += 1
             continue
         if "scene" in factors:
-            excl = {row["character_name"], row["character2_name"]}
+            excl = {c for c in (c1, c2) if c != "blank"}
             cand = [a for a in animals if a not in excl]
             if not cand:
                 stats["scene_no_candidate"] += 1
@@ -169,7 +177,7 @@ def build_spar_items(meta, factors, rng, two_object_only, require_diff_texture):
                 pos, neg = spar_scene_contents(row, other)
                 push("scene", "phrase", rid, pos, neg)
         if not two:
-            stats["blank_two_object_skipped"] += 1
+            stats["single_animal_rows"] += 1
             continue
         if "position" in factors:
             pos, neg = spar_position_contents(row)
@@ -192,9 +200,9 @@ def run(model, paths, logger, smoke=False, seed=None):
     cfg = load_config("e1_state")
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
     tcache = TextCache(paths["dirs"]["cache"], model.name)
-    out_tables = paths["dirs"]["outputs"] / "tables"
-    out_tables.mkdir(parents=True, exist_ok=True)
-    rng = np.random.default_rng(cfg["seeds"][0] if seed is None else seed)
+    eff_seed = cfg["seeds"][0] if seed is None else seed
+    out_tables = output_tables_dir(paths, model.name, eff_seed)   # R2：按模型/种子隔离
+    rng = np.random.default_rng(eff_seed)
     bs = cfg["bootstrap"]
     cap = cfg["sampling"].get("per_scene_cap", 1)
     target = min(200, cfg["sampling"]["target_per_cell"]) if smoke \

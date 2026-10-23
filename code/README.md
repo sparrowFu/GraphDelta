@@ -25,25 +25,28 @@ conda run -n CudaVersion128Fuxp python scripts/extract_embeddings.py --dataset c
 conda run -n CudaVersion128Fuxp python scripts/extract_embeddings.py --dataset cogent_valB
 conda run -n CudaVersion128Fuxp python scripts/extract_embeddings.py --dataset pug_animals
 
-# 2) 四个实验（默认 CLIP ViT-L/14；SigLIP2 对照加 `--model siglip2_so400m`）
+# 2) 四个实验（默认 CLIP ViT-L/14；其他 baseline 加 `--model`：clip_vitb32 / siglip2_so400m）
 conda run -n CudaVersion128Fuxp python scripts/run_e1.py                 # SPAR + CLEVR 自建 2AFC
 conda run -n CudaVersion128Fuxp python scripts/run_e1_spar_official.py   # SPAR 官方协议（P2-11）
 conda run -n CudaVersion128Fuxp python scripts/run_e3.py                 # CoGenT 难度不对称 + sphere 对照
 conda run -n CudaVersion128Fuxp python scripts/run_e2.py                 # PUG: Animals 单因素响应（最重，最后跑）
-# 例：SigLIP2 第一阶段对照（特征按模型分目录缓存，互不影响）
+# 例：SigLIP2 / CLIP B/32 对照（特征缓存与结果目录均按模型隔离，互不影响）
 conda run -n CudaVersion128Fuxp python scripts/run_e1.py --model siglip2_so400m
+conda run -n CudaVersion128Fuxp python scripts/run_e1.py --model clip_vitb32
 
 # 检验多次采样稳定性（方案 seeds 0/1/2）：
-conda run -n CudaVersion128Fuxp python scripts/run_e1.py --seed 1   # e2/e3 同理，覆盖 outputs 前自行备份
-# 收尾脚本（2026-10-22 已按此跑完 seeds 0/1/2）：
+conda run -n CudaVersion128Fuxp python scripts/run_e1.py --seed 1   # e2/e3 同理；结果自动写入 seed_1 目录
+# 收尾脚本（2026-10-22 已按此跑完 seeds 0/1/2，当时为旧布局）：
 conda run -n CudaVersion128Fuxp python scripts/analyze_e3_units.py        # E3 逐单元 gap（读 e3_items_cogent.jsonl）
-conda run -n CudaVersion128Fuxp python scripts/summarize_seed_stability.py # 三种子判定稳定性汇总
-conda run -n CudaVersion128Fuxp python scripts/make_figures.py            # §67 五图（PNG + 合并 PDF）
+conda run -n CudaVersion128Fuxp python scripts/summarize_seed_stability.py # 三种子判定稳定性汇总（--model 可选）
+conda run -n CudaVersion128Fuxp python scripts/make_figures.py            # §67 五图（--model/--seed 标注标题）
 ```
 
-种子目录约定：`outputs/tables` 恒为预注册 seed 0（`seeds[0]`）的结果；
-`outputs/tables_seed{0,1,2}` 为三份全量快照。阶段总结见
-`outputs/STAGE1_SUMMARY.md`。
+结果目录约定（R2 隔离）：每个运行写入 `outputs/<model>/seed_<k>/tables/`，
+切换 `--model` / `--seed` 不再互相覆盖。旧布局 `outputs/tables`（seed 0）与
+`outputs/tables_seed{1,2}` 是 2026-10-22 三种子运行的历史快照，只读保留；
+`summarize_seed_stability.py` / `make_figures.py` / `analyze_e3_units.py`
+在新布局不存在时自动回退旧布局。阶段总结见 `outputs/STAGE1_SUMMARY.md`。
 
 快速自检（小样本，输出带 `_smoke` 后缀）：
 
@@ -54,7 +57,7 @@ conda run -n CudaVersion128Fuxp python scripts/run_e3.py --smoke
 conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
 ```
 
-## 输出（outputs/tables/）
+## 输出（outputs/<model>/seed_<k>/tables/；旧结果在 outputs/tables*）
 
 | 文件 | 内容 |
 |---|---|
@@ -79,15 +82,16 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
 1. **Split（16a）**：CLEVR 只用 val；CoGenT 只用 valA/valB；PUG: Animals 全量 215,040；
    SPAR 全量 43,560。
 1a. **多 baseline（§84-2/§84-22）**：`--model` 选择冻结 baseline（`clip_vitl14` /
-   `siglip2_so400m`），按 `configs/<model>.yaml` 的 `model_type` 分发到各自 encoder；
-   特征缓存按模型分目录（`data/cache/<model>/`），不同模型不跨模型计算 cosine。
-   SigLIP2 so400m 权重需先用 `scripts/convert_siglip2_checkpoint.py` 一次性转换
-   （transformers 5.13 重构了 Siglip2：Conv→Linear patch 嵌入，权重需按
-   (P,P,C) 顺序重排——Siglip2ImageProcessor 的 patch 向量实测按 (P,P,C) 展平；
-   产物在原目录旁的 `-v5/`，paths.yaml 指向它）。SigLIP2 实现要点：文本
-   `padding="max_length"`（池化取序列末位置，官方要求）；processor 走
-   `image_processor`/`tokenizer` 直调（transformers 5.13 的
-   `Siglip2Processor.__call__` 会用默认 patch 16/256 覆盖实例属性）；SPAR 官方
+   `clip_vitb32` / `siglip2_so400m`），按 `configs/<model>.yaml` 的 `model_type`
+   分发到各自 encoder；特征缓存按模型分目录（`data/cache/<model>/`），结果目录
+   按模型 + 种子隔离（R2），不同模型不跨模型计算 cosine。
+   SigLIP2 so400m-patch14-384 是 **FixRes checkpoint**（R1）：`SiglipModel` +
+   `SiglipImageProcessor` 直接加载原始目录（固定 384×384 resize），无需转换；
+   曾用 `convert_siglip2_checkpoint.py` 转成 NaFlex 布局加载的做法会改变预处理
+   语义（动态分辨率 + 保持纵横比，同图特征实测 cosine 0.994 非等价），已废弃，
+   脚本仅留档。文本统一**显式小写**后编码（R4：tokenizer_config 的
+   do_lower_case 对 GemmaTokenizer 不生效，SigLIP2 官方要求小写），
+   `padding="max_length"` 到 64（池化取序列末位置，官方要求）；SPAR 官方
    协议对其使用自身 384 预处理（§84-22），故 SigLIP2 官方协议数字不复现任何
    官方发布值，只作 backbone 对照。
 2. **PUG 行号**：按分片文件名字典序累计的全局 row_id；sample_id = `pug_{data}_{row_id:06d}`。
@@ -97,10 +101,12 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
    三维向量逐条验证 21,164/21,164 为真）。
 4. **负例有效性（20a）**：正例存在、负例对整图为假、（建议）正例唯一；无效样本直接丢弃，
    各过滤原因计数写入 `e1_*_filter_stats.json`。
-5. **SPAR 自建 2AFC**：`character2_name=="blank"` 为单动物场景，position/attribute/relation
-   先过滤；**双对象同种动物场景整体过滤**（正负文本可能相同或同时为真，P1-2）；
-   position 负例 = 方位词取反，水平用 "to the left/right of"、垂直用 "below/above"
-   （P2-11，不产生 "to the below of"）；relation 负例 = 主客体互换；
+5. **SPAR 自建 2AFC**：blank 可能在 `character_name` 或 `character2_name` 任意一侧
+   （各 1,320 行；R3），双对象任务（position/attribute/relation）要求**两侧均非
+   blank**；双侧均 blank 的纯背景行（40 行）不进入动物描述任务；scene 单动物行
+   描述实际存在的一侧。**双对象同种动物场景整体过滤**（正负文本可能相同或同时
+   为真，P1-2）；position 负例 = 方位词取反，水平用 "to the left/right of"、垂直用
+   "below/above"（P2-11，不产生 "to the below of"）；relation 负例 = 主客体互换；
    attribute 负例 = 纹理互换（要求 tex1≠tex2）。
 6. **模板（31）**：phrase 7 个 + sentence 7 个（configs/templates.yaml），报告跨模板平均与
    模板间方差；平局 s+==s- 记错。
@@ -130,7 +136,9 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
     `PUG_SPAR/run_eval_vlms_on_spar.py` CLIP 路径（对照过 facebookresearch/PUG
     仓库原脚本，历轮审查已核对逐项一致；审查材料已清理）：
     官方 caption 模板（无句号）、全候选检索 top1/top5 + hard-negative 二选一；
-    **检索候选集只含真实行的正例 caption**（role-swap 负例仅用于 hard-negative，
+    one_object 候选池含 "blank"（官方 `character_name.unique()` 不去 blank，
+    blank 为干扰候选，R6）；**检索候选集只含真实行的正例 caption**（role-swap
+    负例仅用于 hard-negative，
     二轮问题 7）；add_background=True 时每个正例组合按**全部 world** 展开候选、
     图片的正标签与 hard-negative 仍用图片自身 world（三轮问题 2）；官方脚本的
     quirk 保留（`character1_pos` 只有 left/below，"bottom/top" 子集为空）。
@@ -154,6 +162,7 @@ PUG 系列为 CC-BY-NC（禁止用于训练生成式模型）；本流水线只�
   一条样本（P2-5）。E3 每图最多 2 对象 × 2 题型，CI 按图片聚类。
 - SPAR 官方协议 smoke 模式只取前 3000 行，部分任务样本少或为空（如 blank-blank 场景
   识别）；全量运行才有可与论文对齐的数字。
-- SigLIP2 已实现（`siglip_encoder.py` + `convert_siglip2_checkpoint.py`）；
+- SigLIP2 已按 FixRes 路径重实现（`siglip_encoder.py`，R1/R4 修复后需重抽该模型
+  全部图像与文本特征并重跑其已有结果；旧的 NaFlex 路径产物已废弃）；
   尚未跑全量对照（需重抽约 35 万张图特征，与 BindRepair 并行安排）。
 - §67 五图已生成（`scripts/make_figures.py` → `outputs/figures/`）。

@@ -1,13 +1,24 @@
 #!/usr/bin/env python
-"""一次性：把旧格式 SigLIP2 checkpoint 转成 transformers v5 结构（只转布局，不改数值语义）。
+"""【已废弃，仅留档】一次性：把旧格式 SigLIP2 checkpoint 转成 transformers v5 结构。
 
-背景：transformers 5.13 重构了 Siglip2——
+废弃原因（审查报告 R1，2026-10-23 实测验证）：本脚本把 FixRes checkpoint
+（SiglipModel + SiglipImageProcessor 固定 384×384）转成 NaFlex 布局
+（Siglip2Model + Siglip2ImageProcessor 动态分辨率、保持纵横比），改变的是
+预处理语义而非等价升级：512×512 输入被按 378×378 处理、320×480 被按
+308×462 处理（patch 网格 22×33），不再是对指定 checkpoint 的官方预处理。
+transformers 5.13 的 SiglipModel / SiglipImageProcessor 仍完整支持原始权重
+直接 from_pretrained（Conv2d patch 嵌入），无需本转换。siglip_encoder.py
+已改回原始目录 + SiglipModel 路径，paths.yaml 同步指向原始目录。
+（-v5 产物目录保留在原处，不再被任何代码引用。）
+
+历史背景（转换当时的技术判断，其中"v5 无自动转换映射、直接加载会 size
+mismatch"仅对 Siglip2Model 成立，对 SiglipModel 不成立——此为当时的误判）：
+transformers 5.13 重构了 Siglip2——
 - patch 嵌入从 Conv2d(C→H, k=P) 改为 Linear(C*P*P→H)（patch 化移到 processor）；
 - 配置从 image_size 改为 num_patches（位置嵌入数）；
 - image processor 改为 Siglip2ImageProcessor（输出 patchified pixel_values
   (N, 729, 588) + spatial_shapes + pixel_attention_mask）。
-旧 release 权重（Conv 729 位置 + SiglipImageProcessor）直接 from_pretrained 会
-size mismatch，且 v5 无自动转换映射。本脚本做四件事并在随机输入上数值验证等价：
+本脚本做过四件事并在随机输入上数值验证等价：
 1. vision patch_embedding.weight: (H, C, P, P) → permute(0,2,3,1).reshape(H, P*P*C)。
    Siglip2ImageProcessor 的 patch 向量按 (P,P,C) 顺序展平（已实测：与 (C,P,P)
    不符、与 (P,P,C) 差 3e-8），权重必须同序；
@@ -18,10 +29,6 @@ size mismatch，且 v5 无自动转换映射。本脚本做四件事并在随机
 3. 用 Siglip2ImageProcessor.save_pretrained 重写 preprocessor_config
    （沿用原 mean/std=0.5、384 resize、resample=2；patch 14、max_num_patches 729）。
 4. 其余 tokenizer / 配置文件原样复制。
-
-产物写入 <src>-v5/（原目录不动），paths.yaml 指向新目录。
-注意（transformers 5.13 怪癖）：Siglip2Processor.__call__ 会以默认 patch 16/256
-覆盖实例属性，encoder 必须直接调 image_processor / tokenizer，不走包装层。
 """
 import json
 import shutil

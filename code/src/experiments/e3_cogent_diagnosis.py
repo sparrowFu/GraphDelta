@@ -15,7 +15,7 @@ from ..data.cogent import condition_image_dir, load_condition_scenes
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.extract import extract_clevr_images
 from ..metrics.bootstrap import cluster_gap_ci, cluster_gap_ci_equal_types
-from ..utils.io import load_config, write_jsonl
+from ..utils.io import load_config, output_tables_dir, write_jsonl
 from .common import EXPORT_FIELDS, eval_2afc_items, subsample
 
 
@@ -70,9 +70,9 @@ def run(model, paths, logger, smoke=False, seed=None):
     cfg = load_config("e3_cogent")
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
     tcache = TextCache(paths["dirs"]["cache"], model.name)
-    out_tables = paths["dirs"]["outputs"] / "tables"
-    out_tables.mkdir(parents=True, exist_ok=True)
-    rng = np.random.default_rng(cfg["seeds"][0] if seed is None else seed)
+    eff_seed = cfg["seeds"][0] if seed is None else seed
+    out_tables = output_tables_dir(paths, model.name, eff_seed)   # R2：按模型/种子隔离
+    rng = np.random.default_rng(eff_seed)
     bs = cfg["bootstrap"]
     target = min(300, cfg["sampling"]["target_per_condition_shape"]) if smoke \
         else cfg["sampling"]["target_per_condition_shape"]

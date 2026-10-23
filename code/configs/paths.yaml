@@ -8,7 +8,9 @@ datasets:
 
 models:
   clip_vitl14: /mnt/disk1/xpfu/PreTrainedModels/clip-vit-large-patch14
-  siglip2_so400m: /mnt/disk1/xpfu/PreTrainedModels/siglip2-so400m-patch14-384-v5
+  clip_vitb32: /mnt/disk1/xpfu/PreTrainedModels/clip-vit-base-patch32
+  # FixRes checkpoint，SiglipModel 直接加载原始目录（R1；-v5 转换目录已废弃）
+  siglip2_so400m: /mnt/disk1/xpfu/PreTrainedModels/siglip2-so400m-patch14-384
 
 dirs:
   manifests: data/manifests

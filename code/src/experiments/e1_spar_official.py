@@ -11,7 +11,9 @@ CLIP 路径；审查报告 P2-11）。
   （sim_pos > sim_neg），固定 [pos, neg] 顺序与官方 accuracy 等价
   （平局除外：本实现平局判错，与方案 2AFC 规则一致）；
 - 官方脚本的已知 quirk 按原样保留：character1_pos 只有 left/below，
-  "bottom/top" 子集为空；actor 列表去 blank（官方用 unique()[1:] 近似实现）；
+  "bottom/top" 子集为空；one_object 候选池含 "blank"（官方
+  character_name.unique() 不去 blank，blank 为干扰候选，R6）；官方仅
+  one_object_position 任务用 unique()[1:]（按出现序去掉首元素 blank）；
 - 抽样：spar_official.max_per_task 限制每个评测子集的查询图片数（按 seeds[0] 随机
   抽样，与自建 E1 的 target_per_cell 对齐）。检索候选池始终由完整子集生成，不随
   查询抽样缩减；bg 与 no-bg 两轮复用同一组查询图片（五轮 P2-1）。此时偏离官方
@@ -25,7 +27,7 @@ import zlib
 from ..data.pug_common import count_rows, iter_image_batches
 from ..data.pug_spar import META_COLUMNS, build_metadata
 from ..features.cache import ImageFeatureCache, TextCache
-from ..utils.io import load_config
+from ..utils.io import load_config, output_tables_dir
 
 TEXTURES = ["Default", "Blue", "Grass"]
 POS_PAIRS = [("left", "right"), ("bottom", "top")]
@@ -159,10 +161,9 @@ def run(model, paths, logger, smoke=False, seed=None):
     cfg = full.get("spar_official", {})
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name)
     tcache = TextCache(paths["dirs"]["cache"], model.name)
-    out_tables = paths["dirs"]["outputs"] / "tables"
-    out_tables.mkdir(parents=True, exist_ok=True)
     max_per_task = cfg.get("max_per_task")   # null：官方全量（历史行为）
     base_seed = full.get("seeds", [0])[0] if seed is None else seed
+    out_tables = output_tables_dir(paths, model.name, base_seed)  # R2：按模型/种子隔离
 
     meta = build_metadata(paths["datasets"]["pug_spar"])
     # add_background 候选的 world 展开按全量 metadata（官方脚本用完整 labels.csv，
@@ -234,8 +235,11 @@ def run(model, paths, logger, smoke=False, seed=None):
             full = ss[ss["character_texture"] == texture].reset_index(drop=True)
             st = _sample_query(full, max_per_task, base_seed,
                                "one_object", str(world), texture)
-            # 候选池取完整子集，不随查询抽样缩减（五轮 P2-1）
-            chars = sorted({c for c in full["actor"].unique() if c != "blank"})
+            # 候选池取完整子集，不随查询抽样缩减（五轮 P2-1）。
+            # R6：官方 one_object 候选 = character_name.unique()，不去 blank
+            #（blank 是官方的干扰候选 caption）；actor 侧动物集合与官方
+            # character_name 侧一致（已对三个 texture 子集逐一核对相等）
+            chars = sorted(set(full["actor"].unique()) | {"blank"})
             if add_back:
                 caps = [f"This is a photo of a {c}" + _env_suffix(w)
                         for c in chars for w in worlds]

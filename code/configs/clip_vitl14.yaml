@@ -1,5 +1,6 @@
 # CLIP ViT-L/14（首选冻结 baseline）
 name: clip_vitl14
+label: CLIP ViT-L/14
 model_type: clip
 device: auto          # auto / cuda / cpu
 fp16: true

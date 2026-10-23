@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """多种子稳定性汇总（方案 §82 seeds 0/1/2）。
 
-读 outputs/tables（seed 0，规范目录）与 tables_seed1 / tables_seed2，
+每个种子优先读新布局 outputs/<model>/seed_{k}/tables（R2 隔离后的规范目录），
+不存在时回退旧布局 outputs/tables（seed 0）/ tables_seed{k}（历史结果），
 检验三种子下关键判定是否翻转：
 - E1 自建 2AFC：accuracy CI 与 0.5 的关系（含 / 上 / 下）是否一致；
 - E1 factor gaps：gap CI 符号（正 / 负 / 含 0）是否一致；
@@ -42,14 +43,28 @@ def ci_sign(lo, hi):
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model", default="clip_vitl14",
+                    help="汇总的模型（新布局 outputs/<model>/seed_k/tables；R2）")
+    args = ap.parse_args()
+
     paths = load_paths()
     out_dir = paths["dirs"]["outputs"]
-    tabs = {0: out_dir / "tables",
-            1: out_dir / "tables_seed1",
-            2: out_dir / "tables_seed2"}
-    for s, d in tabs.items():
-        assert d.exists(), f"missing {d}"
+    tabs = {}
+    for s in [0, 1, 2]:
+        new = out_dir / args.model / f"seed_{s}" / "tables"
+        legacy = out_dir / ("tables" if s == 0 else f"tables_seed{s}")
+        # 以全量结果文件判定（只有 _smoke 文件的新目录不误选）
+        if (new / "e1_results.csv").exists():
+            tabs[s] = new
+        elif (legacy / "e1_results.csv").exists():
+            tabs[s] = legacy       # R2 隔离修复前跑出的历史结果
+        else:
+            raise SystemExit(f"missing full results in both {new} and {legacy}")
     logger = get_logger("seed_stability", out_dir / "logs")
+    for s, d in tabs.items():
+        logger.info(f"[seeds] seed {s} tables: {d}")
 
     def read(seed, name):
         return pd.read_csv(tabs[seed] / name)

@@ -1,0 +1,9 @@
+# CLIP ViT-B/32（冻结 baseline）
+name: clip_vitb32
+label: CLIP ViT-B/32
+model_type: clip
+device: auto          # auto / cuda / cpu
+fp16: true
+batch_size_image: 512
+batch_size_text: 512
+num_workers: 8

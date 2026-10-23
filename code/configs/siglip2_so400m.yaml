@@ -1,5 +1,6 @@
 # SigLIP2 so400m-patch14-384（第一阶段第二轮对照 baseline，方案 §84-2/§84-22）
 name: siglip2_so400m
+label: SigLIP2 so400m-p14-384
 model_type: siglip2
 device: auto          # auto / cuda / cpu
 fp16: true
