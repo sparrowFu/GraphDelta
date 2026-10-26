@@ -3,13 +3,13 @@
 对照《GraphDelta_代码审查报告_2026-10-26》逐条核实当前代码（基线 `422b1c9`），
 属实的问题已修复并用测试验证。本报告为该审查报告的核实结论与修复记录。
 
-**结论：报告所列 7 条问题（A1–A7）全部属实，已全部修复；第 3 节的统计风险
-按"披露样本量"处理，抽样分布未改动（原因见第 3 节）。共修改 14 个文件，
-39 项单元检查 + 2 个数据集的 E2 端到端集成测试全部通过。**
+**状态更新：本文件记录 A1–A7 原触发路径的实现修复，并保留当时“14 个实现/文档文件、39 项检查、2 个合成数据集集成流程”的验证记录。这些记录不能等同于所有逻辑问题关闭或五数据集、三模型的真实端到端验收。后续独立复核已确认原 NaN-CI、目录身份、new/legacy 拒绝及比较上限等修复有效，同时发现 ImageNet 实例覆盖和 SPAR 逐环境汇总等问题。最新状态以[独立复核修订版](D:/code/GraphDelta/GraphDelta_修复复核报告_2026-10-26.md)为准。**
+
+第 3 节稀疏比较风险按样本量披露处理，不改变联合均匀抽样定义；该处理不保证实际样本量足以支持结论。
 
 ## 1. 逐条核实与修复
 
-### A1 [P1] PUG_ImageNet 未接入 —— 属实，已修复
+### A1 [P1] PUG_ImageNet 未接入 —— 入口已接通，实例约束未完成验收
 
 核实：`extract_embeddings.py` 的 `--dataset` 无 `pug_imagenet`；`e2_change_diagnosis.py`
 的 metadata、特征抽取、nuisance、dataset 标签全部写死 `pug_animals`；`run_e2.py`
@@ -20,7 +20,8 @@
 - `src/data/pug_imagenet.py`：`META_COLUMNS` 补 `character_rotation_yaw/roll/pitch`；
   统一语义列 environment←world_name、texture←character_texture、size←character_scale
   （原始数值）、camera←camera_yaw；固定 context 包含 character_label、camera_pitch、
-  camera_roll、scene_light 和全部旋转字段，保证每对只有目标因素变化。
+  camera_roll、scene_light 和全部旋转字段，约束这些字段不变；但未保留并固定
+  character_name，不能据此保证同一具体物体下仅目标因素变化，见最新复核 B1。
 - `src/experiments/e2_change_diagnosis.py`：改为 `run(dataset=...)` 分发（DATASETS
   注册表），metadata / 抽取 / nuisance / caption / 输出标签全部按数据集选择；
   ImageNet 结果写 `e2_delta_stats_pug_imagenet.csv`（Animals 沿用原文件名，
@@ -32,12 +33,13 @@
 - `configs/e2_change.yaml`：`factors` 与 `canonical_orders` 按数据集隔离
   （Animals 声明标签顺序；ImageNet 不声明，按观测值排序——不能沿用
   small/medium/large 标签顺序匹配 ImageNet 的原始数值 0.7/1.0/1.3）。
-- `src/data/captions.py` 加 `pug_imagenet_caption`（character_name 是 hash、
-  character_label 是编号，无法构成自然语言，caption 只描述 texture + environment）。
+- `src/data/captions.py` 加 `pug_imagenet_caption`，当前只描述 texture + environment。
+  原理由“character_label 是编号，无法构成自然语言”不成立：官方字段为
+  African_crocodile 等字符串，可转为空格分词的类别名，见最新复核来源。
 
-验证：合成 parquet + 假 encoder 跑通 ImageNet E2 全流程（配对只变目标因素、
-类别/姿态/灯光/其余相机角全固定、数值因素 source<target、CSV 含 dataset 列
-和 n_cmp_* 列）。
+当时验证：合成 parquet + 假 encoder 跑通 ImageNet E2 流程，覆盖类别/姿态/
+灯光/其余相机角固定、数值因素 source<target、CSV 标签和 n_cmp_* 列。
+这不能证明同类多实例的严格单因素配对；最新真实元数据连续样本已发现实例覆盖压缩。
 
 ### A2 [P1] 旧缓存被错误认证 —— 属实，已修复
 
@@ -50,8 +52,8 @@
 - `cache.py`：只有**空目录**（无任何 NPZ）才首次登记协议；无协议但已有 NPZ
   的目录直接报错，提示用 `--force` 重建或手动移入历史目录。
 - `extract_embeddings.py`：`--force` 移到缓存构造**之前**执行，作为整套重建
-  入口——协议匹配时删本数据集图像缓存 + 文本缓存（文本与图像共享 encoder
-  语义，不能只重建图像）；协议不匹配或无协议时删整个模型缓存目录（目录内
+  入口——协议匹配时删本数据集图像缓存 + 文本缓存（这是当前保守实现，
+  不是同协议图像重抽必须清除全部文本的逻辑要求）；协议不匹配或无协议时删整个模型缓存目录（目录内
   新旧特征无法区分，部分保留会重新引入本问题）。
 
 验证：旧 NPZ 无协议被拒绝、空目录登记、不匹配报错、force 三种情形（匹配/
@@ -176,8 +178,8 @@ SPAR 官方描述行在含缺失值时标注"含缺失值"。
 
 边界（与审查报告第 5 节一致）：
 
-- 本机无 torch/transformers，未加载真实权重；合成数据 + 假 encoder 的测试
-  证明**流程与逻辑**正确，不等于真实 checkpoint 下的数值结果正确。
+- 当时未加载真实权重；合成数据 + 假 encoder 的测试只证明**被覆盖用例的流程可运行**，
+  不证明全部配对语义、输入边界或真实 checkpoint 下的数值结果正确。
 - `summarize_seed_stability.py` 的完整运行、`make_figures.py` 的实际绘图
   依赖真实结果目录和 matplotlib，本机不可用，仅做代码级验证。
 - PUG:ImageNet 真实数据的取值集合（scale/texture/灯光等）未见过，按观测值
@@ -185,8 +187,9 @@ SPAR 官方描述行在含缺失值时标注"含缺失值"。
 
 ## 5. 后续动作建议（按审查报告第 5 节顺序，结合本轮修改更新）
 
-1. 服务器上核查 `data/cache/` 来源；来源不明或为旧 SigLIP2 特征的，用
-   `extract_embeddings.py --force` 整套重建（A2 修复后这现在是安全入口）。
+1. 服务器上核查 `data/cache/` 来源；来源不明或确为旧 SigLIP2 特征时，应先隔离
+   整个受影响模型缓存，再从空目录逐数据集重建。当前 `--force` 对匹配协议只删除
+   指定数据集图像和文本缓存，不等于重建其他数据集；损坏 JSON 的恢复边界见最新复核 B7。
 2. 真实数据端到端：三模型 × 五数据集各自任务各跑一次 `--smoke`，确认
    ImageNet 链路（首次运行观察各因素取值与配对日志）。
 3. E2 按新 nuisance 语义（面积比例 85%–100%）重算；原图像特征可复用。

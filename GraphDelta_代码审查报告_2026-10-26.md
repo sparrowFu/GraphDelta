@@ -1,4 +1,6 @@
-# GraphDelta 当前代码审查报告（2026-10-26）
+# GraphDelta 代码审查报告（2026-10-26，历史基线 deb6d3a）
+
+> 状态更新：下文 A1–A7 描述的是修复前源码，不应继续当作提交 `3cc6dae` 的现状。原触发路径的修复、新发现的问题、证据分级及前版结论的收窄，统一见[独立复核修订版](D:/code/GraphDelta/GraphDelta_修复复核报告_2026-10-26.md)。本文件保留历史复现依据；历史统计和当时环境描述不代表本轮重新验收通过。
 
 审查基线：`deb6d3a`，工作区 `D:/code/GraphDelta/code/`。对照《GraphDelta_完整预实验方案_统一修订版》和《GraphDelta_研究框架_统一修订版》，并按本次要求检查五个数据集、三个指定模型。此前审查报告仅作为线索，下面的结论以当前源码和本轮验证为准。本轮未修改实验源码。
 
@@ -59,7 +61,7 @@ new_marker: {'protocol': 'siglip2-fixres-lowercase-v1'}
 
 建议：仅允许空目录首次登记协议；无协议但已有 NPZ 的目录应拒绝复用或移入历史命名空间。更完整的指纹还应包含 checkpoint/processor 身份，避免同一模型别名换权重后继续命中缓存。
 
-附带的恢复流程缺陷：[extract_embeddings.py](D:/code/GraphDelta/code/scripts/extract_embeddings.py:37) 先构造并校验缓存，再在 39–40 行处理 `--force`。协议不匹配时会先抛异常，`--force` 删除分支不可达。本轮复现确认旧 NPZ 保持原样。应提供明确的整套缓存迁移/重建入口；重建不能只覆盖图像缓存而保留旧文本缓存。
+附带的历史恢复流程缺陷：[extract_embeddings.py](D:/code/GraphDelta/code/scripts/extract_embeddings.py:37) 当时先构造并校验缓存，再处理 `--force`，协议不匹配时删除分支不可达；该原触发已在 `3cc6dae` 修复。原建议应收窄：encoder 语义改变或来源未知时，受影响的图像和文本应一起重建；同协议下仅重抽某数据集图像，不必天然清除全模型文本缓存。具体恢复边界和成本见最新复核报告。
 
 ### A3 [P2] nuisance 的裁剪比例实现与其面积定义不一致
 
