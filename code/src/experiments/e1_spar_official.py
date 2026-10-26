@@ -163,7 +163,8 @@ def run(model, paths, logger, smoke=False, seed=None):
     tcache = TextCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     max_per_task = cfg.get("max_per_task")   # null：官方全量（历史行为）
     base_seed = full.get("seeds", [0])[0] if seed is None else seed
-    out_tables = output_tables_dir(paths, model.name, base_seed)  # R2：按模型/种子隔离
+    out_tables = output_tables_dir(paths, model.name, base_seed,  # R2：按模型/种子隔离
+                                   extra={"cache_protocol": model.cache_protocol})
 
     meta = build_metadata(paths["datasets"]["pug_spar"])
     # add_background 候选的 world 展开按全量 metadata（官方脚本用完整 labels.csv，

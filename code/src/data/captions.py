@@ -106,9 +106,10 @@ def pug_animals_caption(row):
     return f"a {row['animal']} in the {row['environment']}"
 
 
-# ---------------- PUG: ImageNet（文本 nuisance 用，审查 A1）----------------
-# character_name 是 hash、character_label 是类别编号，都不能构成自然语言
-# 内容；caption 只描述可自然表达的字段（texture + environment）。
+# ---------------- PUG: ImageNet（文本 nuisance 用，审查 A1 / 复核 B1）----------------
+# character_name 是 asset hash（实例身份，不进文本）；character_label 是类别名
+# 字符串（官方数据如 African_crocodile），可直接构成自然语言内容。
 
 def pug_imagenet_caption(row):
-    return f"a {row['texture']} object in the {row['environment']}"
+    label = str(row["character_label"]).replace("_", " ")
+    return f"a {label} in the {row['environment']}"

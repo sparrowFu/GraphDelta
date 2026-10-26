@@ -8,7 +8,8 @@ A−B 难度差 + 图片聚类 bootstrap CI，检验"逐组合效应方向不一
 
 - 16 个主单元各报 95% CI，属多重比较，只做描述、不做联合检验。
 - 先用全部 items 复算一次总 gap，与 e3_difficulty_gap.csv 主指标对照
-  （同一函数、同一数据，应一致到数值精度）。
+  （同一函数、同一数据，应一致到数值精度）；不一致时默认停止输出单元表，
+  检查结果写 e3_unit_consistency.json（复核 B6；--no-strict 为探索模式）。
 """
 import argparse
 import json
@@ -41,6 +42,11 @@ def main():
     ap.add_argument("--tables-dir", default=None,
                     help="items 所在目录（默认 outputs/clip_vitl14/seed_0/tables，"
                          "不存在时回退旧布局 outputs/tables；多种子校验时显式指向对应目录）")
+    ap.add_argument("--no-strict", action="store_true",
+                    help="一致性检查不过时仍输出单元表（探索模式；检查结果始终写 "
+                         "e3_unit_consistency.json，复核 B6）")
+    ap.add_argument("--check-atol", type=float, default=1e-8,
+                    help="总 gap 复算与主表比较的绝对容差（默认 1e-8）")
     args = ap.parse_args()
 
     paths = load_paths()
@@ -62,8 +68,12 @@ def main():
     df = load_items(tables / "e3_items_cogent.jsonl")
     logger.info(f"[E3-units] loaded {len(df)} items")
 
-    # 总 gap 复算（强校验：应与 e3_difficulty_gap.csv 主指标一致到数值精度）
+    # 总 gap 复算（强校验：应与 e3_difficulty_gap.csv 主指标一致到数值精度）。
+    # 复核 B6：此前只打日志、不拦截——items 与主表冲突时仍输出单元表，下游
+    # Figure 5 可能展示冲突来源。现在：检查结果写 e3_unit_consistency.json；
+    # 不一致时默认停止（--no-strict 为探索模式，仍输出单元表）。
     ref_path = tables / "e3_difficulty_gap.csv"
+    checks, check_fail = [], False
     if ref_path.exists():
         ref = pd.read_csv(ref_path).set_index("shape_group")
         for grp in ["cube_cylinder", "sphere"]:
@@ -74,8 +84,26 @@ def main():
                 acc_a, cl_a, ty_a, acc_b, cl_b, ty_b, types,
                 n_boot=bs["n_boot"], ci=bs["ci"], seed=0)
             r_gap = float(ref.loc[grp, "difficulty_gap"])
+            both_nan = np.isnan(gap) and np.isnan(r_gap)
+            diff = (abs(gap - r_gap)
+                    if np.isfinite(gap) and np.isfinite(r_gap) else None)
+            ok = bool(both_nan or (diff is not None and diff <= args.check_atol))
+            checks.append({"shape_group": grp, "recomputed": gap, "report": r_gap,
+                           "abs_diff": diff, "ok": ok})
+            check_fail |= not ok
             logger.info(f"[E3-units] total gap {grp}: recomputed={gap:.6f} "
-                        f"report={r_gap:.6f} |diff|={abs(gap - r_gap):.2e}")
+                        f"report={r_gap:.6f} |diff|={diff if diff is not None else 'NA'}"
+                        f" ok={ok}")
+    sidecar = tables / "e3_unit_consistency.json"
+    sidecar.write_text(json.dumps(
+        {"all_ok": not check_fail, "atol": args.check_atol, "checks": checks,
+         "tables_dir": str(tables)}, ensure_ascii=False, indent=2))
+    logger.info(f"[E3-units] consistency: all_ok={not check_fail} -> {sidecar}")
+    if check_fail and not args.no_strict:
+        raise SystemExit(
+            "[E3-units] items 复算的总 gap 与主表不一致（见 "
+            f"{sidecar}）——数据来源冲突，已停止输出单元表；"
+            "探索模式（仍输出，供排查）用 --no-strict。")
 
     rows = []
     for grp in ["cube_cylinder", "sphere"]:

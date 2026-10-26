@@ -87,7 +87,13 @@ def extract_pug_images(model, cache, dataset_key, parquet_dir, meta_columns, log
     existing_ids = _existing(cache, dataset_key, logger)
     have = set(existing_ids)
     if only_row_ids is not None:
-        expected_new = sum(1 for r in only_row_ids if fmt(r) not in have)
+        # 复核 B9：只迭代/解码"尚未缓存"的行；全部已缓存时直接返回，
+        # 不再扫描整个 parquet 的 image 列
+        only_row_ids = {r for r in only_row_ids if fmt(r) not in have}
+        if not only_row_ids:
+            logger.info(f"[extract] cache complete, skip: {dataset_key}")
+            return
+        expected_new = len(only_row_ids)
     elif have:
         # 缓存有基础：把需要补抽的行作为 only_row_ids 传给迭代器，
         # 避免为跳过的行解码图像

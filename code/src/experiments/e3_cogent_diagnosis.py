@@ -71,7 +71,8 @@ def run(model, paths, logger, smoke=False, seed=None):
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     tcache = TextCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     eff_seed = cfg["seeds"][0] if seed is None else seed
-    out_tables = output_tables_dir(paths, model.name, eff_seed)   # R2：按模型/种子隔离
+    out_tables = output_tables_dir(paths, model.name, eff_seed,   # R2：按模型/种子隔离
+                                   extra={"cache_protocol": model.cache_protocol})
     rng = np.random.default_rng(eff_seed)
     bs = cfg["bootstrap"]
     target = min(300, cfg["sampling"]["target_per_condition_shape"]) if smoke \

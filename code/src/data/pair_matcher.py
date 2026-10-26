@@ -67,7 +67,21 @@ def build_factor_pairs(df: pd.DataFrame, factor: str, orders: dict,
         ctx_dict = dict(zip(group_cols, ctx_key))
         ctx_key_str = "|".join(str(v) for v in ctx_key)
 
-        by_val = {r[factor]: r for r in grp.to_dict("records")}
+        by_val = {}
+        n_dup = 0
+        for r in grp.to_dict("records"):
+            v = r[factor]
+            if v in by_val:
+                n_dup += 1          # 复核 B1：重复行不能被静默折叠
+            else:
+                by_val[v] = r
+        if n_dup:
+            ctx_show = "|".join(str(v) for v in (ctx_key if isinstance(ctx_key, tuple) else (ctx_key,)))
+            raise ValueError(
+                f"factor={factor!r} 的 context ({ctx_show}) 内有 {n_dup} 行重复因素值："
+                f"每 (context, 因素值) 应只有一行（Animals 为组合唯一的完整笛卡尔积；"
+                f"ImageNet 固定 character_name 后同类多实例不应重叠）。请检查数据或 "
+                f"meta_cols 的 context 列配置。")
         vals = canonical_values(factor, by_val.keys(), orders)
         avail = [(vals[i], vals[j]) for i in range(len(vals)) for j in range(i + 1, len(vals))]
         n_take = min(max_pairs_per_context, len(avail))

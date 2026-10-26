@@ -74,6 +74,8 @@ def _nuisance_visual(model, paths, meta, cfg, logger, smoke, seed, spec):
 
     ids 按解码顺序追加（iter_image_batches 按全局 row_id 顺序产出），与 delta
     行一一对应（五轮 P3）；不能改用 sel 的抽样顺序。
+    分批生成/编码/释放（复核 R2）：不同时保留全部增强图像，峰值内存与批大小
+    成比例；每图增强种子固定，分批不改变任何数值结果。
     """
     n_cfg = cfg["nuisance"]
     n_img = min(200 if smoke else n_cfg["n_images"], len(meta))
@@ -82,7 +84,20 @@ def _nuisance_visual(model, paths, meta, cfg, logger, smoke, seed, spec):
     sel_rows = set(sel["row_id"].tolist())
     smin, smax = n_cfg["crop_scale"]
     q1, q2 = n_cfg["jpeg_quality"]
+    chunk = min(128, max(1, int(getattr(model, "bs_img", 128))))
     v1s, v2s, ids = [], [], []
+    d_raw, d_z = [], []
+
+    def flush():
+        nonlocal v1s, v2s
+        if not v1s:
+            return
+        o1 = model.encode_images(v1s)
+        o2 = model.encode_images(v2s)
+        d_raw.append(o2["raw"] - o1["raw"])
+        d_z.append(o2["normalized"] - o1["normalized"])
+        v1s, v2s = [], []
+
     for row_ids, images, _m in iter_image_batches(paths["datasets"][spec["path_key"]],
                                                   spec["raw_meta_columns"],
                                                   only_row_ids=sel_rows):
@@ -90,10 +105,11 @@ def _nuisance_visual(model, paths, meta, cfg, logger, smoke, seed, spec):
             v1s.append(augment_view(img, 100000 + rid, smin, smax, q1))
             v2s.append(augment_view(img, 200000 + rid, smin, smax, q2))
             ids.append(row_to_sid[int(rid)])
-    logger.info(f"[E2] nuisance visual: {len(v1s)} images x 2 views")
-    o1 = model.encode_images(v1s)
-    o2 = model.encode_images(v2s)
-    return {"raw": o2["raw"] - o1["raw"], "z": o2["normalized"] - o1["normalized"],
+            if len(v1s) >= chunk:
+                flush()
+    flush()
+    logger.info(f"[E2] nuisance visual: {len(ids)} images x 2 views (chunk={chunk})")
+    return {"raw": np.concatenate(d_raw, axis=0), "z": np.concatenate(d_z, axis=0),
             "ids": ids}
 
 
@@ -111,7 +127,8 @@ def _nuisance_text(model, tcache, meta, cfg, logger, smoke, seed, spec):
     return {"raw": e0r - e1r, "z": e0z - e1z}
 
 
-def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals"):
+def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals",
+        allow_empty_factors=False):
     if dataset not in DATASETS:
         raise ValueError(f"未知数据集 {dataset!r}，可选：{sorted(DATASETS)}")
     spec = DATASETS[dataset]
@@ -119,7 +136,8 @@ def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals"):
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     tcache = TextCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     pair_seed = cfg.get("seeds", [0])[0] if seed is None else seed
-    out_tables = output_tables_dir(paths, model.name, pair_seed)  # R2：按模型/种子隔离
+    out_tables = output_tables_dir(paths, model.name, pair_seed,  # R2：按模型/种子隔离
+                                   extra={"cache_protocol": model.cache_protocol})
 
     meta = spec["build_meta"](paths["datasets"][spec["path_key"]])
     if smoke:
@@ -141,8 +159,23 @@ def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals"):
     for f in factors:
         p = build_factor_pairs(meta, f, orders, samp["max_pairs_per_context"], max_total,
                                seed=pair_seed, meta_cols=spec["meta_cols"])
+        if len(p) == 0:
+            # 复核 B2：空因素此前在日志访问 p['context_key'] 时抛 KeyError；
+            # 现在默认带原因停止，局部诊断可显式跳过
+            msg = (f"[E2] {dataset}/factor={f}: 0 对配对——当前 context 定义下该"
+                   f"因素没有任何单因素变化对，请检查数据覆盖与因素取值")
+            if allow_empty_factors:
+                logger.warning(msg + "；已跳过（--allow-empty-factors），"
+                               "本次结果不构成完整因素集")
+                continue
+            raise SystemExit(msg + "；只需局部诊断时加 --allow-empty-factors")
         pairs_by_factor[f] = p
-        logger.info(f"[E2] factor={f}: {len(p)} pairs, {p['context_key'].nunique()} contexts")
+        # 复核 B1：context 已含 character_name（实例），披露实例覆盖数
+        n_inst = (f", instances={p['character_name'].nunique()}"
+                  if "character_name" in p.columns else "")
+        logger.info(f"[E2] factor={f}: {len(p)} pairs, "
+                    f"{p['context_key'].nunique()} contexts{n_inst}")
+    factors = list(pairs_by_factor)   # B2：被跳过的因素不进入后续统计
 
     delta_df = build_delta_frame(pairs_by_factor)
     needed_rows = sorted(set(delta_df["row_id_a"]) | set(delta_df["row_id_b"]))

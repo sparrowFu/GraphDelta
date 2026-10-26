@@ -21,13 +21,16 @@ def main():
     ap.add_argument("--smoke", action="store_true", help="小样本快速自检")
     ap.add_argument("--seed", type=int, default=None,
                     help="配对与 nuisance 采样种子（默认取配置 seeds[0]）")
+    ap.add_argument("--allow-empty-factors", action="store_true",
+                    help="某因素 0 对配对时跳过而非停止（复核 B2；结果不构成完整因素集）")
     args = ap.parse_args()
 
     paths = load_paths()
     logger = get_logger(f"run_e2_{args.dataset}", paths["dirs"]["outputs"] / "logs")
     model = build_encoder(args.model, paths, logger)
     e2_change_diagnosis.run(model, paths, logger, smoke=args.smoke, seed=args.seed,
-                            dataset=args.dataset)
+                            dataset=args.dataset,
+                            allow_empty_factors=args.allow_empty_factors)
 
 
 if __name__ == "__main__":

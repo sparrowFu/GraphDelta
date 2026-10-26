@@ -16,6 +16,9 @@
 审查 A4：CI 或点估计缺失（NaN）时分类为 invalid，不产生"稳定"结论。
 审查 A6：三种子混用新旧布局（修复前/后口径）时默认停止，需
 --allow-mixed-legacy 才输出临时对照，CSV 记录各种子来源布局。
+复核 B3：SPAR 描述行 stable 记 NA（不计入稳定总数），三种子均未定义的
+指标（如 hardneg 的 top5）跳过；复核 B8：per_world 输出时 world 纳入 key
+与匹配，每种子每 key 必须恰好一行。
 """
 import sys
 from pathlib import Path
@@ -138,28 +141,51 @@ def main():
         stable = stable_classes(cls)
         add("e1_gap", key, "gap", gaps, stable, f"CI 符号: {'/'.join(cls)}")
 
-    # SPAR 官方：top1/top5/hardneg 三种子最大绝对差（描述）
+    # SPAR 官方：top1/top5/hardneg 三种子最大绝对差（描述，无阈值判定）
+    # 复核 B3：不适用指标（三种子均未定义，如 hardneg 的 top5）跳过，不计行；
+    # 描述性行 stable 记 NA（空），不计入"稳定"总数。
+    # 复核 B8：per_world 输出时 world 是 key 的一部分，纳入 key 与匹配；
+    # 每种子每个 key 必须恰好一行，不允许 .iloc[0] 掩盖重复。
     def read_so(seed):
         df = read(seed, "e1_spar_official.csv")
         return df.fillna({"texture": "", "pos_pair": ""})
 
+    has_world = "world" in read_so(0).columns
+
+    def so_key(row):
+        k = (f"{row.task}|bg={row.add_background}|tex={row.texture}"
+             f"|pair={row.pos_pair}|hn={row.hardneg}")
+        return f"{k}|w={row.world}" if has_world else k
+
+    def so_match(df, row):
+        m = (df.task == row.task) & (df.add_background == row.add_background) \
+            & (df.texture == row.texture) & (df.pos_pair == row.pos_pair) \
+            & (df.hardneg == row.hardneg)
+        if has_world:
+            m &= df.world == row.world
+        return m
+
     for _, o0 in read_so(0).iterrows():
         if o0.n_images == 0:
             continue
-        key = f"{o0.task}|bg={o0.add_background}|tex={o0.texture}|pair={o0.pos_pair}|hn={o0.hardneg}"
+        key = so_key(o0)
         for metric in ["top1", "top5"]:
             vals = []
             for s in [0, 1, 2]:
                 o = read_so(s)
-                m = (o.task == o0.task) & (o.add_background == o0.add_background) \
-                    & (o.texture == o0.texture) & (o.pos_pair == o0.pos_pair) \
-                    & (o.hardneg == o0.hardneg)
+                m = so_match(o, o0)
+                if int(m.sum()) != 1:
+                    raise SystemExit(
+                        f"[seeds] e1_spar_official seed {s} 中 key 命中 {int(m.sum())} 行"
+                        f"（应为 1）：{key}——结果表存在重复或缺失行（复核 B8）。")
                 v = o[m].iloc[0][metric]
                 vals.append(None if pd.isna(v) else round(float(v), 4))
+            if all(v is None for v in vals):
+                continue    # 三种子均未定义（如 hardneg 的 top5）→ 不适用
             vv = [v for v in vals if v is not None]
             maxdiff = None if len(vv) < 2 else round(max(vv) - min(vv), 4)
             miss = "含缺失值; " if len(vv) < 3 else ""
-            add("spar_official", key, metric, vals, True,
+            add("spar_official", key, metric, vals, None,   # 描述行：stable=NA
                 f"{miss}max|diff|={maxdiff}")
 
     # E2：Norm Gap 与 Transition Gap 的 CI 符号
@@ -200,15 +226,17 @@ def main():
     same_sign = 0
     for _, r0 in u0.iterrows():
         key = f"{r0.shape_group}/{r0.color}"
-        vals = []
+        raw = []
         for s in [0, 1, 2]:
             u = unit[s]
             r = u[(u.negative_type == "pooled_equal_type") & (u.shape_group == r0.shape_group)
                   & (u.color == r0.color)].iloc[0]
-            vals.append(round(float(r.gap), 4))
+            raw.append(float(r.gap))
         # A4：点估计缺失（NaN）时不能凭 sign 集合判稳定
-        ok = all(np.isfinite(v) for v in vals)
-        signs = {np.sign(v) for v in vals} if ok else {"invalid"}
+        # B4：符号用原始值判定，round 只用于显示（避免先舍入把 ±1e-5 变成 0）
+        vals = [round(v, 4) for v in raw]
+        ok = all(np.isfinite(v) for v in raw)
+        signs = {np.sign(v) for v in raw} if ok else {"invalid"}
         stable = ok and len(signs) == 1
         if stable:
             same_sign += 1
@@ -222,9 +250,12 @@ def main():
         out[f"layout_seed{s}"] = layouts[s]
     path_out = tabs[0] / "seed_stability.csv"
     out.to_csv(path_out, index=False)
-    unstable = out[~out.stable]
+    # B3：stable 列含 NA（SPAR 描述行），计数与筛选需 NA 安全
+    n_stable = int((out.stable == True).sum())
+    n_na = int(out.stable.isna().sum())
+    unstable = out[out.stable == False]
     logger.info(f"[seeds] written {path_out} ({len(out)} rows; "
-                f"stable={int(out.stable.sum())}, UNSTABLE={len(unstable)})")
+                f"stable={n_stable}, NA(描述)={n_na}, UNSTABLE={len(unstable)})")
     for _, r in unstable.iterrows():
         logger.info(f"[seeds] FLIP {r.section} {r.key} {r.metric}: "
                     f"{r.seed0}/{r.seed1}/{r.seed2} ({r.note})")

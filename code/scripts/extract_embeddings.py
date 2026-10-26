@@ -31,11 +31,24 @@ def _force_reset(cache_root, model, dataset, logger):
 
     - 协议匹配：只删本数据集图像缓存 + 文本缓存（文本与图像共享 encoder
       语义，重建不能只覆盖图像而保留旧文本特征）；
-    - 协议不匹配或无 protocol.json：目录内新旧特征无法区分，整目录删除。
+    - 协议不匹配、无 protocol.json 或协议文件损坏（复核 B7：损坏 JSON 此前
+      使 force 抛 JSONDecodeError、旧 NPZ 删不掉）：目录内新旧特征无法区分，
+      整目录删除。
+    删除前校验目标路径确实位于 cache_root 下一级（复核 B7 的路径安全建议）。
     """
-    model_dir = Path(cache_root) / model.name
+    root = Path(cache_root).resolve()
+    model_dir = root / model.name
+    if model_dir.resolve().parent != root:
+        raise RuntimeError(f"异常缓存路径 {model_dir}（不在 {root} 下一级），拒绝删除")
+    stored = None
     pf = model_dir / "protocol.json"
-    if pf.exists() and json.loads(pf.read_text()).get("protocol") == model.cache_protocol:
+    if pf.exists():
+        try:
+            stored = json.loads(pf.read_text()).get("protocol")
+        except (json.JSONDecodeError, OSError, ValueError):
+            stored = None   # 损坏/不可读 → 来源未知，按整套重建处理（B7）
+            logger.info("[extract] force: protocol.json 损坏或不可读，按来源未知处理")
+    if stored == model.cache_protocol:
         for p in (model_dir / f"{dataset}_images.npz", model_dir / "text_cache.npz"):
             if p.exists():
                 p.unlink()
@@ -44,7 +57,7 @@ def _force_reset(cache_root, model, dataset, logger):
         if model_dir.exists():
             shutil.rmtree(model_dir)
         logger.info(f"[extract] force: removed entire cache dir {model_dir} "
-                    f"(protocol mismatch or missing; mixed-version features)")
+                    f"(protocol mismatch/missing/corrupt; mixed-version features)")
 
 
 def main():

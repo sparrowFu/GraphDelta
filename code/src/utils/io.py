@@ -36,24 +36,45 @@ def resolve(path_str):
     return p if p.is_absolute() else ROOT / p
 
 
-def output_tables_dir(paths, model_name: str, seed: int) -> Path:
+def _code_identity():
+    """粗粒度代码身份（复核 R1）：当前 commit 与是否有未提交改动。
+    仓库缺 git 或命令失败时返回空 dict，不阻塞实验运行。"""
+    import subprocess
+    try:
+        commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT,
+                                capture_output=True, text=True,
+                                timeout=10).stdout.strip()
+        dirty = bool(subprocess.run(["git", "status", "--porcelain"], cwd=ROOT,
+                                    capture_output=True, text=True,
+                                    timeout=10).stdout.strip())
+        if commit:
+            return {"git_commit": commit, "git_dirty": dirty}
+    except Exception:
+        pass
+    return {}
+
+
+def output_tables_dir(paths, model_name: str, seed: int, extra: dict = None) -> Path:
     """结果目录按模型与种子隔离（审查报告 R2）：outputs/<model>/seed_<seed>/tables/。
 
     切换 --model / --seed 不再互相覆盖；旧布局 outputs/tables、outputs/tables_seed{k}
     为历史结果，只读保留（summarize_seed_stability / make_figures 有回退逻辑）。
 
-    目录内写 run_meta.json（model/seed/created，R2 读取端身份校验用）；
-    后处理入口据此核对数据身份，避免把历史 CLIP-L/14 结果当成其他模型。
+    目录内写 run_meta.json（model/seed/created + git 身份；复核 R1 的低成本
+    来源记录：调用方经 extra 传入 cache_protocol 等预处理身份）；后处理入口
+    据此核对数据身份，避免把历史 CLIP-L/14 结果当成其他模型。
     """
     d = paths["dirs"]["outputs"] / model_name / f"seed_{seed}" / "tables"
     d.mkdir(parents=True, exist_ok=True)
     meta = d / "run_meta.json"
     if not meta.exists():
         from datetime import datetime
-        meta.write_text(json.dumps(
-            {"model": model_name, "seed": seed,
-             "created": datetime.now().isoformat(timespec="seconds")},
-            ensure_ascii=False, indent=2))
+        info = {"model": model_name, "seed": seed,
+                "created": datetime.now().isoformat(timespec="seconds")}
+        info.update(_code_identity())
+        if extra:
+            info.update(extra)
+        meta.write_text(json.dumps(info, ensure_ascii=False, indent=2))
     return d
 
 
