@@ -1,197 +1,211 @@
-# GraphDelta 代码审查报告（2026-10-26，历史基线 deb6d3a）
+# GraphDelta 代码审查报告
 
-> 状态更新：下文 A1–A7 描述的是修复前源码，不应继续当作提交 `3cc6dae` 的现状。原触发路径的修复、新发现的问题、证据分级及前版结论的收窄，统一见[独立复核修订版](D:/code/GraphDelta/GraphDelta_修复复核报告_2026-10-26.md)。本文件保留历史复现依据；历史统计和当时环境描述不代表本轮重新验收通过。
+审查日期：2026-10-26  
+代码基线：`7b68232`  
+审查范围：`code/` 的数据读取、单因素配对、模型分发、特征缓存、E1/E2/E3 实验、统计汇总与绘图流程。
 
-审查基线：`deb6d3a`，工作区 `D:/code/GraphDelta/code/`。对照《GraphDelta_完整预实验方案_统一修订版》和《GraphDelta_研究框架_统一修订版》，并按本次要求检查五个数据集、三个指定模型。此前审查报告仅作为线索，下面的结论以当前源码和本轮验证为准。本轮未修改实验源码。
+## 一、审查结论
 
-**结论：当前代码的阶段一实验框架基本符合方案，但尚未完整满足“五数据集、三模型”的要求，也仍有会影响结果可信度的缺陷。** 三个模型均有配置和工厂分发；四个数据集有实验主链；PUG_ImageNet 尚未接入特征抽取与评估。优先解决旧缓存被错误认证、ImageNet 接入和 E2 nuisance 参数语义，再重算受影响结果。
+**当前代码已具备五个数据集、三个模型的实验入口，主要诊断流程能够在已覆盖的构造用例中运行，但仍存在三项 P2 问题和三项 P3 边界问题，尚不适合直接认定为完整验收通过。**
 
-## 1. 数据集和模型支持范围
+优先处理的问题是：
 
-“有实现”表示当前代码具有入口及相应流程，不等于真实数据和权重已经通过端到端验收。
+1. ImageNet 的 smoke 筛选可能将具有有效配对的数据错误筛空。
+2. E3 一致性检查失败后，旧单元表仍可被绘图消费。
+3. 复用结果目录时，来源元数据仍可能保留首次运行的代码和协议身份。
 
-| 要求的数据集 | 当前入口与用途 | 审查结论 |
+本次没有发现新的、已证实的主评分公式错误。这里的“未发现”仅限已检查源码与用例，不是无 BUG 保证；真实权重和全量图像的端到端验收尚未完成。
+
+优先级为审查判断：P2 表示会影响受支持流程或正式结果来源，建议在正式实验前处理；P3 表示输入边界、恢复能力或状态表达问题。触发条件与实际影响在各项中单独说明。
+
+## 二、数据集和模型支持情况
+
+### 2.1 数据集
+
+| 数据集 | 当前实现 | 验收边界 |
 |---|---|---|
-| CLEVR_v1.0 | E1；`clevr_val`；Object/Color/Size/Material/Relation/Binding | 已实现；默认只用 val，符合方案 §16a |
-| CLEVR_CoGenT_v1.0 | E3；`cogent_valA`、`cogent_valB` | 已实现；A/B 难度比较、sphere 对照、题型等权 Gap |
-| PUG_Animals | E2；`pug_animals`；四因素单因素配对 | 已实现；读取全量 metadata，不进行训练/测试随机拆分 |
-| PUG_SPAR | E1 自建 2AFC；另有官方协议入口 | 已实现；单动物/双动物和 blank 过滤已修复 |
-| PUG_ImageNet | metadata 模块和 manifest builder | **未完成：没有特征抽取 CLI 和实验主链** |
+| CLEVR_v1.0 | E1；读取 val；对象、属性、关系与 binding-style 文本负例 | 已接入，未完成当前环境的真实图像端到端验收 |
+| CLEVR_CoGenT_v1.0 | E3；读取 valA/valB；A/B 匹配难度与 sphere 对照 | 已接入；一致性检查到绘图的失效链仍有问题 |
+| PUG_Animals | E2；单因素配对、表示变化、视觉/文本 nuisance | 已接入；局部诊断的全部因素为空边界仍需处理 |
+| PUG_ImageNet | E2；实例级 context、额外姿态/灯光固定字段、独立输出 | 实例配对已验证；smoke 筛选有回归 |
+| PUG_SPAR | E1 自建 2AFC 与独立官方协议入口 | 描述性汇总、world 匹配和不适用指标处理已通过对应验证 |
 
-方案 §14 允许暂缓运行 PUG_ImageNet，但本次用户明确要求支持该数据集，因此不能据此把缺少实现视为满足要求。五个数据集按方案分别承担不同任务，无须在每个数据集上都运行 E1/E2/E3。
+不同数据集承担不同诊断任务，不需要在每个数据集上都运行 E1/E2/E3。入口存在与真实数据、真实模型验收通过是两个层次。
 
-| 要求的模型 | `--model` 参数值 | 当前加载路径 |
+### 2.2 模型
+
+| 指定模型 | CLI 配置名 | 当前分发 |
 |---|---|---|
-| siglip2-so400m-patch14-384 | `siglip2_so400m` | `SigLIP2Encoder`，原始 checkpoint；`SiglipModel` + `SiglipImageProcessor` |
-| clip-vit-base-patch32 | `clip_vitb32` | `CLIPEncoder` + 对应 checkpoint 的 `AutoProcessor` |
-| clip-vit-large-patch14 | `clip_vitl14` | `CLIPEncoder` + 对应 checkpoint 的 `AutoProcessor` |
+| siglip2-so400m-patch14-384 | `siglip2_so400m` | `SigLIP2Encoder`，FixRes 加载路径 |
+| clip-vit-base-patch32 | `clip_vitb32` | `CLIPEncoder` |
+| clip-vit-large-patch14 | `clip_vitl14` | `CLIPEncoder` |
 
-三个工厂分支的模型名称、权重路径、图像/文本 batch size 已用替代构造器核对。三个 encoder 都执行 `eval()`、参数冻结和 `no_grad()`，没有发现训练 backbone、adapter 或 projection 的代码。
+配置与权重路径由 [paths.yaml](D:/code/GraphDelta/code/configs/paths.yaml:9) 和[模型工厂](D:/code/GraphDelta/code/src/models/__init__.py:11)分发。三个模型均按冻结 baseline 使用；当前阶段不训练 GraphDelta 模块，符合阶段一方案。
 
-指定 SigLIP2 checkpoint 的官方配置确为 FixRes：`model_type=siglip`、384 输入、patch14；当前实现的固定 384 图像处理、显式文本小写化、固定 padding/truncation 到 64 与该路径相符。来源：[官方模型配置](https://huggingface.co/google/siglip2-so400m-patch14-384/raw/main/config.json)、[官方预处理配置](https://huggingface.co/google/siglip2-so400m-patch14-384/blob/main/preprocessor_config.json)、[官方文本处理说明](https://huggingface.co/docs/transformers/en/model_doc/siglip2#text-embeddings-and-retrieval)。这不代替实际 checkpoint 输出对齐测试。
+上述结论是配置和实现层面的支持确认，不表示本轮已加载三个真实 checkpoint 或完成官方输出数值对齐。
 
-## 2. 确认的问题
+## 三、已确认的有效行为
 
-### A1 [P1] PUG_ImageNet 没有接入可执行实验流程
+### 3.1 ImageNet 实例约束与重复项检查
 
-位置：[extract_embeddings.py](D:/code/GraphDelta/code/scripts/extract_embeddings.py:27)、[e2_change_diagnosis.py](D:/code/GraphDelta/code/src/experiments/e2_change_diagnosis.py:101)、[pug_imagenet.py](D:/code/GraphDelta/code/src/data/pug_imagenet.py:10)。
+`character_name` 已参与固定 context，类别与具体物体实例不再混为同一身份。对保存的官方连续 100 行元数据样本，实际 loader/matcher 输出：
 
-`extract_embeddings.py` 的 `--dataset` 列表及后续分发没有 `pug_imagenet`。E2 的 metadata loader、特征提取、视觉 nuisance 和结果中的 dataset 字段都固定为 `pug_animals`；`run_e2.py` 也没有数据集选择参数。全仓的 ImageNet 引用只接通路径、metadata 和 manifest，未接通表示变化分析。
+| 指标 | 结果 |
+|---|---:|
+| 配对数 | 66 |
+| context 数 | 18 |
+| 配对端点覆盖的实例数 | 18 |
+| 跨实例配对数 | 0 |
 
-此外，ImageNet 的 `META_COLUMNS` 未保留 `character_rotation_yaw`、`character_rotation_roll`、`character_rotation_pitch`。这些字段确实存在于[官方数据集 schema](https://huggingface.co/datasets/facebook/PUG_ImageNet)。后续配对必须保留并固定物体姿态、其他相机角度和灯光等非目标因素，不能直接替换 Animals 的路径后沿用其五字段配对规则。当前没有 ImageNet 实验结果，因此这里不是声称已有 ImageNet 指标受到污染。
+重复 `(context,factor_value)` 输入会明确报错，不再静默覆盖。这是有限样本验证，不能外推为全量数据没有重复项或所有因素覆盖充分。
 
-建议：补齐 ImageNet 抽取分支、适配后的 metadata、严格单因素配对和独立评估入口，并让 nuisance、dataset 标签及输出文件按实际数据集选择。先验证每对只有目标因素发生变化，再执行辅助实验。
+### 3.2 汇总中的 NA、符号与环境维度
 
-### A2 [P1] 没有协议文件的旧缓存会被直接认证为当前新缓存
+- SPAR 描述行的 `stable` 为 NA，不再混入肯定的稳定数量。
+- hard-negative 未定义的 top5 不再输出为有效指标行。
+- E3 使用原始 Gap 判断符号，再对显示值舍入；`[+1e-5,-1e-5,+1e-5]` 正确判定为方向不一致。
+- SPAR 按 world 独立匹配；测试输入 desert 的 `[0.1,0.9,0.1]` 正确保留，最大差为 0.8，重复键被拒绝。
 
-位置：[cache.py](D:/code/GraphDelta/code/src/features/cache.py:26)。
+### 3.3 局部诊断、缓存与 nuisance 分批
 
-`_check_protocol()` 在发现已有 `protocol.json` 时会校验；但文件不存在时直接写入当前协议，未检查目录里是否已有图像或文本 NPZ。恰好是尚未版本化的历史缓存没有该文件，因而会被错误地标记成新版协议。
+- 某因素无配对时，严格模式明确停止；允许局部诊断时，具有有效配对的因素可以继续运行。
+- 已全部命中的 PUG 图像请求会直接返回，不调用图像迭代器；部分命中只向迭代器传入缺失行。
+- 截断的协议 JSON 可以通过 force 的未知来源分支处理，越界缓存路径被拒绝。
+- nuisance 采用分批生成、编码和释放。200 图、模型批大小 37 的替代 encoder 验证中，实际批最大为 37，图像 ID 顺序及 raw/normalized delta 与一次性参考一致。
 
-本轮用实际 `ImageFeatureCache`、`TextCache` 和 `extract_clevr_images` 复现：预置没有协议文件的旧特征 `[1,0]`，新 encoder 应返回 `[0,1]`，初始化当前 SigLIP2 协议后得到：
+替代 encoder 的数值一致不等于真实 fp16 GPU 输出逐位一致；当前证据支持控制流程、增强种子和批处理顺序的正确性。
 
-```text
-image: [[1.0, 0.0]]
-text: [[1.0, 0.0]]
-new_encoder_calls: 0
-new_marker: {'protocol': 'siglip2-fixres-lowercase-v1'}
-```
+## 四、需要处理的问题
 
-影响：如果服务器保留修复前的 NaFlex 或未小写化特征，即使当前 encoder 已修正，实验仍可能静默使用旧特征。不能用新生成的 `protocol.json` 证明旧特征确实按新语义抽取。当前本机没有实际缓存，无法断言服务器正在触发此问题。
+### 问题 1：ImageNet smoke 筛选可能错误清空有效数据 [P2]
 
-建议：仅允许空目录首次登记协议；无协议但已有 NPZ 的目录应拒绝复用或移入历史命名空间。更完整的指纹还应包含 checkpoint/processor 身份，避免同一模型别名换权重后继续命中缓存。
+位置：[e2_change_diagnosis.py](D:/code/GraphDelta/code/src/experiments/e2_change_diagnosis.py:146)、[pug_imagenet.py](D:/code/GraphDelta/code/src/data/pug_imagenet.py:31)。
 
-附带的历史恢复流程缺陷：[extract_embeddings.py](D:/code/GraphDelta/code/scripts/extract_embeddings.py:37) 当时先构造并校验缓存，再处理 `--force`，协议不匹配时删除分支不可达；该原触发已在 `3cc6dae` 修复。原建议应收窄：encoder 语义改变或来源未知时，受影响的图像和文本应一起重建；同协议下仅重抽某数据集图像，不必天然清除全模型文本缓存。具体恢复边界和成本见最新复核报告。
+**原因。**smoke 通过 `spec['meta_cols'][:2]` 决定筛选字段。ImageNet 的前两列现在是实例哈希与类别；分别取字典序前六个值后再 AND，两个相关集合可能没有交集。字段顺序变化也使该逻辑不再限制 environment。
 
-### A3 [P2] nuisance 的裁剪比例实现与其面积定义不一致
-
-位置：[delta.py](D:/code/GraphDelta/code/src/features/delta.py:13)、[delta.py](D:/code/GraphDelta/code/src/features/delta.py:17)。
-
-函数声明 `crop_scale` 是“面积比例区间”，实际同时计算 `nw=w*s`、`nh=h*s`，保留面积为 `s²`。配置 `[0.85,1.0]` 允许保留约 72.25% 面积，并非所声明的至少 85%。
-
-实际调用：
-
-```python
-augment_view(Image.new('RGB', (1000, 1000)), 0, .85, .850000001, 90)
-# 返回 850×850，保留面积比例 0.7225
-```
-
-影响：相对面积比例的定义，扰动更强，会改变 E2 visual nuisance 的范数和相似度，以及 Factor/Nuisance Norm Gap。不能由此直接量化已有结论会变化多少。方案 §39a 要求固定轻量扰动，但未规定 85% 面积；本项是代码内部参数语义错误，不是声称违反了方案中不存在的数值规定。
-
-建议：若采用面积比例，两边使用 `sqrt(s)`；若本意是边长比例，应修正文档并明确确认这组 nuisance 参数。改变实际裁剪策略后，重算 E2 视觉 nuisance、相关 Gap 和图，不必因此重抽原始图像特征。
-
-### A4 [P2] 缺失置信区间被判为“不显著且稳定”
-
-位置：[summarize_seed_stability.py](D:/code/GraphDelta/code/scripts/summarize_seed_stability.py:28)、[summarize_seed_stability.py](D:/code/GraphDelta/code/scripts/summarize_seed_stability.py:37)、[summarize_seed_stability.py](D:/code/GraphDelta/code/scripts/summarize_seed_stability.py:96)。
-
-`ci_vs_ref()` 和 `ci_sign()` 不检查有限性。`NaN` 与参考值的比较均为 False，分别落入 `contains` 和 `ns`；随后三个种子的分类相同就被写成 `stable=True`。上游 bootstrap 在有效重采样不足、E3 缺整类题型等情况下明确返回 NaN，因此该情况不是只存在于不合法输入。
-
-用实际汇总脚本、三种子最小 CSV 运行，所有 CI 均设为 NaN，得到：
+**已复现事实。**构造 12 个实例和 12 个类别，使实例排序与类别排序相反；每实例具有完整的 2 environments × 2 textures × 2 sizes × 2 cameras，共 192 行。使用实际 parquet loader 和 run：
 
 ```text
-e1_acc  stable=True  contains/contains/contains
-e1_gap  stable=True  ns/ns/ns
-e2      stable=True  ns/ns/ns
-e3_gap  stable=True  ns/ns/ns
+完整输入：四个因素各有 96 对有效配对
+smoke 筛选后：0 行
+运行结果：SystemExit，提示 environment 0 对配对
 ```
 
-影响：“无法判断”会被写成“稳定地不显著”，掩盖统计计算失败或样本不足，影响方案 §82 的重复采样稳定性结论。
+这是筛选程序造成的数据丢失，不是源数据本来没有因素覆盖。尚未证明用户完整真实数据的默认 smoke 必然触发；`smoke=False` 不执行该筛选分支。
 
-建议：先检查点估计和 CI 的 `isfinite`，将缺失/失败单独标为 `invalid` 或 `insufficient_data`；任何种子无效时不产生肯定的稳定性结论。
+**建议。**按数据集显式定义 smoke 字段，避免依赖 `META_COLS` 的位置。多个相关字段应基于已选子集逐层筛选，或按实例采样后保留必要的因素变化覆盖；筛选后区分“筛选失败”和“源数据无配对”。
 
-### A5 [P2] 显式结果目录仍能绕过模型/种子身份校验
+### 问题 2：E3 严格检查失败后，旧派生表仍可被绘图使用 [P2]
 
-位置：[io.py](D:/code/GraphDelta/code/src/utils/io.py:66)、[make_figures.py](D:/code/GraphDelta/code/scripts/make_figures.py:246)、[make_figures.py](D:/code/GraphDelta/code/scripts/make_figures.py:257)。
+位置：[analyze_e3_units.py](D:/code/GraphDelta/code/scripts/analyze_e3_units.py:102)、[make_figures.py](D:/code/GraphDelta/code/scripts/make_figures.py:166)。
 
-自动选择目录时，当前代码已经阻止 SigLIP2/B32 错误回退旧 CLIP 结果；这部分旧问题已修复。但 `--tables-dir` 可以指向没有 `run_meta.json` 的历史目录，`verify_run_meta()` 直接放行，图标题仍从请求的 `--model/--seed` 取得。
+**原因。**严格检查只阻止写入新单元表，没有失效已经存在的 `e3_unit_gaps.csv`；绘图函数不核对 `e3_unit_consistency.json`。
 
-用实际 `make_figures.main()` 测试目录选择和标签生成，替代绘图函数以避免生成无意义图像：指向模拟的旧 `outputs/tables`（内容标记为 CLIP-L/14 seed0），同时请求 `--model siglip2_so400m --seed 1`，流程接受并传给绘图函数：
+**已复现事实。**先用一致输入成功生成单元表，再将主表改为与 items 冲突，严格模式正确退出并写 `all_ok=false`，但旧单元 CSV 原样保留。独立实际绘图验证仍能读取旧表并生成图像。
+
+**影响边界。**仅在输入冲突、部分重跑或旧派生文件存在时触发，不代表正常一致输入的计算错误。
+
+**建议。**检查失败时失效旧派生表，或要求下游强制校验失败状态与输入身份。探索性输出应使用独立名称或显式标记，避免正式绘图误用。
+
+### 问题 3：复用目录时，来源元数据可能记录旧代码/协议 [P2]
+
+位置：[io.py](D:/code/GraphDelta/code/src/utils/io.py:70)。
+
+**原因。**`output_tables_dir` 只在 `run_meta.json` 不存在时写入。旧格式文件不会补齐新增字段；相同目录重跑也不会更新或拒绝不同的来源身份。
+
+**已复现事实。**对实际 helper 传入两次受控身份：
 
 ```text
-source=tables
-label=SigLIP2 so400m-p14-384
-seed=1
+第一次：commit=A，cache_protocol=v1
+第二次：commit=B，cache_protocol=v2
+第二次磁盘记录仍为：commit=A，cache_protocol=v1
 ```
 
-这是输入路由与标签生成的复现，没有用模拟数据验证实际模型指标。影响范围是无运行元数据的输入目录；有正确 `run_meta.json` 的模型/种子不匹配会被拒绝。
+若随后覆盖同目录的 CSV，记录的来源可能仍是首次版本。没有证据说明服务器现有真实结果已误标，也不直接影响评分公式。
 
-建议：显式目录也需要可验证身份；已知历史目录应绑定其实际模型和种子，其余无元数据的目录不能直接被标为某个模型的正式结果。运行信息还应携带协议/配置版本，供下项检查使用。
+**建议。**按实验/运行保存来源，或在身份不同时拒绝复用目录。不能简单覆盖一个共享 meta，因为目录中未重跑的其他实验文件可能仍属于旧版本。代码 commit 和 `git_dirty` 也不能独立替代配置、数据和 checkpoint 身份。
 
-### A6 [P2] 明知新旧协议不可比，仍输出跨协议的种子稳定性
+### 问题 4：全部因素跳空后，局部诊断仍抛内部异常 [P3]
 
-位置：[summarize_seed_stability.py](D:/code/GraphDelta/code/scripts/summarize_seed_stability.py:60)、[summarize_seed_stability.py](D:/code/GraphDelta/code/scripts/summarize_seed_stability.py:74)。
+位置：[e2_change_diagnosis.py](D:/code/GraphDelta/code/src/experiments/e2_change_diagnosis.py:178)、[delta_stats.py](D:/code/GraphDelta/code/src/metrics/delta_stats.py:38)。
 
-对 CLIP-L/14，脚本逐种子独立选择新目录或旧目录；可以形成 seed0 使用修复后结果、seed1/2 使用修复前结果的组合。74–76 行已明确识别并警告“两套口径不可直接比较”，但仍继续计算 `stable` 并输出正式 CSV。该 CSV 中没有记录各行的协议来源。
+`allow_empty_factors=True` 且全部因素无有效配对时，空字典继续进入 `build_delta_frame`，实际抛 `ValueError: No objects to concatenate`。
 
-影响：SPAR blank 过滤、官方候选集合等实现变更会与随机种子的变化混在一起，所得“稳定/翻转”不能解释为固定协议下的抽样稳定性。不代表当前本机存在这套混合结果；当前仓库没有相应 CSV。
+默认严格模式和存在有效因素的局部模式可以正常处理。建议在没有任何有效因素时，给出明确的停止消息，不进入后续统计。
 
-建议：已知协议不一致时停止正式稳定性汇总；补齐同版本三种子后再计算。若保留历史对照，应输出独立的版本比较结果，并记录代码、协议、配置及缓存版本。
+### 问题 5：协议 JSON 为非对象时，缓存恢复仍失败 [P3]
 
-### A7 [P3] E2 两个相似度分支不遵守比较次数上限
+位置：[extract_embeddings.py](D:/code/GraphDelta/code/scripts/extract_embeddings.py:47)、[cache.py](D:/code/GraphDelta/code/src/features/cache.py:27)。
 
-位置：[delta_stats.py](D:/code/GraphDelta/code/src/metrics/delta_stats.py:82)、[delta_stats.py](D:/code/GraphDelta/code/src/metrics/delta_stats.py:101)。
+`[]`、`null`、字符串都是可解析 JSON，但不是协议对象。直接调用 `.get()` 会抛 AttributeError，当前异常处理没有覆盖；实际 force 因此失败，旧文件保留。
 
-`same_transition_dc` 和 `same_factor_dt_sc` 使用 `per=max(32,ceil(max_comparisons/分组数))`，拼接后没有施加全局上限。实际配对器构建的 384 行完整小型 metadata 组合，在 `max_comparisons=100` 时得到：
+这是非法协议结构的恢复边界，不是正常协议下错误复用特征。建议先验证解析结果是 dict，再检查 protocol 字段，其余结构按来源未知处理。
+
+### 问题 6：缺少参考主表时，检查状态被记录为通过 [P3]
+
+位置：[analyze_e3_units.py](D:/code/GraphDelta/code/scripts/analyze_e3_units.py:77)、[analyze_e3_units.py](D:/code/GraphDelta/code/scripts/analyze_e3_units.py:99)。
+
+主表不存在时没有进行比较，但实际输出 `all_ok=true, checks=[]` 并生成单元表。应区分 `passed`、`failed`、`not_checked`；严格模式可要求参考主表存在。
+
+完整绘图目前会因主表缺失另行失败，因此不能将本问题描述为“缺表也能生成正式图”。问题在于检查状态表意不正确。
+
+## 五、研究解释、数据质量和成本边界
+
+以下事项不作为新增程序 BUG 计数，但会限制结果解释。
+
+1. **CoGenT 的 shape 混杂。**同颜色在 A/B 中对应不同的 cube/cylinder。单元差异可能来自 shape 基础识别难度，不能直接归因为颜色—形状绑定能力；sphere 对照不能完全排除该解释。当前主指标按题型等权，也没有强制颜色/shape 单元等权。
+2. **未显著不等于等效。**区间包含 0.5 只能说明未检出偏离随机水平；符号跨种子一致也不等于效应显著或对新数据稳健。
+3. **信息保留尚无直接检验。**当前 E1/E3 是真假 caption 匹配，E2 文本 nuisance 是同内容换模板；没有完整/不完整描述成对控制及未提及信息保留指标，不能据此声称已验证信息保留或遗忘。这是研究覆盖边界，不违反现阶段冻结 baseline 方案。
+4. **nuisance 强度需要解释。**面积/JPEG 参数实现一致不保证 crop 无语义影响；Factor/Nuisance Gap 对扰动强度敏感。不同模型的 raw projection 尺度也不同，不应直接按 raw delta 给模型排语义敏感性。
+5. **资源评估需看构建过程。**nuisance 全量视图驻留已被分批降低，但 pair 的 `max_total` 在记录构建完成后才截断，不是峰值内存上限。应测量全量 metadata 配对耗时与峰值，不能由 smoke 成功推断全量资源充足。
+6. **数据质量和版本仍需核实。**官方 Animals 提示部分 goldfish 图像渲染异常；这不证明用户当前版本仍包含这些图，也不能仅凭整体比例小就认定各因素无影响。[官方数据质量提示](https://raw.githubusercontent.com/facebookresearch/PUG/main/PUG_Animals/README.md) 数据 revision、分片顺序、checkpoint 和配置身份尚未被完整校验；没有证据时应列为条件性风险，而非认定实际结果已污染。
+
+## 六、证据和验证范围
+
+### 6.1 可重放材料
+
+- [验收脚本](D:/code/GraphDelta/code/outputs/audit_7b68232_2026-10-26/verify_acceptance.py)
+- [机器可读结果](D:/code/GraphDelta/code/outputs/audit_7b68232_2026-10-26/acceptance_checks.json)
+- [保存的官方元数据样本](D:/code/GraphDelta/code/outputs/audit_2026-10-26/imagenet_metadata_sample.json)
+
+重放命令：
+
+```powershell
+& D:\conda\python.exe D:\code\GraphDelta\code\outputs\audit_7b68232_2026-10-26\verify_acceptance.py
+```
+
+结果包含 41 个实验 Python 文件的源码哈希和 AST 检查，以及 14 类证据。**14 类证据不是“14 项问题均已修复”或“14 个真实模型测试通过”**，其中包含已修行为验证和残留问题复现。
+
+官方元数据样本为连续 100 行，API offset=10000、length=100，不是随机或全量代表性样本。文件 SHA256：
 
 ```text
-same_transition_dc: 192
-same_factor_dt_sc:  576
-same_factor_dt_dc:  100
-diff_factor_sc:       9
-diff_factor_dc:     100
-random:            100
+9bd0c94e5fd2c0affe176a61a4b12e1ea61af8bcd660fe74eadd4ec32f81d1c7
 ```
 
-影响主要是配置预算与实际计算量不符，增加相似度和 bootstrap 工作量；本项本身不足以证明点估计方向错误。建议分配严格的分层预算，并输出实际比较数。
+实际绘图、路径越界守卫、部分缓存增量等另做了独立临时验证，没有全部纳入该脚本。报告不将不同来源的检查数量相加作为通过数量。
 
-## 3. 需要注意的统计质量风险
+### 6.2 本次文档生成时的核对
 
-E2 的 `diff_factor_sc` 是先从所有其他因素联合抽样，再筛选共同固定字段相同者；只尝试 `3*max_comparisons` 次。完整 Animals 中的同 context 事件很稀少，例如 texture 与 size 共同固定 animal/environment/camera，匹配概率约为 `1/(70*64*4)`。
+本次重新生成报告时，已确认：
 
-按官方维度构造、每 context 最多四对且每因素最多 30,000 对的合法合成 delta 表，设置上限 20,000 时，四因素的该层级仅生成 74/21/11/15 个比较；这些是合成验证结果，不是实际数据集重跑计数。结果 CSV 只输出均值，没有各组实际比较量；日志中的来源计数也只针对 `diff_factor_dc`（[e2_change_diagnosis.py](D:/code/GraphDelta/code/src/experiments/e2_change_diagnosis.py:192)）。
+- 当前代码基线仍为 `7b68232`。
+- 41 个实验源码文件与保存的验收结果哈希一致。
+- 验收脚本哈希与结果记录一致。
 
-这里不应把条件筛选后因素比例不同直接称为错误偏差：当前代码声明的是对其他 delta 联合均匀抽样，其条件分布本来可能不均匀。真正的问题是该辅助层级的样本量可能不足，却缺少数量披露和不足标记。建议直接索引可匹配的 shared context，明确抽样分布及权重，并输出每组数量/来源。核心 Transition Gap 使用的是 different-context 对照，本风险不能被夸大为核心 Gap 已经计算错误。
+因此本报告采用已保存的验收证据，没有声称本次又重复执行了全部测试。
 
-## 4. 与方案一致、已完成验证的部分
+### 6.3 未覆盖范围
 
-- 阶段一保持冻结 baseline 和固定公开图片，不进行 GraphDelta 训练，不新增 Controlled Edit 图片；不能因没有第二/三阶段训练模块就判断当前阶段一不完整。
-- CLEVR 只读 val，CoGenT 只读 valA/valB；E3 不把 A/B 直接解释为 seen/unseen。
-- CLEVR relation 从官方 relationships 取方向；负例按整幅 scene 判假。binding 唯一性按 caption 实际涉及的 color/shape 判断。
-- SPAR 当前正确处理任一侧 blank、双侧 blank、同种双动物和相同纹理的属性交换过滤。
-- 2AFC 采用 `s+ > s-`、平局判错；跨模板聚合并报告模板间方差。
-- E2 使用 canonical transition、`target-source`、raw/normalized 两空间，以及同 transition 跨 context 的分析。
-- E2 核心相似度 Gap 使用双端点、同步 context bootstrap；E3 Gap 按题型等权、按图片聚类，并有 sphere 对照。
-- 三模型结果写入按模型和种子隔离；普通自动读取路径对历史结果的模型归属限制已经加入。
+当前环境无 torch/transformers，缺少服务器上的真实权重、全量图像和历史结果。构造流程使用替代 encoder；没有完成真实 tokenizer/encoder 数值对齐，也没有完成五数据集、三个模型的真实端到端验收。
 
-本轮检查与构造测试：
+实验源码本轮未修改。报告中的“已确认有效”仅针对相应路径和用例。
 
-| 检查 | 结果与边界 |
-|---|---|
-| 全部 Python 文件 AST 解析 | 41 个文件通过；仅证明无语法错误 |
-| 三模型工厂 | 替代构造器核对名称/路径/batch size 通过；未加载真实权重 |
-| SPAR item builder | 7 行边界样例；scene=5、position=2、attribute=1、relation=2；无 blank 正例、无正负相同文本 |
-| Animals metadata + pair matcher | 192 行完整小型笛卡尔积；四因素逐对检查只有目标字段变化，通过 |
-| CLEVR item builder | 100 个构造场景，独立验证 10,063 条样本；正例真、负例假全部通过 |
-| 缓存迁移 | 复现 A2：旧 NPZ 被新协议认证，encoder 未被调用 |
-| nuisance crop | 复现 A3：85% 被当作边长比例，面积约 72.25% |
-| 稳定性汇总 | 实际 main 配合最小 CSV，复现 A4 |
-| 图表来源 | 实际 main 的目录/标签路径配合替代绘图函数，复现 A5 |
-| E2 比较预算 | 实际 matcher + similarity 函数，复现 A7 |
+## 七、处理顺序建议
 
-未再列为当前缺陷的旧问题：SigLIP2 FixRes 加载、小写化、B/32 配置、SPAR blank 正例、结果写入目录隔离、普通自动目录回退的跨模型误标。这些已有修复；A2/A5/A6 是仍未覆盖的触发路径。
+1. 修正 ImageNet smoke 的显式筛选规则，检查筛选后的因素覆盖。
+2. 闭合 E3 检查失败到绘图的失效链，避免使用旧派生表。
+3. 为重复运行保存准确的实验级来源，不用共享目录 meta 冒充所有文件的统一版本。
+4. 补齐全部因素跳空、JSON 结构、未检查状态三个低成本边界。
+5. 再进行真实数据小样本、模型预处理对齐及必要的结果重算。
 
-## 5. 验证边界和后续处理范围
-
-当前可用 Python 为 `D:/conda/python.exe`（3.13），有 NumPy/Pandas/PyArrow/Pillow/YAML，但没有 torch/transformers。`paths.yaml` 指向 Linux 服务器的 `/mnt/disk1/...` 数据及权重，本机不存在这些实际输入。未下载数据或模型，未运行真实 checkpoint 的小样本/全量实验，也未验证真实 tokenizer token ID 或与官方完整 encoder 的数值对齐。
-
-当前仓库 `code/outputs/` 只保留总结和分析 Markdown，未保留其引用的 CSV、图和特征缓存；因此不能核实历史数字对应的源码/缓存版本，也不能确认服务器已按 README 所述清理和重抽。上述复现不会证明历史结果一定已受影响，应以运行来源和缓存来源核实为准。
-
-建议处理顺序和重算范围：
-
-1. 修复无协议缓存迁移；核实服务器缓存来源。若来源未知或确为旧 SigLIP2 特征，重建该模型的图像/文本缓存，并重跑受影响的 E1、SPAR 官方协议、E2、E3。
-2. 补齐 PUG_ImageNet 的严格单因素评估路径；确认三个模型都能在五数据集各自任务上完成小样本端到端运行。
-3. 明确 nuisance crop 参数语义。若改为面积比例，重算所有已运行模型的 E2 视觉 nuisance、Norm Gap 和相关汇总/图；原图 embedding 可复用。
-4. 修复 NaN 分类、目录身份校验和跨协议种子混用，再生成稳定性 CSV 与图表；无需因此重抽 embedding。
-5. 约束 E2 相似度预算并公开实际样本量；若调整抽样策略，固定协议后重算该部分统计和三种子比较。
-
-正式验收还应保留每次运行的代码版本、checkpoint/processor 身份、数据版本、协议/配置和种子。上述缺口关闭并通过真实端到端运行后，才能确认本次要求完整满足。
+这些问题不要求无条件重抽所有模型、所有数据集。数据版本和行号映射稳定时，可优先复用原图特征，重做筛选、配对、统计和来源记录。

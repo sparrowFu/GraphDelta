@@ -1,0 +1,138 @@
+{
+  "revision": "7b68232",
+  "checks": {
+    "syntax": {
+      "production_files": 41
+    },
+    "B1_real_sample": {
+      "pairs": 66,
+      "contexts": 18,
+      "assets": 18,
+      "cross_asset": 0,
+      "sample_file_sha256": "9bd0c94e5fd2c0affe176a61a4b12e1ea61af8bcd660fe74eadd4ec32f81d1c7"
+    },
+    "B1_duplicate_guard": "rejected",
+    "new_smoke_selection_regression": {
+      "input_rows": 192,
+      "full_factor_pairs": {
+        "environment": 96,
+        "texture": 96,
+        "size": 96,
+        "camera": 96
+      },
+      "smoke_rows": 0,
+      "actual_run": "SystemExit: no pairs after smoke selection"
+    },
+    "all_factors_skipped": "No objects to concatenate",
+    "B2_strict_empty_factor": "explicit stop",
+    "B2_allow_partial": {
+      "returned_factors": [
+        "environment",
+        "texture",
+        "camera"
+      ],
+      "image_encoder_batches": [
+        8,
+        5,
+        5,
+        3,
+        3
+      ],
+      "synthetic_encoder_only": true
+    },
+    "R2_nuisance_batching": {
+      "max_batch": 37,
+      "images": 200,
+      "ids_in_row_order": true,
+      "raw_matches_fake_reference": true,
+      "normalized_matches_fake_reference": true,
+      "real_weights_not_tested": true
+    },
+    "B3_B4_B8_summary": {
+      "SPAR_all_stable_NA": true,
+      "undefined_hardneg_top5_rows": 0,
+      "tiny_E3_gap_stable": false,
+      "desert_seeds": [
+        0.1,
+        0.9,
+        0.1
+      ],
+      "desert_note": "max|diff|=0.8"
+    },
+    "B6_strict_rerun": {
+      "stopped": true,
+      "all_ok": false,
+      "old_unit_unchanged": true
+    },
+    "B6_missing_reference": {
+      "all_ok": true,
+      "checks": []
+    },
+    "B7_force_JSON_boundaries": {
+      "{\"protocol\":": "rebuilt",
+      "[]": "AttributeError",
+      "null": "AttributeError"
+    },
+    "R1_rerun_metadata": {
+      "requested_second": {
+        "git_commit": "B",
+        "cache_protocol": "v2"
+      },
+      "stored_second": {
+        "model": "clip_vitl14",
+        "seed": 0,
+        "created": "2026-10-26T15:50:24",
+        "git_commit": "A",
+        "git_dirty": false,
+        "cache_protocol": "v1"
+      }
+    },
+    "B9_full_cache_hit": {
+      "iterator_calls": 0
+    }
+  },
+  "source_sha256": {
+    "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/data/captions.py": "136456f0bd8ad2d61612397839fc2a924bc1aa9cc32504a418e002efbef6d7cd",
+    "src/data/clevr.py": "b5a409d0534d36d47d7f5a5009e5037c3d1e4ee739ee40c721ec538ba23c64b0",
+    "src/data/cogent.py": "35595c6ecfe07bbd92742f74fe56f264672ad6a7fb0031917585f136357eb23f",
+    "src/data/pair_matcher.py": "7f26c448bd6f6a8fe5b6b75bfc4cb5fd7ed0d1ee92307deb6d6222fc807cf61d",
+    "src/data/pug_animals.py": "8b7db81c062d772dc7aed5d627c792c24dee8562996fc88ed07e63f23950575c",
+    "src/data/pug_common.py": "1ac761793dbc03e2f7a2c6b3f6af6f170218513625f425a1de392574b97ef9ad",
+    "src/data/pug_imagenet.py": "98e0b5cb552432962b9c695f0e35a4a78b0e66cc04751c3f34208b1a85de39a9",
+    "src/data/pug_spar.py": "5201463d23bec4cceba041c6074f32b1469c581c931c5e4aee099450fea3f371",
+    "src/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/experiments/common.py": "67e4a4b521c4612850a952ccaae021c2ba9bcc9e43e54e20a97be48db44c8653",
+    "src/experiments/e1_spar_official.py": "3ef58ba6f4a3cd681d833d5fd3feee528be6bbed5824e0ea59b72039453c4e25",
+    "src/experiments/e1_state_diagnosis.py": "c07f72cef4c2ad00a883cf18f86a24070a67155921e64dfee8a6c9e7405762b6",
+    "src/experiments/e2_change_diagnosis.py": "b3ccac3ef5fe34cc8c93f1d22d32749c6550a9193be161833c896f3e11b56ca3",
+    "src/experiments/e3_cogent_diagnosis.py": "e387569cfc8cd376a74eb5cffb3bce1e697d682f214b53cb214b407400a92dd0",
+    "src/experiments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/features/cache.py": "723d2d3ce171ba32e496600bc5576bf2f13a5a65732e715899a09529a1bfb5d6",
+    "src/features/delta.py": "9bd1683821f15cfb5d404cfa59a0b34d45b3575ea9a52333643e7dac792ffd49",
+    "src/features/extract.py": "8971e4c311a22d105e3d23095e079c3137d3546a6a3117164efa438cbbd77a77",
+    "src/features/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/metrics/bootstrap.py": "123a8d4baba8087dbc6e9a35ef5b0cbe63f1ec3f22161bb8cde7acab51fa3bf4",
+    "src/metrics/delta_stats.py": "ba98fbb768fa1ffb55d8f9fa570e46a29f3cf2c5ab4ad2e8a85087ec6322b7b1",
+    "src/metrics/matching.py": "415bc0b39fad2519d2396bc499edef9bc6f68a53ec5cbc82e2cb8165ea2a5b17",
+    "src/metrics/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/models/clip_encoder.py": "4832c350eef6353e248547eaba4dbc1af015c56bec2ba9e4265e183f66c802ba",
+    "src/models/siglip_encoder.py": "973be5ea0a8888cbb99096fae2ddb5714f0be976df3f39b0c018f017f21e1a59",
+    "src/models/vlm_encoder.py": "548492f87da578f50dcc382ae6f6a50f12668cc96ba1f22e4e63b8b2217294ae",
+    "src/models/__init__.py": "3d8f01de3e2ef934d43c4c2ce784c10792aa9ba1b4bd55369f6e7fa7d0992c1c",
+    "src/utils/io.py": "1b2512c06da51464400583fe410f1d4f9469bd6b49813e33e31e2a1d9986581d",
+    "src/utils/logging.py": "e95c4c26be7a6701ed1df02b911e8c63534102d532dc2f241810b3cd892349e5",
+    "src/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scripts/analyze_e3_units.py": "12c37fc680216b04146cae03588f1a71308dab343c9706cd65b6aeea460ad799",
+    "scripts/build_manifests.py": "7517b128e85928138d339c5308adf6b9092dc44eb49dc7148cac4cfebdecea7b",
+    "scripts/convert_siglip2_checkpoint.py": "92c6b41014dbfb2e2508fbfb3df3ea1b32253af94d97d21588aa87eed2ea2a42",
+    "scripts/extract_embeddings.py": "21834aff746d19a43cbf08432f3e6473c9bac53ea025b092a9ffdf49fd14607d",
+    "scripts/make_figures.py": "bf0c04b9fc4d4e6882def9b12e9663e9f4a8240ef0c26d67a9ab850c249903ad",
+    "scripts/run_e1.py": "ff6f94389f74fc113e7d2abd06ba83d71b34cb9dad1aef02e44385d5a67170f9",
+    "scripts/run_e1_spar_official.py": "25f33ff55a2cba7e142a9273989ddfcc42bb62688bcfb7e3b532f55529de6141",
+    "scripts/run_e2.py": "e17de19c25d37bb6ed250f56e4cc9a119e141624e94450c65e82990ae9c310ca",
+    "scripts/run_e3.py": "305748d973ba1266ec4b0546ce99bdf21aa2f117fec94bffc7c6b77a6d479224",
+    "scripts/summarize_seed_stability.py": "bb87ac334af44fdf890ad8ffa0f922e0473c34416adc04567f4ae2576c2dd4bf"
+  },
+  "audit_script_sha256": "e21eb0a02dc6860b74d6afcd6c5d39094725e4547379789617b57a04bddf0abd"
+}
