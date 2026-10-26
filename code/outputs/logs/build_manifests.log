@@ -1,6 +1,0 @@
-2026-10-21 17:18:58,727 | INFO | build_manifests | [manifest] pug_spar: 43560 rows -> /home/xpfu/WorkSpace/GraphDelta/code/data/manifests/pug_spar_meta.parquet
-2026-10-21 17:18:58,727 | INFO | build_manifests | [manifest] pug_spar uniques: {"world_name": 10, "character_name": 33, "character2_name": 33, "character1_pos": 2, "character2_pos": 2, "character_texture": 3, "character2_texture": 3, "two_object": 2}
-2026-10-21 17:18:59,595 | INFO | build_manifests | [manifest] pug_animals: 215040 rows -> /home/xpfu/WorkSpace/GraphDelta/code/data/manifests/pug_animals_meta.parquet
-2026-10-21 17:18:59,596 | INFO | build_manifests | [manifest] pug_animals uniques: {"animal": 70, "environment": 64, "texture": 4, "size": 3, "camera": 4, "character_scale": 3, "camera_yaw": 4, "character_texture": 4}
-2026-10-21 17:19:00,047 | INFO | build_manifests | [manifest] pug_imagenet: 88328 rows -> /home/xpfu/WorkSpace/GraphDelta/code/data/manifests/pug_imagenet_meta.parquet
-2026-10-21 17:19:00,047 | INFO | build_manifests | [manifest] pug_imagenet uniques: {"world_name": 64, "character_name": 724, "character_label": 151, "character_scale": 7, "camera_yaw": 6, "camera_pitch": 7, "camera_roll": 7, "character_texture": 9, "scene_light": 8}
