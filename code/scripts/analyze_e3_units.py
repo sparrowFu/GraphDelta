@@ -70,11 +70,15 @@ def main():
 
     # 总 gap 复算（强校验：应与 e3_difficulty_gap.csv 主指标一致到数值精度）。
     # 复核 B6：此前只打日志、不拦截——items 与主表冲突时仍输出单元表，下游
-    # Figure 5 可能展示冲突来源。现在：检查结果写 e3_unit_consistency.json；
-    # 不一致时默认停止（--no-strict 为探索模式，仍输出单元表）。
+    # Figure 5 可能展示冲突来源。现在：检查结果写 e3_unit_consistency.json
+    # （status: passed/failed/not_checked，三轮审查问题 6）；失败时删除旧
+    # 派生单元表（三轮审查问题 2：防止绘图消费过期数据），默认停止，
+    # --no-strict 为探索模式（仍输出单元表供排查）；严格模式要求参考主表存在。
     ref_path = tables / "e3_difficulty_gap.csv"
     checks, check_fail = [], False
+    status = "not_checked"
     if ref_path.exists():
+        status = "passed"
         ref = pd.read_csv(ref_path).set_index("shape_group")
         for grp in ["cube_cylinder", "sphere"]:
             sub = df[df["shape_group"] == grp]
@@ -94,16 +98,28 @@ def main():
             logger.info(f"[E3-units] total gap {grp}: recomputed={gap:.6f} "
                         f"report={r_gap:.6f} |diff|={diff if diff is not None else 'NA'}"
                         f" ok={ok}")
+        if check_fail:
+            status = "failed"
+    elif not args.no_strict:
+        raise SystemExit(
+            "[E3-units] 缺少参考主表 e3_difficulty_gap.csv，无法做一致性检查"
+            "（严格模式要求存在；探索模式用 --no-strict，状态记 not_checked）。")
     sidecar = tables / "e3_unit_consistency.json"
     sidecar.write_text(json.dumps(
-        {"all_ok": not check_fail, "atol": args.check_atol, "checks": checks,
-         "tables_dir": str(tables)}, ensure_ascii=False, indent=2))
-    logger.info(f"[E3-units] consistency: all_ok={not check_fail} -> {sidecar}")
-    if check_fail and not args.no_strict:
-        raise SystemExit(
-            "[E3-units] items 复算的总 gap 与主表不一致（见 "
-            f"{sidecar}）——数据来源冲突，已停止输出单元表；"
-            "探索模式（仍输出，供排查）用 --no-strict。")
+        {"status": status, "all_ok": status == "passed", "atol": args.check_atol,
+         "checks": checks, "tables_dir": str(tables)}, ensure_ascii=False, indent=2))
+    logger.info(f"[E3-units] consistency: status={status} -> {sidecar}")
+    if status == "failed":
+        stale = tables / "e3_unit_gaps.csv"
+        if stale.exists():
+            stale.unlink()
+            logger.warning(f"[E3-units] 检查失败，已删除旧派生单元表 {stale}"
+                           "（防止下游绘图消费过期数据）")
+        if not args.no_strict:
+            raise SystemExit(
+                "[E3-units] items 复算的总 gap 与主表不一致（见 "
+                f"{sidecar}）——数据来源冲突，已停止输出单元表；"
+                "探索模式（仍输出，供排查）用 --no-strict。")
 
     rows = []
     for grp in ["cube_cylinder", "sphere"]:

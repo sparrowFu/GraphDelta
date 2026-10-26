@@ -24,12 +24,16 @@ def _check_protocol(model_dir: Path, protocol: str):
     pf = model_dir / "protocol.json"
     if pf.exists():
         try:
-            stored = json.loads(pf.read_text()).get("protocol")
+            obj = json.loads(pf.read_text())
+            if not isinstance(obj, dict):
+                raise ValueError(f"不是 JSON 对象：{type(obj).__name__}")
+            stored = obj.get("protocol")
         except (json.JSONDecodeError, OSError, ValueError) as e:
-            # 复核 B7：损坏/不可读的协议文件 → 来源未知，不能按任何协议复用
+            # 复核 B7 / 三轮审查问题 5：损坏、不可读或结构不对（[]/null/字符串
+            # 都是合法 JSON 但不是协议对象）→ 来源未知，不能按任何协议复用
             raise RuntimeError(
-                f"protocol.json 无法解析（{e}）：{pf}。缓存来源未知，不能复用——"
-                f"请用 extract_embeddings.py --force 整套重建。")
+                f"protocol.json 无法解析或不是对象（{e}）：{pf}。缓存来源未知，"
+                f"不能复用——请用 extract_embeddings.py --force 整套重建。")
         if stored != protocol:
             raise RuntimeError(
                 f"缓存协议不匹配：{model_dir} 记录 protocol={stored!r}，"

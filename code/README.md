@@ -34,6 +34,7 @@ conda run -n CudaVersion128Fuxp python scripts/run_e3.py                 # CoGen
 conda run -n CudaVersion128Fuxp python scripts/run_e2.py                 # PUG: Animals 单因素响应（最重，最后跑）
 # PUG: ImageNet 辅助验证（方案 §14 / 审查 A1）：--dataset pug_imagenet
 # 配对固定 character_name（实例身份，复核 B1）等全部非目标因素；
+# smoke 子集按 smoke_cols 逐层筛选（先实例后环境，三轮审查问题 1）；
 # 某因素 0 对配对默认停止，局部诊断加 --allow-empty-factors
 # conda run -n CudaVersion128Fuxp python scripts/run_e2.py --dataset pug_imagenet
 # 例：SigLIP2 / CLIP B/32 对照（特征缓存与结果目录均按模型隔离，互不影响）
@@ -51,6 +52,9 @@ conda run -n CudaVersion128Fuxp python scripts/make_figures.py            # §67
 结果目录约定（R2 隔离）：每个运行写入 `outputs/<model>/seed_<k>/tables/`，
 切换 `--model` / `--seed` 不再互相覆盖；目录内 `run_meta.json` 记录 model/seed、
 git commit（含是否有未提交改动）与 encoder `cache_protocol`（复核 R1 的来源记录），
+并**按实验名**（e1_state / e1_spar_official / e2_<dataset>[_smoke] / e3_cogent）
+更新各自当前来源；同实验身份变化时旧身份保存在 `replaces`，顶层保留首次记录
+（三轮审查问题 3：共享顶层 meta 不能代表目录内全部文件），
 `summarize_seed_stability.py` / `make_figures.py` / `analyze_e3_units.py` 读取时
 校验身份。旧布局 `outputs/tables`（seed 0）与 `outputs/tables_seed{1,2}` 是
 2026-10-22 **clip_vitl14** 三种子运行的历史快照，只读保留；读取端仅对
@@ -92,7 +96,7 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
 | e3_cogent_by_combo.csv | 逐 (condition, shape_group, color, shape, negative_type)（含 pooled 行）：n、accuracy、mean_margin（P2-10） |
 | e3_cogent_by_color.csv | 逐 (condition, shape_group, color)：n、accuracy、mean_margin（P2-10） |
 | e3_items_cogent.jsonl | E3 每条 item 级结果（image_id、condition、shape_group、negative_type、color、shape、item_acc、item_margin），供逐单元分析复查 |
-| e3_unit_gaps.csv | 逐 (shape_group, color) 主单元 A−B 题型等权 gap + 图片聚类 bootstrap CI（`pooled_equal_type` 行）+ 逐题型明细行；单元级效应方向沿 CoGenT 调色板分裂，详见 `analyze_e3_units.py` 与 STAGE1_SUMMARY §3。写出前先复算总 gap 与主表对照，不一致默认停止（复核 B6；`--no-strict` 探索模式），检查结果写 `e3_unit_consistency.json` |
+| e3_unit_gaps.csv | 逐 (shape_group, color) 主单元 A−B 题型等权 gap + 图片聚类 bootstrap CI（`pooled_equal_type` 行）+ 逐题型明细行；单元级效应方向沿 CoGenT 调色板分裂，详见 `analyze_e3_units.py` 与 STAGE1_SUMMARY §3。写出前先复算总 gap 与主表对照，不一致默认停止（复核 B6；`--no-strict` 探索模式），检查状态（passed/failed/not_checked）写 `e3_unit_consistency.json`；失败时删除旧单元表，`make_figures` 读取前强制校验该文件（三轮审查问题 2/6），严格模式要求参考主表存在 |
 | seed_stability.csv | seeds 0/1/2 三种子关键判定（E1 CI-vs-0.5、gap 符号、SPAR 官方最大差、E2 CI 符号、E3 总/单元 gap）稳定性汇总。SPAR 描述行 stable 为 NA 不计稳定数；三种子均未定义的指标（hardneg 的 top5）跳过；`per_world` 输出时 world 计入 key（复核 B3/B8）；各种子来源布局记录在 `layout_seed*` 列 |
 | figures/ | §67 五图：fig1 2AFC accuracy、fig2 margin、fig3 Δ 范数 vs nuisance、fig4 相似性阶梯、fig5 CoGenT A/B + 逐单元 gap（PNG 300dpi + 合并 PDF） |
 

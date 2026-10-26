@@ -44,10 +44,16 @@ def _force_reset(cache_root, model, dataset, logger):
     pf = model_dir / "protocol.json"
     if pf.exists():
         try:
-            stored = json.loads(pf.read_text()).get("protocol")
+            obj = json.loads(pf.read_text())
+            if not isinstance(obj, dict):
+                raise ValueError(f"不是 JSON 对象：{type(obj).__name__}")
+            stored = obj.get("protocol")
         except (json.JSONDecodeError, OSError, ValueError):
-            stored = None   # 损坏/不可读 → 来源未知，按整套重建处理（B7）
-            logger.info("[extract] force: protocol.json 损坏或不可读，按来源未知处理")
+            # 损坏/不可读/结构不对（[]/null/字符串）→ 来源未知，整套重建
+            # （复核 B7 / 三轮审查问题 5）
+            stored = None
+            logger.info("[extract] force: protocol.json 损坏、不可读或不是对象，"
+                        "按来源未知处理")
     if stored == model.cache_protocol:
         for p in (model_dir / f"{dataset}_images.npz", model_dir / "text_cache.npz"):
             if p.exists():

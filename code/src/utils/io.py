@@ -54,27 +54,44 @@ def _code_identity():
     return {}
 
 
-def output_tables_dir(paths, model_name: str, seed: int, extra: dict = None) -> Path:
+def output_tables_dir(paths, model_name: str, seed: int, extra: dict = None,
+                      experiment: str = None) -> Path:
     """结果目录按模型与种子隔离（审查报告 R2）：outputs/<model>/seed_<seed>/tables/。
 
     切换 --model / --seed 不再互相覆盖；旧布局 outputs/tables、outputs/tables_seed{k}
     为历史结果，只读保留（summarize_seed_stability / make_figures 有回退逻辑）。
 
-    目录内写 run_meta.json（model/seed/created + git 身份；复核 R1 的低成本
-    来源记录：调用方经 extra 传入 cache_protocol 等预处理身份）；后处理入口
-    据此核对数据身份，避免把历史 CLIP-L/14 结果当成其他模型。
+    run_meta.json 的写入规则（三轮审查问题 3）：
+    - 首次创建：写 model/seed/created + git 身份 + extra（cache_protocol 等）；
+    - 复用目录：顶层字段保留首次记录，**按实验名**（experiment 参数）更新
+      experiments/<name> 的当前来源（git/cache_protocol/updated）；同一实验身份
+      变化时旧身份保存在 replaces 里，不覆盖、不冒充——目录里未重跑的其他
+      实验文件仍对应其各自首次记录，不能用共享顶层 meta 代表全部文件。
     """
+    from datetime import datetime
     d = paths["dirs"]["outputs"] / model_name / f"seed_{seed}" / "tables"
     d.mkdir(parents=True, exist_ok=True)
     meta = d / "run_meta.json"
-    if not meta.exists():
-        from datetime import datetime
-        info = {"model": model_name, "seed": seed,
-                "created": datetime.now().isoformat(timespec="seconds")}
-        info.update(_code_identity())
-        if extra:
-            info.update(extra)
-        meta.write_text(json.dumps(info, ensure_ascii=False, indent=2))
+    now = datetime.now().isoformat(timespec="seconds")
+    ident = _code_identity()
+    if extra:
+        ident.update(extra)
+    if meta.exists():
+        info = json.loads(meta.read_text())
+    else:
+        info = {"model": model_name, "seed": seed, "created": now}
+        info.update(ident)
+    if experiment:
+        exps = info.setdefault("experiments", {})
+        rec = dict(ident)
+        rec["updated"] = now
+        prev = exps.get(experiment)
+        if prev is not None and (prev.get("git_commit") != rec.get("git_commit")
+                                 or prev.get("cache_protocol") != rec.get("cache_protocol")):
+            rec["replaces"] = {k: prev.get(k) for k in
+                               ("git_commit", "git_dirty", "cache_protocol", "updated")}
+        exps[experiment] = rec
+    meta.write_text(json.dumps(info, ensure_ascii=False, indent=2))
     return d
 
 
@@ -132,6 +149,26 @@ def verify_tables_identity(tables_dir, out_dir, model_name: str, seed: int) -> N
         raise SystemExit(
             f"旧布局目录 {d} 属于 {ident[0]} seed {ident[1]}，与请求的 "
             f"{model_name} seed {seed} 不一致。")
+
+
+def verify_e3_consistency(tables_dir) -> None:
+    """消费 e3_unit_gaps.csv 前核对一致性 sidecar（三轮审查问题 2）。
+
+    analyze_e3_units 的检查状态为 failed 时，旧单元表已被删除/失效，下游
+    （make_figures Figure 5）不得继续消费该目录的派生表；not_checked /
+    passed 不拦截。兼容只有 all_ok 字段的旧 sidecar。
+    """
+    p = Path(tables_dir) / "e3_unit_consistency.json"
+    if not p.exists():
+        return
+    c = json.loads(p.read_text())
+    status = c.get("status")
+    if status is None:
+        status = "passed" if c.get("all_ok") else "failed"
+    if status == "failed":
+        raise SystemExit(
+            f"{p} 记录一致性检查失败（items 与主表冲突）——该目录的"
+            f"e3_unit_gaps.csv 已失效，请先重跑 analyze_e3_units 解决冲突再绘图。")
 
 
 def md5(s: str) -> str:

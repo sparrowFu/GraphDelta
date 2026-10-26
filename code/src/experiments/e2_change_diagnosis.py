@@ -33,12 +33,15 @@ from ..utils.io import load_config, output_tables_dir
 
 # 数据集注册表（审查 A1）：E2 除 Animals 外接入 PUG:ImageNet。
 # raw_meta_columns 为 parquet 原始列（迭代图像用），meta_cols 为配对语义列。
+# smoke_cols：smoke 子集的筛选字段（显式声明，不依赖 meta_cols 位置——
+# 三轮审查问题 1：ImageNet 前两列（实例/类别）独立取前 6 再求交可能筛成空集）。
 DATASETS = {
     "pug_animals": {
         "path_key": "pug_animals",
         "build_meta": build_animals_metadata,
         "raw_meta_columns": ANIMALS_META_COLUMNS,
         "meta_cols": ANIMALS_PAIR_COLS,
+        "smoke_cols": ["animal", "environment"],
         "caption": pug_animals_caption,
     },
     "pug_imagenet": {
@@ -46,6 +49,7 @@ DATASETS = {
         "build_meta": build_imagenet_metadata,
         "raw_meta_columns": IMAGENET_META_COLUMNS,
         "meta_cols": IMAGENET_PAIR_COLS,
+        "smoke_cols": ["character_name", "environment"],   # 先选实例，再在其子集内选环境
         "caption": pug_imagenet_caption,
     },
 }
@@ -136,19 +140,27 @@ def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals",
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     tcache = TextCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     pair_seed = cfg.get("seeds", [0])[0] if seed is None else seed
-    out_tables = output_tables_dir(paths, model.name, pair_seed,  # R2：按模型/种子隔离
-                                   extra={"cache_protocol": model.cache_protocol})
+    out_tables = output_tables_dir(  # R2：按模型/种子隔离
+        paths, model.name, pair_seed,
+        extra={"cache_protocol": model.cache_protocol},
+        experiment=f"e2_{dataset}" + ("_smoke" if smoke else ""))
 
     meta = spec["build_meta"](paths["datasets"][spec["path_key"]])
     if smoke:
-        # 前两个语义列各取前 6 个取值做小样本子集（Animals: animal/environment；
-        # ImageNet: character_label/environment）
-        m0, m1 = spec["meta_cols"][:2]
-        v0 = sorted(meta[m0].astype(str).unique())[:6]
-        v1 = sorted(meta[m1].astype(str).unique())[:6]
-        meta = meta[meta[m0].astype(str).isin(v0)
-                    & meta[m1].astype(str).isin(v1)].reset_index(drop=True)
-        logger.info(f"[E2] {dataset} smoke subset: {len(meta)} rows")
+        # 三轮审查问题 1：筛选字段按数据集显式声明（smoke_cols），并**逐层**
+        # 筛选（后一列在已选子集内取前 6 个值）——独立取前 6 再求交可能
+        # 把有配对的数据筛成空集；筛选后为空属于配置问题，显式报错。
+        sub = meta
+        for c in spec["smoke_cols"]:
+            vals = sorted(sub[c].astype(str).unique())[:6]
+            sub = sub[sub[c].astype(str).isin(vals)]
+        meta = sub.reset_index(drop=True)
+        if len(meta) == 0:
+            raise SystemExit(
+                f"[E2] {dataset} smoke 筛选后 0 行（smoke_cols={spec['smoke_cols']}），"
+                f"请检查 smoke_cols 配置与数据取值分布。")
+        logger.info(f"[E2] {dataset} smoke subset: {len(meta)} rows"
+                    f" (smoke_cols={spec['smoke_cols']})")
 
     # canonical 顺序按数据集隔离（Animals 声明标签顺序；ImageNet 按观测值排序）
     orders = cfg["datasets"][dataset].get("canonical_orders")
@@ -161,9 +173,12 @@ def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals",
                                seed=pair_seed, meta_cols=spec["meta_cols"])
         if len(p) == 0:
             # 复核 B2：空因素此前在日志访问 p['context_key'] 时抛 KeyError；
-            # 现在默认带原因停止，局部诊断可显式跳过
+            # 现在默认带原因停止，局部诊断可显式跳过。三轮审查问题 1：
+            # smoke 模式需区分"smoke 子集筛掉了覆盖"与"源数据无配对"。
             msg = (f"[E2] {dataset}/factor={f}: 0 对配对——当前 context 定义下该"
                    f"因素没有任何单因素变化对，请检查数据覆盖与因素取值")
+            if smoke:
+                msg += "（注意：smoke 子集可能筛掉了该因素的覆盖，完整运行无此筛选）"
             if allow_empty_factors:
                 logger.warning(msg + "；已跳过（--allow-empty-factors），"
                                "本次结果不构成完整因素集")
@@ -175,6 +190,12 @@ def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals",
                   if "character_name" in p.columns else "")
         logger.info(f"[E2] factor={f}: {len(p)} pairs, "
                     f"{p['context_key'].nunique()} contexts{n_inst}")
+    if not pairs_by_factor:
+        # 三轮审查问题 4：全部因素为空时给明确停止消息，不让空 dict 进入
+        # build_delta_frame（此前抛 ValueError: No objects to concatenate）
+        raise SystemExit(
+            f"[E2] {dataset}: 全部因素均无有效配对，停止（--allow-empty-factors "
+            f"只跳过个别空因素，不适用于全空输入；请检查数据或配对协议）。")
     factors = list(pairs_by_factor)   # B2：被跳过的因素不进入后续统计
 
     delta_df = build_delta_frame(pairs_by_factor)
