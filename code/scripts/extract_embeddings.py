@@ -5,6 +5,8 @@
 --force 删除后重抽。
 """
 import argparse
+import json
+import shutil
 import sys
 from pathlib import Path
 
@@ -13,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from src.data import clevr
 from src.data.cogent import condition_image_dir, load_condition_scenes
 from src.data.pug_animals import META_COLUMNS as ANIMALS_META
+from src.data.pug_imagenet import META_COLUMNS as IMAGENET_META
 from src.data.pug_spar import META_COLUMNS as SPAR_META
 from src.experiments.e1_spar_official import extract_official_features
 from src.features.cache import ImageFeatureCache
@@ -22,11 +25,34 @@ from src.utils.io import load_config, load_paths
 from src.utils.logging import get_logger
 
 
+def _force_reset(cache_root, model, dataset, logger):
+    """--force 的整套重建入口（审查 A2）：必须在协议校验**之前**执行，
+    否则协议不匹配的历史目录会先抛异常，删除分支永远不可达。
+
+    - 协议匹配：只删本数据集图像缓存 + 文本缓存（文本与图像共享 encoder
+      语义，重建不能只覆盖图像而保留旧文本特征）；
+    - 协议不匹配或无 protocol.json：目录内新旧特征无法区分，整目录删除。
+    """
+    model_dir = Path(cache_root) / model.name
+    pf = model_dir / "protocol.json"
+    if pf.exists() and json.loads(pf.read_text()).get("protocol") == model.cache_protocol:
+        for p in (model_dir / f"{dataset}_images.npz", model_dir / "text_cache.npz"):
+            if p.exists():
+                p.unlink()
+                logger.info(f"[extract] force: removed {p}")
+    else:
+        if model_dir.exists():
+            shutil.rmtree(model_dir)
+        logger.info(f"[extract] force: removed entire cache dir {model_dir} "
+                    f"(protocol mismatch or missing; mixed-version features)")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", required=True,
                     choices=["clevr_val", "cogent_valA", "cogent_valB",
-                             "pug_spar", "pug_animals", "pug_spar_official"])
+                             "pug_spar", "pug_animals", "pug_imagenet",
+                             "pug_spar_official"])
     ap.add_argument("--model", default="clip_vitl14")
     ap.add_argument("--force", action="store_true", help="删除已有缓存重新抽取")
     args = ap.parse_args()
@@ -34,10 +60,9 @@ def main():
     paths = load_paths()
     logger = get_logger(f"extract_{args.dataset}", paths["dirs"]["outputs"] / "logs")
     model = build_encoder(args.model, paths, logger)
+    if args.force:
+        _force_reset(paths["dirs"]["cache"], model, args.dataset, logger)
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
-
-    if args.force and cache.exists(args.dataset):
-        cache.path(args.dataset).unlink()
 
     if args.dataset == "clevr_val":
         cfg = load_config("e1_state")["clevr"]
@@ -55,6 +80,10 @@ def main():
     elif args.dataset == "pug_animals":
         extract_pug_images(model, cache, "pug_animals", paths["datasets"]["pug_animals"],
                            ANIMALS_META, logger, id_prefix="pug_animals")
+    elif args.dataset == "pug_imagenet":
+        extract_pug_images(model, cache, "pug_imagenet",
+                           paths["datasets"]["pug_imagenet"],
+                           IMAGENET_META, logger, id_prefix="pug_imagenet")
     elif args.dataset == "pug_spar_official":
         # 官方协议预处理（Resize224 + ImageNet mean/std），缓存 key 同名
         extract_official_features(model, cache, "pug_spar_official",

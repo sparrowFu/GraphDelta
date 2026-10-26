@@ -104,3 +104,11 @@ def spar_relation_contents(row):
 
 def pug_animals_caption(row):
     return f"a {row['animal']} in the {row['environment']}"
+
+
+# ---------------- PUG: ImageNet（文本 nuisance 用，审查 A1）----------------
+# character_name 是 hash、character_label 是类别编号，都不能构成自然语言
+# 内容；caption 只描述可自然表达的字段（texture + environment）。
+
+def pug_imagenet_caption(row):
+    return f"a {row['texture']} object in the {row['environment']}"

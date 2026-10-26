@@ -61,7 +61,8 @@ def verify_run_meta(tables_dir, model_name: str, seed: int) -> None:
     """核对结果目录的 run_meta.json 身份（审查报告 R2/R7 读取端）。
 
     目录无 run_meta.json（旧布局或显式 --tables-dir 指向的历史目录）时不校验；
-    有则 model/seed 必须与请求一致，否则报错。
+    有则 model/seed 必须与请求一致，否则报错。显式目录的完整校验用
+    verify_tables_identity（审查 A5）。
     """
     meta = Path(tables_dir) / "run_meta.json"
     if not meta.exists():
@@ -73,6 +74,43 @@ def verify_run_meta(tables_dir, model_name: str, seed: int) -> None:
             f"model={m.get('model')!r}, seed={m.get('seed')!r}，"
             f"与请求的 model={model_name!r}, seed={seed!r} 不一致。"
             f"请核对 --model/--seed 或 --tables-dir。")
+
+
+# 旧布局目录的固定属主（R2 隔离前的历史结果，无 run_meta.json）
+LEGACY_TABLES_IDENTITY = {
+    "tables": ("clip_vitl14", 0),
+    "tables_seed1": ("clip_vitl14", 1),
+    "tables_seed2": ("clip_vitl14", 2),
+}
+
+
+def verify_tables_identity(tables_dir, out_dir, model_name: str, seed: int) -> None:
+    """显式指定的 tables 目录也必须有可验证身份（审查 A5）。
+
+    - 有 run_meta.json → 核对 model/seed；
+    - 无 run_meta.json → 只接受已知的旧布局目录（outputs/tables、
+      outputs/tables_seed1/2，属主固定为 clip_vitl14 对应种子），且请求的
+      model/seed 必须与属主一致；
+    - 其余无元数据目录一律拒绝：不能被标成任何模型的正式结果。
+    """
+    d = Path(tables_dir)
+    if (d / "run_meta.json").exists():
+        verify_run_meta(d, model_name, seed)
+        return
+    try:
+        rel = str(d.resolve().relative_to(Path(out_dir).resolve()))
+    except ValueError:
+        rel = None
+    ident = LEGACY_TABLES_IDENTITY.get(rel) if rel else None
+    if ident is None:
+        raise SystemExit(
+            f"目录 {d} 没有 run_meta.json，也不属于已知的旧布局目录，无法验证"
+            f"其模型/种子身份——不能作为 {model_name} seed {seed} 的正式结果"
+            f"来源（审查 A5）。")
+    if ident != (model_name, seed):
+        raise SystemExit(
+            f"旧布局目录 {d} 属于 {ident[0]} seed {ident[1]}，与请求的 "
+            f"{model_name} seed {seed} 不一致。")
 
 
 def md5(s: str) -> str:

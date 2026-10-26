@@ -10,11 +10,19 @@ from PIL import Image
 
 def augment_view(img: Image.Image, seed: int, scale_min: float, scale_max: float,
                  quality: int) -> Image.Image:
-    """确定性轻量增强：随机裁剪（固定面积比例区间）+ JPEG 压缩。"""
+    """确定性轻量增强：随机裁剪（保留面积比例区间）+ JPEG 压缩。
+
+    s 为目标**保留面积**比例，边长缩放系数取 sqrt(s)。此前两边各乘 s，
+    实际保留面积为 s²（[0.85,1.0] 只剩 72.25%–100% 面积），与"面积比例"
+    的声明不符（审查 A3）；修正后 [0.85,1.0] 即保留 85%–100% 面积。
+    边长向上取整，保证实际保留面积不低于采样的 s。
+    """
     rng = np.random.default_rng(seed)
     w, h = img.size
     s = float(rng.uniform(scale_min, scale_max))
-    nw, nh = max(1, int(w * s)), max(1, int(h * s))
+    side = float(np.sqrt(s))
+    nw = max(1, min(w, int(np.ceil(w * side))))
+    nh = max(1, min(h, int(np.ceil(h * side))))
     x0 = int(rng.integers(0, w - nw + 1))
     y0 = int(rng.integers(0, h - nh + 1))
     img2 = img.crop((x0, y0, x0 + nw, y0 + nh))

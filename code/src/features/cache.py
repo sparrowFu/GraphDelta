@@ -14,7 +14,13 @@ from ..utils.io import md5
 
 
 def _check_protocol(model_dir: Path, protocol: str):
-    """校验/登记缓存目录的 encoder 协议指纹；不一致即报错（审查报告 §3.8）。"""
+    """校验/登记缓存目录的 encoder 协议指纹（审查报告 §3.8 / 审查 A2）。
+
+    - 已有 protocol.json：指纹不一致即报错，要求整套重建；
+    - 无 protocol.json 但目录里已有任何 NPZ（协议化之前的历史缓存）：
+      拒绝登记——新写入的协议不能证明旧特征按当前语义抽取；
+    - 无 protocol.json 且无任何 NPZ（空目录）：首次登记。
+    """
     pf = model_dir / "protocol.json"
     if pf.exists():
         stored = json.loads(pf.read_text()).get("protocol")
@@ -23,8 +29,14 @@ def _check_protocol(model_dir: Path, protocol: str):
                 f"缓存协议不匹配：{model_dir} 记录 protocol={stored!r}，"
                 f"当前 encoder 要求 {protocol!r}。encoder 语义已变化，旧特征不能"
                 f"复用——请删除整个目录后重抽：rm -rf {model_dir}")
-    else:
-        pf.write_text(json.dumps({"protocol": protocol}))
+        return
+    if any(model_dir.glob("*.npz")):
+        raise RuntimeError(
+            f"缓存目录无 protocol.json 但已有特征文件：{model_dir}。这些特征"
+            f"无法证明按当前协议 {protocol!r} 抽取，不能直接登记复用——"
+            f"请用 extract_embeddings.py --force 整套重建，或把旧目录移入"
+            f"历史命名空间后从空目录重抽。")
+    pf.write_text(json.dumps({"protocol": protocol}))
 
 
 class ImageFeatureCache:

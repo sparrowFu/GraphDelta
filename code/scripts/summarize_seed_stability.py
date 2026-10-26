@@ -12,6 +12,10 @@
   三种子是否同号。
 
 输出 outputs/tables/seed_stability.csv + 控制台摘要；判定翻转的行 stable=False。
+
+审查 A4：CI 或点估计缺失（NaN）时分类为 invalid，不产生"稳定"结论。
+审查 A6：三种子混用新旧布局（修复前/后口径）时默认停止，需
+--allow-mixed-legacy 才输出临时对照，CSV 记录各种子来源布局。
 """
 import sys
 from pathlib import Path
@@ -26,7 +30,13 @@ from src.utils.logging import get_logger
 
 
 def ci_vs_ref(lo, hi, ref=0.5):
-    """CI 与参考值的关系：above / below / contains。"""
+    """CI 与参考值的关系：above / below / contains / invalid。
+
+    invalid：CI 缺失（NaN/Inf，上游 bootstrap 有效重采样不足等）——
+    不能与任何参考值比较（审查 A4）。
+    """
+    if not (np.isfinite(lo) and np.isfinite(hi)):
+        return "invalid"
     if lo > ref:
         return "above"
     if hi < ref:
@@ -35,6 +45,9 @@ def ci_vs_ref(lo, hi, ref=0.5):
 
 
 def ci_sign(lo, hi):
+    """CI 符号：pos / neg / ns / invalid（CI 缺失时不能判为不显著，审查 A4）。"""
+    if not (np.isfinite(lo) and np.isfinite(hi)):
+        return "invalid"
     if lo > 0:
         return "pos"
     if hi < 0:
@@ -42,11 +55,18 @@ def ci_sign(lo, hi):
     return "ns"
 
 
+def stable_classes(cls):
+    """三种子分类一致且无 invalid 才判 stable（审查 A4：缺失 ≠ 稳定）。"""
+    return len(set(cls)) == 1 and "invalid" not in cls
+
+
 def main():
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="clip_vitl14",
                     help="汇总的模型（新布局 outputs/<model>/seed_k/tables；R2）")
+    ap.add_argument("--allow-mixed-legacy", action="store_true",
+                    help="三种子混用新旧布局时仍输出（仅作版本临时对照，审查 A6）")
     args = ap.parse_args()
 
     paths = load_paths()
@@ -72,8 +92,16 @@ def main():
     for s, d in tabs.items():
         logger.info(f"[seeds] seed {s} tables: {d} ({layouts[s]})")
     if len(set(layouts.values())) > 1:
-        logger.warning("[seeds] 三种子混用新旧布局：新布局为 R3/R6 修复后数据、"
-                       "旧布局为修复前数据，两套口径不可直接比较——建议补齐重跑")
+        # A6：新旧布局分别是修复前/后的口径，混用的"稳定/翻转"不能解释为
+        # 固定协议下的抽样稳定性——默认停止，只允许显式要求的临时对照。
+        if not args.allow_mixed_legacy:
+            raise SystemExit(
+                "[seeds] 三种子混用新旧布局（新=修复后、旧=修复前数据，口径"
+                "不可比），已停止正式稳定性汇总（审查 A6）。请补齐同版本三种子"
+                "后重跑；确要输出临时对照请加 --allow-mixed-legacy（CSV 会记录"
+                "各种子来源布局）。")
+        logger.warning("[seeds] --allow-mixed-legacy：三种子混用新旧布局，"
+                       "结果只能作为版本对照，不是固定协议下的抽样稳定性")
 
     def read(seed, name):
         return pd.read_csv(tabs[seed] / name)
@@ -93,7 +121,7 @@ def main():
             r = r[(r.dataset == ds) & (r.factor == fac)].iloc[0]
             cls.append(ci_vs_ref(r.acc_ci_low, r.acc_ci_high))
             accs.append(round(float(r.accuracy), 4))
-        stable = len(set(cls)) == 1
+        stable = stable_classes(cls)
         add("e1_acc", f"{ds}/{fac}", "accuracy", accs, stable,
             f"CI-vs-0.5: {'/'.join(cls)}")
 
@@ -107,7 +135,7 @@ def main():
                   & (g.factor_b == g0.factor_b)].iloc[0]
             cls.append(ci_sign(g.gap_ci_low, g.gap_ci_high))
             gaps.append(round(float(g.gap), 4))
-        stable = len(set(cls)) == 1
+        stable = stable_classes(cls)
         add("e1_gap", key, "gap", gaps, stable, f"CI 符号: {'/'.join(cls)}")
 
     # SPAR 官方：top1/top5/hardneg 三种子最大绝对差（描述）
@@ -130,8 +158,9 @@ def main():
                 vals.append(None if pd.isna(v) else round(float(v), 4))
             vv = [v for v in vals if v is not None]
             maxdiff = None if len(vv) < 2 else round(max(vv) - min(vv), 4)
+            miss = "含缺失值; " if len(vv) < 3 else ""
             add("spar_official", key, metric, vals, True,
-                f"max|diff|={maxdiff}")
+                f"{miss}max|diff|={maxdiff}")
 
     # E2：Norm Gap 与 Transition Gap 的 CI 符号
     for _, d0 in read(0, "e2_delta_stats.csv").iterrows():
@@ -150,7 +179,7 @@ def main():
                 else:
                     cls.append(ci_sign(d[lo_c], d[hi_c]))
                     vals.append(round(float(d[metric]), 4))
-            stable = len(set(cls)) == 1
+            stable = stable_classes(cls)
             add("e2", f"{fac}/{metric}", metric, vals, stable,
                 f"CI 符号: {'/'.join(cls)}")
 
@@ -162,7 +191,7 @@ def main():
             d = d[d.shape_group == grp_name].iloc[0]
             cls.append(ci_sign(d.gap_ci_low, d.gap_ci_high))
             vals.append(round(float(d.difficulty_gap), 4))
-        stable = len(set(cls)) == 1
+        stable = stable_classes(cls)
         add("e3_gap", grp_name, "difficulty_gap", vals, stable,
             f"CI 符号: {'/'.join(cls)}")
 
@@ -177,14 +206,20 @@ def main():
             r = u[(u.negative_type == "pooled_equal_type") & (u.shape_group == r0.shape_group)
                   & (u.color == r0.color)].iloc[0]
             vals.append(round(float(r.gap), 4))
-        signs = {np.sign(v) for v in vals}
-        if len(signs) == 1:
+        # A4：点估计缺失（NaN）时不能凭 sign 集合判稳定
+        ok = all(np.isfinite(v) for v in vals)
+        signs = {np.sign(v) for v in vals} if ok else {"invalid"}
+        stable = ok and len(signs) == 1
+        if stable:
             same_sign += 1
-        add("e3_unit", key, "gap", vals, len(signs) == 1,
-            f"point-gap 符号{'一致' if len(signs) == 1 else '翻转'}")
+        add("e3_unit", key, "gap", vals, stable,
+            ("gap 缺失（invalid）" if not ok else
+             f"point-gap 符号{'一致' if stable else '翻转'}"))
     logger.info(f"[seeds] E3 单元 gap 三种子同号: {same_sign}/{len(u0)}")
 
     out = pd.DataFrame(rows)
+    for s in (0, 1, 2):   # A6：记录各种子数据来源布局（new/legacy）
+        out[f"layout_seed{s}"] = layouts[s]
     path_out = tabs[0] / "seed_stability.csv"
     out.to_csv(path_out, index=False)
     unstable = out[~out.stable]

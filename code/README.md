@@ -24,12 +24,16 @@ conda run -n CudaVersion128Fuxp python scripts/extract_embeddings.py --dataset p
 conda run -n CudaVersion128Fuxp python scripts/extract_embeddings.py --dataset cogent_valA
 conda run -n CudaVersion128Fuxp python scripts/extract_embeddings.py --dataset cogent_valB
 conda run -n CudaVersion128Fuxp python scripts/extract_embeddings.py --dataset pug_animals
+# PUG: ImageNet（辅助，方案 §14 / 审查 A1；跑 E2-ImageNet 前需要）
+# conda run -n CudaVersion128Fuxp python scripts/extract_embeddings.py --dataset pug_imagenet
 
 # 2) 四个实验（默认 CLIP ViT-L/14；其他 baseline 加 `--model`：clip_vitb32 / siglip2_so400m）
 conda run -n CudaVersion128Fuxp python scripts/run_e1.py                 # SPAR + CLEVR 自建 2AFC
 conda run -n CudaVersion128Fuxp python scripts/run_e1_spar_official.py   # SPAR 官方协议（P2-11）
 conda run -n CudaVersion128Fuxp python scripts/run_e3.py                 # CoGenT 难度不对称 + sphere 对照
 conda run -n CudaVersion128Fuxp python scripts/run_e2.py                 # PUG: Animals 单因素响应（最重，最后跑）
+# PUG: ImageNet 辅助验证（方案 §14 / 审查 A1）：--dataset pug_imagenet
+# conda run -n CudaVersion128Fuxp python scripts/run_e2.py --dataset pug_imagenet
 # 例：SigLIP2 / CLIP B/32 对照（特征缓存与结果目录均按模型隔离，互不影响）
 conda run -n CudaVersion128Fuxp python scripts/run_e1.py --model siglip2_so400m
 conda run -n CudaVersion128Fuxp python scripts/run_e1.py --model clip_vitb32
@@ -51,11 +55,14 @@ clip_vitl14（及 seed 0 绘图）允许回退旧布局，其他模型缺少新�
 不会把历史 CLIP-L/14 数据错当其他模型的结果（R2/R7）。阶段总结见
 `outputs/STAGE1_SUMMARY.md`。
 
-特征缓存约定（审查 §3.8）：`data/cache/<model>/` 内 `protocol.json` 记录该
+特征缓存约定（审查 §3.8 / A2）：`data/cache/<model>/` 内 `protocol.json` 记录该
 encoder 的预处理语义指纹（`cache_protocol`，随 encoder 类声明）。encoder 的
 图像/文本预处理变更时指纹更新，旧缓存立即报错失效（提示删除重抽），不会按
-ID/文本键静默复用旧特征；siglip2_so400m 当前指纹为
-`siglip2-fixres-lowercase-v1`（R1 FixRes + R4 小写化），旧缓存已删除。
+ID/文本键静默复用旧特征；无 `protocol.json` 但已有 NPZ 的历史目录会被拒绝
+登记（新指纹不能证明旧特征语义），重建入口为 `extract_embeddings.py --force`
+（协议不匹配时删整个模型缓存目录；协议匹配时删该数据集图像缓存 + 文本缓存）；
+siglip2_so400m 当前指纹为 `siglip2-fixres-lowercase-v1`（R1 FixRes + R4 小写化），
+旧缓存已删除。
 
 快速自检（小样本，输出带 `_smoke` 后缀）：
 
@@ -75,7 +82,7 @@ conda run -n CudaVersion128Fuxp python scripts/run_e2.py --smoke
 | e1_clevr_filter_stats.json / e1_spar_filter_stats.json | 各过滤原因的候选计数（§20a） |
 | e1_items_clevr/spar.jsonl | 每条 2AFC 样本（正/负内容、图片、factor），可复查 |
 | e1_spar_official.csv | SPAR 官方协议：scene / one_object / one_object_position / two_objects / two_objects_relation / two_objects_attribute × {全候选检索 top1/top5, hard-negative} × {无背景, caption 带背景}（P2-11）。检索候选集只含真实行的正例 caption，role-swap 负例只用于 hard-negative 二选一（二轮问题 7）。查询图片按 `spar_official.max_per_task=2000` 种子随机抽样（与自建 E1 的 n 对齐；候选池仍取完整子集，bg/no-bg 复用同一组查询图片；设 null 恢复官方全量；scene 保留官方 10 行 quirk） |
-| e2_delta_stats.csv | 按因素：Δ 范数（raw/z）、before/after 余弦、nuisance 范数与相似度、分层相似度（raw/z）、Transition Gap + CI、Factor/Nuisance Norm Gap + CI（§64；无后缀列 = normalized 空间，`_raw` = 归一化前空间，一轮 P2-8）。diff_factor 基准从其他因素联合均匀抽样，来源计数写入日志（二轮问题 1）；相似度 CI 为双端点 context 聚类 bootstrap（二轮问题 3）；Norm Gap 的因素端按 context、nuisance 端按图像聚类（二轮问题 4） |
+| e2_delta_stats.csv | 按因素：Δ 范数（raw/z）、before/after 余弦、nuisance 范数与相似度、分层相似度（raw/z）、Transition Gap + CI、Factor/Nuisance Norm Gap + CI（§64；无后缀列 = normalized 空间，`_raw` = 归一化前空间，一轮 P2-8）。diff_factor 基准从其他因素联合均匀抽样，来源计数写入日志（二轮问题 1）；相似度 CI 为双端点 context 聚类 bootstrap（二轮问题 3）；Norm Gap 的因素端按 context、nuisance 端按图像聚类（二轮问题 4）。各组实际比较数见 `n_cmp_*` 列，不足预算时日志告警（审查 A7/§3）。ImageNet 跑 E2 时输出为 `e2_delta_stats_pug_imagenet.csv`（A1） |
 | e2_transition_stats.csv | 逐 transition：(factor, source, target) 的 n_contexts、相似度（raw/z）、Δ 范数（raw/z）；n_contexts<2 时 mean_sim 为 NaN 并在日志报告数量 |
 | e3_cogent.csv | 按 condition × shape_group × negative_type（§65）；CI 按图片聚类 bootstrap |
 | e3_difficulty_gap.csv | A−B：题型等权 accuracy（主指标，图片聚类 bootstrap）+ 汇总口径（敏感性对照，CI 同样按图片聚类）；cube/cylinder 主指标 + sphere 对照（一轮 P2-9、二轮问题 5） |

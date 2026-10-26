@@ -12,11 +12,21 @@
 每条比较记录两个端点的 context（ctx_a / ctx_b），供双端点聚类 bootstrap
 （二轮审查问题 3）。聚类单位：完整 metadata 组合（context_key）。
 比较采样直接抽取不相等的索引对，不会把有效比较删空（一轮 P2-7）。
+每组比较施加 max_comparisons 全局上限（审查 A7）；实际比较数由调用方
+（e2_change_diagnosis）写入结果 CSV 并在不足时告警（审查 §3）。
 """
 import numpy as np
 import pandas as pd
 
-from ..data.pair_matcher import FIXED_COLS
+from ..data.pair_matcher import META_COLS as PAIR_META_COLS
+
+
+def _subsample_cap(rng, i, j, cap):
+    """全局上限（审查 A7）：拼接后的比较数超过 cap 时无放回抽 cap 条。"""
+    if len(i) > cap:
+        keep = rng.choice(len(i), size=cap, replace=False)
+        return i[keep], j[keep]
+    return i, j
 
 
 def build_delta_frame(pairs_by_factor: dict) -> pd.DataFrame:
@@ -45,7 +55,14 @@ def _distinct_pairs(rng, m, k):
 
 
 def group_similarities(delta_df: pd.DataFrame, factor: str, delta_mat: np.ndarray,
-                       max_comparisons: int, rng) -> dict:
+                       max_comparisons: int, rng, meta_cols=None) -> dict:
+    """meta_cols：该数据集的语义列（默认 Animals 的 META_COLS，审查 A1 参数化）。
+
+    每组比较施加 max_comparisons **全局上限**（审查 A7：此前 same_transition_dc
+    / same_factor_dt_sc 按分组数×每组下限拼接，实际比较数可远超预算）。
+    """
+    if meta_cols is None:
+        meta_cols = PAIR_META_COLS
     sub = delta_df[delta_df["factor"] == factor].reset_index(drop=True)
     f_gidx = sub["delta_index"].to_numpy()
     f_context = sub["context_key"].to_numpy()
@@ -91,6 +108,7 @@ def group_similarities(delta_df: pd.DataFrame, factor: str, delta_mat: np.ndarra
         j_list.append(pos[ib])
     if i_list:
         pi, pj = np.concatenate(i_list), np.concatenate(j_list)
+        pi, pj = _subsample_cap(rng, pi, pj, max_comparisons)   # A7 全局上限
     else:
         pi, pj = [], []
     record("same_transition_dc", pi, f_gidx[pj] if len(pj) else np.zeros(0, dtype=np.int64))
@@ -110,6 +128,7 @@ def group_similarities(delta_df: pd.DataFrame, factor: str, delta_mat: np.ndarra
         j_list.append(pos[ib])
     if i_list:
         pi, pj = np.concatenate(i_list), np.concatenate(j_list)
+        pi, pj = _subsample_cap(rng, pi, pj, max_comparisons)   # A7 全局上限
     else:
         pi, pj = [], []
     record("same_factor_dt_sc", pi, f_gidx[pj] if len(pj) else np.zeros(0, dtype=np.int64))
@@ -121,19 +140,19 @@ def group_similarities(delta_df: pd.DataFrame, factor: str, delta_mat: np.ndarra
     record("same_factor_dt_dc", a[keep][:max_comparisons], f_gidx[b[keep][:max_comparisons]])
 
     # --- different factor：从其他因素联合集合统一抽样（二轮问题 1）---
-    meta_cols = ["animal", "environment", "texture", "size", "camera"]
+    # same-context 匹配在完整数据中很稀疏（§3），拒绝采样尝试次数提高到 20×上限
+    n_try_sc = max_comparisons * 20
     f_meta = {c: sub[c].to_numpy() for c in meta_cols}
     other_meta = {c: delta_df[c].to_numpy() for c in meta_cols}
     other_pos = np.where(all_factor != factor)[0]
     if len(other_pos):
-        a = rng.integers(0, len(sub), size=n_try)
-        b = rng.choice(other_pos, size=n_try)
+        a = rng.integers(0, len(sub), size=n_try_sc)
+        b = rng.choice(other_pos, size=n_try_sc)
         gb = all_factor[b]
-        same = np.zeros(n_try, dtype=bool)
+        same = np.zeros(n_try_sc, dtype=bool)
         for g in np.unique(gb):
             m = gb == g
-            common = [c for c in meta_cols
-                      if c in FIXED_COLS[factor] and c in FIXED_COLS[g]]
+            common = [c for c in meta_cols if c not in (factor, g)]
             if common:
                 s = np.ones(int(m.sum()), dtype=bool)
                 for c in common:

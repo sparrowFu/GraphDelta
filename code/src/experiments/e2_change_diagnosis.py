@@ -1,5 +1,7 @@
-"""E2: Single-Factor Representation Response Diagnosis（PUG: Animals，方案 §34–§45）。
+"""E2: Single-Factor Representation Response Diagnosis（PUG: Animals / ImageNet，方案 §34–§45）。
 
+- 数据集：run(dataset=...) 选择 pug_animals（主）或 pug_imagenet（辅助，方案 §14、
+  审查 A1）；配对、特征抽取、nuisance、输出标签全部按数据集分发。
 - 配对：固定其余因素、只变一个因素；Δ 方向按 canonical 顺序（38）。
 - 主分析单位 transition_key = (factor, source, target)（38/40）。
 - 相似度分层：same_transition / same_factor_dt / diff_factor / random × context（41）。
@@ -8,14 +10,19 @@
 - nuisance 基线：同图两个增强视图 + 同内容不同模板（39a）；除范数外，
   增加 nuisance delta 两两相似度与 Factor/Nuisance Norm Gap 及其 CI。
 - 统计：Transition Similarity Gap 的同步聚类 bootstrap（66）。
+- 各相似度分组的实际比较数写入 n_cmp_* 列，不足预算时告警（审查 §3）。
 """
 import numpy as np
 import pandas as pd
 
-from ..data.captions import pug_animals_caption, templates, wrap
+from ..data.captions import pug_animals_caption, pug_imagenet_caption, templates, wrap
+from ..data.pair_matcher import META_COLS as ANIMALS_PAIR_COLS
 from ..data.pair_matcher import build_factor_pairs
 from ..data.pug_animals import META_COLUMNS as ANIMALS_META_COLUMNS
 from ..data.pug_animals import build_metadata as build_animals_metadata
+from ..data.pug_imagenet import META_COLS as IMAGENET_PAIR_COLS
+from ..data.pug_imagenet import META_COLUMNS as IMAGENET_META_COLUMNS
+from ..data.pug_imagenet import build_metadata as build_imagenet_metadata
 from ..data.pug_common import iter_image_batches
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.delta import augment_view, compute_deltas
@@ -23,6 +30,25 @@ from ..features.extract import extract_pug_images
 from ..metrics.bootstrap import cluster_gap_ci, pair_cluster_gap_ci, pair_cluster_mean_ci
 from ..metrics.delta_stats import build_delta_frame, group_similarities, transition_table
 from ..utils.io import load_config, output_tables_dir
+
+# 数据集注册表（审查 A1）：E2 除 Animals 外接入 PUG:ImageNet。
+# raw_meta_columns 为 parquet 原始列（迭代图像用），meta_cols 为配对语义列。
+DATASETS = {
+    "pug_animals": {
+        "path_key": "pug_animals",
+        "build_meta": build_animals_metadata,
+        "raw_meta_columns": ANIMALS_META_COLUMNS,
+        "meta_cols": ANIMALS_PAIR_COLS,
+        "caption": pug_animals_caption,
+    },
+    "pug_imagenet": {
+        "path_key": "pug_imagenet",
+        "build_meta": build_imagenet_metadata,
+        "raw_meta_columns": IMAGENET_META_COLUMNS,
+        "meta_cols": IMAGENET_PAIR_COLS,
+        "caption": pug_imagenet_caption,
+    },
+}
 
 
 def _rowwise_cos(A, B):
@@ -43,7 +69,7 @@ def _delta_pair_sim(D, rng, k=2000):
     return float(np.mean(_rowwise_cos(D[ia], D[ib])))
 
 
-def _nuisance_visual(model, paths, meta, cfg, logger, smoke, seed):
+def _nuisance_visual(model, paths, meta, cfg, logger, smoke, seed, spec):
     """同图两个增强视图的 Δ，返回 raw/z 空间的 delta 矩阵与每条的图像 id。
 
     ids 按解码顺序追加（iter_image_batches 按全局 row_id 顺序产出），与 delta
@@ -57,8 +83,8 @@ def _nuisance_visual(model, paths, meta, cfg, logger, smoke, seed):
     smin, smax = n_cfg["crop_scale"]
     q1, q2 = n_cfg["jpeg_quality"]
     v1s, v2s, ids = [], [], []
-    for row_ids, images, _m in iter_image_batches(paths["datasets"]["pug_animals"],
-                                                  ANIMALS_META_COLUMNS,
+    for row_ids, images, _m in iter_image_batches(paths["datasets"][spec["path_key"]],
+                                                  spec["raw_meta_columns"],
                                                   only_row_ids=sel_rows):
         for rid, img in zip(row_ids, images):
             v1s.append(augment_view(img, 100000 + rid, smin, smax, q1))
@@ -71,12 +97,12 @@ def _nuisance_visual(model, paths, meta, cfg, logger, smoke, seed):
             "ids": ids}
 
 
-def _nuisance_text(model, tcache, meta, cfg, logger, smoke, seed):
+def _nuisance_text(model, tcache, meta, cfg, logger, smoke, seed, spec):
     """同内容不同模板的文本 Δ，返回 raw 与 normalized 两个空间的 delta 矩阵。"""
     n_cfg = cfg["nuisance"]
     n_cap = min(200 if smoke else n_cfg["n_captions"], len(meta))
     sel = meta.sample(n=n_cap, random_state=seed + 1)
-    caps = [pug_animals_caption(r) for r in sel.to_dict("records")]
+    caps = [spec["caption"](r) for r in sel.to_dict("records")]
     ph = templates()["phrase"]
     i0, i1 = n_cfg["text_template_indices"]
     e0r, e0z = tcache.encode(model, [wrap(c, ph[i0]) for c in caps])
@@ -85,37 +111,46 @@ def _nuisance_text(model, tcache, meta, cfg, logger, smoke, seed):
     return {"raw": e0r - e1r, "z": e0z - e1z}
 
 
-def run(model, paths, logger, smoke=False, seed=None):
+def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals"):
+    if dataset not in DATASETS:
+        raise ValueError(f"未知数据集 {dataset!r}，可选：{sorted(DATASETS)}")
+    spec = DATASETS[dataset]
     cfg = load_config("e2_change")
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     tcache = TextCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     pair_seed = cfg.get("seeds", [0])[0] if seed is None else seed
     out_tables = output_tables_dir(paths, model.name, pair_seed)  # R2：按模型/种子隔离
 
-    meta = build_animals_metadata(paths["datasets"]["pug_animals"])
+    meta = spec["build_meta"](paths["datasets"][spec["path_key"]])
     if smoke:
-        envs = sorted(meta["environment"].unique())[:6]
-        anims = sorted(meta["animal"].unique())[:6]
-        meta = meta[meta["environment"].isin(envs) & meta["animal"].isin(anims)].reset_index(drop=True)
-        logger.info(f"[E2] pug_animals smoke subset: {len(meta)} rows")
+        # 前两个语义列各取前 6 个取值做小样本子集（Animals: animal/environment；
+        # ImageNet: character_label/environment）
+        m0, m1 = spec["meta_cols"][:2]
+        v0 = sorted(meta[m0].astype(str).unique())[:6]
+        v1 = sorted(meta[m1].astype(str).unique())[:6]
+        meta = meta[meta[m0].astype(str).isin(v0)
+                    & meta[m1].astype(str).isin(v1)].reset_index(drop=True)
+        logger.info(f"[E2] {dataset} smoke subset: {len(meta)} rows")
 
-    orders = cfg["canonical_orders"]
+    # canonical 顺序按数据集隔离（Animals 声明标签顺序；ImageNet 按观测值排序）
+    orders = cfg["datasets"][dataset].get("canonical_orders")
+    factors = cfg["datasets"][dataset]["factors"]
     samp = cfg["sampling"]
     max_total = 2000 if smoke else samp["max_total_per_factor"]
     pairs_by_factor = {}
-    for f in cfg["factors"]:
+    for f in factors:
         p = build_factor_pairs(meta, f, orders, samp["max_pairs_per_context"], max_total,
-                               seed=pair_seed)
+                               seed=pair_seed, meta_cols=spec["meta_cols"])
         pairs_by_factor[f] = p
         logger.info(f"[E2] factor={f}: {len(p)} pairs, {p['context_key'].nunique()} contexts")
 
     delta_df = build_delta_frame(pairs_by_factor)
     needed_rows = sorted(set(delta_df["row_id_a"]) | set(delta_df["row_id_b"]))
-    key = "pug_animals_smoke" if smoke else "pug_animals"
-    extract_pug_images(model, cache, key, paths["datasets"]["pug_animals"],
-                       ANIMALS_META_COLUMNS, logger,
+    key = f"{dataset}_smoke" if smoke else dataset
+    extract_pug_images(model, cache, key, paths["datasets"][spec["path_key"]],
+                       spec["raw_meta_columns"], logger,
                        only_row_ids=set(needed_rows) if smoke else None,
-                       id_prefix="pug_animals")
+                       id_prefix=dataset)
 
     _ids, index, raw, norm = cache.arrays(key)
     id_of_row = dict(zip(meta["row_id"].astype(int), meta["sample_id"]))
@@ -134,11 +169,11 @@ def run(model, paths, logger, smoke=False, seed=None):
               "z": _rowwise_cos(norm[ia].astype(np.float32), norm[ib].astype(np.float32))}
     ba_cos_by_factor = {f: {s: float(np.mean(ba_cos[s][
         (delta_df["factor"].to_numpy() == f)])) for s in ("raw", "z")}
-        for f in cfg["factors"]}
+        for f in factors}
 
     # nuisance（raw / z 两空间）
-    nu_v = _nuisance_visual(model, paths, meta, cfg, logger, smoke, pair_seed)
-    nu_t = _nuisance_text(model, tcache, meta, cfg, logger, smoke, pair_seed)
+    nu_v = _nuisance_visual(model, paths, meta, cfg, logger, smoke, pair_seed, spec)
+    nu_t = _nuisance_text(model, tcache, meta, cfg, logger, smoke, pair_seed, spec)
     nu_rng = np.random.default_rng(pair_seed + 100)
     nu_stats = {
         "norm_visual_raw": float(np.mean(np.linalg.norm(nu_v["raw"], axis=1))),
@@ -157,16 +192,27 @@ def run(model, paths, logger, smoke=False, seed=None):
     n_boot, ci = cfg["bootstrap"]["n_boot"], cfg["bootstrap"]["ci"]
 
     rows = []
-    for f in cfg["factors"]:
+    for f in factors:
         # 同一 rng 种子 + 相同调用序列 → raw 与 z 使用完全相同的比较对
-        groups = {s: group_similarities(delta_df, f, d, mc, np.random.default_rng(1000))
+        groups = {s: group_similarities(delta_df, f, d, mc, np.random.default_rng(1000),
+                                        meta_cols=spec["meta_cols"])
                   for s, d in (("raw", delta_raw), ("z", delta_norm))}
         fmask = delta_df["factor"].to_numpy() == f
         norms_f = {"raw": np.linalg.norm(delta_raw[fmask], axis=1),
                    "z": np.linalg.norm(delta_norm[fmask], axis=1)}
 
+        # 实际比较数披露（审查 A7/§3）：raw 与 z 的比较对相同，取 z 侧计数
+        n_cmp = {g: int(len(groups["z"][g]["values"]))
+                 for g in ("same_transition_dc", "same_factor_dt_sc",
+                           "same_factor_dt_dc", "diff_factor_sc",
+                           "diff_factor_dc", "random")}
+        for g, n in n_cmp.items():
+            if n < mc:
+                logger.warning(f"[E2] {dataset}/{f}/{g}: 仅采样到 {n}/{mc} 条比较"
+                               f"（候选不足或 same-context 匹配稀疏）")
+
         row = {
-            "dataset": "pug_animals",
+            "dataset": dataset,
             "factor": f,
             "n_pairs": int(fmask.sum()),
             "n_contexts": int(delta_df.loc[fmask, "context_key"].nunique()),
@@ -177,6 +223,7 @@ def run(model, paths, logger, smoke=False, seed=None):
             "before_after_cos_raw": ba_cos_by_factor[f]["raw"],
             "before_after_cos_z": ba_cos_by_factor[f]["z"],
         }
+        row.update({f"n_cmp_{g}": n for g, n in n_cmp.items()})
 
         for s in ("raw", "z"):
             g = groups[s]
@@ -190,6 +237,7 @@ def run(model, paths, logger, smoke=False, seed=None):
                 dfc["values"], dfc["ctx_a"], dfc["ctx_b"],
                 n_boot=n_boot, ci=ci, seed=0)
             src_counts = dfc.get("source_counts", {})
+            sc_counts = g["diff_factor_sc"].get("source_counts", {})
 
             def gmean(name):
                 v = g[name]["values"]
@@ -240,14 +288,17 @@ def run(model, paths, logger, smoke=False, seed=None):
         })
         rows.append(row)
         logger.info(
-            f"[E2] pug_animals/{f}: |Δ|raw={row['mean_delta_norm_raw']:.3f} "
+            f"[E2] {dataset}/{f}: |Δ|raw={row['mean_delta_norm_raw']:.3f} "
             f"same_tr_z={row['same_transition_sim_diff_context']:.4f} "
             f"gap_z={row['transition_similarity_gap']:.4f} "
             f"[{row['gap_ci_low']:.4f}, {row['gap_ci_high']:.4f}] "
-            f"diff_factor_src={src_counts}")
+            f"diff_factor_src={src_counts} diff_factor_sc_src={sc_counts}")
 
     out = pd.DataFrame(rows)
-    path = out_tables / ("e2_delta_stats_smoke.csv" if smoke else "e2_delta_stats.csv")
+    # Animals 沿用原文件名（下游 summarize/make_figures 兼容）；ImageNet 加数据集后缀
+    ds_suffix = "" if dataset == "pug_animals" else f"_{dataset}"
+    path = out_tables / (f"e2_delta_stats{ds_suffix}_smoke.csv" if smoke
+                         else f"e2_delta_stats{ds_suffix}.csv")
     out.to_csv(path, index=False)
     logger.info(f"[E2] written {path} ({len(out)} rows)")
 
@@ -265,7 +316,8 @@ def run(model, paths, logger, smoke=False, seed=None):
         ["factor", "source_value", "target_value"])[["n_raw", "n_z"]].mean().reset_index()
     tt = tt.merge(tmp, on=["factor", "source_value", "target_value"], how="left")
     tt = tt.rename(columns={"n_raw": "mean_delta_norm_raw", "n_z": "mean_delta_norm_z"})
-    path_t = out_tables / ("e2_transition_stats_smoke.csv" if smoke else "e2_transition_stats.csv")
+    path_t = out_tables / (f"e2_transition_stats{ds_suffix}_smoke.csv" if smoke
+                           else f"e2_transition_stats{ds_suffix}.csv")
     tt.to_csv(path_t, index=False)
     low = tt[tt["n_contexts"] < 2]
     logger.info(f"[E2] written {path_t} ({len(tt)} transitions; "

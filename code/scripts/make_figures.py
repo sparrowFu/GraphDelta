@@ -20,7 +20,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.utils.io import load_config, load_paths, verify_run_meta
+from src.utils.io import load_config, load_paths, verify_tables_identity
 
 # 调色板（dataviz 默认参考实例，浅色模式）
 BLUE, ORANGE, RED = "#2a78d6", "#eb6834", "#e34948"
@@ -254,7 +254,8 @@ def main():
         raise SystemExit(f"找不到 {args.model} seed {args.seed} 的全量结果"
                          f"（{new_tables}）；旧布局仅属于 clip_vitl14 seed 0。"
                          f"请先跑全量或用 --tables-dir 指定")
-    verify_run_meta(tables, args.model, args.seed)   # 有 run_meta 时校验身份
+    # A5：显式目录也要可验证身份（有 run_meta 核对；无 run_meta 只认旧布局属主）
+    verify_tables_identity(tables, out, args.model, args.seed)
     model_label = load_config(args.model).get("label", args.model)
     # 默认组合（clip_vitl14, seed 0）沿用 outputs/figures 保持文件名兼容；
     # 其他模型/种子写入独立子目录，互不覆盖（R2/R7）

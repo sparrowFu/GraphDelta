@@ -5,7 +5,7 @@
 - 每个无序值对只保留 canonical 方向上的一个 transition（Δ = target − source）；
 - 每个 context 内按"全局已选次数越少的 transition 权重越高"做无放回加权抽样，
   保证 transition 覆盖（审查报告 P2-7）；
-- 输出全部 5 个 metadata 列（变化因素记为 "src->tgt"），供跨因素
+- 输出全部 meta_cols 列（变化因素记为 "src->tgt"），供跨因素
   same/different-context 判定使用（审查报告 P2-6）。
 
 键的定义：
@@ -25,19 +25,33 @@ FIXED_COLS = {
 META_COLS = ["animal", "environment", "texture", "size", "camera"]
 
 
-def canonical_values(factor, observed, orders):
-    """返回按 canonical 顺序排列的观测值。顺序只用于统一 Δ 方向，不解释为语义顺序。"""
-    if factor == "environment":
+def canonical_values(factor, observed, orders=None):
+    """返回按 canonical 顺序排列的观测值。顺序只用于统一 Δ 方向，不解释为语义顺序。
+
+    factor 未在 orders 中声明、或声明的值不是列表（如 Animals 配置中
+    `environment: alphabetical` 只是说明文字）时，退回按观测值排序
+    （数值列按数值序，其余按字典序；PUG:ImageNet 即走此分支）。
+    """
+    order = orders.get(factor) if orders else None
+    if not isinstance(order, (list, tuple)):
         return sorted(observed)
-    order = orders[factor]
     obs = set(observed)
     return [v for v in order if v in obs]
 
 
 def build_factor_pairs(df: pd.DataFrame, factor: str, orders: dict,
-                       max_pairs_per_context: int, max_total: int, seed: int) -> pd.DataFrame:
+                       max_pairs_per_context: int, max_total: int, seed: int,
+                       meta_cols=None) -> pd.DataFrame:
+    """meta_cols：该数据集参与配对的语义列（默认 Animals 的 META_COLS）。
+
+    context = meta_cols 中除被测因素外的全部列（审查 A1：PUG:ImageNet 的
+    物体类别、其他相机角度、灯光、物体姿态等列也进入固定 context）。
+    """
     rng = np.random.default_rng(seed)
-    group_cols = FIXED_COLS[factor]
+    meta_cols = list(meta_cols) if meta_cols is not None else META_COLS
+    if factor not in meta_cols:
+        raise ValueError(f"factor {factor!r} 不在 meta_cols {meta_cols} 中")
+    group_cols = [c for c in meta_cols if c != factor]
 
     # context 顺序随机化 + 在线 transition 计数：同轮中后处理的 context 更倾向
     # 选尚未被覆盖过的 transition，避免 2016 个 environment transition 漏覆盖
@@ -78,9 +92,9 @@ def build_factor_pairs(df: pd.DataFrame, factor: str, orders: dict,
                 "sample_id_b": rb["sample_id"],
                 "context_key": f"{factor}|{ctx_key_str}",
             }
-            for c in META_COLS:
+            for c in meta_cols:
                 rec[c] = f"{src}->{tgt}" if c == factor else str(ctx_dict[c])
-            rec["cluster_key"] = "|".join(rec[c] for c in META_COLS if c != factor)
+            rec["cluster_key"] = "|".join(rec[c] for c in meta_cols if c != factor)
             records.append(rec)
 
     out = pd.DataFrame(records)
