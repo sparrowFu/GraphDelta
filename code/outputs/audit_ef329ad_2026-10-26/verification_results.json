@@ -1,0 +1,156 @@
+{
+  "revision": "ef329ad",
+  "fixture_helpers_sha256": "e21eb0a02dc6860b74d6afcd6c5d39094725e4547379789617b57a04bddf0abd",
+  "checks": {
+    "syntax": {
+      "production_files": 41
+    },
+    "issue1_smoke_fixed": {
+      "input_rows": 192,
+      "selected_rows_by_current_rule": 96,
+      "factors": [
+        "environment",
+        "texture",
+        "size",
+        "camera"
+      ],
+      "pairs": [
+        48,
+        48,
+        48,
+        48
+      ],
+      "synthetic_encoder": true
+    },
+    "issue4_all_empty_fixed": {
+      "error_type": "SystemExit",
+      "message": "[E2] pug_imagenet: 全部因素均无有效配对，停止（--allow-empty-factors 只跳过个别空因素，不适用于全空输入；请检查数据或配对协议）。"
+    },
+    "issue5_protocol_types_fixed": {
+      "[]": {
+        "reader_rejected": true,
+        "force_removed_directory": true
+      },
+      "null": {
+        "reader_rejected": true,
+        "force_removed_directory": true
+      },
+      "\"text\"": {
+        "reader_rejected": true,
+        "force_removed_directory": true
+      },
+      "{\"protocol\":": {
+        "reader_rejected": true,
+        "force_removed_directory": true
+      }
+    },
+    "issue2_failed_units_fixed": {
+      "strict_stopped": true,
+      "old_unit_removed": true,
+      "status": "failed",
+      "consumer_guard_blocked": true
+    },
+    "issue6_missing_reference_fixed": {
+      "strict_stopped": true,
+      "exploration_status": "not_checked",
+      "exploration_all_ok": false
+    },
+    "failed_exploration_units_consumed_by_summary": {
+      "sidecar_statuses": [
+        "failed",
+        "failed",
+        "failed"
+      ],
+      "formal_summary_written": true,
+      "unit_rows_stable": [
+        true,
+        true
+      ]
+    },
+    "successful_e3_rerun_keeps_stale_passed_units": {
+      "new_main_gaps": [
+        0.0,
+        0.0
+      ],
+      "old_nonmissing_unit_gaps": [
+        1.0
+      ],
+      "unit_bytes_unchanged": true,
+      "sidecar_status": "passed",
+      "guard_blocked": false,
+      "loading_extraction_scoring_replaced": true
+    },
+    "smoke_overwrites_full_experiment_provenance": {
+      "full_CSV_unchanged": true,
+      "full_CSV_source_before_smoke": "full_B",
+      "recorded_full_experiment_source": "smoke_C",
+      "experiment_keys": [
+        "e3_cogent"
+      ],
+      "smoke_CSV_written": true
+    },
+    "issue3_normal_update_fixed": {
+      "first_directory_commit": "A",
+      "e1_current_commit": "B",
+      "e1_current_protocol": "v2",
+      "e1_replaces_commit": "A",
+      "separate_experiments": [
+        "e1_state",
+        "e2_pug_imagenet"
+      ]
+    },
+    "same_identity_repeat_history": {
+      "replaces_still_present": false
+    },
+    "failed_run_provenance_mismatch": {
+      "actual_run_stopped": true,
+      "old_csv_unchanged": true,
+      "recorded_experiment_commit": "failed_attempt",
+      "actual_csv_source": "old_success"
+    }
+  },
+  "source_sha256": {
+    "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/data/captions.py": "136456f0bd8ad2d61612397839fc2a924bc1aa9cc32504a418e002efbef6d7cd",
+    "src/data/clevr.py": "b5a409d0534d36d47d7f5a5009e5037c3d1e4ee739ee40c721ec538ba23c64b0",
+    "src/data/cogent.py": "35595c6ecfe07bbd92742f74fe56f264672ad6a7fb0031917585f136357eb23f",
+    "src/data/pair_matcher.py": "7f26c448bd6f6a8fe5b6b75bfc4cb5fd7ed0d1ee92307deb6d6222fc807cf61d",
+    "src/data/pug_animals.py": "8b7db81c062d772dc7aed5d627c792c24dee8562996fc88ed07e63f23950575c",
+    "src/data/pug_common.py": "1ac761793dbc03e2f7a2c6b3f6af6f170218513625f425a1de392574b97ef9ad",
+    "src/data/pug_imagenet.py": "98e0b5cb552432962b9c695f0e35a4a78b0e66cc04751c3f34208b1a85de39a9",
+    "src/data/pug_spar.py": "5201463d23bec4cceba041c6074f32b1469c581c931c5e4aee099450fea3f371",
+    "src/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/experiments/common.py": "67e4a4b521c4612850a952ccaae021c2ba9bcc9e43e54e20a97be48db44c8653",
+    "src/experiments/e1_spar_official.py": "17be6de7a141cbc38c2f6197707cde2843a518e031e8b21f90e6f838590b9b03",
+    "src/experiments/e1_state_diagnosis.py": "6fc17a2ea9150e4fea9c2e3b43acaacaaac5cdca027b914fea263faeacc57bb2",
+    "src/experiments/e2_change_diagnosis.py": "98ff627175a66cd01025c7273921bd84755e9a267097c5291d2707166ef9432f",
+    "src/experiments/e3_cogent_diagnosis.py": "2662da1cddf9e6439bf1b82d07d46761ab59c9241531f230d52eb940171ba463",
+    "src/experiments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/features/cache.py": "2406ac797f483f156c245a087b0ceb59825c3af1b75814b48d41fb023ef872e8",
+    "src/features/delta.py": "9bd1683821f15cfb5d404cfa59a0b34d45b3575ea9a52333643e7dac792ffd49",
+    "src/features/extract.py": "8971e4c311a22d105e3d23095e079c3137d3546a6a3117164efa438cbbd77a77",
+    "src/features/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/metrics/bootstrap.py": "123a8d4baba8087dbc6e9a35ef5b0cbe63f1ec3f22161bb8cde7acab51fa3bf4",
+    "src/metrics/delta_stats.py": "ba98fbb768fa1ffb55d8f9fa570e46a29f3cf2c5ab4ad2e8a85087ec6322b7b1",
+    "src/metrics/matching.py": "415bc0b39fad2519d2396bc499edef9bc6f68a53ec5cbc82e2cb8165ea2a5b17",
+    "src/metrics/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/models/clip_encoder.py": "4832c350eef6353e248547eaba4dbc1af015c56bec2ba9e4265e183f66c802ba",
+    "src/models/siglip_encoder.py": "973be5ea0a8888cbb99096fae2ddb5714f0be976df3f39b0c018f017f21e1a59",
+    "src/models/vlm_encoder.py": "548492f87da578f50dcc382ae6f6a50f12668cc96ba1f22e4e63b8b2217294ae",
+    "src/models/__init__.py": "3d8f01de3e2ef934d43c4c2ce784c10792aa9ba1b4bd55369f6e7fa7d0992c1c",
+    "src/utils/io.py": "31cff3daf02403251e0dc7ecef0bf3f6dfade4bc645782aacfa676c6bc242126",
+    "src/utils/logging.py": "e95c4c26be7a6701ed1df02b911e8c63534102d532dc2f241810b3cd892349e5",
+    "src/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scripts/analyze_e3_units.py": "a9ce5f2b23dfc55bad4d72d618c8edff89efc4d704caaad1ebef02b6dfb89b5c",
+    "scripts/build_manifests.py": "7517b128e85928138d339c5308adf6b9092dc44eb49dc7148cac4cfebdecea7b",
+    "scripts/convert_siglip2_checkpoint.py": "92c6b41014dbfb2e2508fbfb3df3ea1b32253af94d97d21588aa87eed2ea2a42",
+    "scripts/extract_embeddings.py": "c269f06364f4144370dbd145b61cdebc2f5b7c521744d4728cc51aec5c64c817",
+    "scripts/make_figures.py": "fc62078fa7c9ba8c79caf9efca38a462d7aec89d1c8cf1d64841675d14f8ad12",
+    "scripts/run_e1.py": "ff6f94389f74fc113e7d2abd06ba83d71b34cb9dad1aef02e44385d5a67170f9",
+    "scripts/run_e1_spar_official.py": "25f33ff55a2cba7e142a9273989ddfcc42bb62688bcfb7e3b532f55529de6141",
+    "scripts/run_e2.py": "e17de19c25d37bb6ed250f56e4cc9a119e141624e94450c65e82990ae9c310ca",
+    "scripts/run_e3.py": "305748d973ba1266ec4b0546ce99bdf21aa2f117fec94bffc7c6b77a6d479224",
+    "scripts/summarize_seed_stability.py": "bb87ac334af44fdf890ad8ffa0f922e0473c34416adc04567f4ae2576c2dd4bf"
+  },
+  "audit_script_sha256": "121b19b3c70dcecdb317612c21b98c924c899399dfe35d5ace2f8f5090361559"
+}

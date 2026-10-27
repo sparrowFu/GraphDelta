@@ -1,0 +1,146 @@
+{
+  "git_commit": "ef329ad0428f736732cff925efd6dc10170e1ef9",
+  "scope": "Configuration flow only; no actual pretrained-model forward pass.",
+  "e3_custom_paths_ignored": {
+    "configured_conditions": {
+      "A": {
+        "scene_file": "custom/A.json",
+        "image_dir": "custom_images/A"
+      },
+      "B": {
+        "scene_file": "custom/B.json",
+        "image_dir": "custom_images/B"
+      }
+    },
+    "default_conditions": {
+      "A": {
+        "scene_file": "scenes/CLEVR_valA_scenes.json",
+        "image_dir": "images/valA"
+      },
+      "B": {
+        "scene_file": "scenes/CLEVR_valB_scenes.json",
+        "image_dir": "images/valB"
+      }
+    },
+    "custom_scene_exists": true,
+    "custom_scene_exception": "FileNotFoundError",
+    "attempted_scene_relative": "scenes/CLEVR_valA_scenes.json",
+    "actual_image_dir_relative": "images/valA",
+    "default_matches_hardcoded_layout": true,
+    "impact": "Custom conditions scene/image paths are ignored; official default layout is unaffected."
+  },
+  "e1_filter_switches_inert": {
+    "runs": [
+      {
+        "config": {
+          "same_animal_filter": true,
+          "two_object_only": [
+            "position",
+            "attribute",
+            "relation"
+          ]
+        },
+        "items": [
+          {
+            "image_id": "valid_two",
+            "factor": "scene",
+            "content_pos": "a cat and a dog in the w",
+            "content_neg": "a cat and a horse in the w",
+            "kind": "phrase"
+          },
+          {
+            "image_id": "single",
+            "factor": "scene",
+            "content_pos": "a cat in the w",
+            "content_neg": "a horse in the w",
+            "kind": "phrase"
+          },
+          {
+            "image_id": "valid_two",
+            "factor": "position",
+            "content_pos": "the cat is to the left of the dog",
+            "content_neg": "the cat is to the right of the dog",
+            "kind": "sentence"
+          },
+          {
+            "image_id": "valid_two",
+            "factor": "attribute",
+            "content_pos": "a blue cat and a red dog",
+            "content_neg": "a red cat and a blue dog",
+            "kind": "phrase"
+          },
+          {
+            "image_id": "valid_two",
+            "factor": "relation",
+            "content_pos": "the cat is to the left of the dog",
+            "content_neg": "the dog is to the left of the cat",
+            "kind": "sentence"
+          }
+        ],
+        "filter_stats": {
+          "rows": 3,
+          "background_skipped": 0,
+          "same_animal_filtered": 1,
+          "single_animal_rows": 1,
+          "attribute_same_texture_filtered": 0,
+          "scene_no_candidate": 0
+        }
+      },
+      {
+        "config": {
+          "same_animal_filter": false,
+          "two_object_only": []
+        },
+        "items": [
+          {
+            "image_id": "valid_two",
+            "factor": "scene",
+            "content_pos": "a cat and a dog in the w",
+            "content_neg": "a cat and a horse in the w",
+            "kind": "phrase"
+          },
+          {
+            "image_id": "single",
+            "factor": "scene",
+            "content_pos": "a cat in the w",
+            "content_neg": "a horse in the w",
+            "kind": "phrase"
+          },
+          {
+            "image_id": "valid_two",
+            "factor": "position",
+            "content_pos": "the cat is to the left of the dog",
+            "content_neg": "the cat is to the right of the dog",
+            "kind": "sentence"
+          },
+          {
+            "image_id": "valid_two",
+            "factor": "attribute",
+            "content_pos": "a blue cat and a red dog",
+            "content_neg": "a red cat and a blue dog",
+            "kind": "phrase"
+          },
+          {
+            "image_id": "valid_two",
+            "factor": "relation",
+            "content_pos": "the cat is to the left of the dog",
+            "content_neg": "the dog is to the left of the cat",
+            "kind": "sentence"
+          }
+        ],
+        "filter_stats": {
+          "rows": 3,
+          "background_skipped": 0,
+          "same_animal_filtered": 1,
+          "single_animal_rows": 1,
+          "attribute_same_texture_filtered": 0,
+          "scene_no_candidate": 0
+        }
+      }
+    ],
+    "same_items": true,
+    "same_filter_stats": true,
+    "default_matches_hardcoded_filters": true,
+    "impact": "Two exposed filter settings are inert; default protocol remains in effect. Do not simply disable the validity filters: remove/fix obsolete settings or reject unsupported alternatives."
+  }
+}
