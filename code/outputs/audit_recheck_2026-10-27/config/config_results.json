@@ -1,0 +1,74 @@
+{
+  "scope": "Synthetic PNG/scene data; deterministic encoder; no model checkpoints.",
+  "checks": {
+    "A_custom_paths_and_e3_smoke_keys": {
+      "completed_full_and_smoke": true,
+      "experiments": [
+        "e3_cogent",
+        "e3_cogent_smoke"
+      ],
+      "default_scene_absent": true,
+      "image_encoder_calls": 4,
+      "full_outputs": [
+        "e3_cogent.csv",
+        "e3_cogent_by_color.csv",
+        "e3_cogent_by_combo.csv",
+        "e3_difficulty_gap.csv",
+        "e3_items_cogent.jsonl"
+      ],
+      "smoke_outputs": [
+        "e3_cogent_by_color_smoke.csv",
+        "e3_cogent_by_combo_smoke.csv",
+        "e3_cogent_smoke.csv",
+        "e3_difficulty_gap_smoke.csv",
+        "e3_items_cogent_smoke.jsonl"
+      ]
+    },
+    "problem2_E1_entry_keys": {
+      "e1_state": [
+        "e1_state",
+        "e1_state_smoke"
+      ],
+      "e1_spar_official": [
+        "e1_spar_official",
+        "e1_spar_official_smoke"
+      ]
+    },
+    "B_fixed_protocol_rejection": {
+      "default_accepted": true,
+      "rejected": {
+        "same_animal_filter": "[E1] spar.same_animal_filter=false 不受支持：双对象同种动物场景的正负文本可能相同或同时为真（P1-2），协议要求整体过滤，不能用配置关闭。如需其他协议请先设计仍保证正负文本有效性的替代方案。",
+        "two_object_only": "[E1] spar.two_object_only 不受支持：position/attribute/relation 固定为双对象任务（R3），当前协议要求 two_object_only=['attribute', 'position', 'relation']，配置为 []——修改该列表不会改变过滤行为，已停止。"
+      }
+    },
+    "A_default_cache_compatibility_regression": {
+      "default_yaml": {
+        "scene_file": "scenes/CLEVR_valA_scenes.json",
+        "image_dir": "images/valA"
+      },
+      "old_key": "cogent_valA",
+      "current_key": "cogent_valA@9d14557edd2e",
+      "report_claim_default_key_unchanged": false
+    },
+    "A_force_fails_to_reextract": {
+      "actual_cached_key": "cogent_valA@09271e9668a8",
+      "force_deletes_key": "cogent_valA",
+      "image_changed_on_disk": true,
+      "extra_image_encoder_calls_after_force": 0,
+      "cached_npz_bytes_unchanged": true
+    },
+    "A_dataset_root_not_in_cache_identity": {
+      "changed_dataset_root_only": true,
+      "same_relative_path_and_image_id": true,
+      "extra_image_encoder_calls": 0,
+      "cached_npz_bytes_unchanged": true
+    }
+  },
+  "source_sha256": {
+    "src\\data\\cogent.py": "fcf4c52a5418c9eb1f5db7ee18b8a493a0fddce1b94c87cdbfed610ec54285c9",
+    "scripts\\extract_embeddings.py": "f304fc74bd80e362f6ba7a2fa6d4e5fd9849470b884ed056400a93373ea0cef3",
+    "src\\experiments\\e1_state_diagnosis.py": "6e8e4848dbb55bb8d0c3ac818566b794e84e2ba7f161dd379f4bafe1ac0fe40a",
+    "src\\experiments\\e1_spar_official.py": "158c796c474ca1f4f135a7b159366c9a9671589e61ff44d9cb1690bce61e6ec4",
+    "src\\experiments\\e3_cogent_diagnosis.py": "2a054bb5a54b3d285a1943800067ddcc876aa0c496510ba1f5593ca8056b26e9"
+  }
+}
