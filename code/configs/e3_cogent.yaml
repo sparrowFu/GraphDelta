@@ -1,7 +1,9 @@
 # E3: Composition Difficulty Diagnosis（CoGenT valA / valB + sphere 对照）
 # conditions.<cond>.scene_file / image_dir 现已生效（四轮补充 A：此前字段从未
-# 被读取，入口 run_e3 与独立抽取脚本 extract_embeddings.py 统一解析此处配置；
-# 使用非默认路径时缓存 key 附加路径指纹，不与默认路径的旧特征混用）。
+# 被读取，入口 run_e3 与独立抽取脚本 extract_embeddings.py 统一解析此处配置）。
+# 缓存 key = (数据根目录, scene_file, image_dir) 的指纹（复核缺口 4/5）：
+# 默认路径同样带指纹，与不带后缀的历史 key 不通用，首次使用需重抽一次；
+# 换数据根目录或路径配置都会得到新 key，不会复用旧特征。
 conditions:
   A:
     scene_file: scenes/CLEVR_valA_scenes.json

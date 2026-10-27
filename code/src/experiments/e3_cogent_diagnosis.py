@@ -17,7 +17,8 @@ from ..data.cogent import condition_cache_key, condition_image_dir, load_conditi
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.extract import extract_clevr_images
 from ..metrics.bootstrap import cluster_gap_ci, cluster_gap_ci_equal_types
-from ..utils.io import commit_experiment, load_config, output_tables_dir, write_jsonl
+from ..utils.io import (commit_experiment, load_config, output_tables_dir,
+                        write_jsonl, write_text_atomic)
 from .common import EXPORT_FIELDS, eval_2afc_items, subsample
 
 
@@ -90,8 +91,9 @@ def run(model, paths, logger, smoke=False, seed=None):
 
     for cond in ["A", "B"]:
         ccfg = cfg["conditions"][cond]
-        # 四轮补充 A：conditions.<cond>.scene_file / image_dir 现已生效；
-        # 非默认路径时缓存 key 附加路径指纹，不与默认路径的旧特征混用
+        # 四轮补充 A + 复核缺口 5：conditions.<cond>.scene_file / image_dir
+        # 现已生效；缓存 key = (数据根目录, scene_file, image_dir) 的指纹，
+        # 换数据根目录或路径都不会复用旧特征（含默认路径，历史裸 key 需重抽）
         scenes = load_condition_scenes(paths["datasets"]["cogent"], cond,
                                        ccfg.get("scene_file"))
         check_palette(scenes, cond, cfg, logger)
@@ -100,6 +102,7 @@ def run(model, paths, logger, smoke=False, seed=None):
             logger.info(f"[E3] cogent val{cond} smoke subset: {len(scenes)} scenes")
         key = condition_cache_key(
             f"cogent_val{cond}_smoke" if smoke else f"cogent_val{cond}",
+            paths["datasets"]["cogent"], cond,
             ccfg.get("scene_file"), ccfg.get("image_dir"))
         extract_clevr_images(model, cache, key, scenes,
                              condition_image_dir(paths["datasets"]["cogent"], cond,
@@ -205,19 +208,20 @@ def run(model, paths, logger, smoke=False, seed=None):
 
     suffix = "_smoke" if smoke else ""
     if not smoke:
-        # 四轮问题 3：全量源结果重写成功后，旧派生单元表立即失效——删除
-        # e3_unit_gaps.csv 并把 sidecar 置 stale（消费守卫会拦截），必须重跑
+        # 四轮问题 3：全量源结果重写成功后，旧派生单元表立即失效——sidecar
+        # 置 stale（原子写），再删除 e3_unit_gaps.csv，必须重跑
         # analyze_e3_units 重算并登记新的源指纹。放在全部源文件写出之后：
-        # 失败的中断运行不会破坏仍然有效的派生表。
+        # 失败的中断运行不会破坏仍然有效的派生表；先写 sidecar 再删表，
+        # 任一步中断都至少留下 stale 标记，守卫不放行。
         stale_units = out_tables / "e3_unit_gaps.csv"
         sidecar = out_tables / "e3_unit_consistency.json"
         if stale_units.exists() or sidecar.exists():
-            if stale_units.exists():
-                stale_units.unlink()
-            sidecar.write_text(json.dumps(
+            write_text_atomic(sidecar, json.dumps(
                 {"status": "stale", "all_ok": False,
                  "reason": "e3 source results rewritten; rerun analyze_e3_units",
                  "tables_dir": str(out_tables)}, ensure_ascii=False, indent=2))
+            if stale_units.exists():
+                stale_units.unlink()
             logger.warning("[E3] 源结果已重写：旧 e3_unit_gaps.csv 已删除、"
                            "sidecar 置 stale，请重跑 analyze_e3_units（四轮问题 3）")
     # 四轮问题 1：全部输出成功写出后提交成功来源（含产物清单）

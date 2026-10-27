@@ -28,7 +28,8 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.utils.io import load_paths, verify_e3_consistency, verify_run_meta
+from src.utils.io import (load_paths, verify_e3_consistency,
+                          verify_experiment_committed, verify_run_meta)
 from src.utils.logging import get_logger
 
 
@@ -110,9 +111,23 @@ def main():
         logger.warning("[seeds] --allow-mixed-legacy：三种子混用新旧布局，"
                        "结果只能作为版本对照，不是固定协议下的抽样稳定性")
 
+    # 复核缺口 2：部分写出的实验结果不得进入正式汇总——运行中断后 status
+    # 停在 running（或产物清单不含目标文件），磁盘文件可能已部分改写。
+    # 该检查无条件执行，不受 --allow-exploratory-e3 约束（那是 E3 派生表
+    # 状态的探索开关，不能放过来源未完成的实验）。
+    for s, d in tabs.items():
+        verify_experiment_committed(d, "e1_state",
+                                    ["e1_results.csv", "e1_factor_gaps.csv"])
+        verify_experiment_committed(d, "e1_spar_official", ["e1_spar_official.csv"])
+        verify_experiment_committed(d, "e2_pug_animals", ["e2_delta_stats.csv"])
+        verify_experiment_committed(d, "e3_cogent",
+                                    ["e3_items_cogent.jsonl",
+                                     "e3_difficulty_gap.csv"])
+
     # 四轮问题 4：绘图入口已校验 E3 一致性 sidecar，正式稳定性汇总此前没有
-    # 同样检查——明确 failed/stale/指纹不匹配的探索单元表会静默进入正式结论。
-    # 默认停止；显式 --allow-exploratory-e3 时输出独立文件，不写正式 CSV。
+    # 同样检查——明确 failed/stale/pending/指纹不匹配的探索单元表会静默进入
+    # 正式结论。默认停止；显式 --allow-exploratory-e3 时输出独立文件，不写
+    # 正式 CSV。
     e3_exploratory = False
     for s, d in tabs.items():
         try:

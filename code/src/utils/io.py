@@ -95,8 +95,13 @@ def output_tables_dir(paths, model_name: str, seed: int, extra: dict = None,
         rec = {**ident, "status": "running", "started": now}
         prev = exps.get(experiment)
         if prev is not None:
-            # 旧格式迁移：身份在记录顶层、无 last_success → 视为历史成功来源
-            if "last_success" not in prev and any(k in prev for k in ident):
+            # 旧 schema 迁移（复核缺口 1）：只匹配明确的三轮旧格式——身份在
+            # 记录顶层，且没有 status / last_success 字段。新格式的 running
+            # 记录同样没有 last_success，但有 status 字段；从未成功过的运行
+            # 失败后留下的正是这种记录，不能推定成历史成功来源——成功来源
+            # 只能由 commit_experiment 提交产生。
+            if ("last_success" not in prev and "status" not in prev
+                    and any(k in prev for k in ident)):
                 prev = {**prev, "last_success": {**_experiment_ident(prev),
                                                  "updated": prev.get("updated")}}
             if prev.get("last_success") is not None:
@@ -201,14 +206,6 @@ def verify_tables_identity(tables_dir, out_dir, model_name: str, seed: int) -> N
             f"{model_name} seed {seed} 不一致。")
 
 
-def _md5_file(p) -> str:
-    h = hashlib.md5()
-    with open(p, "rb") as f:
-        for chunk in iter(lambda: f.read(1 << 20), b""):
-            h.update(chunk)
-    return h.hexdigest()
-
-
 def e3_source_fingerprint(tables_dir):
     """E3 派生单元表的源输入指纹（四轮审查问题 3）。
 
@@ -222,17 +219,78 @@ def e3_source_fingerprint(tables_dir):
         p = d / name
         if not p.exists():
             return None
-        parts.append(f"{name}={_md5_file(p)}")
+        parts.append(f"{name}={md5_file(p)}")
     return hashlib.md5("|".join(parts).encode("utf-8")).hexdigest()
 
 
+def verify_experiment_committed(tables_dir, experiment: str,
+                                required_files=()) -> None:
+    """正式消费前核对实验来源已完成（复核问题 1 缺口 2：部分写出的结果
+    不得进入正式汇总/绘图）。
+
+    运行中途失败时 status 停在 running、last_success 指向旧产物，但磁盘上
+    的文件可能已被本次运行部分改写（例如 E2 写出第一张表后中断）。只校验
+    model/seed 不够，正式消费者必须拒绝未完成、产物身份无法对应的实验：
+
+    - 无 run_meta.json（旧布局/显式历史目录）：不校验（与 verify_run_meta
+      的兼容口径一致）；
+    - 实验记录 status=running：该实验有未完成的运行，直接停止；
+    - last_success 带产物清单（outputs）时：required_files 必须都在清单内
+      ——清单外的文件不属于任何已提交的成功运行；
+    - 旧 schema 记录（无 status / 无 outputs 清单）：无证据表明未完成，
+      放行。
+    """
+    meta = Path(tables_dir) / "run_meta.json"
+    if not meta.exists():
+        return
+    info = json.loads(meta.read_text())
+    rec = (info.get("experiments") or {}).get(experiment)
+    if rec is None:
+        return
+    if rec.get("status") == "running":
+        raise SystemExit(
+            f"{meta} 中实验 {experiment!r} 的 status=running——该实验存在未"
+            f"完成的运行（启动后未成功提交产物），目录里的文件可能部分来自"
+            f"本次中断的运行，不能作为正式结果消费。请重跑该实验至完成。")
+    outputs = (rec.get("last_success") or {}).get("outputs")
+    if outputs is not None:
+        missing = [str(f) for f in required_files if str(f) not in outputs]
+        if missing:
+            raise SystemExit(
+                f"{meta} 中实验 {experiment!r} 的成功产物清单不含 {missing}"
+                f"——这些文件不属于任何已提交的成功运行，不能作为正式结果"
+                f"消费。")
+
+
+def write_text_atomic(path, text) -> None:
+    """同目录临时文件 + rename（复核缺口 3）：中断不会留下半写的目标文件。"""
+    p = Path(path)
+    tmp = p.with_name(p.name + ".tmp")
+    tmp.write_text(text)
+    tmp.replace(p)
+
+
+def md5_file(p) -> str:
+    h = hashlib.md5()
+    with open(p, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
 def verify_e3_consistency(tables_dir) -> None:
-    """消费 e3_unit_gaps.csv 前核对一致性 sidecar（三轮问题 2 + 四轮问题 3）。
+    """消费 e3_unit_gaps.csv 前核对一致性 sidecar（三轮问题 2 + 四轮问题 3
+    + 复核缺口 3）。
 
     - status=failed：items 与主表冲突，旧单元表已删除/失效，不得消费；
     - status=stale：E3 源结果已重写（run_e3 全量成功后主动失效），待重算；
-    - sidecar 记录了 source_fingerprint 时核对当前源文件指纹——成功重跑
-      E3 后残留的旧单元表即使 sidecar 仍是 passed 也会因指纹不匹配被拦截；
+    - status=pending：分析进行中或上次分析中断（analyze 先发 pending、
+      单元表安全写出后才提交最终状态），当前单元表不能消费；
+    - source_fingerprint：核对当前源文件指纹——E3 源结果更新后残留的旧
+      单元表即使 sidecar 仍是 passed 也会因指纹不匹配被拦截；
+    - unit_table_md5：核对当前 e3_unit_gaps.csv 内容哈希——sidecar 的
+      passed 只对"由该次分析写出的那份单元表"有效，旧表顶替新表（哈希
+      不一致）同样拦截；
     - not_checked / passed（无指纹的旧 sidecar 兼容）不拦截。
     """
     d = Path(tables_dir)
@@ -251,6 +309,10 @@ def verify_e3_consistency(tables_dir) -> None:
         raise SystemExit(
             f"{p} 记录 status=stale——E3 源结果已重写，e3_unit_gaps.csv 待重跑 "
             f"analyze_e3_units 后才能消费。")
+    if status == "pending":
+        raise SystemExit(
+            f"{p} 记录 status=pending——单元表分析未完成或上次中断，"
+            f"e3_unit_gaps.csv 不能消费，请重跑 analyze_e3_units。")
     fp = c.get("source_fingerprint")
     if fp is not None:
         cur = e3_source_fingerprint(d)
@@ -259,6 +321,14 @@ def verify_e3_consistency(tables_dir) -> None:
                 f"{p} 记录的源输入指纹与当前 e3_items_cogent.jsonl / "
                 f"e3_difficulty_gap.csv 不匹配——E3 源结果已更新，"
                 f"e3_unit_gaps.csv 是过期派生表，请重跑 analyze_e3_units 再消费。")
+    ut = c.get("unit_table_md5")
+    if ut is not None:
+        units = d / "e3_unit_gaps.csv"
+        if not units.exists() or md5_file(units) != ut:
+            raise SystemExit(
+                f"{p} 记录的 e3_unit_gaps.csv 内容哈希与当前文件不匹配——"
+                f"当前单元表不是该次分析写出的版本（旧表残留或被改写），"
+                f"请重跑 analyze_e3_units 再消费。")
 
 
 def md5(s: str) -> str:

@@ -22,8 +22,8 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.metrics.bootstrap import cluster_gap_ci, cluster_gap_ci_equal_types
-from src.utils.io import (e3_source_fingerprint, load_config, load_paths,
-                          verify_run_meta)
+from src.utils.io import (e3_source_fingerprint, load_config, load_paths, md5_file,
+                          verify_run_meta, write_text_atomic)
 from src.utils.logging import get_logger
 
 
@@ -69,6 +69,16 @@ def main():
     df = load_items(tables / "e3_items_cogent.jsonl")
     logger.info(f"[E3-units] loaded {len(df)} items")
 
+    # 复核缺口 3：sidecar 先发 pending 使旧状态（含旧 passed + 旧指纹）立即
+    # 失效；单元表安全写出后才提交最终状态。分析在任一环节中断时，目录里
+    # 留下的是 pending（或 stale），消费守卫不放行旧单元表——不存在
+    # "分析失败但 sidecar 已是 passed" 的窗口。最终 sidecar 另记录单元表
+    # 自身的内容哈希（unit_table_md5），旧表顶替新表会被守卫识别。
+    sidecar = tables / "e3_unit_consistency.json"
+    write_text_atomic(sidecar, json.dumps(
+        {"status": "pending", "all_ok": False, "reason": "analysis in progress",
+         "tables_dir": str(tables)}, ensure_ascii=False, indent=2))
+
     # 总 gap 复算（强校验：应与 e3_difficulty_gap.csv 主指标一致到数值精度）。
     # 复核 B6：此前只打日志、不拦截——items 与主表冲突时仍输出单元表，下游
     # Figure 5 可能展示冲突来源。现在：检查结果写 e3_unit_consistency.json
@@ -102,17 +112,11 @@ def main():
         if check_fail:
             status = "failed"
     elif not args.no_strict:
+        # 严格模式缺参考主表：源结果不完整（E3 未完成或主表被删），旧单元表
+        # 也不应再被正式消费，sidecar 保持 pending 后停止。
         raise SystemExit(
             "[E3-units] 缺少参考主表 e3_difficulty_gap.csv，无法做一致性检查"
             "（严格模式要求存在；探索模式用 --no-strict，状态记 not_checked）。")
-    sidecar = tables / "e3_unit_consistency.json"
-    sidecar.write_text(json.dumps(
-        {"status": status, "all_ok": status == "passed", "atol": args.check_atol,
-         # 四轮问题 3：记录本次分析消费的源输入指纹；下游（绘图/汇总）核对
-         # 指纹，E3 源结果重写后旧单元表即使残留也不能再被当作一致
-         "source_fingerprint": e3_source_fingerprint(tables),
-         "checks": checks, "tables_dir": str(tables)}, ensure_ascii=False, indent=2))
-    logger.info(f"[E3-units] consistency: status={status} -> {sidecar}")
     if status == "failed":
         stale = tables / "e3_unit_gaps.csv"
         if stale.exists():
@@ -120,6 +124,12 @@ def main():
             logger.warning(f"[E3-units] 检查失败，已删除旧派生单元表 {stale}"
                            "（防止下游绘图消费过期数据）")
         if not args.no_strict:
+            write_text_atomic(sidecar, json.dumps(
+                {"status": status, "all_ok": False, "atol": args.check_atol,
+                 "source_fingerprint": e3_source_fingerprint(tables),
+                 "checks": checks, "tables_dir": str(tables)},
+                ensure_ascii=False, indent=2))
+            logger.info(f"[E3-units] consistency: status={status} -> {sidecar}")
             raise SystemExit(
                 "[E3-units] items 复算的总 gap 与主表不一致（见 "
                 f"{sidecar}）——数据来源冲突，已停止输出单元表；"
@@ -155,8 +165,21 @@ def main():
 
     out = pd.DataFrame(rows)
     path_out = tables / "e3_unit_gaps.csv"
-    out.to_csv(path_out, index=False)
+    # 复核缺口 3：单元表原子写出（tmp + rename），中断不会留半写 CSV；
+    # 成功后才提交最终 sidecar，并绑定单元表内容哈希。
+    tmp_out = path_out.with_name(path_out.name + ".tmp")
+    out.to_csv(tmp_out, index=False)
+    tmp_out.replace(path_out)
+    write_text_atomic(sidecar, json.dumps(
+        {"status": status, "all_ok": status == "passed", "atol": args.check_atol,
+         # 四轮问题 3：记录本次分析消费的源输入指纹；下游（绘图/汇总）核对
+         # 指纹，E3 源结果重写后旧单元表即使残留也不能再被当作一致
+         "source_fingerprint": e3_source_fingerprint(tables),
+         # 复核缺口 3：绑定本次分析写出的单元表内容，旧表顶替新表可识别
+         "unit_table_md5": md5_file(path_out),
+         "checks": checks, "tables_dir": str(tables)}, ensure_ascii=False, indent=2))
     logger.info(f"[E3-units] written {path_out} ({len(out)} rows)")
+    logger.info(f"[E3-units] consistency: status={status} -> {sidecar}")
 
     # 摘要：主单元 16 个（CI 不含 0 的按方向计数 + 离散度）
     pooled = out[out["negative_type"] == "pooled_equal_type"]

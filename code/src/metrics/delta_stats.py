@@ -79,8 +79,10 @@ def group_similarities(delta_df: pd.DataFrame, factor: str, delta_mat: np.ndarra
         """pos_i: sub 内位置；pos_j_other_global: 全局 delta 行号。
 
         返回 values 与两个端点的 context（ctx_a = d1，ctx_b = d2）。
-        n_unique_pairs 另披露独特 (d1, d2) 组合数（四轮 §5 建议）：_distinct_pairs
-        等抽样保证单条比较内两索引不同，但比较之间有放回，n_cmp 只是抽样次数。
+        n_unique_pairs 另披露**无序**独特比较对数（四轮 §5 建议 + 复核说明 2）：
+        余弦相似度对称，(d1,d2) 与 (d2,d1) 是同一条比较，按无序对计数；
+        _distinct_pairs 等抽样只保证单条比较内两索引不同，比较之间有放回，
+        n_cmp 是抽样次数，不等于独特比较数。
         """
         pos_i = np.asarray(pos_i, dtype=np.int64)
         gj = np.asarray(pos_j_other_global, dtype=np.int64)
@@ -92,7 +94,7 @@ def group_similarities(delta_df: pd.DataFrame, factor: str, delta_mat: np.ndarra
             entry["values"] = _cos(D, f_gidx[pos_i], gj)
             entry["ctx_a"] = f_context[pos_i]
             entry["ctx_b"] = all_context[gj]
-            entry["n_unique_pairs"] = int(len({(int(a), int(b))
+            entry["n_unique_pairs"] = int(len({tuple(sorted((int(a), int(b))))
                                                for a, b in zip(f_gidx[pos_i], gj)}))
         out[name] = entry
 

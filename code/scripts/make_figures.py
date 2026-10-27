@@ -21,6 +21,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.utils.io import (load_config, load_paths, verify_e3_consistency,
+                          verify_experiment_committed,
                           verify_tables_identity)
 
 # 调色板（dataviz 默认参考实例，浅色模式）
@@ -257,6 +258,12 @@ def main():
                          f"请先跑全量或用 --tables-dir 指定")
     # A5：显式目录也要可验证身份（有 run_meta 核对；无 run_meta 只认旧布局属主）
     verify_tables_identity(tables, out, args.model, args.seed)
+    # 复核缺口 2：未完成（status=running）或产物清单不含目标文件的实验结果
+    # 不得进入正式图——运行中断后磁盘文件可能已部分改写
+    verify_experiment_committed(tables, "e1_state", ["e1_results.csv"])
+    verify_experiment_committed(tables, "e2_pug_animals", ["e2_delta_stats.csv"])
+    verify_experiment_committed(tables, "e3_cogent",
+                                ["e3_cogent.csv", "e3_difficulty_gap.csv"])
     # 三轮审查问题 2：E3 一致性检查失败的目录，其旧派生单元表已失效，不得绘图
     verify_e3_consistency(tables)
     model_label = load_config(args.model).get("label", args.model)

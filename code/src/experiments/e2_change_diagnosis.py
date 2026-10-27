@@ -256,8 +256,9 @@ def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals",
                    "z": np.linalg.norm(delta_norm[fmask], axis=1)}
 
         # 实际比较数披露（审查 A7/§3）：raw 与 z 的比较对相同，取 z 侧计数。
-        # n_cmp 是抽样次数（比较之间有放回）；n_cmp_unique 另披露独特比较数
-        # （四轮 §5 建议：小样本重复会降低有效覆盖，只看抽样次数会高估覆盖）。
+        # n_cmp 是抽样次数（比较之间有放回）；n_cmp_unique 另披露**无序**
+        # 独特比较对数（四轮 §5 建议 + 复核说明 2：余弦对称，(a,b) 与 (b,a)
+        # 算同一条比较；小样本重复会降低有效覆盖，只看抽样次数会高估覆盖）。
         n_cmp = {g: int(len(groups["z"][g]["values"]))
                  for g in ("same_transition_dc", "same_factor_dt_sc",
                            "same_factor_dt_dc", "diff_factor_sc",

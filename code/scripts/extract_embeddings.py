@@ -67,6 +67,16 @@ def _force_reset(cache_root, model, dataset, logger):
                     f"(protocol mismatch/missing/corrupt; mixed-version features)")
 
 
+def _cogent_key_cfg(paths, dataset):
+    """cogent 数据集的生效配置与完整缓存 key（复核缺口 4：--force 删除与
+    实际抽取必须使用同一个 key；key 指纹含数据根目录与生效路径）。"""
+    cond = dataset[-1]
+    ccfg = load_config("e3_cogent")["conditions"][cond]
+    key = condition_cache_key(dataset, paths["datasets"]["cogent"], cond,
+                              ccfg.get("scene_file"), ccfg.get("image_dir"))
+    return ccfg, key
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", required=True,
@@ -80,8 +90,14 @@ def main():
     paths = load_paths()
     logger = get_logger(f"extract_{args.dataset}", paths["dirs"]["outputs"] / "logs")
     model = build_encoder(args.model, paths, logger)
+    # cogent 的生效缓存 key 在 force 之前解析（复核缺口 4：此前 force 删裸
+    # dataset 名的 NPZ，实际抽取用带指纹 key，同协议 force 删错目标、不重抽）
+    cogent_ccfg = cogent_key = None
+    if args.dataset in ("cogent_valA", "cogent_valB"):
+        cogent_ccfg, cogent_key = _cogent_key_cfg(paths, args.dataset)
     if args.force:
-        _force_reset(paths["dirs"]["cache"], model, args.dataset, logger)
+        _force_reset(paths["dirs"]["cache"], model, cogent_key or args.dataset,
+                     logger)
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
 
     if args.dataset == "clevr_val":
@@ -92,16 +108,13 @@ def main():
     elif args.dataset in ("cogent_valA", "cogent_valB"):
         cond = args.dataset[-1]
         # 四轮补充 A：与 run_e3 统一读取 configs/e3_cogent.yaml 的
-        # conditions.<cond>.scene_file / image_dir；非默认路径时缓存 key
-        # 附加路径指纹，与实验入口互认，不与默认路径旧特征混用
-        ccfg = load_config("e3_cogent")["conditions"][cond]
+        # conditions.<cond>.scene_file / image_dir；缓存 key 含数据根目录与
+        # 生效路径的指纹，与实验入口、--force 三处共用同一 key
         scenes = load_condition_scenes(paths["datasets"]["cogent"], cond,
-                                       ccfg.get("scene_file"))
-        key = condition_cache_key(args.dataset, ccfg.get("scene_file"),
-                                  ccfg.get("image_dir"))
-        extract_clevr_images(model, cache, key, scenes,
+                                       cogent_ccfg.get("scene_file"))
+        extract_clevr_images(model, cache, cogent_key, scenes,
                              condition_image_dir(paths["datasets"]["cogent"], cond,
-                                                 ccfg.get("image_dir")), logger)
+                                                 cogent_ccfg.get("image_dir")), logger)
     elif args.dataset == "pug_spar":
         extract_pug_images(model, cache, "pug_spar", paths["datasets"]["pug_spar"],
                            SPAR_META, logger, id_prefix="pug_spar")
