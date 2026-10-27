@@ -28,7 +28,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.utils.io import load_paths, verify_run_meta
+from src.utils.io import load_paths, verify_e3_consistency, verify_run_meta
 from src.utils.logging import get_logger
 
 
@@ -70,6 +70,10 @@ def main():
                     help="汇总的模型（新布局 outputs/<model>/seed_k/tables；R2）")
     ap.add_argument("--allow-mixed-legacy", action="store_true",
                     help="三种子混用新旧布局时仍输出（仅作版本临时对照，审查 A6）")
+    ap.add_argument("--allow-exploratory-e3", action="store_true",
+                    help="E3 派生单元表状态异常（failed/stale/指纹不匹配）时仍汇总，"
+                         "但输出写入独立的 seed_stability_exploratory.csv，"
+                         "不冒充正式稳定性结果（四轮问题 4）")
     args = ap.parse_args()
 
     paths = load_paths()
@@ -105,6 +109,23 @@ def main():
                 "各种子来源布局）。")
         logger.warning("[seeds] --allow-mixed-legacy：三种子混用新旧布局，"
                        "结果只能作为版本对照，不是固定协议下的抽样稳定性")
+
+    # 四轮问题 4：绘图入口已校验 E3 一致性 sidecar，正式稳定性汇总此前没有
+    # 同样检查——明确 failed/stale/指纹不匹配的探索单元表会静默进入正式结论。
+    # 默认停止；显式 --allow-exploratory-e3 时输出独立文件，不写正式 CSV。
+    e3_exploratory = False
+    for s, d in tabs.items():
+        try:
+            verify_e3_consistency(d)
+        except SystemExit as e:
+            if not args.allow_exploratory_e3:
+                raise SystemExit(f"seed {s} 的 E3 派生表不可消费：{e}")
+            e3_exploratory = True
+            logger.warning(f"[seeds] seed {s}: {e}")
+    if e3_exploratory:
+        logger.warning("[seeds] --allow-exploratory-e3：E3 派生表状态异常，"
+                       "本次输出为探索对照，写入 seed_stability_exploratory.csv，"
+                       "不构成正式稳定性结论")
 
     def read(seed, name):
         return pd.read_csv(tabs[seed] / name)
@@ -248,7 +269,9 @@ def main():
     out = pd.DataFrame(rows)
     for s in (0, 1, 2):   # A6：记录各种子数据来源布局（new/legacy）
         out[f"layout_seed{s}"] = layouts[s]
-    path_out = tabs[0] / "seed_stability.csv"
+    # 四轮问题 4：E3 探索模式输出独立文件，不与正式 seed_stability.csv 混写
+    path_out = tabs[0] / ("seed_stability_exploratory.csv" if e3_exploratory
+                          else "seed_stability.csv")
     out.to_csv(path_out, index=False)
     # B3：stable 列含 NA（SPAR 描述行），计数与筛选需 NA 安全
     n_stable = int((out.stable == True).sum())

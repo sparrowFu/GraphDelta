@@ -1,4 +1,7 @@
 # E3: Composition Difficulty Diagnosis（CoGenT valA / valB + sphere 对照）
+# conditions.<cond>.scene_file / image_dir 现已生效（四轮补充 A：此前字段从未
+# 被读取，入口 run_e3 与独立抽取脚本 extract_embeddings.py 统一解析此处配置；
+# 使用非默认路径时缓存 key 附加路径指纹，不与默认路径的旧特征混用）。
 conditions:
   A:
     scene_file: scenes/CLEVR_valA_scenes.json

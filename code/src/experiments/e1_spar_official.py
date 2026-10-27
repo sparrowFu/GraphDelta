@@ -27,7 +27,7 @@ import zlib
 from ..data.pug_common import count_rows, iter_image_batches
 from ..data.pug_spar import META_COLUMNS, build_metadata
 from ..features.cache import ImageFeatureCache, TextCache
-from ..utils.io import load_config, output_tables_dir
+from ..utils.io import commit_experiment, load_config, output_tables_dir
 
 TEXTURES = ["Default", "Blue", "Grass"]
 POS_PAIRS = [("left", "right"), ("bottom", "top")]
@@ -163,9 +163,11 @@ def run(model, paths, logger, smoke=False, seed=None):
     tcache = TextCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     max_per_task = cfg.get("max_per_task")   # null：官方全量（历史行为）
     base_seed = full.get("seeds", [0])[0] if seed is None else seed
+    # 四轮问题 2：smoke 与全量分开登记来源键（同 E1/E2/E3 的 _smoke 约定）
+    experiment = "e1_spar_official" + ("_smoke" if smoke else "")
     out_tables = output_tables_dir(paths, model.name, base_seed,  # R2：按模型/种子隔离
                                    extra={"cache_protocol": model.cache_protocol},
-                                   experiment="e1_spar_official")
+                                   experiment=experiment)
 
     meta = build_metadata(paths["datasets"]["pug_spar"])
     # add_background 候选的 world 展开按全量 metadata（官方脚本用完整 labels.csv，
@@ -389,4 +391,6 @@ def run(model, paths, logger, smoke=False, seed=None):
     path = out_tables / ("e1_spar_official_smoke.csv" if smoke else "e1_spar_official.csv")
     out.to_csv(path, index=False)
     logger.info(f"[E1] written {path} ({len(out)} rows)")
+    # 四轮问题 1：输出成功写出后提交成功来源
+    commit_experiment(out_tables, experiment, [path.name])
     return out

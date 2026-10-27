@@ -79,16 +79,21 @@ def group_similarities(delta_df: pd.DataFrame, factor: str, delta_mat: np.ndarra
         """pos_i: sub 内位置；pos_j_other_global: 全局 delta 行号。
 
         返回 values 与两个端点的 context（ctx_a = d1，ctx_b = d2）。
+        n_unique_pairs 另披露独特 (d1, d2) 组合数（四轮 §5 建议）：_distinct_pairs
+        等抽样保证单条比较内两索引不同，但比较之间有放回，n_cmp 只是抽样次数。
         """
         pos_i = np.asarray(pos_i, dtype=np.int64)
         gj = np.asarray(pos_j_other_global, dtype=np.int64)
-        entry = {"values": np.zeros(0), "ctx_a": np.zeros(0), "ctx_b": np.zeros(0)}
+        entry = {"values": np.zeros(0), "ctx_a": np.zeros(0), "ctx_b": np.zeros(0),
+                 "n_unique_pairs": 0}
         if extra:
             entry.update(extra)
         if len(pos_i):
             entry["values"] = _cos(D, f_gidx[pos_i], gj)
             entry["ctx_a"] = f_context[pos_i]
             entry["ctx_b"] = all_context[gj]
+            entry["n_unique_pairs"] = int(len({(int(a), int(b))
+                                               for a, b in zip(f_gidx[pos_i], gj)}))
         out[name] = entry
 
     n_try = max_comparisons * 3

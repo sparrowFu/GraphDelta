@@ -39,6 +39,33 @@ def eval_2afc_items(model, tcache, img_cache, dataset_key, items,
             texts.append(wrap(it["content_pos"], t))
             texts.append(wrap(it["content_neg"], t))
     _, txt = tcache.encode(model, texts)
+    # 四轮补充 C：评分前校验。
+    # - 图/文维度必须严格相等：此前 img 维度为 1 时 broadcast_to 会静默扩展，
+    #   余弦差上界被破坏，指标含义改变；
+    # - 有限值：NaN 的 s_pos > s_neg 恒 False，会被当成确定的答错（accuracy=0
+    #   的假象）；无效观测必须停止并给出模型/缓存/样本位置，不静默计分。
+    mname = getattr(model, "name", type(model).__name__)
+    where = f"model={mname}, cache={img_cache.dir}, dataset_key={dataset_key}"
+    if img_norm.ndim != 2 or txt.ndim != 2:
+        raise SystemExit(
+            f"[eval] 特征不是二维矩阵：img {img_norm.shape} / txt {txt.shape}"
+            f"（{where}）——特征形状异常，拒绝评分。")
+    if img_norm.shape[1] != txt.shape[1]:
+        raise SystemExit(
+            f"[eval] 图像特征维度 {img_norm.shape[1]} != 文本特征维度 "
+            f"{txt.shape[1]}（{where}）——图文特征空间不一致，广播扩展后的"
+            f"相似度没有意义，拒绝评分。")
+    if not np.isfinite(img_norm).all():
+        bad = np.where((~np.isfinite(img_norm)).any(axis=1))[0]
+        raise SystemExit(
+            f"[eval] 图像特征含 NaN/Inf（{len(bad)} 条，首条 image_id="
+            f"{items[int(bad[0])]['image_id']!r}；{where}）——无效特征不得"
+            f"计为答错，请检查该样本的缓存与 encoder 输出。")
+    if not np.isfinite(txt).all():
+        raise SystemExit(
+            f"[eval] 文本特征含 NaN/Inf（{where}，首个异常文本块在 "
+            f"#{int(np.where((~np.isfinite(txt)).any(axis=1))[0][0])} 行）——"
+            f"无效特征不得计为答错。")
     D = txt.shape[1]
     both = txt.reshape(T, N, 2, D)
     pos, neg = both[:, :, 0], both[:, :, 1]

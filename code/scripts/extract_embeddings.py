@@ -13,7 +13,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.data import clevr
-from src.data.cogent import condition_image_dir, load_condition_scenes
+from src.data.cogent import (condition_cache_key, condition_image_dir,
+                             load_condition_scenes)
 from src.data.pug_animals import META_COLUMNS as ANIMALS_META
 from src.data.pug_imagenet import META_COLUMNS as IMAGENET_META
 from src.data.pug_spar import META_COLUMNS as SPAR_META
@@ -90,9 +91,17 @@ def main():
                              f"{paths['datasets']['clevr']}/{cfg['image_dir']}", logger)
     elif args.dataset in ("cogent_valA", "cogent_valB"):
         cond = args.dataset[-1]
-        scenes = load_condition_scenes(paths["datasets"]["cogent"], cond)
-        extract_clevr_images(model, cache, args.dataset, scenes,
-                             condition_image_dir(paths["datasets"]["cogent"], cond), logger)
+        # 四轮补充 A：与 run_e3 统一读取 configs/e3_cogent.yaml 的
+        # conditions.<cond>.scene_file / image_dir；非默认路径时缓存 key
+        # 附加路径指纹，与实验入口互认，不与默认路径旧特征混用
+        ccfg = load_config("e3_cogent")["conditions"][cond]
+        scenes = load_condition_scenes(paths["datasets"]["cogent"], cond,
+                                       ccfg.get("scene_file"))
+        key = condition_cache_key(args.dataset, ccfg.get("scene_file"),
+                                  ccfg.get("image_dir"))
+        extract_clevr_images(model, cache, key, scenes,
+                             condition_image_dir(paths["datasets"]["cogent"], cond,
+                                                 ccfg.get("image_dir")), logger)
     elif args.dataset == "pug_spar":
         extract_pug_images(model, cache, "pug_spar", paths["datasets"]["pug_spar"],
                            SPAR_META, logger, id_prefix="pug_spar")

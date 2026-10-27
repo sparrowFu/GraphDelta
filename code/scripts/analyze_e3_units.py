@@ -22,7 +22,8 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.metrics.bootstrap import cluster_gap_ci, cluster_gap_ci_equal_types
-from src.utils.io import load_config, load_paths, verify_run_meta
+from src.utils.io import (e3_source_fingerprint, load_config, load_paths,
+                          verify_run_meta)
 from src.utils.logging import get_logger
 
 
@@ -107,6 +108,9 @@ def main():
     sidecar = tables / "e3_unit_consistency.json"
     sidecar.write_text(json.dumps(
         {"status": status, "all_ok": status == "passed", "atol": args.check_atol,
+         # 四轮问题 3：记录本次分析消费的源输入指纹；下游（绘图/汇总）核对
+         # 指纹，E3 源结果重写后旧单元表即使残留也不能再被当作一致
+         "source_fingerprint": e3_source_fingerprint(tables),
          "checks": checks, "tables_dir": str(tables)}, ensure_ascii=False, indent=2))
     logger.info(f"[E3-units] consistency: status={status} -> {sidecar}")
     if status == "failed":

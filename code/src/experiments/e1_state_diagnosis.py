@@ -33,8 +33,35 @@ from ..data.pug_spar import build_metadata as build_spar_metadata
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.extract import extract_clevr_images, extract_pug_images
 from ..metrics.bootstrap import cluster_gap_ci
-from ..utils.io import load_config, output_tables_dir, write_jsonl
+from ..utils.io import commit_experiment, load_config, output_tables_dir, write_jsonl
 from .common import EXPORT_FIELDS, cap_per_image, eval_2afc_items, subsample
+
+
+def _validate_spar_protocol(sp):
+    """四轮补充 B：same_animal_filter / two_object_only 此前是"写了但不生效"的
+    配置——过滤逻辑固定执行，改配置不会产生任何消融效果。
+
+    协议固定为：
+    - 双对象同种动物场景整体过滤（P1-2：放开会产生相同或同时为真的正负
+      文本，不能用配置关闭）；
+    - position/attribute/relation 固定为双对象任务（R3：单动物行不产生这
+      三类 item，scene 对单/双动物均适用）。
+
+    与固定协议不一致的取值直接拒绝（显式报错），不再静默忽略。
+    """
+    if not sp.get("same_animal_filter", True):
+        raise SystemExit(
+            "[E1] spar.same_animal_filter=false 不受支持：双对象同种动物场景的"
+            "正负文本可能相同或同时为真（P1-2），协议要求整体过滤，不能用配置"
+            "关闭。如需其他协议请先设计仍保证正负文本有效性的替代方案。")
+    expected = sorted(f for f in sp.get("factors", [])
+                      if f in ("position", "attribute", "relation"))
+    got = sorted(set(sp.get("two_object_only", expected)))
+    if got != expected:
+        raise SystemExit(
+            f"[E1] spar.two_object_only 不受支持：position/attribute/relation "
+            f"固定为双对象任务（R3），当前协议要求 two_object_only={expected}，"
+            f"配置为 {got}——修改该列表不会改变过滤行为，已停止。")
 
 
 # ---------------- CLEVR items ----------------
@@ -143,9 +170,11 @@ def build_clevr_items(scenes, factors, rng):
 
 # ---------------- SPAR items ----------------
 
-def build_spar_items(meta, factors, rng, two_object_only, require_diff_texture):
+def build_spar_items(meta, factors, rng, require_diff_texture):
     """返回 (items, stats)。双对象同种动物场景整体过滤（审查报告 P1-2）；
-    双对象判定要求两侧动物均非 blank，纯背景行整体跳过（审查报告 R3）。"""
+    双对象判定要求两侧动物均非 blank，纯背景行整体跳过（审查报告 R3）；
+    position/attribute/relation 固定为双对象任务（R3，配置层面由
+    _validate_spar_protocol 校验，不作为可关闭开关）。"""
     animals = sorted((set(meta["character_name"]) | set(meta["character2_name"])) - {"blank"})
     items = {f: [] for f in factors}
     stats = {"rows": len(meta), "background_skipped": 0, "same_animal_filtered": 0,
@@ -198,12 +227,16 @@ def build_spar_items(meta, factors, rng, two_object_only, require_diff_texture):
 
 def run(model, paths, logger, smoke=False, seed=None):
     cfg = load_config("e1_state")
+    _validate_spar_protocol(cfg.get("spar", {}))   # 补充 B：不支持的选项显式拒绝
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     tcache = TextCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     eff_seed = cfg["seeds"][0] if seed is None else seed
+    # 四轮问题 2：smoke 与全量输出是不同文件，来源键分开登记，smoke 运行
+    # 不再更新全量结果的当前来源（E2 的 e2_<dataset>_smoke 约定一致）。
+    experiment = "e1_state" + ("_smoke" if smoke else "")
     out_tables = output_tables_dir(paths, model.name, eff_seed,   # R2：按模型/种子隔离
                                    extra={"cache_protocol": model.cache_protocol},
-                                   experiment="e1_state")
+                                   experiment=experiment)
     rng = np.random.default_rng(eff_seed)
     bs = cfg["bootstrap"]
     cap = cfg["sampling"].get("per_scene_cap", 1)
@@ -257,7 +290,6 @@ def run(model, paths, logger, smoke=False, seed=None):
                        logger, only_row_ids=set(meta["row_id"]) if smoke else None,
                        id_prefix="pug_spar")
     spar_items, spar_stats = build_spar_items(meta, sp["factors"], rng,
-                                              set(sp["two_object_only"]),
                                               sp["attribute_require_diff_texture"])
     spar_all_items = []
     for f in sp["factors"]:
@@ -304,4 +336,11 @@ def run(model, paths, logger, smoke=False, seed=None):
     path_g = out_tables / ("e1_factor_gaps_smoke.csv" if smoke else "e1_factor_gaps.csv")
     gap_df.to_csv(path_g, index=False)
     logger.info(f"[E1] written {path_g} ({len(gap_df)} pairs)")
+    # 四轮问题 1：全部输出成功写出后才提交成功来源（含产物清单）；
+    # 中途失败时 last_success 保持旧值，本次尝试只留在 status=running 里。
+    suffix = "_smoke" if smoke else ""
+    commit_experiment(out_tables, experiment, [
+        f"e1_items_clevr{suffix}.jsonl", f"e1_clevr_filter_stats{suffix}.json",
+        f"e1_items_spar{suffix}.jsonl", f"e1_spar_filter_stats{suffix}.json",
+        f"e1_results{suffix}.csv", f"e1_factor_gaps{suffix}.csv"])
     return out

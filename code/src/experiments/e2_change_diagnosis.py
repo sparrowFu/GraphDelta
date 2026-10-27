@@ -29,7 +29,7 @@ from ..features.delta import augment_view, compute_deltas
 from ..features.extract import extract_pug_images
 from ..metrics.bootstrap import cluster_gap_ci, pair_cluster_gap_ci, pair_cluster_mean_ci
 from ..metrics.delta_stats import build_delta_frame, group_similarities, transition_table
-from ..utils.io import load_config, output_tables_dir
+from ..utils.io import commit_experiment, load_config, output_tables_dir
 
 # 数据集注册表（审查 A1）：E2 除 Animals 外接入 PUG:ImageNet。
 # raw_meta_columns 为 parquet 原始列（迭代图像用），meta_cols 为配对语义列。
@@ -255,11 +255,15 @@ def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals",
         norms_f = {"raw": np.linalg.norm(delta_raw[fmask], axis=1),
                    "z": np.linalg.norm(delta_norm[fmask], axis=1)}
 
-        # 实际比较数披露（审查 A7/§3）：raw 与 z 的比较对相同，取 z 侧计数
+        # 实际比较数披露（审查 A7/§3）：raw 与 z 的比较对相同，取 z 侧计数。
+        # n_cmp 是抽样次数（比较之间有放回）；n_cmp_unique 另披露独特比较数
+        # （四轮 §5 建议：小样本重复会降低有效覆盖，只看抽样次数会高估覆盖）。
         n_cmp = {g: int(len(groups["z"][g]["values"]))
                  for g in ("same_transition_dc", "same_factor_dt_sc",
                            "same_factor_dt_dc", "diff_factor_sc",
                            "diff_factor_dc", "random")}
+        n_cmp_unique = {g: int(groups["z"][g].get("n_unique_pairs", n_cmp[g]))
+                        for g in n_cmp}
         for g, n in n_cmp.items():
             if n < mc:
                 logger.warning(f"[E2] {dataset}/{f}/{g}: 仅采样到 {n}/{mc} 条比较"
@@ -278,6 +282,7 @@ def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals",
             "before_after_cos_z": ba_cos_by_factor[f]["z"],
         }
         row.update({f"n_cmp_{g}": n for g, n in n_cmp.items()})
+        row.update({f"n_cmp_unique_{g}": n for g, n in n_cmp_unique.items()})
 
         for s in ("raw", "z"):
             g = groups[s]
@@ -376,4 +381,7 @@ def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals",
     low = tt[tt["n_contexts"] < 2]
     logger.info(f"[E2] written {path_t} ({len(tt)} transitions; "
                 f"{len(low)} with n_contexts<2 → mean_sim=NaN)")
+    # 四轮问题 1：两张结果表都成功写出后才提交成功来源
+    commit_experiment(out_tables, f"e2_{dataset}" + ("_smoke" if smoke else ""),
+                      [path.name, path_t.name])
     return out

@@ -15,9 +15,13 @@ clevr:
 
 spar:
   factors: [scene, position, attribute, relation]
-  two_object_only: [position, attribute, relation]   # 双对象任务：两侧动物均非 blank（R3）
+  # 以下两项是协议的固定描述（入口校验，不支持用配置关闭——四轮补充 B：
+  # 此前改这两项不会产生任何消融效果，现改为显式拒绝）：
+  # - position/attribute/relation 固定为双对象任务：两侧动物均非 blank（R3）；
+  # - 双对象同种动物场景固定整体过滤（P1-2：否则正负文本可能相同或同时为真）。
+  two_object_only: [position, attribute, relation]
   attribute_require_diff_texture: true               # tex1 != tex2 才有效
-  same_animal_filter: true                           # 双对象同种动物场景整体过滤（P1-2）
+  same_animal_filter: true
 
 # PUG:SPAR 官方协议（facebookresearch/PUG run_eval_vlms_on_spar.py 的 CLIP 路径）。
 # 与上方自建 2AFC 并行输出；scripts/run_e1_spar_official.py 单独运行。

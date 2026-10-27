@@ -7,15 +7,17 @@
 - 逐 (color, shape)、逐颜色报告保留 condition / shape_group / negative_type /
   mean_margin（审查报告 P2-10）；Difficulty Gap 只在 cube/cylinder 上计算。
 """
+import json
+
 import numpy as np
 import pandas as pd
 
 from ..data.captions import cogent_color_shape_contents
-from ..data.cogent import condition_image_dir, load_condition_scenes
+from ..data.cogent import condition_cache_key, condition_image_dir, load_condition_scenes
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.extract import extract_clevr_images
 from ..metrics.bootstrap import cluster_gap_ci, cluster_gap_ci_equal_types
-from ..utils.io import load_config, output_tables_dir, write_jsonl
+from ..utils.io import commit_experiment, load_config, output_tables_dir, write_jsonl
 from .common import EXPORT_FIELDS, eval_2afc_items, subsample
 
 
@@ -71,9 +73,11 @@ def run(model, paths, logger, smoke=False, seed=None):
     cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     tcache = TextCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
     eff_seed = cfg["seeds"][0] if seed is None else seed
+    # 四轮问题 2：smoke 与全量输出是不同文件，来源键分开登记
+    experiment = "e3_cogent" + ("_smoke" if smoke else "")
     out_tables = output_tables_dir(paths, model.name, eff_seed,   # R2：按模型/种子隔离
                                    extra={"cache_protocol": model.cache_protocol},
-                                   experiment="e3_cogent")
+                                   experiment=experiment)
     rng = np.random.default_rng(eff_seed)
     bs = cfg["bootstrap"]
     target = min(300, cfg["sampling"]["target_per_condition_shape"]) if smoke \
@@ -86,14 +90,20 @@ def run(model, paths, logger, smoke=False, seed=None):
 
     for cond in ["A", "B"]:
         ccfg = cfg["conditions"][cond]
-        scenes = load_condition_scenes(paths["datasets"]["cogent"], cond)
+        # 四轮补充 A：conditions.<cond>.scene_file / image_dir 现已生效；
+        # 非默认路径时缓存 key 附加路径指纹，不与默认路径的旧特征混用
+        scenes = load_condition_scenes(paths["datasets"]["cogent"], cond,
+                                       ccfg.get("scene_file"))
         check_palette(scenes, cond, cfg, logger)
         if smoke:
             scenes = scenes[:300]
             logger.info(f"[E3] cogent val{cond} smoke subset: {len(scenes)} scenes")
-        key = (f"cogent_val{cond}_smoke" if smoke else f"cogent_val{cond}")
+        key = condition_cache_key(
+            f"cogent_val{cond}_smoke" if smoke else f"cogent_val{cond}",
+            ccfg.get("scene_file"), ccfg.get("image_dir"))
         extract_clevr_images(model, cache, key, scenes,
-                             condition_image_dir(paths["datasets"]["cogent"], cond),
+                             condition_image_dir(paths["datasets"]["cogent"], cond,
+                                                 ccfg.get("image_dir")),
                              logger,
                              only_ids=[s["image_filename"] for s in scenes] if smoke else None)
         items = build_cogent_items(scenes, cond, cfg, rng)
@@ -192,4 +202,27 @@ def run(model, paths, logger, smoke=False, seed=None):
     items_path = out_tables / ("e3_items_cogent_smoke.jsonl" if smoke else "e3_items_cogent.jsonl")
     write_jsonl(items_path, all_items)
     logger.info(f"[E3] written {items_path} ({len(all_items)} items)")
+
+    suffix = "_smoke" if smoke else ""
+    if not smoke:
+        # 四轮问题 3：全量源结果重写成功后，旧派生单元表立即失效——删除
+        # e3_unit_gaps.csv 并把 sidecar 置 stale（消费守卫会拦截），必须重跑
+        # analyze_e3_units 重算并登记新的源指纹。放在全部源文件写出之后：
+        # 失败的中断运行不会破坏仍然有效的派生表。
+        stale_units = out_tables / "e3_unit_gaps.csv"
+        sidecar = out_tables / "e3_unit_consistency.json"
+        if stale_units.exists() or sidecar.exists():
+            if stale_units.exists():
+                stale_units.unlink()
+            sidecar.write_text(json.dumps(
+                {"status": "stale", "all_ok": False,
+                 "reason": "e3 source results rewritten; rerun analyze_e3_units",
+                 "tables_dir": str(out_tables)}, ensure_ascii=False, indent=2))
+            logger.warning("[E3] 源结果已重写：旧 e3_unit_gaps.csv 已删除、"
+                           "sidecar 置 stale，请重跑 analyze_e3_units（四轮问题 3）")
+    # 四轮问题 1：全部输出成功写出后提交成功来源（含产物清单）
+    commit_experiment(out_tables, experiment, [
+        f"e3_cogent{suffix}.csv", f"e3_difficulty_gap{suffix}.csv",
+        f"e3_cogent_by_combo{suffix}.csv", f"e3_cogent_by_color{suffix}.csv",
+        f"e3_items_cogent{suffix}.jsonl"])
     return out

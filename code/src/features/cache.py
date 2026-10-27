@@ -49,6 +49,30 @@ def _check_protocol(model_dir: Path, protocol: str):
     pf.write_text(json.dumps({"protocol": protocol}))
 
 
+def _check_features(arr, name: str, ctx: str) -> None:
+    """特征块有效性校验（四轮补充 C）：二维矩阵 + 有限值。
+
+    NaN/Inf 相似度的 s_pos > s_neg 恒为 False，会被计成确定的答错；
+    形状异常（如一维）则可能在下游被广播悄悄扩展。两者都在缓存边界
+    明确停止，并给出位置（ctx）便于定位 encoder/缓存/样本。
+    """
+    a = np.asarray(arr)
+    if a.ndim != 2:
+        raise RuntimeError(f"{ctx}: {name} 不是二维特征矩阵（shape={a.shape}）")
+    if not np.isfinite(a).all():
+        bad = np.where((~np.isfinite(a)).any(axis=1))[0]
+        raise RuntimeError(
+            f"{ctx}: {name} 含 NaN/Inf（{len(bad)} 行，首行 #{int(bad[0])}）——"
+            f"无效特征不得进入评分，请检查 encoder 输出或删除该缓存重抽")
+
+
+def _check_ids_rows(ids, raw: np.ndarray, norm: np.ndarray, ctx: str) -> None:
+    if raw.shape != norm.shape or len(ids) != raw.shape[0]:
+        raise RuntimeError(
+            f"{ctx}: ids/raw/normalized 行数或维度不一致（ids={len(ids)}, "
+            f"raw={raw.shape}, normalized={norm.shape}）——按 id 取行会错位")
+
+
 class ImageFeatureCache:
     def __init__(self, cache_dir, model_name: str, protocol: str = None):
         self.dir = Path(cache_dir) / model_name
@@ -64,6 +88,12 @@ class ImageFeatureCache:
         return self.path(dataset_key).exists()
 
     def save(self, dataset_key: str, ids, raw: np.ndarray, normalized: np.ndarray):
+        raw = np.asarray(raw)
+        normalized = np.asarray(normalized)
+        ctx = f"cache save {self.path(dataset_key)}"
+        _check_features(raw, "raw", ctx)
+        _check_features(normalized, "normalized", ctx)
+        _check_ids_rows(ids, raw, normalized, ctx)
         np.savez(self.path(dataset_key),
                  ids=np.array(ids, dtype=np.str_),
                  raw=raw.astype(np.float16),
@@ -73,10 +103,16 @@ class ImageFeatureCache:
     def arrays(self, dataset_key: str):
         """返回 (ids, index, raw, normalized)；raw/norm 为 fp16 视图。"""
         if dataset_key not in self._loaded:
-            z = np.load(self.path(dataset_key), allow_pickle=False)
+            p = self.path(dataset_key)
+            z = np.load(p, allow_pickle=False)
             ids = z["ids"].astype(str)
+            raw, norm = z["raw"], z["normalized"]
+            ctx = f"cache load {p}"
+            _check_features(raw, "raw", ctx)
+            _check_features(norm, "normalized", ctx)
+            _check_ids_rows(ids, raw, norm, ctx)
             index = {sid: i for i, sid in enumerate(ids)}
-            self._loaded[dataset_key] = (ids, index, z["raw"], z["normalized"])
+            self._loaded[dataset_key] = (ids, index, raw, norm)
         return self._loaded[dataset_key]
 
     def get(self, dataset_key: str, wanted_ids):
@@ -110,8 +146,12 @@ class TextCache:
             return
         z = np.load(self.path, allow_pickle=False)
         self.keys = list(z["keys"].astype(str))
-        self.index = {k: i for i, k in enumerate(self.keys)}
         self.raw, self.norm = z["raw"], z["normalized"]
+        ctx = f"cache load {self.path}"
+        _check_features(self.raw, "raw", ctx)
+        _check_features(self.norm, "normalized", ctx)
+        _check_ids_rows(self.keys, self.raw, self.norm, ctx)
+        self.index = {k: i for i, k in enumerate(self.keys)}
 
     def encode(self, model, texts, ensure_period=True):
         """返回 (raw, normalized) float32，顺序与 texts 一致；缺失部分批量编码后写回。
@@ -131,6 +171,11 @@ class TextCache:
                                      ensure_period=False)
             new_raw = out["raw"].astype(np.float16)
             new_norm = out["normalized"].astype(np.float16)
+            # 四轮补充 C：encoder 新产出的块同样校验（二维 + 有限值 + 行数一致）
+            ctx = f"text cache encode {self.path}"
+            _check_features(new_raw, "raw", ctx)
+            _check_features(new_norm, "normalized", ctx)
+            _check_ids_rows(missing_keys, new_raw, new_norm, ctx)
             if self.keys:
                 self.raw = np.concatenate([self.raw, new_raw], axis=0)
                 self.norm = np.concatenate([self.norm, new_norm], axis=0)

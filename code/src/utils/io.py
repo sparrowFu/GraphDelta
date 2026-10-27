@@ -54,6 +54,11 @@ def _code_identity():
     return {}
 
 
+def _experiment_ident(rec):
+    """实验记录里的身份字段（问题 1 / 补充 D 的比较基准）。"""
+    return {k: rec.get(k) for k in ("git_commit", "git_dirty", "cache_protocol")}
+
+
 def output_tables_dir(paths, model_name: str, seed: int, extra: dict = None,
                       experiment: str = None) -> Path:
     """结果目录按模型与种子隔离（审查报告 R2）：outputs/<model>/seed_<seed>/tables/。
@@ -61,12 +66,16 @@ def output_tables_dir(paths, model_name: str, seed: int, extra: dict = None,
     切换 --model / --seed 不再互相覆盖；旧布局 outputs/tables、outputs/tables_seed{k}
     为历史结果，只读保留（summarize_seed_stability / make_figures 有回退逻辑）。
 
-    run_meta.json 的写入规则（三轮审查问题 3）：
+    run_meta.json 的写入规则（四轮审查问题 1：失败运行不能改写成功来源）：
     - 首次创建：写 model/seed/created + git 身份 + extra（cache_protocol 等）；
-    - 复用目录：顶层字段保留首次记录，**按实验名**（experiment 参数）更新
-      experiments/<name> 的当前来源（git/cache_protocol/updated）；同一实验身份
-      变化时旧身份保存在 replaces 里，不覆盖、不冒充——目录里未重跑的其他
-      实验文件仍对应其各自首次记录，不能用共享顶层 meta 代表全部文件。
+    - 复用目录：顶层字段保留首次记录；experiment 参数只登记**本次尝试**
+      （status=running + 身份 + started），不触碰 last_success——运行在数据
+      读取、配对验证或写盘中途失败时，last_success 仍指向旧的成功产出，
+      失败的尝试不能冒充当前来源；
+    - 输出全部成功写出后由 commit_experiment 提交 last_success（含产物清单）
+      并把 status 置 success；
+    - replaces（四轮补充 D）：身份变化的历史以**列表**追加，同版本重复重跑
+      不再使留痕消失；旧格式（单条 dict）读取时自动转为列表。
     """
     from datetime import datetime
     d = paths["dirs"]["outputs"] / model_name / f"seed_{seed}" / "tables"
@@ -83,16 +92,57 @@ def output_tables_dir(paths, model_name: str, seed: int, extra: dict = None,
         info.update(ident)
     if experiment:
         exps = info.setdefault("experiments", {})
-        rec = dict(ident)
-        rec["updated"] = now
+        rec = {**ident, "status": "running", "started": now}
         prev = exps.get(experiment)
-        if prev is not None and (prev.get("git_commit") != rec.get("git_commit")
-                                 or prev.get("cache_protocol") != rec.get("cache_protocol")):
-            rec["replaces"] = {k: prev.get(k) for k in
-                               ("git_commit", "git_dirty", "cache_protocol", "updated")}
+        if prev is not None:
+            # 旧格式迁移：身份在记录顶层、无 last_success → 视为历史成功来源
+            if "last_success" not in prev and any(k in prev for k in ident):
+                prev = {**prev, "last_success": {**_experiment_ident(prev),
+                                                 "updated": prev.get("updated")}}
+            if prev.get("last_success") is not None:
+                rec["last_success"] = prev["last_success"]
+            if prev.get("replaces"):
+                rec["replaces"] = prev["replaces"]
         exps[experiment] = rec
     meta.write_text(json.dumps(info, ensure_ascii=False, indent=2))
     return d
+
+
+def commit_experiment(tables_dir, experiment: str, outputs) -> None:
+    """实验输出成功写出后提交来源（四轮审查问题 1）。
+
+    - 用本次尝试的身份更新 experiments/<name>.last_success（含产物清单
+      outputs），status 置 success；失败/中断的运行不会走到这里，
+      last_success 保持旧值；
+    - 新 last_success 与上一次身份不同时，把旧来源**追加**进 replaces 列表
+      （补充 D：同版本重跑不追加也不丢失，变更留痕一直保留）；
+    - 未先经 output_tables_dir 登记尝试时按错误处理，防止凭空提交。
+    """
+    from datetime import datetime
+    meta = Path(tables_dir) / "run_meta.json"
+    if not meta.exists():
+        raise RuntimeError(f"{meta} 不存在：commit_experiment 必须在 "
+                           f"output_tables_dir 之后调用")
+    info = json.loads(meta.read_text())
+    rec = info.setdefault("experiments", {}).get(experiment)
+    if rec is None:
+        raise RuntimeError(f"实验 {experiment!r} 未登记尝试："
+                           f"commit_experiment 必须在 output_tables_dir 之后调用")
+    now = datetime.now().isoformat(timespec="seconds")
+    prev_success = rec.get("last_success")
+    new_success = {**_experiment_ident(rec), "updated": now,
+                   "outputs": sorted(str(o) for o in outputs)}
+    replaces = rec.get("replaces") or []
+    if isinstance(replaces, dict):     # 旧格式（单条 dict）→ 列表
+        replaces = [replaces]
+    if prev_success is not None and \
+            _experiment_ident(prev_success) != _experiment_ident(new_success):
+        replaces = replaces + [{**_experiment_ident(prev_success),
+                                "updated": prev_success.get("updated")}]
+    rec["replaces"] = replaces
+    rec["last_success"] = new_success
+    rec["status"] = "success"
+    meta.write_text(json.dumps(info, ensure_ascii=False, indent=2))
 
 
 def verify_run_meta(tables_dir, model_name: str, seed: int) -> None:
@@ -151,14 +201,42 @@ def verify_tables_identity(tables_dir, out_dir, model_name: str, seed: int) -> N
             f"{model_name} seed {seed} 不一致。")
 
 
-def verify_e3_consistency(tables_dir) -> None:
-    """消费 e3_unit_gaps.csv 前核对一致性 sidecar（三轮审查问题 2）。
+def _md5_file(p) -> str:
+    h = hashlib.md5()
+    with open(p, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
-    analyze_e3_units 的检查状态为 failed 时，旧单元表已被删除/失效，下游
-    （make_figures Figure 5）不得继续消费该目录的派生表；not_checked /
-    passed 不拦截。兼容只有 all_ok 字段的旧 sidecar。
+
+def e3_source_fingerprint(tables_dir):
+    """E3 派生单元表的源输入指纹（四轮审查问题 3）。
+
+    analyze_e3_units 消费 e3_items_cogent.jsonl 与 e3_difficulty_gap.csv，
+    指纹 = 两个文件内容哈希的组合；任一文件缺失返回 None（无法核对的
+    旧目录不比对，有指纹的目录必须匹配）。
     """
-    p = Path(tables_dir) / "e3_unit_consistency.json"
+    d = Path(tables_dir)
+    parts = []
+    for name in ("e3_items_cogent.jsonl", "e3_difficulty_gap.csv"):
+        p = d / name
+        if not p.exists():
+            return None
+        parts.append(f"{name}={_md5_file(p)}")
+    return hashlib.md5("|".join(parts).encode("utf-8")).hexdigest()
+
+
+def verify_e3_consistency(tables_dir) -> None:
+    """消费 e3_unit_gaps.csv 前核对一致性 sidecar（三轮问题 2 + 四轮问题 3）。
+
+    - status=failed：items 与主表冲突，旧单元表已删除/失效，不得消费；
+    - status=stale：E3 源结果已重写（run_e3 全量成功后主动失效），待重算；
+    - sidecar 记录了 source_fingerprint 时核对当前源文件指纹——成功重跑
+      E3 后残留的旧单元表即使 sidecar 仍是 passed 也会因指纹不匹配被拦截；
+    - not_checked / passed（无指纹的旧 sidecar 兼容）不拦截。
+    """
+    d = Path(tables_dir)
+    p = d / "e3_unit_consistency.json"
     if not p.exists():
         return
     c = json.loads(p.read_text())
@@ -168,7 +246,19 @@ def verify_e3_consistency(tables_dir) -> None:
     if status == "failed":
         raise SystemExit(
             f"{p} 记录一致性检查失败（items 与主表冲突）——该目录的"
-            f"e3_unit_gaps.csv 已失效，请先重跑 analyze_e3_units 解决冲突再绘图。")
+            f"e3_unit_gaps.csv 已失效，请先重跑 analyze_e3_units 解决冲突再消费。")
+    if status == "stale":
+        raise SystemExit(
+            f"{p} 记录 status=stale——E3 源结果已重写，e3_unit_gaps.csv 待重跑 "
+            f"analyze_e3_units 后才能消费。")
+    fp = c.get("source_fingerprint")
+    if fp is not None:
+        cur = e3_source_fingerprint(d)
+        if cur != fp:
+            raise SystemExit(
+                f"{p} 记录的源输入指纹与当前 e3_items_cogent.jsonl / "
+                f"e3_difficulty_gap.csv 不匹配——E3 源结果已更新，"
+                f"e3_unit_gaps.csv 是过期派生表，请重跑 analyze_e3_units 再消费。")
 
 
 def md5(s: str) -> str:
