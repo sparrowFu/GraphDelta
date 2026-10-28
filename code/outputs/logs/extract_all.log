@@ -1,0 +1,480 @@
+2026-10-27 15:32:04,130 | INFO | extract_all | [extract] model clip_vitl14：7 个数据集串行
+2026-10-27 15:32:06,045 | INFO | extract_all | [extract:clevr_val] model clip_vitl14
+2026-10-27 15:32:07,141 | INFO | extract_all | [extract] cache clevr_val: 15000 ids present
+2026-10-27 15:32:07,146 | INFO | extract_all | [extract] cache complete, skip: clevr_val
+2026-10-27 15:32:07,178 | INFO | extract_all | [extract:pug_spar] model clip_vitl14
+2026-10-27 15:32:07,377 | INFO | extract_all | [extract] cache pug_spar: 43560 ids present
+2026-10-27 15:32:07,389 | INFO | extract_all | [extract] cache complete, skip: pug_spar
+2026-10-27 15:32:07,391 | INFO | extract_all | [extract:pug_spar_official] model clip_vitl14
+2026-10-27 15:32:07,584 | INFO | extract_all | [extract] cache pug_spar_official: 43560 ids present
+2026-10-27 15:32:07,593 | INFO | extract_all | [extract] cache complete, skip: pug_spar_official
+2026-10-27 15:32:07,595 | INFO | extract_all | [extract:pug_animals] model clip_vitl14
+2026-10-27 15:32:08,968 | INFO | extract_all | [extract] cache pug_animals: 215040 ids present
+2026-10-27 15:32:09,024 | INFO | extract_all | [extract] cache complete, skip: pug_animals
+2026-10-27 15:32:09,035 | INFO | extract_all | [extract:cogent_valA] model clip_vitl14
+2026-10-27 15:32:10,009 | INFO | extract_all | [extract] cache cogent_valA@cb38ee6b302e: 15000 ids present
+2026-10-27 15:32:10,014 | INFO | extract_all | [extract] cache complete, skip: cogent_valA@cb38ee6b302e
+2026-10-27 15:32:10,056 | INFO | extract_all | [extract:cogent_valB] model clip_vitl14
+2026-10-27 15:32:10,889 | INFO | extract_all | [extract] cache cogent_valB@d6e8bfbd95aa: 15000 ids present
+2026-10-27 15:32:10,895 | INFO | extract_all | [extract] cache complete, skip: cogent_valB@d6e8bfbd95aa
+2026-10-27 15:32:10,943 | INFO | extract_all | [extract:pug_imagenet] model clip_vitl14
+2026-10-27 15:32:11,337 | INFO | extract_all | [extract] cache pug_imagenet: 88328 ids present
+2026-10-27 15:32:11,361 | INFO | extract_all | [extract] cache complete, skip: pug_imagenet
+2026-10-27 15:32:11,461 | INFO | extract_all | [extract] model clip_vitb32：7 个数据集串行
+2026-10-27 15:32:12,596 | INFO | extract_all | [extract:clevr_val] model clip_vitb32
+2026-10-27 15:32:31,570 | INFO | extract_all | [extract:clevr_val] 2000/15000
+2026-10-27 15:32:55,505 | INFO | extract_all | [extract:clevr_val] 4000/15000
+2026-10-27 15:33:18,855 | INFO | extract_all | [extract:clevr_val] 6000/15000
+2026-10-27 15:33:50,169 | INFO | extract_all | [extract:clevr_val] 8000/15000
+2026-10-27 15:34:11,030 | INFO | extract_all | [extract:clevr_val] 10000/15000
+2026-10-27 15:34:27,915 | INFO | extract_all | [extract:clevr_val] 12000/15000
+2026-10-27 15:34:54,313 | INFO | extract_all | [extract:clevr_val] 14000/15000
+2026-10-27 15:35:04,645 | INFO | extract_all | [extract] saved 15000 new / 15000 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitb32/clevr_val_images.npz
+2026-10-27 15:35:04,680 | INFO | extract_all | [extract:pug_spar] model clip_vitb32
+2026-10-27 15:35:33,108 | INFO | extract_all | [extract:pug_spar] 2013/43560
+2026-10-27 15:36:00,839 | INFO | extract_all | [extract:pug_spar] 4023/43560
+2026-10-27 15:36:28,049 | INFO | extract_all | [extract:pug_spar] 6036/43560
+2026-10-27 15:36:59,134 | INFO | extract_all | [extract:pug_spar] 8046/43560
+2026-10-27 15:37:25,024 | INFO | extract_all | [extract:pug_spar] 10008/43560
+2026-10-27 15:37:55,237 | INFO | extract_all | [extract:pug_spar] 12021/43560
+2026-10-27 15:38:23,836 | INFO | extract_all | [extract:pug_spar] 14031/43560
+2026-10-27 15:38:51,662 | INFO | extract_all | [extract:pug_spar] 16044/43560
+2026-10-27 15:39:20,613 | INFO | extract_all | [extract:pug_spar] 18006/43560
+2026-10-27 15:39:50,704 | INFO | extract_all | [extract:pug_spar] 20016/43560
+2026-10-27 15:40:20,135 | INFO | extract_all | [extract:pug_spar] 22029/43560
+2026-10-27 15:40:48,538 | INFO | extract_all | [extract:pug_spar] 24039/43560
+2026-10-27 15:41:18,136 | INFO | extract_all | [extract:pug_spar] 26004/43560
+2026-10-27 15:41:47,337 | INFO | extract_all | [extract:pug_spar] 28012/43560
+2026-10-27 15:42:16,026 | INFO | extract_all | [extract:pug_spar] 30020/43560
+2026-10-27 15:42:46,474 | INFO | extract_all | [extract:pug_spar] 32032/43560
+2026-10-27 15:43:15,847 | INFO | extract_all | [extract:pug_spar] 34040/43560
+2026-10-27 15:43:42,674 | INFO | extract_all | [extract:pug_spar] 36004/43560
+2026-10-27 15:44:10,345 | INFO | extract_all | [extract:pug_spar] 38012/43560
+2026-10-27 15:44:39,129 | INFO | extract_all | [extract:pug_spar] 40020/43560
+2026-10-27 15:45:08,961 | INFO | extract_all | [extract:pug_spar] 42032/43560
+2026-10-27 15:45:30,626 | INFO | extract_all | [extract] saved 43560 new / 43560 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitb32/pug_spar_images.npz
+2026-10-27 15:45:30,628 | INFO | extract_all | [extract:pug_spar_official] model clip_vitb32
+2026-10-27 15:46:28,557 | INFO | extract_all | [extract:pug_spar_official] 2013/43560
+2026-10-27 15:47:26,595 | INFO | extract_all | [extract:pug_spar_official] 4023/43560
+2026-10-27 15:48:21,604 | INFO | extract_all | [extract:pug_spar_official] 6036/43560
+2026-10-27 15:49:21,643 | INFO | extract_all | [extract:pug_spar_official] 8046/43560
+2026-10-27 15:50:12,151 | INFO | extract_all | [extract:pug_spar_official] 10008/43560
+2026-10-27 15:51:10,080 | INFO | extract_all | [extract:pug_spar_official] 12021/43560
+2026-10-27 15:52:09,110 | INFO | extract_all | [extract:pug_spar_official] 14031/43560
+2026-10-27 15:53:08,447 | INFO | extract_all | [extract:pug_spar_official] 16044/43560
+2026-10-27 15:54:11,940 | INFO | extract_all | [extract:pug_spar_official] 18006/43560
+2026-10-27 15:55:11,102 | INFO | extract_all | [extract:pug_spar_official] 20016/43560
+2026-10-27 15:56:13,621 | INFO | extract_all | [extract:pug_spar_official] 22029/43560
+2026-10-27 15:57:12,631 | INFO | extract_all | [extract:pug_spar_official] 24039/43560
+2026-10-27 15:58:10,880 | INFO | extract_all | [extract:pug_spar_official] 26004/43560
+2026-10-27 15:59:04,889 | INFO | extract_all | [extract:pug_spar_official] 28012/43560
+2026-10-27 16:00:02,177 | INFO | extract_all | [extract:pug_spar_official] 30020/43560
+2026-10-27 16:00:52,650 | INFO | extract_all | [extract:pug_spar_official] 32032/43560
+2026-10-27 16:01:47,358 | INFO | extract_all | [extract:pug_spar_official] 34040/43560
+2026-10-27 16:02:50,870 | INFO | extract_all | [extract:pug_spar_official] 36004/43560
+2026-10-27 16:03:39,691 | INFO | extract_all | [extract:pug_spar_official] 38012/43560
+2026-10-27 16:04:33,690 | INFO | extract_all | [extract:pug_spar_official] 40020/43560
+2026-10-27 16:05:37,458 | INFO | extract_all | [extract:pug_spar_official] 42032/43560
+2026-10-27 16:06:26,021 | INFO | extract_all | [extract] saved 43560 new / 43560 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitb32/pug_spar_official_images.npz
+2026-10-27 16:06:26,026 | INFO | extract_all | [extract:pug_animals] model clip_vitb32
+2026-10-27 16:06:54,652 | INFO | extract_all | [extract:pug_animals] 2024/215040
+2026-10-27 16:07:24,142 | INFO | extract_all | [extract:pug_animals] 4008/215040
+2026-10-27 16:07:52,317 | INFO | extract_all | [extract:pug_animals] 6032/215040
+2026-10-27 16:08:20,567 | INFO | extract_all | [extract:pug_animals] 8016/215040
+2026-10-27 16:08:48,694 | INFO | extract_all | [extract:pug_animals] 10040/215040
+2026-10-27 16:09:16,834 | INFO | extract_all | [extract:pug_animals] 12024/215040
+2026-10-27 16:09:45,663 | INFO | extract_all | [extract:pug_animals] 14000/215040
+2026-10-27 16:10:12,047 | INFO | extract_all | [extract:pug_animals] 16032/215040
+2026-10-27 16:10:39,606 | INFO | extract_all | [extract:pug_animals] 18008/215040
+2026-10-27 16:11:07,829 | INFO | extract_all | [extract:pug_animals] 20040/215040
+2026-10-27 16:11:35,559 | INFO | extract_all | [extract:pug_animals] 22016/215040
+2026-10-27 16:12:04,534 | INFO | extract_all | [extract:pug_animals] 24000/215040
+2026-10-27 16:12:35,202 | INFO | extract_all | [extract:pug_animals] 26024/215040
+2026-10-27 16:13:03,811 | INFO | extract_all | [extract:pug_animals] 28008/215040
+2026-10-27 16:13:33,892 | INFO | extract_all | [extract:pug_animals] 30040/215040
+2026-10-27 16:14:05,022 | INFO | extract_all | [extract:pug_animals] 32016/215040
+2026-10-27 16:14:35,543 | INFO | extract_all | [extract:pug_animals] 34000/215040
+2026-10-27 16:15:06,054 | INFO | extract_all | [extract:pug_animals] 36024/215040
+2026-10-27 16:15:31,150 | INFO | extract_all | [extract:pug_animals] 38008/215040
+2026-10-27 16:16:00,647 | INFO | extract_all | [extract:pug_animals] 40032/215040
+2026-10-27 16:16:26,530 | INFO | extract_all | [extract:pug_animals] 42016/215040
+2026-10-27 16:16:56,234 | INFO | extract_all | [extract:pug_animals] 44040/215040
+2026-10-27 16:17:26,546 | INFO | extract_all | [extract:pug_animals] 46024/215040
+2026-10-27 16:17:53,033 | INFO | extract_all | [extract:pug_animals] 48000/215040
+2026-10-27 16:18:21,681 | INFO | extract_all | [extract:pug_animals] 50032/215040
+2026-10-27 16:18:51,682 | INFO | extract_all | [extract:pug_animals] 52008/215040
+2026-10-27 16:19:20,188 | INFO | extract_all | [extract:pug_animals] 54040/215040
+2026-10-27 16:19:49,793 | INFO | extract_all | [extract:pug_animals] 56016/215040
+2026-10-27 16:20:15,839 | INFO | extract_all | [extract:pug_animals] 58000/215040
+2026-10-27 16:20:43,509 | INFO | extract_all | [extract:pug_animals] 60031/215040
+2026-10-27 16:21:10,634 | INFO | extract_all | [extract:pug_animals] 62006/215040
+2026-10-27 16:21:36,560 | INFO | extract_all | [extract:pug_animals] 64036/215040
+2026-10-27 16:22:04,023 | INFO | extract_all | [extract:pug_animals] 66011/215040
+2026-10-27 16:22:34,304 | INFO | extract_all | [extract:pug_animals] 68041/215040
+2026-10-27 16:23:04,200 | INFO | extract_all | [extract:pug_animals] 70016/215040
+2026-10-27 16:23:34,823 | INFO | extract_all | [extract:pug_animals] 72046/215040
+2026-10-27 16:24:02,543 | INFO | extract_all | [extract:pug_animals] 74021/215040
+2026-10-27 16:24:33,326 | INFO | extract_all | [extract:pug_animals] 76003/215040
+2026-10-27 16:25:01,166 | INFO | extract_all | [extract:pug_animals] 78026/215040
+2026-10-27 16:25:30,173 | INFO | extract_all | [extract:pug_animals] 80008/215040
+2026-10-27 16:25:58,601 | INFO | extract_all | [extract:pug_animals] 82031/215040
+2026-10-27 16:26:31,700 | INFO | extract_all | [extract:pug_animals] 84013/215040
+2026-10-27 16:26:59,524 | INFO | extract_all | [extract:pug_animals] 86036/215040
+2026-10-27 16:27:29,055 | INFO | extract_all | [extract:pug_animals] 88018/215040
+2026-10-27 16:27:56,146 | INFO | extract_all | [extract:pug_animals] 90000/215040
+2026-10-27 16:28:25,532 | INFO | extract_all | [extract:pug_animals] 92023/215040
+2026-10-27 16:28:55,144 | INFO | extract_all | [extract:pug_animals] 94005/215040
+2026-10-27 16:29:24,139 | INFO | extract_all | [extract:pug_animals] 96028/215040
+2026-10-27 16:29:54,324 | INFO | extract_all | [extract:pug_animals] 98010/215040
+2026-10-27 16:30:21,590 | INFO | extract_all | [extract:pug_animals] 100033/215040
+2026-10-27 16:30:48,628 | INFO | extract_all | [extract:pug_animals] 102015/215040
+2026-10-27 16:31:18,088 | INFO | extract_all | [extract:pug_animals] 104038/215040
+2026-10-27 16:31:47,777 | INFO | extract_all | [extract:pug_animals] 106020/215040
+2026-10-27 16:32:15,777 | INFO | extract_all | [extract:pug_animals] 108043/215040
+2026-10-27 16:32:45,189 | INFO | extract_all | [extract:pug_animals] 110025/215040
+2026-10-27 16:33:11,662 | INFO | extract_all | [extract:pug_animals] 112000/215040
+2026-10-27 16:33:42,680 | INFO | extract_all | [extract:pug_animals] 114030/215040
+2026-10-27 16:34:11,650 | INFO | extract_all | [extract:pug_animals] 116005/215040
+2026-10-27 16:34:43,859 | INFO | extract_all | [extract:pug_animals] 118035/215040
+2026-10-27 16:35:10,576 | INFO | extract_all | [extract:pug_animals] 120017/215040
+2026-10-27 16:35:42,315 | INFO | extract_all | [extract:pug_animals] 122040/215040
+2026-10-27 16:36:10,822 | INFO | extract_all | [extract:pug_animals] 124022/215040
+2026-10-27 16:36:38,059 | INFO | extract_all | [extract:pug_animals] 126045/215040
+2026-10-27 16:37:07,139 | INFO | extract_all | [extract:pug_animals] 128027/215040
+2026-10-27 16:37:33,626 | INFO | extract_all | [extract:pug_animals] 130002/215040
+2026-10-27 16:38:03,200 | INFO | extract_all | [extract:pug_animals] 132032/215040
+2026-10-27 16:38:32,148 | INFO | extract_all | [extract:pug_animals] 134007/215040
+2026-10-27 16:38:57,670 | INFO | extract_all | [extract:pug_animals] 136037/215040
+2026-10-27 16:39:27,596 | INFO | extract_all | [extract:pug_animals] 138012/215040
+2026-10-27 16:39:56,549 | INFO | extract_all | [extract:pug_animals] 140042/215040
+2026-10-27 16:40:23,690 | INFO | extract_all | [extract:pug_animals] 142017/215040
+2026-10-27 16:41:05,850 | INFO | extract_all | [extract:pug_animals] 144047/215040
+2026-10-27 16:41:38,032 | INFO | extract_all | [extract:pug_animals] 146029/215040
+2026-10-27 16:42:08,048 | INFO | extract_all | [extract:pug_animals] 148004/215040
+2026-10-27 16:42:39,001 | INFO | extract_all | [extract:pug_animals] 150034/215040
+2026-10-27 16:43:13,852 | INFO | extract_all | [extract:pug_animals] 152009/215040
+2026-10-27 16:43:42,690 | INFO | extract_all | [extract:pug_animals] 154039/215040
+2026-10-27 16:44:12,293 | INFO | extract_all | [extract:pug_animals] 156014/215040
+2026-10-27 16:44:42,177 | INFO | extract_all | [extract:pug_animals] 158044/215040
+2026-10-27 16:45:14,203 | INFO | extract_all | [extract:pug_animals] 160019/215040
+2026-10-27 16:45:43,359 | INFO | extract_all | [extract:pug_animals] 162001/215040
+2026-10-27 16:46:16,119 | INFO | extract_all | [extract:pug_animals] 164024/215040
+2026-10-27 16:46:47,610 | INFO | extract_all | [extract:pug_animals] 166006/215040
+2026-10-27 16:47:32,834 | INFO | extract_all | [extract:pug_animals] 168029/215040
+2026-10-27 16:48:21,090 | INFO | extract_all | [extract:pug_animals] 170011/215040
+2026-10-27 16:49:09,804 | INFO | extract_all | [extract:pug_animals] 172034/215040
+2026-10-27 16:49:57,611 | INFO | extract_all | [extract:pug_animals] 174016/215040
+2026-10-27 16:50:46,906 | INFO | extract_all | [extract:pug_animals] 176046/215040
+2026-10-27 16:51:35,072 | INFO | extract_all | [extract:pug_animals] 178021/215040
+2026-10-27 16:52:22,938 | INFO | extract_all | [extract:pug_animals] 180003/215040
+2026-10-27 16:53:13,093 | INFO | extract_all | [extract:pug_animals] 182026/215040
+2026-10-27 16:54:02,167 | INFO | extract_all | [extract:pug_animals] 184008/215040
+2026-10-27 16:54:35,795 | INFO | extract_all | [extract:pug_animals] 186031/215040
+2026-10-27 16:55:04,712 | INFO | extract_all | [extract:pug_animals] 188013/215040
+2026-10-27 16:55:32,640 | INFO | extract_all | [extract:pug_animals] 190036/215040
+2026-10-27 16:56:02,128 | INFO | extract_all | [extract:pug_animals] 192018/215040
+2026-10-27 16:56:35,025 | INFO | extract_all | [extract:pug_animals] 194041/215040
+2026-10-27 16:57:07,058 | INFO | extract_all | [extract:pug_animals] 196023/215040
+2026-10-27 16:57:40,014 | INFO | extract_all | [extract:pug_animals] 198046/215040
+2026-10-27 16:58:10,514 | INFO | extract_all | [extract:pug_animals] 200028/215040
+2026-10-27 16:58:41,162 | INFO | extract_all | [extract:pug_animals] 202003/215040
+2026-10-27 16:59:10,861 | INFO | extract_all | [extract:pug_animals] 204033/215040
+2026-10-27 16:59:39,201 | INFO | extract_all | [extract:pug_animals] 206015/215040
+2026-10-27 17:00:10,825 | INFO | extract_all | [extract:pug_animals] 208038/215040
+2026-10-27 17:00:39,826 | INFO | extract_all | [extract:pug_animals] 210020/215040
+2026-10-27 17:01:12,830 | INFO | extract_all | [extract:pug_animals] 212043/215040
+2026-10-27 17:01:41,604 | INFO | extract_all | [extract:pug_animals] 214025/215040
+2026-10-27 17:01:57,046 | INFO | extract_all | [extract] saved 215040 new / 215040 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitb32/pug_animals_images.npz
+2026-10-27 17:01:57,066 | INFO | extract_all | [extract:cogent_valA] model clip_vitb32
+2026-10-27 17:02:22,064 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 2000/15000
+2026-10-27 17:02:47,081 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 4000/15000
+2026-10-27 17:03:18,835 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 6000/15000
+2026-10-27 17:03:47,603 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 8000/15000
+2026-10-27 17:04:10,000 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 10000/15000
+2026-10-27 17:04:32,873 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 12000/15000
+2026-10-27 17:05:03,115 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 14000/15000
+2026-10-27 17:05:11,212 | INFO | extract_all | [extract] saved 15000 new / 15000 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitb32/cogent_valA@cb38ee6b302e_images.npz
+2026-10-27 17:05:11,268 | INFO | extract_all | [extract:cogent_valB] model clip_vitb32
+2026-10-27 17:05:34,758 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 2000/15000
+2026-10-27 17:05:54,921 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 4000/15000
+2026-10-27 17:06:25,375 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 6000/15000
+2026-10-27 17:06:55,758 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 8000/15000
+2026-10-27 17:07:13,680 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 10000/15000
+2026-10-27 17:07:36,878 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 12000/15000
+2026-10-27 17:07:55,287 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 14000/15000
+2026-10-27 17:08:13,665 | INFO | extract_all | [extract] saved 15000 new / 15000 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitb32/cogent_valB@d6e8bfbd95aa_images.npz
+2026-10-27 17:08:13,703 | INFO | extract_all | [extract:pug_imagenet] model clip_vitb32
+2026-10-27 17:08:40,193 | INFO | extract_all | [extract:pug_imagenet] 2026/88328
+2026-10-27 17:09:06,041 | INFO | extract_all | [extract:pug_imagenet] 4004/88328
+2026-10-27 17:09:34,115 | INFO | extract_all | [extract:pug_imagenet] 6040/88328
+2026-10-27 17:10:03,795 | INFO | extract_all | [extract:pug_imagenet] 8018/88328
+2026-10-27 17:10:29,562 | INFO | extract_all | [extract:pug_imagenet] 10043/88328
+2026-10-27 17:10:55,541 | INFO | extract_all | [extract:pug_imagenet] 12029/88328
+2026-10-27 17:11:19,051 | INFO | extract_all | [extract:pug_imagenet] 14006/88328
+2026-10-27 17:11:46,032 | INFO | extract_all | [extract:pug_imagenet] 16031/88328
+2026-10-27 17:12:12,814 | INFO | extract_all | [extract:pug_imagenet] 18017/88328
+2026-10-27 17:12:38,504 | INFO | extract_all | [extract:pug_imagenet] 20042/88328
+2026-10-27 17:13:05,551 | INFO | extract_all | [extract:pug_imagenet] 22019/88328
+2026-10-27 17:13:31,140 | INFO | extract_all | [extract:pug_imagenet] 24005/88328
+2026-10-27 17:13:58,631 | INFO | extract_all | [extract:pug_imagenet] 26030/88328
+2026-10-27 17:14:21,528 | INFO | extract_all | [extract:pug_imagenet] 28007/88328
+2026-10-27 17:14:45,025 | INFO | extract_all | [extract:pug_imagenet] 30041/88328
+2026-10-27 17:15:10,636 | INFO | extract_all | [extract:pug_imagenet] 32018/88328
+2026-10-27 17:15:34,615 | INFO | extract_all | [extract:pug_imagenet] 34043/88328
+2026-10-27 17:16:00,065 | INFO | extract_all | [extract:pug_imagenet] 36029/88328
+2026-10-27 17:16:23,178 | INFO | extract_all | [extract:pug_imagenet] 38006/88328
+2026-10-27 17:16:48,036 | INFO | extract_all | [extract:pug_imagenet] 40031/88328
+2026-10-27 17:17:14,044 | INFO | extract_all | [extract:pug_imagenet] 42017/88328
+2026-10-27 17:17:40,670 | INFO | extract_all | [extract:pug_imagenet] 44042/88328
+2026-10-27 17:18:14,105 | INFO | extract_all | [extract:pug_imagenet] 46019/88328
+2026-10-27 17:18:49,518 | INFO | extract_all | [extract:pug_imagenet] 48005/88328
+2026-10-27 17:19:20,538 | INFO | extract_all | [extract:pug_imagenet] 50030/88328
+2026-10-27 17:19:47,702 | INFO | extract_all | [extract:pug_imagenet] 52007/88328
+2026-10-27 17:20:24,570 | INFO | extract_all | [extract:pug_imagenet] 54041/88328
+2026-10-27 17:20:58,290 | INFO | extract_all | [extract:pug_imagenet] 56018/88328
+2026-10-27 17:21:35,565 | INFO | extract_all | [extract:pug_imagenet] 58043/88328
+2026-10-27 17:22:02,703 | INFO | extract_all | [extract:pug_imagenet] 60029/88328
+2026-10-27 17:22:37,056 | INFO | extract_all | [extract:pug_imagenet] 62006/88328
+2026-10-27 17:23:24,868 | INFO | extract_all | [extract:pug_imagenet] 64031/88328
+2026-10-27 17:24:13,039 | INFO | extract_all | [extract:pug_imagenet] 66017/88328
+2026-10-27 17:24:42,684 | INFO | extract_all | [extract:pug_imagenet] 68042/88328
+2026-10-27 17:25:08,620 | INFO | extract_all | [extract:pug_imagenet] 70019/88328
+2026-10-27 17:25:34,698 | INFO | extract_all | [extract:pug_imagenet] 72005/88328
+2026-10-27 17:26:02,597 | INFO | extract_all | [extract:pug_imagenet] 74030/88328
+2026-10-27 17:26:28,804 | INFO | extract_all | [extract:pug_imagenet] 76007/88328
+2026-10-27 17:26:57,317 | INFO | extract_all | [extract:pug_imagenet] 78041/88328
+2026-10-27 17:27:26,189 | INFO | extract_all | [extract:pug_imagenet] 80018/88328
+2026-10-27 17:27:55,025 | INFO | extract_all | [extract:pug_imagenet] 82043/88328
+2026-10-27 17:28:23,743 | INFO | extract_all | [extract:pug_imagenet] 84029/88328
+2026-10-27 17:29:00,253 | INFO | extract_all | [extract:pug_imagenet] 86006/88328
+2026-10-27 17:29:49,604 | INFO | extract_all | [extract:pug_imagenet] 88031/88328
+2026-10-27 17:29:57,126 | INFO | extract_all | [extract] saved 88328 new / 88328 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitb32/pug_imagenet_images.npz
+2026-10-27 17:29:57,228 | INFO | extract_all | [extract] model siglip2_so400m：7 个数据集串行
+2026-10-27 17:30:02,695 | INFO | extract_all | [extract:clevr_val] model siglip2_so400m
+2026-10-27 17:30:58,672 | INFO | extract_all | [extract:clevr_val] 2000/15000
+2026-10-27 17:31:59,369 | INFO | extract_all | [extract:clevr_val] 4000/15000
+2026-10-27 17:33:01,221 | INFO | extract_all | [extract:clevr_val] 6000/15000
+2026-10-27 17:34:03,017 | INFO | extract_all | [extract:clevr_val] 8000/15000
+2026-10-27 17:34:59,233 | INFO | extract_all | [extract:clevr_val] 10000/15000
+2026-10-27 17:35:23,829 | INFO | extract_all | [extract:clevr_val] 12000/15000
+2026-10-27 17:36:00,141 | INFO | extract_all | [extract:clevr_val] 14000/15000
+2026-10-27 17:36:25,025 | INFO | extract_all | [extract] saved 15000 new / 15000 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/siglip2_so400m/clevr_val_images.npz
+2026-10-27 17:36:25,073 | INFO | extract_all | [extract:pug_spar] model siglip2_so400m
+2026-10-27 17:36:59,799 | INFO | extract_all | [extract:pug_spar] 2013/43560
+2026-10-27 17:37:37,813 | INFO | extract_all | [extract:pug_spar] 4023/43560
+2026-10-27 17:38:16,896 | INFO | extract_all | [extract:pug_spar] 6036/43560
+2026-10-27 17:38:50,936 | INFO | extract_all | [extract:pug_spar] 8046/43560
+2026-10-27 17:39:25,075 | INFO | extract_all | [extract:pug_spar] 10008/43560
+2026-10-27 17:40:02,917 | INFO | extract_all | [extract:pug_spar] 12021/43560
+2026-10-27 17:40:41,345 | INFO | extract_all | [extract:pug_spar] 14031/43560
+2026-10-27 17:41:19,329 | INFO | extract_all | [extract:pug_spar] 16044/43560
+2026-10-27 17:41:53,964 | INFO | extract_all | [extract:pug_spar] 18006/43560
+2026-10-27 17:42:29,525 | INFO | extract_all | [extract:pug_spar] 20016/43560
+2026-10-27 17:43:04,379 | INFO | extract_all | [extract:pug_spar] 22029/43560
+2026-10-27 17:43:39,069 | INFO | extract_all | [extract:pug_spar] 24039/43560
+2026-10-27 17:44:11,581 | INFO | extract_all | [extract:pug_spar] 26004/43560
+2026-10-27 17:44:50,187 | INFO | extract_all | [extract:pug_spar] 28012/43560
+2026-10-27 17:45:25,328 | INFO | extract_all | [extract:pug_spar] 30020/43560
+2026-10-27 17:46:00,815 | INFO | extract_all | [extract:pug_spar] 32032/43560
+2026-10-27 17:46:36,463 | INFO | extract_all | [extract:pug_spar] 34040/43560
+2026-10-27 17:47:16,728 | INFO | extract_all | [extract:pug_spar] 36004/43560
+2026-10-27 17:48:13,274 | INFO | extract_all | [extract:pug_spar] 38012/43560
+2026-10-27 17:49:18,009 | INFO | extract_all | [extract:pug_spar] 40020/43560
+2026-10-27 17:50:22,970 | INFO | extract_all | [extract:pug_spar] 42032/43560
+2026-10-27 17:51:12,711 | INFO | extract_all | [extract] saved 43560 new / 43560 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/siglip2_so400m/pug_spar_images.npz
+2026-10-27 17:51:12,713 | INFO | extract_all | [extract:pug_spar_official] model siglip2_so400m
+2026-10-27 17:52:17,226 | INFO | extract_all | [extract:pug_spar_official] 2013/43560
+2026-10-27 17:53:21,791 | INFO | extract_all | [extract:pug_spar_official] 4023/43560
+2026-10-27 17:54:21,900 | INFO | extract_all | [extract:pug_spar_official] 6036/43560
+2026-10-27 17:55:26,462 | INFO | extract_all | [extract:pug_spar_official] 8046/43560
+2026-10-27 17:56:29,689 | INFO | extract_all | [extract:pug_spar_official] 10008/43560
+2026-10-27 17:57:34,434 | INFO | extract_all | [extract:pug_spar_official] 12021/43560
+2026-10-27 17:58:39,306 | INFO | extract_all | [extract:pug_spar_official] 14031/43560
+2026-10-27 17:59:43,680 | INFO | extract_all | [extract:pug_spar_official] 16044/43560
+2026-10-27 18:00:32,961 | INFO | extract_all | [extract:pug_spar_official] 18006/43560
+2026-10-27 18:01:31,241 | INFO | extract_all | [extract:pug_spar_official] 20016/43560
+2026-10-27 18:02:36,013 | INFO | extract_all | [extract:pug_spar_official] 22029/43560
+2026-10-27 18:03:40,307 | INFO | extract_all | [extract:pug_spar_official] 24039/43560
+2026-10-27 18:04:43,254 | INFO | extract_all | [extract:pug_spar_official] 26004/43560
+2026-10-27 18:05:47,884 | INFO | extract_all | [extract:pug_spar_official] 28012/43560
+2026-10-27 18:06:52,825 | INFO | extract_all | [extract:pug_spar_official] 30020/43560
+2026-10-27 18:07:57,525 | INFO | extract_all | [extract:pug_spar_official] 32032/43560
+2026-10-27 18:09:01,773 | INFO | extract_all | [extract:pug_spar_official] 34040/43560
+2026-10-27 18:10:04,726 | INFO | extract_all | [extract:pug_spar_official] 36004/43560
+2026-10-27 18:11:08,565 | INFO | extract_all | [extract:pug_spar_official] 38012/43560
+2026-10-27 18:12:12,387 | INFO | extract_all | [extract:pug_spar_official] 40020/43560
+2026-10-27 18:13:17,168 | INFO | extract_all | [extract:pug_spar_official] 42032/43560
+2026-10-27 18:14:06,425 | INFO | extract_all | [extract] saved 43560 new / 43560 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/siglip2_so400m/pug_spar_official_images.npz
+2026-10-27 18:14:06,427 | INFO | extract_all | [extract:pug_animals] model siglip2_so400m
+2026-10-27 18:15:11,235 | INFO | extract_all | [extract:pug_animals] 2024/215040
+2026-10-27 18:16:14,784 | INFO | extract_all | [extract:pug_animals] 4008/215040
+2026-10-27 18:17:20,288 | INFO | extract_all | [extract:pug_animals] 6032/215040
+2026-10-27 18:18:16,812 | INFO | extract_all | [extract:pug_animals] 8016/215040
+2026-10-27 18:18:56,450 | INFO | extract_all | [extract:pug_animals] 10040/215040
+2026-10-27 18:19:36,120 | INFO | extract_all | [extract:pug_animals] 12024/215040
+2026-10-27 18:20:39,850 | INFO | extract_all | [extract:pug_animals] 14000/215040
+2026-10-27 18:21:45,654 | INFO | extract_all | [extract:pug_animals] 16032/215040
+2026-10-27 18:22:49,896 | INFO | extract_all | [extract:pug_animals] 18008/215040
+2026-10-27 18:23:55,636 | INFO | extract_all | [extract:pug_animals] 20040/215040
+2026-10-27 18:24:59,253 | INFO | extract_all | [extract:pug_animals] 22016/215040
+2026-10-27 18:26:03,647 | INFO | extract_all | [extract:pug_animals] 24000/215040
+2026-10-27 18:27:08,506 | INFO | extract_all | [extract:pug_animals] 26024/215040
+2026-10-27 18:28:12,624 | INFO | extract_all | [extract:pug_animals] 28008/215040
+2026-10-27 18:29:18,632 | INFO | extract_all | [extract:pug_animals] 30040/215040
+2026-10-27 18:30:22,263 | INFO | extract_all | [extract:pug_animals] 32016/215040
+2026-10-27 18:31:26,497 | INFO | extract_all | [extract:pug_animals] 34000/215040
+2026-10-27 18:32:31,699 | INFO | extract_all | [extract:pug_animals] 36024/215040
+2026-10-27 18:33:35,926 | INFO | extract_all | [extract:pug_animals] 38008/215040
+2026-10-27 18:34:41,444 | INFO | extract_all | [extract:pug_animals] 40032/215040
+2026-10-27 18:35:45,957 | INFO | extract_all | [extract:pug_animals] 42016/215040
+2026-10-27 18:36:51,725 | INFO | extract_all | [extract:pug_animals] 44040/215040
+2026-10-27 18:37:49,463 | INFO | extract_all | [extract:pug_animals] 46024/215040
+2026-10-27 18:38:26,960 | INFO | extract_all | [extract:pug_animals] 48000/215040
+2026-10-27 18:39:09,261 | INFO | extract_all | [extract:pug_animals] 50032/215040
+2026-10-27 18:39:46,067 | INFO | extract_all | [extract:pug_animals] 52008/215040
+2026-10-27 18:40:21,365 | INFO | extract_all | [extract:pug_animals] 54040/215040
+2026-10-27 18:40:59,100 | INFO | extract_all | [extract:pug_animals] 56016/215040
+2026-10-27 18:41:36,396 | INFO | extract_all | [extract:pug_animals] 58000/215040
+2026-10-27 18:42:13,953 | INFO | extract_all | [extract:pug_animals] 60031/215040
+2026-10-27 18:42:50,336 | INFO | extract_all | [extract:pug_animals] 62006/215040
+2026-10-27 18:43:27,318 | INFO | extract_all | [extract:pug_animals] 64036/215040
+2026-10-27 18:44:02,909 | INFO | extract_all | [extract:pug_animals] 66011/215040
+2026-10-27 18:44:40,289 | INFO | extract_all | [extract:pug_animals] 68041/215040
+2026-10-27 18:45:16,798 | INFO | extract_all | [extract:pug_animals] 70016/215040
+2026-10-27 18:45:52,957 | INFO | extract_all | [extract:pug_animals] 72046/215040
+2026-10-27 18:46:27,439 | INFO | extract_all | [extract:pug_animals] 74021/215040
+2026-10-27 18:47:03,082 | INFO | extract_all | [extract:pug_animals] 76003/215040
+2026-10-27 18:47:40,356 | INFO | extract_all | [extract:pug_animals] 78026/215040
+2026-10-27 18:48:15,885 | INFO | extract_all | [extract:pug_animals] 80008/215040
+2026-10-27 18:48:53,467 | INFO | extract_all | [extract:pug_animals] 82031/215040
+2026-10-27 18:49:27,442 | INFO | extract_all | [extract:pug_animals] 84013/215040
+2026-10-27 18:50:10,981 | INFO | extract_all | [extract:pug_animals] 86036/215040
+2026-10-27 18:50:55,438 | INFO | extract_all | [extract:pug_animals] 88018/215040
+2026-10-27 18:51:30,643 | INFO | extract_all | [extract:pug_animals] 90000/215040
+2026-10-27 18:52:07,366 | INFO | extract_all | [extract:pug_animals] 92023/215040
+2026-10-27 18:52:43,441 | INFO | extract_all | [extract:pug_animals] 94005/215040
+2026-10-27 18:53:18,954 | INFO | extract_all | [extract:pug_animals] 96028/215040
+2026-10-27 18:53:55,290 | INFO | extract_all | [extract:pug_animals] 98010/215040
+2026-10-27 18:54:27,856 | INFO | extract_all | [extract:pug_animals] 100033/215040
+2026-10-27 18:55:06,364 | INFO | extract_all | [extract:pug_animals] 102015/215040
+2026-10-27 18:55:40,386 | INFO | extract_all | [extract:pug_animals] 104038/215040
+2026-10-27 18:56:16,392 | INFO | extract_all | [extract:pug_animals] 106020/215040
+2026-10-27 18:56:50,901 | INFO | extract_all | [extract:pug_animals] 108043/215040
+2026-10-27 18:57:26,298 | INFO | extract_all | [extract:pug_animals] 110025/215040
+2026-10-27 18:58:03,055 | INFO | extract_all | [extract:pug_animals] 112000/215040
+2026-10-27 18:58:37,841 | INFO | extract_all | [extract:pug_animals] 114030/215040
+2026-10-27 18:59:12,855 | INFO | extract_all | [extract:pug_animals] 116005/215040
+2026-10-27 18:59:49,840 | INFO | extract_all | [extract:pug_animals] 118035/215040
+2026-10-27 19:00:25,442 | INFO | extract_all | [extract:pug_animals] 120017/215040
+2026-10-27 19:01:03,404 | INFO | extract_all | [extract:pug_animals] 122040/215040
+2026-10-27 19:01:41,865 | INFO | extract_all | [extract:pug_animals] 124022/215040
+2026-10-27 19:02:19,434 | INFO | extract_all | [extract:pug_animals] 126045/215040
+2026-10-27 19:02:54,858 | INFO | extract_all | [extract:pug_animals] 128027/215040
+2026-10-27 19:03:31,397 | INFO | extract_all | [extract:pug_animals] 130002/215040
+2026-10-27 19:04:06,963 | INFO | extract_all | [extract:pug_animals] 132032/215040
+2026-10-27 19:04:44,273 | INFO | extract_all | [extract:pug_animals] 134007/215040
+2026-10-27 19:05:20,185 | INFO | extract_all | [extract:pug_animals] 136037/215040
+2026-10-27 19:05:56,641 | INFO | extract_all | [extract:pug_animals] 138012/215040
+2026-10-27 19:06:29,916 | INFO | extract_all | [extract:pug_animals] 140042/215040
+2026-10-27 19:07:05,480 | INFO | extract_all | [extract:pug_animals] 142017/215040
+2026-10-27 19:07:40,261 | INFO | extract_all | [extract:pug_animals] 144047/215040
+2026-10-27 19:08:11,968 | INFO | extract_all | [extract:pug_animals] 146029/215040
+2026-10-27 19:08:49,838 | INFO | extract_all | [extract:pug_animals] 148004/215040
+2026-10-27 19:09:24,916 | INFO | extract_all | [extract:pug_animals] 150034/215040
+2026-10-27 19:10:00,949 | INFO | extract_all | [extract:pug_animals] 152009/215040
+2026-10-27 19:10:39,443 | INFO | extract_all | [extract:pug_animals] 154039/215040
+2026-10-27 19:11:16,821 | INFO | extract_all | [extract:pug_animals] 156014/215040
+2026-10-27 19:11:53,577 | INFO | extract_all | [extract:pug_animals] 158044/215040
+2026-10-27 19:12:28,478 | INFO | extract_all | [extract:pug_animals] 160019/215040
+2026-10-27 19:13:02,804 | INFO | extract_all | [extract:pug_animals] 162001/215040
+2026-10-27 19:13:37,457 | INFO | extract_all | [extract:pug_animals] 164024/215040
+2026-10-27 19:14:13,525 | INFO | extract_all | [extract:pug_animals] 166006/215040
+2026-10-27 19:14:52,877 | INFO | extract_all | [extract:pug_animals] 168029/215040
+2026-10-27 19:15:27,835 | INFO | extract_all | [extract:pug_animals] 170011/215040
+2026-10-27 19:16:02,891 | INFO | extract_all | [extract:pug_animals] 172034/215040
+2026-10-27 19:16:40,897 | INFO | extract_all | [extract:pug_animals] 174016/215040
+2026-10-27 19:17:17,391 | INFO | extract_all | [extract:pug_animals] 176046/215040
+2026-10-27 19:17:54,275 | INFO | extract_all | [extract:pug_animals] 178021/215040
+2026-10-27 19:18:30,887 | INFO | extract_all | [extract:pug_animals] 180003/215040
+2026-10-27 19:19:11,058 | INFO | extract_all | [extract:pug_animals] 182026/215040
+2026-10-27 19:19:52,955 | INFO | extract_all | [extract:pug_animals] 184008/215040
+2026-10-27 19:20:34,627 | INFO | extract_all | [extract:pug_animals] 186031/215040
+2026-10-27 19:21:11,909 | INFO | extract_all | [extract:pug_animals] 188013/215040
+2026-10-27 19:21:52,965 | INFO | extract_all | [extract:pug_animals] 190036/215040
+2026-10-27 19:22:34,445 | INFO | extract_all | [extract:pug_animals] 192018/215040
+2026-10-27 19:23:16,791 | INFO | extract_all | [extract:pug_animals] 194041/215040
+2026-10-27 19:23:54,518 | INFO | extract_all | [extract:pug_animals] 196023/215040
+2026-10-27 19:24:32,082 | INFO | extract_all | [extract:pug_animals] 198046/215040
+2026-10-27 19:25:08,329 | INFO | extract_all | [extract:pug_animals] 200028/215040
+2026-10-27 19:25:44,541 | INFO | extract_all | [extract:pug_animals] 202003/215040
+2026-10-27 19:26:26,094 | INFO | extract_all | [extract:pug_animals] 204033/215040
+2026-10-27 19:27:01,434 | INFO | extract_all | [extract:pug_animals] 206015/215040
+2026-10-27 19:27:42,307 | INFO | extract_all | [extract:pug_animals] 208038/215040
+2026-10-27 19:28:18,087 | INFO | extract_all | [extract:pug_animals] 210020/215040
+2026-10-27 19:28:57,868 | INFO | extract_all | [extract:pug_animals] 212043/215040
+2026-10-27 19:29:35,571 | INFO | extract_all | [extract:pug_animals] 214025/215040
+2026-10-27 19:29:55,164 | INFO | extract_all | [extract] saved 215040 new / 215040 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/siglip2_so400m/pug_animals_images.npz
+2026-10-27 19:29:55,172 | INFO | extract_all | [extract:cogent_valA] model siglip2_so400m
+2026-10-27 19:30:31,611 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 2000/15000
+2026-10-27 19:31:08,090 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 4000/15000
+2026-10-27 19:31:38,521 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 6000/15000
+2026-10-27 19:32:16,866 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 8000/15000
+2026-10-27 19:32:52,232 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 10000/15000
+2026-10-27 19:33:18,432 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 12000/15000
+2026-10-27 19:33:53,300 | INFO | extract_all | [extract:cogent_valA@cb38ee6b302e] 14000/15000
+2026-10-27 19:34:16,106 | INFO | extract_all | [extract] saved 15000 new / 15000 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/siglip2_so400m/cogent_valA@cb38ee6b302e_images.npz
+2026-10-27 19:34:16,148 | INFO | extract_all | [extract:cogent_valB] model siglip2_so400m
+2026-10-27 19:34:48,626 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 2000/15000
+2026-10-27 19:35:23,008 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 4000/15000
+2026-10-27 19:36:02,964 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 6000/15000
+2026-10-27 19:36:46,680 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 8000/15000
+2026-10-27 19:37:16,710 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 10000/15000
+2026-10-27 19:37:49,869 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 12000/15000
+2026-10-27 19:38:25,160 | INFO | extract_all | [extract:cogent_valB@d6e8bfbd95aa] 14000/15000
+2026-10-27 19:38:42,499 | INFO | extract_all | [extract] saved 15000 new / 15000 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/siglip2_so400m/cogent_valB@d6e8bfbd95aa_images.npz
+2026-10-27 19:38:42,558 | INFO | extract_all | [extract:pug_imagenet] model siglip2_so400m
+2026-10-27 19:39:17,601 | INFO | extract_all | [extract:pug_imagenet] 2026/88328
+2026-10-27 19:39:51,811 | INFO | extract_all | [extract:pug_imagenet] 4004/88328
+2026-10-27 19:40:23,852 | INFO | extract_all | [extract:pug_imagenet] 6040/88328
+2026-10-27 19:40:55,868 | INFO | extract_all | [extract:pug_imagenet] 8018/88328
+2026-10-27 19:41:28,005 | INFO | extract_all | [extract:pug_imagenet] 10043/88328
+2026-10-27 19:41:59,305 | INFO | extract_all | [extract:pug_imagenet] 12029/88328
+2026-10-27 19:42:31,456 | INFO | extract_all | [extract:pug_imagenet] 14006/88328
+2026-10-27 19:43:02,455 | INFO | extract_all | [extract:pug_imagenet] 16031/88328
+2026-10-27 19:43:36,334 | INFO | extract_all | [extract:pug_imagenet] 18017/88328
+2026-10-27 19:44:08,188 | INFO | extract_all | [extract:pug_imagenet] 20042/88328
+2026-10-27 19:44:37,674 | INFO | extract_all | [extract:pug_imagenet] 22019/88328
+2026-10-27 19:45:11,383 | INFO | extract_all | [extract:pug_imagenet] 24005/88328
+2026-10-27 19:45:44,342 | INFO | extract_all | [extract:pug_imagenet] 26030/88328
+2026-10-27 19:46:16,844 | INFO | extract_all | [extract:pug_imagenet] 28007/88328
+2026-10-27 19:46:55,326 | INFO | extract_all | [extract:pug_imagenet] 30041/88328
+2026-10-27 19:47:29,864 | INFO | extract_all | [extract:pug_imagenet] 32018/88328
+2026-10-27 19:48:05,954 | INFO | extract_all | [extract:pug_imagenet] 34043/88328
+2026-10-27 19:48:38,221 | INFO | extract_all | [extract:pug_imagenet] 36029/88328
+2026-10-27 19:49:08,850 | INFO | extract_all | [extract:pug_imagenet] 38006/88328
+2026-10-27 19:49:44,394 | INFO | extract_all | [extract:pug_imagenet] 40031/88328
+2026-10-27 19:50:28,264 | INFO | extract_all | [extract:pug_imagenet] 42017/88328
+2026-10-27 19:51:04,446 | INFO | extract_all | [extract:pug_imagenet] 44042/88328
+2026-10-27 19:51:40,841 | INFO | extract_all | [extract:pug_imagenet] 46019/88328
+2026-10-27 19:52:17,893 | INFO | extract_all | [extract:pug_imagenet] 48005/88328
+2026-10-27 19:52:55,339 | INFO | extract_all | [extract:pug_imagenet] 50030/88328
+2026-10-27 19:53:39,481 | INFO | extract_all | [extract:pug_imagenet] 52007/88328
+2026-10-27 19:54:16,425 | INFO | extract_all | [extract:pug_imagenet] 54041/88328
+2026-10-27 19:54:52,438 | INFO | extract_all | [extract:pug_imagenet] 56018/88328
+2026-10-27 19:55:25,295 | INFO | extract_all | [extract:pug_imagenet] 58043/88328
+2026-10-27 19:56:08,923 | INFO | extract_all | [extract:pug_imagenet] 60029/88328
+2026-10-27 19:56:56,706 | INFO | extract_all | [extract:pug_imagenet] 62006/88328
+2026-10-27 19:58:02,539 | INFO | extract_all | [extract:pug_imagenet] 64031/88328
+2026-10-27 19:59:07,180 | INFO | extract_all | [extract:pug_imagenet] 66017/88328
+2026-10-27 20:00:12,354 | INFO | extract_all | [extract:pug_imagenet] 68042/88328
+2026-10-27 20:01:16,505 | INFO | extract_all | [extract:pug_imagenet] 70019/88328
+2026-10-27 20:02:20,814 | INFO | extract_all | [extract:pug_imagenet] 72005/88328
+2026-10-27 20:03:26,206 | INFO | extract_all | [extract:pug_imagenet] 74030/88328
+2026-10-27 20:04:29,576 | INFO | extract_all | [extract:pug_imagenet] 76007/88328
+2026-10-27 20:05:35,754 | INFO | extract_all | [extract:pug_imagenet] 78041/88328
+2026-10-27 20:06:39,741 | INFO | extract_all | [extract:pug_imagenet] 80018/88328
+2026-10-27 20:07:45,389 | INFO | extract_all | [extract:pug_imagenet] 82043/88328
+2026-10-27 20:08:48,837 | INFO | extract_all | [extract:pug_imagenet] 84029/88328
+2026-10-27 20:09:53,119 | INFO | extract_all | [extract:pug_imagenet] 86006/88328
+2026-10-27 20:10:58,750 | INFO | extract_all | [extract:pug_imagenet] 88031/88328
+2026-10-27 20:11:08,961 | INFO | extract_all | [extract] saved 88328 new / 88328 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/siglip2_so400m/pug_imagenet_images.npz

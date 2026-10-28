@@ -1,0 +1,429 @@
+2026-10-27 13:52:57,168 | INFO | run_e1_spar_official | [extract:pug_spar_official] 2013/43560
+2026-10-27 13:54:11,611 | INFO | run_e1_spar_official | [extract:pug_spar_official] 4023/43560
+2026-10-27 13:55:42,763 | INFO | run_e1_spar_official | [extract:pug_spar_official] 6036/43560
+2026-10-27 13:57:22,062 | INFO | run_e1_spar_official | [extract:pug_spar_official] 8046/43560
+2026-10-27 13:58:58,896 | INFO | run_e1_spar_official | [extract:pug_spar_official] 10008/43560
+2026-10-27 14:00:05,656 | INFO | run_e1_spar_official | [extract:pug_spar_official] 12021/43560
+2026-10-27 14:01:06,090 | INFO | run_e1_spar_official | [extract:pug_spar_official] 14031/43560
+2026-10-27 14:02:08,658 | INFO | run_e1_spar_official | [extract:pug_spar_official] 16044/43560
+2026-10-27 14:03:13,194 | INFO | run_e1_spar_official | [extract:pug_spar_official] 18006/43560
+2026-10-27 14:04:12,151 | INFO | run_e1_spar_official | [extract:pug_spar_official] 20016/43560
+2026-10-27 14:05:13,991 | INFO | run_e1_spar_official | [extract:pug_spar_official] 22029/43560
+2026-10-27 14:06:17,636 | INFO | run_e1_spar_official | [extract:pug_spar_official] 24039/43560
+2026-10-27 14:07:14,624 | INFO | run_e1_spar_official | [extract:pug_spar_official] 26004/43560
+2026-10-27 14:08:24,167 | INFO | run_e1_spar_official | [extract:pug_spar_official] 28012/43560
+2026-10-27 14:09:28,421 | INFO | run_e1_spar_official | [extract:pug_spar_official] 30020/43560
+2026-10-27 14:10:26,644 | INFO | run_e1_spar_official | [extract:pug_spar_official] 32032/43560
+2026-10-27 14:11:36,788 | INFO | run_e1_spar_official | [extract:pug_spar_official] 34040/43560
+2026-10-27 14:12:30,175 | INFO | run_e1_spar_official | [extract:pug_spar_official] 36004/43560
+2026-10-27 14:13:31,190 | INFO | run_e1_spar_official | [extract:pug_spar_official] 38012/43560
+2026-10-27 14:14:38,382 | INFO | run_e1_spar_official | [extract:pug_spar_official] 40020/43560
+2026-10-27 14:15:45,346 | INFO | run_e1_spar_official | [extract:pug_spar_official] 42032/43560
+2026-10-27 14:16:37,598 | INFO | run_e1_spar_official | [extract] saved 43560 new / 43560 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitl14/pug_spar_official_images.npz
+2026-10-27 14:16:38,027 | INFO | run_e1_spar_official | [E1] spar_official/scene_backgrounds: n=10 caps=10 top1=1.0000 top5=1.0000
+2026-10-27 14:16:38,386 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default]: n=1280 caps=33 top1=0.7367 top5=0.8922
+2026-10-27 14:16:38,395 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue]: n=640 caps=33 top1=0.5719 top5=0.8125
+2026-10-27 14:16:38,403 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass]: n=640 caps=33 top1=0.4641 top5=0.7234
+2026-10-27 14:16:38,657 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right]: n=640 caps=64 top1=0.3328 top5=0.8297
+2026-10-27 14:16:38,663 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,hardneg]: n=640 caps=2 top1=0.4766 top5=nan
+2026-10-27 14:16:38,664 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-27 14:16:38,664 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-27 14:16:39,144 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default]: n=2000 caps=528 top1=0.3805 top5=0.6445
+2026-10-27 14:16:39,377 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue]: n=2000 caps=528 top1=0.2265 top5=0.4425
+2026-10-27 14:16:39,572 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass]: n=2000 caps=528 top1=0.1590 top5=0.3380
+2026-10-27 14:16:40,098 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right]: n=2000 caps=992 top1=0.2000 top5=0.5525
+2026-10-27 14:16:40,108 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,hardneg]: n=2000 caps=2 top1=0.4995 top5=nan
+2026-10-27 14:16:40,111 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-27 14:16:40,111 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-27 14:16:40,529 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue]: n=2000 caps=992 top1=0.1155 top5=0.3135
+2026-10-27 14:16:40,539 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,hardneg]: n=2000 caps=2 top1=0.5350 top5=nan
+2026-10-27 14:16:41,024 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass]: n=2000 caps=992 top1=0.0840 top5=0.2475
+2026-10-27 14:16:41,036 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,hardneg]: n=2000 caps=2 top1=0.5535 top5=nan
+2026-10-27 14:16:41,452 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default,bg]: n=1280 caps=330 top1=0.7852 top5=0.9289
+2026-10-27 14:16:41,517 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue,bg]: n=640 caps=330 top1=0.6000 top5=0.8594
+2026-10-27 14:16:41,527 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass,bg]: n=640 caps=330 top1=0.5437 top5=0.7781
+2026-10-27 14:16:41,923 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg]: n=640 caps=640 top1=0.3937 top5=0.8625
+2026-10-27 14:16:41,933 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg,hardneg]: n=640 caps=2 top1=0.5000 top5=nan
+2026-10-27 14:16:41,934 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-27 14:16:41,935 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-27 14:16:42,626 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default,bg]: n=2000 caps=5280 top1=0.4430 top5=0.6975
+2026-10-27 14:16:42,777 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue,bg]: n=2000 caps=5280 top1=0.2355 top5=0.4705
+2026-10-27 14:16:42,999 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass,bg]: n=2000 caps=5280 top1=0.1710 top5=0.3725
+2026-10-27 14:16:44,392 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg]: n=2000 caps=9920 top1=0.2180 top5=0.5815
+2026-10-27 14:16:44,404 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg,hardneg]: n=2000 caps=2 top1=0.5320 top5=nan
+2026-10-27 14:16:44,407 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-27 14:16:44,407 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-27 14:16:45,709 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg]: n=2000 caps=9920 top1=0.0865 top5=0.2665
+2026-10-27 14:16:45,722 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg,hardneg]: n=2000 caps=2 top1=0.5570 top5=nan
+2026-10-27 14:16:47,157 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg]: n=2000 caps=9920 top1=0.0840 top5=0.2355
+2026-10-27 14:16:47,169 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg,hardneg]: n=2000 caps=2 top1=0.5510 top5=nan
+2026-10-27 14:16:47,170 | INFO | run_e1_spar_official | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_spar_official.csv (37 rows)
+2026-10-28 09:27:55,493 | INFO | run_e1_spar_official | [run_e1_spar_official] model clip_vitl14
+2026-10-28 09:27:58,889 | INFO | run_e1_spar_official | [extract] cache pug_spar_official: 43560 ids present
+2026-10-28 09:27:58,898 | INFO | run_e1_spar_official | [extract] cache complete, skip: pug_spar_official
+2026-10-28 09:27:58,906 | INFO | run_e1_spar_official | [E1] spar_official/scene_backgrounds: n=10 caps=10 top1=1.0000 top5=1.0000
+2026-10-28 09:27:58,946 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default]: n=1280 caps=33 top1=0.7367 top5=0.8922
+2026-10-28 09:27:58,955 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue]: n=640 caps=33 top1=0.5719 top5=0.8125
+2026-10-28 09:27:58,964 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass]: n=640 caps=33 top1=0.4641 top5=0.7234
+2026-10-28 09:27:58,968 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right]: n=640 caps=64 top1=0.3328 top5=0.8297
+2026-10-28 09:27:58,974 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,hardneg]: n=640 caps=2 top1=0.4766 top5=nan
+2026-10-28 09:27:58,974 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:27:58,975 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:27:59,191 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default]: n=2000 caps=528 top1=0.3805 top5=0.6445
+2026-10-28 09:27:59,386 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue]: n=2000 caps=528 top1=0.2265 top5=0.4425
+2026-10-28 09:27:59,582 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass]: n=2000 caps=528 top1=0.1590 top5=0.3380
+2026-10-28 09:27:59,779 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right]: n=2000 caps=992 top1=0.2000 top5=0.5525
+2026-10-28 09:27:59,789 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,hardneg]: n=2000 caps=2 top1=0.4995 top5=nan
+2026-10-28 09:27:59,792 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:27:59,792 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:27:59,990 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue]: n=2000 caps=992 top1=0.1155 top5=0.3135
+2026-10-28 09:28:00,001 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,hardneg]: n=2000 caps=2 top1=0.5350 top5=nan
+2026-10-28 09:28:00,205 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass]: n=2000 caps=992 top1=0.0840 top5=0.2475
+2026-10-28 09:28:00,215 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,hardneg]: n=2000 caps=2 top1=0.5535 top5=nan
+2026-10-28 09:28:00,331 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default,bg]: n=1280 caps=330 top1=0.7852 top5=0.9289
+2026-10-28 09:28:00,398 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue,bg]: n=640 caps=330 top1=0.6000 top5=0.8594
+2026-10-28 09:28:00,460 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass,bg]: n=640 caps=330 top1=0.5437 top5=0.7781
+2026-10-28 09:28:00,529 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg]: n=640 caps=640 top1=0.3937 top5=0.8625
+2026-10-28 09:28:00,536 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg,hardneg]: n=640 caps=2 top1=0.5000 top5=nan
+2026-10-28 09:28:00,537 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:28:00,537 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:28:00,786 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default,bg]: n=2000 caps=5280 top1=0.4430 top5=0.6975
+2026-10-28 09:28:01,045 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue,bg]: n=2000 caps=5280 top1=0.2355 top5=0.4705
+2026-10-28 09:28:01,269 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass,bg]: n=2000 caps=5280 top1=0.1710 top5=0.3725
+2026-10-28 09:28:01,608 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg]: n=2000 caps=9920 top1=0.2180 top5=0.5815
+2026-10-28 09:28:01,621 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg,hardneg]: n=2000 caps=2 top1=0.5320 top5=nan
+2026-10-28 09:28:01,624 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:28:01,624 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:28:01,936 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg]: n=2000 caps=9920 top1=0.0865 top5=0.2665
+2026-10-28 09:28:01,948 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg,hardneg]: n=2000 caps=2 top1=0.5570 top5=nan
+2026-10-28 09:28:02,557 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg]: n=2000 caps=9920 top1=0.0840 top5=0.2355
+2026-10-28 09:28:02,570 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg,hardneg]: n=2000 caps=2 top1=0.5510 top5=nan
+2026-10-28 09:28:02,571 | INFO | run_e1_spar_official | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_spar_official.csv (37 rows)
+2026-10-28 09:28:02,687 | INFO | run_e1_spar_official | [run_e1_spar_official] model clip_vitb32
+2026-10-28 09:28:04,976 | INFO | run_e1_spar_official | [extract] cache pug_spar_official: 43560 ids present
+2026-10-28 09:28:04,985 | INFO | run_e1_spar_official | [extract] cache complete, skip: pug_spar_official
+2026-10-28 09:28:05,550 | INFO | run_e1_spar_official | [E1] spar_official/scene_backgrounds: n=10 caps=10 top1=1.0000 top5=1.0000
+2026-10-28 09:28:05,907 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default]: n=1280 caps=33 top1=0.3875 top5=0.6562
+2026-10-28 09:28:05,911 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue]: n=640 caps=33 top1=0.2953 top5=0.6141
+2026-10-28 09:28:05,914 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass]: n=640 caps=33 top1=0.2266 top5=0.5312
+2026-10-28 09:28:06,250 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right]: n=640 caps=64 top1=0.2047 top5=0.5766
+2026-10-28 09:28:06,256 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,hardneg]: n=640 caps=2 top1=0.4922 top5=nan
+2026-10-28 09:28:06,256 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:28:06,257 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:28:07,078 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default]: n=2000 caps=528 top1=0.0880 top5=0.2355
+2026-10-28 09:28:07,266 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue]: n=2000 caps=528 top1=0.0400 top5=0.1455
+2026-10-28 09:28:07,458 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass]: n=2000 caps=528 top1=0.0290 top5=0.0995
+2026-10-28 09:28:08,034 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right]: n=2000 caps=992 top1=0.0560 top5=0.1790
+2026-10-28 09:28:08,041 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,hardneg]: n=2000 caps=2 top1=0.5215 top5=nan
+2026-10-28 09:28:08,044 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:28:08,044 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:28:08,688 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue]: n=2000 caps=992 top1=0.0235 top5=0.0900
+2026-10-28 09:28:08,701 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,hardneg]: n=2000 caps=2 top1=0.5285 top5=nan
+2026-10-28 09:28:09,567 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass]: n=2000 caps=992 top1=0.0075 top5=0.0495
+2026-10-28 09:28:09,575 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,hardneg]: n=2000 caps=2 top1=0.5325 top5=nan
+2026-10-28 09:28:10,030 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default,bg]: n=1280 caps=330 top1=0.3945 top5=0.6836
+2026-10-28 09:28:10,077 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue,bg]: n=640 caps=330 top1=0.2734 top5=0.6125
+2026-10-28 09:28:10,125 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass,bg]: n=640 caps=330 top1=0.2313 top5=0.5297
+2026-10-28 09:28:10,577 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg]: n=640 caps=640 top1=0.1953 top5=0.5906
+2026-10-28 09:28:10,583 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg,hardneg]: n=640 caps=2 top1=0.4938 top5=nan
+2026-10-28 09:28:10,584 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:28:10,585 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:28:11,587 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default,bg]: n=2000 caps=5280 top1=0.0850 top5=0.2435
+2026-10-28 09:28:11,852 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue,bg]: n=2000 caps=5280 top1=0.0235 top5=0.1115
+2026-10-28 09:28:12,042 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass,bg]: n=2000 caps=5280 top1=0.0270 top5=0.0980
+2026-10-28 09:28:13,306 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg]: n=2000 caps=9920 top1=0.0545 top5=0.1665
+2026-10-28 09:28:13,321 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg,hardneg]: n=2000 caps=2 top1=0.5415 top5=nan
+2026-10-28 09:28:13,325 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:28:13,325 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:28:14,562 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg]: n=2000 caps=9920 top1=0.0190 top5=0.0665
+2026-10-28 09:28:14,572 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg,hardneg]: n=2000 caps=2 top1=0.5345 top5=nan
+2026-10-28 09:28:16,051 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg]: n=2000 caps=9920 top1=0.0090 top5=0.0460
+2026-10-28 09:28:16,071 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg,hardneg]: n=2000 caps=2 top1=0.5245 top5=nan
+2026-10-28 09:28:16,075 | INFO | run_e1_spar_official | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e1_spar_official.csv (37 rows)
+2026-10-28 09:28:16,200 | INFO | run_e1_spar_official | [run_e1_spar_official] model siglip2_so400m
+2026-10-28 09:28:21,719 | INFO | run_e1_spar_official | [extract] cache pug_spar_official: 43560 ids present
+2026-10-28 09:28:21,727 | INFO | run_e1_spar_official | [extract] cache complete, skip: pug_spar_official
+2026-10-28 09:28:22,467 | INFO | run_e1_spar_official | [E1] spar_official/scene_backgrounds: n=10 caps=10 top1=1.0000 top5=1.0000
+2026-10-28 09:28:23,354 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default]: n=1280 caps=33 top1=0.9805 top5=1.0000
+2026-10-28 09:28:23,411 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue]: n=640 caps=33 top1=0.8875 top5=0.9969
+2026-10-28 09:28:23,471 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass]: n=640 caps=33 top1=0.8594 top5=0.9828
+2026-10-28 09:28:24,246 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right]: n=640 caps=64 top1=0.4984 top5=1.0000
+2026-10-28 09:28:24,254 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,hardneg]: n=640 caps=2 top1=0.5047 top5=nan
+2026-10-28 09:28:24,254 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:28:24,255 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:28:25,512 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default]: n=2000 caps=528 top1=0.8875 top5=0.9930
+2026-10-28 09:28:25,885 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue]: n=2000 caps=528 top1=0.7545 top5=0.9520
+2026-10-28 09:28:26,151 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass]: n=2000 caps=528 top1=0.6420 top5=0.9030
+2026-10-28 09:28:27,685 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right]: n=2000 caps=992 top1=0.4780 top5=0.9760
+2026-10-28 09:28:27,698 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,hardneg]: n=2000 caps=2 top1=0.5270 top5=nan
+2026-10-28 09:28:27,702 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:28:27,702 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:28:29,479 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue]: n=2000 caps=992 top1=0.3680 top5=0.8210
+2026-10-28 09:28:29,493 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,hardneg]: n=2000 caps=2 top1=0.5135 top5=nan
+2026-10-28 09:28:31,026 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass]: n=2000 caps=992 top1=0.2420 top5=0.6465
+2026-10-28 09:28:31,039 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,hardneg]: n=2000 caps=2 top1=0.5365 top5=nan
+2026-10-28 09:28:32,090 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default,bg]: n=1280 caps=330 top1=0.8586 top5=0.9828
+2026-10-28 09:28:32,165 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue,bg]: n=640 caps=330 top1=0.7578 top5=0.9688
+2026-10-28 09:28:32,312 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass,bg]: n=640 caps=330 top1=0.7453 top5=0.9500
+2026-10-28 09:28:33,487 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg]: n=640 caps=640 top1=0.4594 top5=0.9797
+2026-10-28 09:28:33,506 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg,hardneg]: n=640 caps=2 top1=0.5000 top5=nan
+2026-10-28 09:28:33,511 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:28:33,511 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:28:37,706 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default,bg]: n=2000 caps=5280 top1=0.7765 top5=0.9830
+2026-10-28 09:28:38,017 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue,bg]: n=2000 caps=5280 top1=0.6190 top5=0.9120
+2026-10-28 09:28:38,390 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass,bg]: n=2000 caps=5280 top1=0.5055 top5=0.8645
+2026-10-28 09:28:45,164 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg]: n=2000 caps=9920 top1=0.4050 top5=0.9360
+2026-10-28 09:28:45,179 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg,hardneg]: n=2000 caps=2 top1=0.5355 top5=nan
+2026-10-28 09:28:45,183 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:28:45,183 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:28:52,058 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg]: n=2000 caps=9920 top1=0.3410 top5=0.7890
+2026-10-28 09:28:52,074 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg,hardneg]: n=2000 caps=2 top1=0.5320 top5=nan
+2026-10-28 09:28:58,854 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg]: n=2000 caps=9920 top1=0.3340 top5=0.7640
+2026-10-28 09:28:58,885 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg,hardneg]: n=2000 caps=2 top1=0.5835 top5=nan
+2026-10-28 09:28:58,887 | INFO | run_e1_spar_official | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e1_spar_official.csv (37 rows)
+2026-10-28 09:30:43,663 | INFO | run_e1_spar_official | [run_e1_spar_official] model clip_vitl14
+2026-10-28 09:30:47,030 | INFO | run_e1_spar_official | [extract] cache pug_spar_official: 43560 ids present
+2026-10-28 09:30:47,039 | INFO | run_e1_spar_official | [extract] cache complete, skip: pug_spar_official
+2026-10-28 09:30:47,042 | INFO | run_e1_spar_official | [E1] spar_official/scene_backgrounds: n=10 caps=10 top1=1.0000 top5=1.0000
+2026-10-28 09:30:47,081 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default]: n=1280 caps=33 top1=0.7367 top5=0.8922
+2026-10-28 09:30:47,090 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue]: n=640 caps=33 top1=0.5719 top5=0.8125
+2026-10-28 09:30:47,102 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass]: n=640 caps=33 top1=0.4641 top5=0.7234
+2026-10-28 09:30:47,109 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right]: n=640 caps=64 top1=0.3328 top5=0.8297
+2026-10-28 09:30:47,114 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,hardneg]: n=640 caps=2 top1=0.4766 top5=nan
+2026-10-28 09:30:47,115 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:30:47,115 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:30:47,450 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default]: n=2000 caps=528 top1=0.3925 top5=0.6410
+2026-10-28 09:30:47,630 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue]: n=2000 caps=528 top1=0.2360 top5=0.4615
+2026-10-28 09:30:47,963 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass]: n=2000 caps=528 top1=0.1485 top5=0.3375
+2026-10-28 09:30:48,163 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right]: n=2000 caps=992 top1=0.1950 top5=0.5450
+2026-10-28 09:30:48,173 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,hardneg]: n=2000 caps=2 top1=0.4900 top5=nan
+2026-10-28 09:30:48,176 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:30:48,176 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:30:48,382 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue]: n=2000 caps=992 top1=0.0990 top5=0.3090
+2026-10-28 09:30:48,392 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,hardneg]: n=2000 caps=2 top1=0.5385 top5=nan
+2026-10-28 09:30:48,626 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass]: n=2000 caps=992 top1=0.0980 top5=0.2455
+2026-10-28 09:30:48,636 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,hardneg]: n=2000 caps=2 top1=0.5455 top5=nan
+2026-10-28 09:30:48,780 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default,bg]: n=1280 caps=330 top1=0.7852 top5=0.9289
+2026-10-28 09:30:48,845 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue,bg]: n=640 caps=330 top1=0.6000 top5=0.8594
+2026-10-28 09:30:48,927 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass,bg]: n=640 caps=330 top1=0.5437 top5=0.7781
+2026-10-28 09:30:48,997 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg]: n=640 caps=640 top1=0.3937 top5=0.8625
+2026-10-28 09:30:49,004 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg,hardneg]: n=640 caps=2 top1=0.5000 top5=nan
+2026-10-28 09:30:49,005 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:30:49,006 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:30:49,254 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default,bg]: n=2000 caps=5280 top1=0.4390 top5=0.6910
+2026-10-28 09:30:49,506 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue,bg]: n=2000 caps=5280 top1=0.2380 top5=0.4700
+2026-10-28 09:30:49,735 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass,bg]: n=2000 caps=5280 top1=0.1665 top5=0.3695
+2026-10-28 09:30:50,038 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg]: n=2000 caps=9920 top1=0.2025 top5=0.5615
+2026-10-28 09:30:50,050 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg,hardneg]: n=2000 caps=2 top1=0.5125 top5=nan
+2026-10-28 09:30:50,054 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:30:50,054 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:30:50,469 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg]: n=2000 caps=9920 top1=0.0945 top5=0.2650
+2026-10-28 09:30:50,504 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg,hardneg]: n=2000 caps=2 top1=0.5470 top5=nan
+2026-10-28 09:30:50,896 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg]: n=2000 caps=9920 top1=0.0970 top5=0.2405
+2026-10-28 09:30:50,925 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg,hardneg]: n=2000 caps=2 top1=0.5585 top5=nan
+2026-10-28 09:30:50,927 | INFO | run_e1_spar_official | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e1_spar_official.csv (37 rows)
+2026-10-28 09:30:51,059 | INFO | run_e1_spar_official | [run_e1_spar_official] model clip_vitb32
+2026-10-28 09:30:53,241 | INFO | run_e1_spar_official | [extract] cache pug_spar_official: 43560 ids present
+2026-10-28 09:30:53,250 | INFO | run_e1_spar_official | [extract] cache complete, skip: pug_spar_official
+2026-10-28 09:30:53,253 | INFO | run_e1_spar_official | [E1] spar_official/scene_backgrounds: n=10 caps=10 top1=1.0000 top5=1.0000
+2026-10-28 09:30:53,292 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default]: n=1280 caps=33 top1=0.3875 top5=0.6562
+2026-10-28 09:30:53,330 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue]: n=640 caps=33 top1=0.2953 top5=0.6141
+2026-10-28 09:30:53,337 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass]: n=640 caps=33 top1=0.2266 top5=0.5312
+2026-10-28 09:30:53,348 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right]: n=640 caps=64 top1=0.2047 top5=0.5766
+2026-10-28 09:30:53,353 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,hardneg]: n=640 caps=2 top1=0.4922 top5=nan
+2026-10-28 09:30:53,353 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:30:53,354 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:30:53,516 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default]: n=2000 caps=528 top1=0.0915 top5=0.2395
+2026-10-28 09:30:53,662 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue]: n=2000 caps=528 top1=0.0510 top5=0.1550
+2026-10-28 09:30:53,811 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass]: n=2000 caps=528 top1=0.0300 top5=0.1005
+2026-10-28 09:30:53,961 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right]: n=2000 caps=992 top1=0.0490 top5=0.1825
+2026-10-28 09:30:53,968 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,hardneg]: n=2000 caps=2 top1=0.5195 top5=nan
+2026-10-28 09:30:53,971 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:30:53,971 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:30:54,119 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue]: n=2000 caps=992 top1=0.0215 top5=0.0955
+2026-10-28 09:30:54,126 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,hardneg]: n=2000 caps=2 top1=0.5250 top5=nan
+2026-10-28 09:30:54,287 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass]: n=2000 caps=992 top1=0.0110 top5=0.0590
+2026-10-28 09:30:54,306 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,hardneg]: n=2000 caps=2 top1=0.5250 top5=nan
+2026-10-28 09:30:54,427 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default,bg]: n=1280 caps=330 top1=0.3945 top5=0.6836
+2026-10-28 09:30:54,482 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue,bg]: n=640 caps=330 top1=0.2734 top5=0.6125
+2026-10-28 09:30:54,529 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass,bg]: n=640 caps=330 top1=0.2313 top5=0.5297
+2026-10-28 09:30:54,579 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg]: n=640 caps=640 top1=0.1953 top5=0.5906
+2026-10-28 09:30:54,585 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg,hardneg]: n=640 caps=2 top1=0.4938 top5=nan
+2026-10-28 09:30:54,586 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:30:54,587 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:30:54,783 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default,bg]: n=2000 caps=5280 top1=0.0970 top5=0.2440
+2026-10-28 09:30:54,981 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue,bg]: n=2000 caps=5280 top1=0.0410 top5=0.1290
+2026-10-28 09:30:55,160 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass,bg]: n=2000 caps=5280 top1=0.0265 top5=0.1035
+2026-10-28 09:30:55,444 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg]: n=2000 caps=9920 top1=0.0460 top5=0.1585
+2026-10-28 09:30:55,454 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg,hardneg]: n=2000 caps=2 top1=0.5330 top5=nan
+2026-10-28 09:30:55,457 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:30:55,457 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:30:55,692 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg]: n=2000 caps=9920 top1=0.0175 top5=0.0700
+2026-10-28 09:30:55,704 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg,hardneg]: n=2000 caps=2 top1=0.5265 top5=nan
+2026-10-28 09:30:56,138 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg]: n=2000 caps=9920 top1=0.0135 top5=0.0560
+2026-10-28 09:30:56,148 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg,hardneg]: n=2000 caps=2 top1=0.5340 top5=nan
+2026-10-28 09:30:56,149 | INFO | run_e1_spar_official | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e1_spar_official.csv (37 rows)
+2026-10-28 09:30:56,261 | INFO | run_e1_spar_official | [run_e1_spar_official] model siglip2_so400m
+2026-10-28 09:31:01,755 | INFO | run_e1_spar_official | [extract] cache pug_spar_official: 43560 ids present
+2026-10-28 09:31:01,764 | INFO | run_e1_spar_official | [extract] cache complete, skip: pug_spar_official
+2026-10-28 09:31:01,768 | INFO | run_e1_spar_official | [E1] spar_official/scene_backgrounds: n=10 caps=10 top1=1.0000 top5=1.0000
+2026-10-28 09:31:01,825 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default]: n=1280 caps=33 top1=0.9805 top5=1.0000
+2026-10-28 09:31:01,843 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue]: n=640 caps=33 top1=0.8875 top5=0.9969
+2026-10-28 09:31:01,861 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass]: n=640 caps=33 top1=0.8594 top5=0.9828
+2026-10-28 09:31:01,880 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right]: n=640 caps=64 top1=0.4984 top5=1.0000
+2026-10-28 09:31:01,897 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,hardneg]: n=640 caps=2 top1=0.5047 top5=nan
+2026-10-28 09:31:01,898 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:01,898 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:02,187 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default]: n=2000 caps=528 top1=0.8910 top5=0.9955
+2026-10-28 09:31:02,565 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue]: n=2000 caps=528 top1=0.7370 top5=0.9430
+2026-10-28 09:31:02,943 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass]: n=2000 caps=528 top1=0.6460 top5=0.9095
+2026-10-28 09:31:03,224 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right]: n=2000 caps=992 top1=0.4805 top5=0.9745
+2026-10-28 09:31:03,237 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,hardneg]: n=2000 caps=2 top1=0.5365 top5=nan
+2026-10-28 09:31:03,241 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:03,241 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:03,489 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue]: n=2000 caps=992 top1=0.3790 top5=0.8175
+2026-10-28 09:31:03,502 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,hardneg]: n=2000 caps=2 top1=0.5225 top5=nan
+2026-10-28 09:31:03,835 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass]: n=2000 caps=992 top1=0.2545 top5=0.6750
+2026-10-28 09:31:03,868 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,hardneg]: n=2000 caps=2 top1=0.5285 top5=nan
+2026-10-28 09:31:04,038 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default,bg]: n=1280 caps=330 top1=0.8586 top5=0.9828
+2026-10-28 09:31:04,128 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue,bg]: n=640 caps=330 top1=0.7578 top5=0.9688
+2026-10-28 09:31:04,278 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass,bg]: n=640 caps=330 top1=0.7453 top5=0.9500
+2026-10-28 09:31:04,367 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg]: n=640 caps=640 top1=0.4594 top5=0.9797
+2026-10-28 09:31:04,376 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg,hardneg]: n=640 caps=2 top1=0.5000 top5=nan
+2026-10-28 09:31:04,377 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:04,377 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:04,838 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default,bg]: n=2000 caps=5280 top1=0.7680 top5=0.9840
+2026-10-28 09:31:05,183 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue,bg]: n=2000 caps=5280 top1=0.6040 top5=0.9085
+2026-10-28 09:31:05,522 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass,bg]: n=2000 caps=5280 top1=0.5170 top5=0.8725
+2026-10-28 09:31:06,159 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg]: n=2000 caps=9920 top1=0.4030 top5=0.9260
+2026-10-28 09:31:06,175 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg,hardneg]: n=2000 caps=2 top1=0.5395 top5=nan
+2026-10-28 09:31:06,180 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:06,180 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:06,596 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg]: n=2000 caps=9920 top1=0.3575 top5=0.7915
+2026-10-28 09:31:06,612 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg,hardneg]: n=2000 caps=2 top1=0.5400 top5=nan
+2026-10-28 09:31:07,020 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg]: n=2000 caps=9920 top1=0.3240 top5=0.7660
+2026-10-28 09:31:07,058 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg,hardneg]: n=2000 caps=2 top1=0.5510 top5=nan
+2026-10-28 09:31:07,059 | INFO | run_e1_spar_official | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e1_spar_official.csv (37 rows)
+2026-10-28 09:31:31,107 | INFO | run_e1_spar_official | [run_e1_spar_official] model clip_vitl14
+2026-10-28 09:31:34,491 | INFO | run_e1_spar_official | [extract] cache pug_spar_official: 43560 ids present
+2026-10-28 09:31:34,500 | INFO | run_e1_spar_official | [extract] cache complete, skip: pug_spar_official
+2026-10-28 09:31:34,503 | INFO | run_e1_spar_official | [E1] spar_official/scene_backgrounds: n=10 caps=10 top1=1.0000 top5=1.0000
+2026-10-28 09:31:34,543 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default]: n=1280 caps=33 top1=0.7367 top5=0.8922
+2026-10-28 09:31:34,552 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue]: n=640 caps=33 top1=0.5719 top5=0.8125
+2026-10-28 09:31:34,561 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass]: n=640 caps=33 top1=0.4641 top5=0.7234
+2026-10-28 09:31:34,565 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right]: n=640 caps=64 top1=0.3328 top5=0.8297
+2026-10-28 09:31:34,571 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,hardneg]: n=640 caps=2 top1=0.4766 top5=nan
+2026-10-28 09:31:34,571 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:34,572 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:34,785 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default]: n=2000 caps=528 top1=0.3845 top5=0.6520
+2026-10-28 09:31:34,982 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue]: n=2000 caps=528 top1=0.2270 top5=0.4420
+2026-10-28 09:31:35,189 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass]: n=2000 caps=528 top1=0.1575 top5=0.3445
+2026-10-28 09:31:35,447 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right]: n=2000 caps=992 top1=0.1950 top5=0.5435
+2026-10-28 09:31:35,457 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,hardneg]: n=2000 caps=2 top1=0.5030 top5=nan
+2026-10-28 09:31:35,460 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:35,460 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:35,698 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue]: n=2000 caps=992 top1=0.1070 top5=0.3090
+2026-10-28 09:31:35,708 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,hardneg]: n=2000 caps=2 top1=0.5315 top5=nan
+2026-10-28 09:31:36,016 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass]: n=2000 caps=992 top1=0.0905 top5=0.2605
+2026-10-28 09:31:36,026 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,hardneg]: n=2000 caps=2 top1=0.5485 top5=nan
+2026-10-28 09:31:36,143 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default,bg]: n=1280 caps=330 top1=0.7852 top5=0.9289
+2026-10-28 09:31:36,280 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue,bg]: n=640 caps=330 top1=0.6000 top5=0.8594
+2026-10-28 09:31:36,418 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass,bg]: n=640 caps=330 top1=0.5437 top5=0.7781
+2026-10-28 09:31:36,486 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg]: n=640 caps=640 top1=0.3937 top5=0.8625
+2026-10-28 09:31:36,493 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg,hardneg]: n=640 caps=2 top1=0.5000 top5=nan
+2026-10-28 09:31:36,494 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:36,494 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:36,895 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default,bg]: n=2000 caps=5280 top1=0.4260 top5=0.6870
+2026-10-28 09:31:37,166 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue,bg]: n=2000 caps=5280 top1=0.2310 top5=0.4565
+2026-10-28 09:31:37,483 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass,bg]: n=2000 caps=5280 top1=0.1715 top5=0.3795
+2026-10-28 09:31:37,965 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg]: n=2000 caps=9920 top1=0.2210 top5=0.5620
+2026-10-28 09:31:37,977 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg,hardneg]: n=2000 caps=2 top1=0.5325 top5=nan
+2026-10-28 09:31:37,980 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:37,980 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:38,354 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg]: n=2000 caps=9920 top1=0.1025 top5=0.2660
+2026-10-28 09:31:38,383 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg,hardneg]: n=2000 caps=2 top1=0.5510 top5=nan
+2026-10-28 09:31:38,690 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg]: n=2000 caps=9920 top1=0.0955 top5=0.2450
+2026-10-28 09:31:38,702 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg,hardneg]: n=2000 caps=2 top1=0.5540 top5=nan
+2026-10-28 09:31:38,704 | INFO | run_e1_spar_official | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e1_spar_official.csv (37 rows)
+2026-10-28 09:31:38,822 | INFO | run_e1_spar_official | [run_e1_spar_official] model clip_vitb32
+2026-10-28 09:31:41,054 | INFO | run_e1_spar_official | [extract] cache pug_spar_official: 43560 ids present
+2026-10-28 09:31:41,062 | INFO | run_e1_spar_official | [extract] cache complete, skip: pug_spar_official
+2026-10-28 09:31:41,065 | INFO | run_e1_spar_official | [E1] spar_official/scene_backgrounds: n=10 caps=10 top1=1.0000 top5=1.0000
+2026-10-28 09:31:41,089 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default]: n=1280 caps=33 top1=0.3875 top5=0.6562
+2026-10-28 09:31:41,093 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue]: n=640 caps=33 top1=0.2953 top5=0.6141
+2026-10-28 09:31:41,096 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass]: n=640 caps=33 top1=0.2266 top5=0.5312
+2026-10-28 09:31:41,100 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right]: n=640 caps=64 top1=0.2047 top5=0.5766
+2026-10-28 09:31:41,104 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,hardneg]: n=640 caps=2 top1=0.4922 top5=nan
+2026-10-28 09:31:41,105 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:41,105 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:41,567 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default]: n=2000 caps=528 top1=0.0975 top5=0.2460
+2026-10-28 09:31:41,774 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue]: n=2000 caps=528 top1=0.0455 top5=0.1585
+2026-10-28 09:31:41,952 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass]: n=2000 caps=528 top1=0.0260 top5=0.1075
+2026-10-28 09:31:42,152 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right]: n=2000 caps=992 top1=0.0535 top5=0.1850
+2026-10-28 09:31:42,200 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,hardneg]: n=2000 caps=2 top1=0.5200 top5=nan
+2026-10-28 09:31:42,203 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:42,203 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:42,390 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue]: n=2000 caps=992 top1=0.0160 top5=0.0885
+2026-10-28 09:31:42,409 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,hardneg]: n=2000 caps=2 top1=0.5350 top5=nan
+2026-10-28 09:31:42,603 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass]: n=2000 caps=992 top1=0.0115 top5=0.0595
+2026-10-28 09:31:42,621 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,hardneg]: n=2000 caps=2 top1=0.5225 top5=nan
+2026-10-28 09:31:42,728 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default,bg]: n=1280 caps=330 top1=0.3945 top5=0.6836
+2026-10-28 09:31:42,796 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue,bg]: n=640 caps=330 top1=0.2734 top5=0.6125
+2026-10-28 09:31:42,853 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass,bg]: n=640 caps=330 top1=0.2313 top5=0.5297
+2026-10-28 09:31:42,918 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg]: n=640 caps=640 top1=0.1953 top5=0.5906
+2026-10-28 09:31:42,927 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg,hardneg]: n=640 caps=2 top1=0.4938 top5=nan
+2026-10-28 09:31:42,931 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:42,932 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:43,167 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default,bg]: n=2000 caps=5280 top1=0.0995 top5=0.2515
+2026-10-28 09:31:43,344 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue,bg]: n=2000 caps=5280 top1=0.0380 top5=0.1235
+2026-10-28 09:31:43,534 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass,bg]: n=2000 caps=5280 top1=0.0285 top5=0.1040
+2026-10-28 09:31:43,762 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg]: n=2000 caps=9920 top1=0.0450 top5=0.1555
+2026-10-28 09:31:43,773 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg,hardneg]: n=2000 caps=2 top1=0.5145 top5=nan
+2026-10-28 09:31:43,777 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:43,777 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:44,040 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg]: n=2000 caps=9920 top1=0.0155 top5=0.0555
+2026-10-28 09:31:44,050 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg,hardneg]: n=2000 caps=2 top1=0.5365 top5=nan
+2026-10-28 09:31:44,368 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg]: n=2000 caps=9920 top1=0.0140 top5=0.0535
+2026-10-28 09:31:44,378 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg,hardneg]: n=2000 caps=2 top1=0.5265 top5=nan
+2026-10-28 09:31:44,379 | INFO | run_e1_spar_official | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e1_spar_official.csv (37 rows)
+2026-10-28 09:31:44,494 | INFO | run_e1_spar_official | [run_e1_spar_official] model siglip2_so400m
+2026-10-28 09:31:50,118 | INFO | run_e1_spar_official | [extract] cache pug_spar_official: 43560 ids present
+2026-10-28 09:31:50,126 | INFO | run_e1_spar_official | [extract] cache complete, skip: pug_spar_official
+2026-10-28 09:31:50,131 | INFO | run_e1_spar_official | [E1] spar_official/scene_backgrounds: n=10 caps=10 top1=1.0000 top5=1.0000
+2026-10-28 09:31:50,161 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default]: n=1280 caps=33 top1=0.9805 top5=1.0000
+2026-10-28 09:31:50,165 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue]: n=640 caps=33 top1=0.8875 top5=0.9969
+2026-10-28 09:31:50,169 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass]: n=640 caps=33 top1=0.8594 top5=0.9828
+2026-10-28 09:31:50,173 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right]: n=640 caps=64 top1=0.4984 top5=1.0000
+2026-10-28 09:31:50,179 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,hardneg]: n=640 caps=2 top1=0.5047 top5=nan
+2026-10-28 09:31:50,180 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:50,180 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:50,810 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default]: n=2000 caps=528 top1=0.8895 top5=0.9930
+2026-10-28 09:31:51,069 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue]: n=2000 caps=528 top1=0.7475 top5=0.9520
+2026-10-28 09:31:51,382 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass]: n=2000 caps=528 top1=0.6470 top5=0.9055
+2026-10-28 09:31:51,653 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right]: n=2000 caps=992 top1=0.4810 top5=0.9770
+2026-10-28 09:31:51,666 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,hardneg]: n=2000 caps=2 top1=0.5295 top5=nan
+2026-10-28 09:31:51,670 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:51,670 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:51,922 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue]: n=2000 caps=992 top1=0.3810 top5=0.8275
+2026-10-28 09:31:51,956 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,hardneg]: n=2000 caps=2 top1=0.5215 top5=nan
+2026-10-28 09:31:52,237 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass]: n=2000 caps=992 top1=0.2580 top5=0.6715
+2026-10-28 09:31:52,250 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,hardneg]: n=2000 caps=2 top1=0.5560 top5=nan
+2026-10-28 09:31:52,398 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Default,bg]: n=1280 caps=330 top1=0.8586 top5=0.9828
+2026-10-28 09:31:52,482 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Blue,bg]: n=640 caps=330 top1=0.7578 top5=0.9688
+2026-10-28 09:31:52,580 | INFO | run_e1_spar_official | [E1] spar_official/one_object[Grass,bg]: n=640 caps=330 top1=0.7453 top5=0.9500
+2026-10-28 09:31:52,665 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg]: n=640 caps=640 top1=0.4594 top5=0.9797
+2026-10-28 09:31:52,673 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,left/right,bg,hardneg]: n=640 caps=2 top1=0.5000 top5=nan
+2026-10-28 09:31:52,674 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:52,674 | INFO | run_e1_spar_official | [E1] spar_official/one_object_position[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:52,982 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Default,bg]: n=2000 caps=5280 top1=0.7830 top5=0.9755
+2026-10-28 09:31:53,368 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Blue,bg]: n=2000 caps=5280 top1=0.6250 top5=0.9120
+2026-10-28 09:31:53,946 | INFO | run_e1_spar_official | [E1] spar_official/two_objects[Grass,bg]: n=2000 caps=5280 top1=0.4980 top5=0.8650
+2026-10-28 09:31:54,367 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg]: n=2000 caps=9920 top1=0.4235 top5=0.9360
+2026-10-28 09:31:54,384 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,left/right,bg,hardneg]: n=2000 caps=2 top1=0.5345 top5=nan
+2026-10-28 09:31:54,388 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg]: n=0 caps=0 top1=nan top5=nan
+2026-10-28 09:31:54,388 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_relation[Default,bottom/top,bg,hardneg]: n=0 caps=2 top1=nan top5=nan
+2026-10-28 09:31:54,739 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg]: n=2000 caps=9920 top1=0.3620 top5=0.7915
+2026-10-28 09:31:54,757 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Blue,bg,hardneg]: n=2000 caps=2 top1=0.5425 top5=nan
+2026-10-28 09:31:55,111 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg]: n=2000 caps=9920 top1=0.3485 top5=0.7725
+2026-10-28 09:31:55,127 | INFO | run_e1_spar_official | [E1] spar_official/two_objects_attribute[Grass,bg,hardneg]: n=2000 caps=2 top1=0.5685 top5=nan
+2026-10-28 09:31:55,128 | INFO | run_e1_spar_official | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e1_spar_official.csv (37 rows)

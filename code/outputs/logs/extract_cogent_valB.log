@@ -1,0 +1,8 @@
+2026-10-27 11:38:48,926 | INFO | extract_cogent_valB | [extract:cogent_valB@d6e8bfbd95aa] 2000/15000
+2026-10-27 11:39:15,812 | INFO | extract_cogent_valB | [extract:cogent_valB@d6e8bfbd95aa] 4000/15000
+2026-10-27 11:39:40,423 | INFO | extract_cogent_valB | [extract:cogent_valB@d6e8bfbd95aa] 6000/15000
+2026-10-27 11:40:08,608 | INFO | extract_cogent_valB | [extract:cogent_valB@d6e8bfbd95aa] 8000/15000
+2026-10-27 11:40:35,636 | INFO | extract_cogent_valB | [extract:cogent_valB@d6e8bfbd95aa] 10000/15000
+2026-10-27 11:41:01,938 | INFO | extract_cogent_valB | [extract:cogent_valB@d6e8bfbd95aa] 12000/15000
+2026-10-27 11:41:28,037 | INFO | extract_cogent_valB | [extract:cogent_valB@d6e8bfbd95aa] 14000/15000
+2026-10-27 11:41:43,924 | INFO | extract_cogent_valB | [extract] saved 15000 new / 15000 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitl14/cogent_valB@d6e8bfbd95aa_images.npz

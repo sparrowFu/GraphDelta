@@ -11,7 +11,11 @@
 - E3：difficulty gap 数值与 CI 符号；逐 (shape_group,color) 单元 gap 点符号
   三种子是否同号。
 
-输出 outputs/tables/seed_stability.csv + 控制台摘要；判定翻转的行 stable=False。
+输出 outputs/<model>/seed_0/tables（或对应布局）/ seed_stability.csv + 控制台摘要；
+判定翻转的行 stable=False。
+
+--model all：依次汇总全部已配置模型（串行，不加载模型）；某模型缺全量结果
+即停止，后面的模型不再汇总。
 
 审查 A4：CI 或点估计缺失（NaN）时分类为 invalid，不产生"稳定"结论。
 审查 A6：三种子混用新旧布局（修复前/后口径）时默认停止，需
@@ -28,6 +32,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from src.models import resolve_models
 from src.utils.io import (load_paths, verify_e3_consistency,
                           verify_experiment_committed, verify_run_meta)
 from src.utils.logging import get_logger
@@ -64,45 +69,33 @@ def stable_classes(cls):
     return len(set(cls)) == 1 and "invalid" not in cls
 
 
-def main():
-    import argparse
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="clip_vitl14",
-                    help="汇总的模型（新布局 outputs/<model>/seed_k/tables；R2）")
-    ap.add_argument("--allow-mixed-legacy", action="store_true",
-                    help="三种子混用新旧布局时仍输出（仅作版本临时对照，审查 A6）")
-    ap.add_argument("--allow-exploratory-e3", action="store_true",
-                    help="E3 派生单元表状态异常（failed/stale/指纹不匹配）时仍汇总，"
-                         "但输出写入独立的 seed_stability_exploratory.csv，"
-                         "不冒充正式稳定性结果（四轮问题 4）")
-    args = ap.parse_args()
-
-    paths = load_paths()
+def summarize_model(model_name, paths, logger,
+                    allow_mixed_legacy=False, allow_exploratory_e3=False):
+    """单个模型的种子稳定性汇总（全部校验与输出，见模块 docstring）。"""
     out_dir = paths["dirs"]["outputs"]
     tabs, layouts = {}, {}
     LEGACY_MODEL = "clip_vitl14"   # 旧布局 outputs/tables* 的唯一来源模型（R2）
     for s in [0, 1, 2]:
-        new = out_dir / args.model / f"seed_{s}" / "tables"
+        new = out_dir / model_name / f"seed_{s}" / "tables"
         legacy = out_dir / ("tables" if s == 0 else f"tables_seed{s}")
         # 以全量结果文件判定（只有 _smoke 文件的新目录不误选）
         if (new / "e1_results.csv").exists():
-            verify_run_meta(new, args.model, s)
+            verify_run_meta(new, model_name, s)
             tabs[s], layouts[s] = new, "new"
-        elif args.model == LEGACY_MODEL and (legacy / "e1_results.csv").exists():
+        elif model_name == LEGACY_MODEL and (legacy / "e1_results.csv").exists():
             tabs[s], layouts[s] = legacy, "legacy"   # 仅历史属主模型可回退
         else:
             raise SystemExit(
-                f"model={args.model} seed {s} 缺少全量结果：{new} 不存在；"
+                f"model={model_name} seed {s} 缺少全量结果：{new} 不存在；"
                 f"旧布局 outputs/tables* 属于 {LEGACY_MODEL}，不能作为 "
-                f"{args.model} 的数据源。请先跑全量（run_e1/e2/e3/spar_official "
-                f"--model {args.model} --seed {s}）。")
-    logger = get_logger("seed_stability", out_dir / "logs")
+                f"{model_name} 的数据源。请先跑全量（run_e1/e2/e3/spar_official "
+                f"--model {model_name} --seed {s}）。")
     for s, d in tabs.items():
         logger.info(f"[seeds] seed {s} tables: {d} ({layouts[s]})")
     if len(set(layouts.values())) > 1:
         # A6：新旧布局分别是修复前/后的口径，混用的"稳定/翻转"不能解释为
         # 固定协议下的抽样稳定性——默认停止，只允许显式要求的临时对照。
-        if not args.allow_mixed_legacy:
+        if not allow_mixed_legacy:
             raise SystemExit(
                 "[seeds] 三种子混用新旧布局（新=修复后、旧=修复前数据，口径"
                 "不可比），已停止正式稳定性汇总（审查 A6）。请补齐同版本三种子"
@@ -133,7 +126,7 @@ def main():
         try:
             verify_e3_consistency(d)
         except SystemExit as e:
-            if not args.allow_exploratory_e3:
+            if not allow_exploratory_e3:
                 raise SystemExit(f"seed {s} 的 E3 派生表不可消费：{e}")
             e3_exploratory = True
             logger.warning(f"[seeds] seed {s}: {e}")
@@ -298,6 +291,30 @@ def main():
         logger.info(f"[seeds] FLIP {r.section} {r.key} {r.metric}: "
                     f"{r.seed0}/{r.seed1}/{r.seed2} ({r.note})")
     return out
+
+
+def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model", default="clip_vitl14",
+                    help="汇总的模型（all = 依次汇总全部已配置模型，串行执行、"
+                         "不加载模型；新布局 outputs/<model>/seed_k/tables；R2）")
+    ap.add_argument("--allow-mixed-legacy", action="store_true",
+                    help="三种子混用新旧布局时仍输出（仅作版本临时对照，审查 A6）")
+    ap.add_argument("--allow-exploratory-e3", action="store_true",
+                    help="E3 派生单元表状态异常（failed/stale/指纹不匹配）时仍汇总，"
+                         "但输出写入独立的 seed_stability_exploratory.csv，"
+                         "不冒充正式稳定性结果（四轮问题 4）")
+    args = ap.parse_args()
+
+    paths = load_paths()
+    logger = get_logger("seed_stability", paths["dirs"]["outputs"] / "logs")
+    # --model all：串行依次汇总各模型；某模型校验失败即停止，后面的不再汇总
+    for name in resolve_models(args.model, paths):
+        logger.info(f"[seeds] ===== model {name} =====")
+        summarize_model(name, paths, logger,
+                        allow_mixed_legacy=args.allow_mixed_legacy,
+                        allow_exploratory_e3=args.allow_exploratory_e3)
 
 
 if __name__ == "__main__":

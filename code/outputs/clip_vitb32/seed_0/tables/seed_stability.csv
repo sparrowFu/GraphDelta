@@ -1,0 +1,108 @@
+section,key,metric,seed0,seed1,seed2,stable,note,layout_seed0,layout_seed1,layout_seed2
+e1_acc,clevr/binding,accuracy,0.5094,0.5072,0.5087,True,CI-vs-0.5: contains/contains/contains,new,new,new
+e1_acc,clevr/color,accuracy,0.7081,0.7258,0.706,True,CI-vs-0.5: above/above/above,new,new,new
+e1_acc,clevr/material,accuracy,0.5161,0.5229,0.544,False,CI-vs-0.5: contains/above/above,new,new,new
+e1_acc,clevr/object,accuracy,0.5775,0.6047,0.5944,True,CI-vs-0.5: above/above/above,new,new,new
+e1_acc,clevr/relation,accuracy,0.5119,0.5166,0.5044,True,CI-vs-0.5: contains/contains/contains,new,new,new
+e1_acc,clevr/size,accuracy,0.5289,0.5166,0.515,False,CI-vs-0.5: above/contains/contains,new,new,new
+e1_acc,pug_spar/attribute,accuracy,0.4016,0.3919,0.4141,True,CI-vs-0.5: below/below/below,new,new,new
+e1_acc,pug_spar/position,accuracy,0.6329,0.6444,0.6375,True,CI-vs-0.5: above/above/above,new,new,new
+e1_acc,pug_spar/relation,accuracy,0.4779,0.4872,0.4849,False,CI-vs-0.5: below/contains/contains,new,new,new
+e1_acc,pug_spar/scene,accuracy,0.7532,0.7761,0.7661,True,CI-vs-0.5: above/above/above,new,new,new
+e1_gap,clevr/object-color,gap,-0.1306,-0.1211,-0.1116,True,CI 符号: neg/neg/neg,new,new,new
+e1_gap,clevr/object-size,gap,0.0486,0.0881,0.0794,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/object-material,gap,0.0614,0.0819,0.0504,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/object-relation,gap,0.0656,0.0881,0.0901,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/object-binding,gap,0.0681,0.0975,0.0857,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/color-size,gap,0.1793,0.2091,0.191,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/color-material,gap,0.1921,0.2029,0.162,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/color-relation,gap,0.1962,0.2091,0.2016,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/color-binding,gap,0.1987,0.2186,0.1973,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/size-material,gap,0.0128,-0.0062,-0.029,True,CI 符号: ns/ns/ns,new,new,new
+e1_gap,clevr/size-relation,gap,0.0169,0.0,0.0106,True,CI 符号: ns/ns/ns,new,new,new
+e1_gap,clevr/size-binding,gap,0.0194,0.0094,0.0063,True,CI 符号: ns/ns/ns,new,new,new
+e1_gap,clevr/material-relation,gap,0.0041,0.0062,0.0396,False,CI 符号: ns/ns/pos,new,new,new
+e1_gap,clevr/material-binding,gap,0.0066,0.0156,0.0353,False,CI 符号: ns/ns/pos,new,new,new
+e1_gap,clevr/relation-binding,gap,0.0025,0.0094,-0.0044,True,CI 符号: ns/ns/ns,new,new,new
+e1_gap,pug_spar/scene-position,gap,0.1204,0.1318,0.1286,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,pug_spar/scene-attribute,gap,0.3516,0.3843,0.352,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,pug_spar/scene-relation,gap,0.2754,0.2889,0.2812,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,pug_spar/position-attribute,gap,0.2313,0.2525,0.2234,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,pug_spar/position-relation,gap,0.155,0.1571,0.1526,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,pug_spar/attribute-relation,gap,-0.0763,-0.0954,-0.0708,True,CI 符号: neg/neg/neg,new,new,new
+spar_official,scene_backgrounds|bg=False|tex=|pair=|hn=False|w=all,top1,1.0,1.0,1.0,,max|diff|=0.0,new,new,new
+spar_official,scene_backgrounds|bg=False|tex=|pair=|hn=False|w=all,top5,1.0,1.0,1.0,,max|diff|=0.0,new,new,new
+spar_official,one_object|bg=False|tex=Default|pair=|hn=False|w=all,top1,0.3875,0.3875,0.3875,,max|diff|=0.0,new,new,new
+spar_official,one_object|bg=False|tex=Default|pair=|hn=False|w=all,top5,0.6562,0.6562,0.6562,,max|diff|=0.0,new,new,new
+spar_official,one_object|bg=False|tex=Blue|pair=|hn=False|w=all,top1,0.2953,0.2953,0.2953,,max|diff|=0.0,new,new,new
+spar_official,one_object|bg=False|tex=Blue|pair=|hn=False|w=all,top5,0.6141,0.6141,0.6141,,max|diff|=0.0,new,new,new
+spar_official,one_object|bg=False|tex=Grass|pair=|hn=False|w=all,top1,0.2266,0.2266,0.2266,,max|diff|=0.0,new,new,new
+spar_official,one_object|bg=False|tex=Grass|pair=|hn=False|w=all,top5,0.5312,0.5312,0.5312,,max|diff|=0.0,new,new,new
+spar_official,one_object_position|bg=False|tex=Default|pair=left/right|hn=False|w=all,top1,0.2047,0.2047,0.2047,,max|diff|=0.0,new,new,new
+spar_official,one_object_position|bg=False|tex=Default|pair=left/right|hn=False|w=all,top5,0.5766,0.5766,0.5766,,max|diff|=0.0,new,new,new
+spar_official,one_object_position|bg=False|tex=Default|pair=left/right|hn=True|w=all,top1,0.4922,0.4922,0.4922,,max|diff|=0.0,new,new,new
+spar_official,two_objects|bg=False|tex=Default|pair=|hn=False|w=all,top1,0.088,0.0915,0.0975,,max|diff|=0.0095,new,new,new
+spar_official,two_objects|bg=False|tex=Default|pair=|hn=False|w=all,top5,0.2355,0.2395,0.246,,max|diff|=0.0105,new,new,new
+spar_official,two_objects|bg=False|tex=Blue|pair=|hn=False|w=all,top1,0.04,0.051,0.0455,,max|diff|=0.011,new,new,new
+spar_official,two_objects|bg=False|tex=Blue|pair=|hn=False|w=all,top5,0.1455,0.155,0.1585,,max|diff|=0.013,new,new,new
+spar_official,two_objects|bg=False|tex=Grass|pair=|hn=False|w=all,top1,0.029,0.03,0.026,,max|diff|=0.004,new,new,new
+spar_official,two_objects|bg=False|tex=Grass|pair=|hn=False|w=all,top5,0.0995,0.1005,0.1075,,max|diff|=0.008,new,new,new
+spar_official,two_objects_relation|bg=False|tex=Default|pair=left/right|hn=False|w=all,top1,0.056,0.049,0.0535,,max|diff|=0.007,new,new,new
+spar_official,two_objects_relation|bg=False|tex=Default|pair=left/right|hn=False|w=all,top5,0.179,0.1825,0.185,,max|diff|=0.006,new,new,new
+spar_official,two_objects_relation|bg=False|tex=Default|pair=left/right|hn=True|w=all,top1,0.5215,0.5195,0.52,,max|diff|=0.002,new,new,new
+spar_official,two_objects_attribute|bg=False|tex=Blue|pair=|hn=False|w=all,top1,0.0235,0.0215,0.016,,max|diff|=0.0075,new,new,new
+spar_official,two_objects_attribute|bg=False|tex=Blue|pair=|hn=False|w=all,top5,0.09,0.0955,0.0885,,max|diff|=0.007,new,new,new
+spar_official,two_objects_attribute|bg=False|tex=Blue|pair=|hn=True|w=all,top1,0.5285,0.525,0.535,,max|diff|=0.01,new,new,new
+spar_official,two_objects_attribute|bg=False|tex=Grass|pair=|hn=False|w=all,top1,0.0075,0.011,0.0115,,max|diff|=0.004,new,new,new
+spar_official,two_objects_attribute|bg=False|tex=Grass|pair=|hn=False|w=all,top5,0.0495,0.059,0.0595,,max|diff|=0.01,new,new,new
+spar_official,two_objects_attribute|bg=False|tex=Grass|pair=|hn=True|w=all,top1,0.5325,0.525,0.5225,,max|diff|=0.01,new,new,new
+spar_official,one_object|bg=True|tex=Default|pair=|hn=False|w=all,top1,0.3945,0.3945,0.3945,,max|diff|=0.0,new,new,new
+spar_official,one_object|bg=True|tex=Default|pair=|hn=False|w=all,top5,0.6836,0.6836,0.6836,,max|diff|=0.0,new,new,new
+spar_official,one_object|bg=True|tex=Blue|pair=|hn=False|w=all,top1,0.2734,0.2734,0.2734,,max|diff|=0.0,new,new,new
+spar_official,one_object|bg=True|tex=Blue|pair=|hn=False|w=all,top5,0.6125,0.6125,0.6125,,max|diff|=0.0,new,new,new
+spar_official,one_object|bg=True|tex=Grass|pair=|hn=False|w=all,top1,0.2313,0.2313,0.2313,,max|diff|=0.0,new,new,new
+spar_official,one_object|bg=True|tex=Grass|pair=|hn=False|w=all,top5,0.5297,0.5297,0.5297,,max|diff|=0.0,new,new,new
+spar_official,one_object_position|bg=True|tex=Default|pair=left/right|hn=False|w=all,top1,0.1953,0.1953,0.1953,,max|diff|=0.0,new,new,new
+spar_official,one_object_position|bg=True|tex=Default|pair=left/right|hn=False|w=all,top5,0.5906,0.5906,0.5906,,max|diff|=0.0,new,new,new
+spar_official,one_object_position|bg=True|tex=Default|pair=left/right|hn=True|w=all,top1,0.4938,0.4938,0.4938,,max|diff|=0.0,new,new,new
+spar_official,two_objects|bg=True|tex=Default|pair=|hn=False|w=all,top1,0.085,0.097,0.0995,,max|diff|=0.0145,new,new,new
+spar_official,two_objects|bg=True|tex=Default|pair=|hn=False|w=all,top5,0.2435,0.244,0.2515,,max|diff|=0.008,new,new,new
+spar_official,two_objects|bg=True|tex=Blue|pair=|hn=False|w=all,top1,0.0235,0.041,0.038,,max|diff|=0.0175,new,new,new
+spar_official,two_objects|bg=True|tex=Blue|pair=|hn=False|w=all,top5,0.1115,0.129,0.1235,,max|diff|=0.0175,new,new,new
+spar_official,two_objects|bg=True|tex=Grass|pair=|hn=False|w=all,top1,0.027,0.0265,0.0285,,max|diff|=0.002,new,new,new
+spar_official,two_objects|bg=True|tex=Grass|pair=|hn=False|w=all,top5,0.098,0.1035,0.104,,max|diff|=0.006,new,new,new
+spar_official,two_objects_relation|bg=True|tex=Default|pair=left/right|hn=False|w=all,top1,0.0545,0.046,0.045,,max|diff|=0.0095,new,new,new
+spar_official,two_objects_relation|bg=True|tex=Default|pair=left/right|hn=False|w=all,top5,0.1665,0.1585,0.1555,,max|diff|=0.011,new,new,new
+spar_official,two_objects_relation|bg=True|tex=Default|pair=left/right|hn=True|w=all,top1,0.5415,0.533,0.5145,,max|diff|=0.027,new,new,new
+spar_official,two_objects_attribute|bg=True|tex=Blue|pair=|hn=False|w=all,top1,0.019,0.0175,0.0155,,max|diff|=0.0035,new,new,new
+spar_official,two_objects_attribute|bg=True|tex=Blue|pair=|hn=False|w=all,top5,0.0665,0.07,0.0555,,max|diff|=0.0145,new,new,new
+spar_official,two_objects_attribute|bg=True|tex=Blue|pair=|hn=True|w=all,top1,0.5345,0.5265,0.5365,,max|diff|=0.01,new,new,new
+spar_official,two_objects_attribute|bg=True|tex=Grass|pair=|hn=False|w=all,top1,0.009,0.0135,0.014,,max|diff|=0.005,new,new,new
+spar_official,two_objects_attribute|bg=True|tex=Grass|pair=|hn=False|w=all,top5,0.046,0.056,0.0535,,max|diff|=0.01,new,new,new
+spar_official,two_objects_attribute|bg=True|tex=Grass|pair=|hn=True|w=all,top1,0.5245,0.534,0.5265,,max|diff|=0.0095,new,new,new
+e2,environment/norm_gap_visual_raw,norm_gap_visual_raw,4.821,4.8601,4.8441,True,CI 符号: pos/pos/pos,new,new,new
+e2,environment/transition_gap_z,transition_gap_z,0.669,0.6708,0.6702,True,CI 符号: pos/pos/pos,new,new,new
+e2,texture/norm_gap_visual_raw,norm_gap_visual_raw,-0.3257,-0.2901,-0.3056,True,CI 符号: neg/neg/neg,new,new,new
+e2,texture/transition_gap_z,transition_gap_z,0.1129,0.1115,0.1121,True,CI 符号: pos/pos/pos,new,new,new
+e2,size/norm_gap_visual_raw,norm_gap_visual_raw,-0.2908,-0.2425,-0.2698,True,CI 符号: neg/neg/neg,new,new,new
+e2,size/transition_gap_z,transition_gap_z,0.0537,0.0561,0.0554,True,CI 符号: pos/pos/pos,new,new,new
+e2,camera/norm_gap_visual_raw,norm_gap_visual_raw,1.457,1.5028,1.4913,True,CI 符号: pos/pos/pos,new,new,new
+e2,camera/transition_gap_z,transition_gap_z,0.0194,0.0152,0.0172,True,CI 符号: pos/pos/pos,new,new,new
+e3_gap,cube_cylinder,difficulty_gap,0.0397,0.0568,0.0435,True,CI 符号: pos/pos/pos,new,new,new
+e3_gap,sphere,difficulty_gap,-0.002,-0.009,-0.0101,True,CI 符号: ns/ns/ns,new,new,new
+e3_unit,cube_cylinder/gray,gap,0.1391,0.159,0.1639,True,point-gap 符号一致,new,new,new
+e3_unit,cube_cylinder/blue,gap,0.1247,0.2409,0.1701,True,point-gap 符号一致,new,new,new
+e3_unit,cube_cylinder/brown,gap,0.2935,0.2982,0.2843,True,point-gap 符号一致,new,new,new
+e3_unit,cube_cylinder/yellow,gap,0.2059,0.2024,0.1979,True,point-gap 符号一致,new,new,new
+e3_unit,cube_cylinder/red,gap,-0.1015,-0.1409,-0.1262,True,point-gap 符号一致,new,new,new
+e3_unit,cube_cylinder/green,gap,-0.2571,-0.281,-0.2484,True,point-gap 符号一致,new,new,new
+e3_unit,cube_cylinder/purple,gap,-0.0213,0.0141,0.0079,False,point-gap 符号翻转,new,new,new
+e3_unit,cube_cylinder/cyan,gap,-0.0802,-0.0595,-0.1061,True,point-gap 符号一致,new,new,new
+e3_unit,sphere/gray,gap,-0.0032,-0.0043,0.0313,False,point-gap 符号翻转,new,new,new
+e3_unit,sphere/blue,gap,0.0098,-0.0087,0.0208,False,point-gap 符号翻转,new,new,new
+e3_unit,sphere/brown,gap,0.0008,0.0534,-0.0226,False,point-gap 符号翻转,new,new,new
+e3_unit,sphere/yellow,gap,0.0506,0.0058,0.0004,True,point-gap 符号一致,new,new,new
+e3_unit,sphere/red,gap,-0.0028,-0.071,-0.05,True,point-gap 符号一致,new,new,new
+e3_unit,sphere/green,gap,-0.0245,-0.0589,-0.0246,True,point-gap 符号一致,new,new,new
+e3_unit,sphere/purple,gap,-0.0015,0.0105,0.0024,False,point-gap 符号翻转,new,new,new
+e3_unit,sphere/cyan,gap,-0.009,0.013,-0.0174,False,point-gap 符号翻转,new,new,new

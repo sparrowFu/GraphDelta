@@ -1,0 +1,163 @@
+{
+  "model": "clip_vitl14",
+  "seed": 0,
+  "created": "2026-10-27T13:50:11",
+  "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+  "git_dirty": true,
+  "cache_protocol": "v1",
+  "experiments": {
+    "e1_state": {
+      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_dirty": true,
+      "cache_protocol": "v1",
+      "status": "success",
+      "started": "2026-10-28T09:19:11",
+      "last_success": {
+        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_dirty": true,
+        "cache_protocol": "v1",
+        "updated": "2026-10-28T09:19:17",
+        "outputs": [
+          "e1_clevr_filter_stats.json",
+          "e1_factor_gaps.csv",
+          "e1_items_clevr.jsonl",
+          "e1_items_spar.jsonl",
+          "e1_results.csv",
+          "e1_spar_filter_stats.json"
+        ]
+      },
+      "replaces": []
+    },
+    "e1_spar_official": {
+      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_dirty": true,
+      "cache_protocol": "v1",
+      "status": "success",
+      "started": "2026-10-28T09:27:58",
+      "last_success": {
+        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_dirty": true,
+        "cache_protocol": "v1",
+        "updated": "2026-10-28T09:28:02",
+        "outputs": [
+          "e1_spar_official.csv"
+        ]
+      },
+      "replaces": []
+    },
+    "e3_cogent": {
+      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_dirty": true,
+      "cache_protocol": "v1",
+      "status": "success",
+      "started": "2026-10-28T11:29:01",
+      "last_success": {
+        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_dirty": true,
+        "cache_protocol": "v1",
+        "updated": "2026-10-28T11:29:05",
+        "outputs": [
+          "e3_cogent.csv",
+          "e3_cogent_by_color.csv",
+          "e3_cogent_by_combo.csv",
+          "e3_difficulty_gap.csv",
+          "e3_items_cogent.jsonl"
+        ]
+      },
+      "replaces": []
+    },
+    "e2_pug_animals": {
+      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_dirty": true,
+      "cache_protocol": "v1",
+      "status": "success",
+      "started": "2026-10-28T10:15:26",
+      "last_success": {
+        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_dirty": true,
+        "cache_protocol": "v1",
+        "updated": "2026-10-28T10:19:28",
+        "outputs": [
+          "e2_delta_stats.csv",
+          "e2_transition_stats.csv"
+        ]
+      },
+      "replaces": []
+    },
+    "e3_cogent_smoke": {
+      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_dirty": true,
+      "cache_protocol": "v1",
+      "status": "success",
+      "started": "2026-10-27T14:59:59",
+      "replaces": [],
+      "last_success": {
+        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_dirty": true,
+        "cache_protocol": "v1",
+        "updated": "2026-10-27T15:00:08",
+        "outputs": [
+          "e3_cogent_by_color_smoke.csv",
+          "e3_cogent_by_combo_smoke.csv",
+          "e3_cogent_smoke.csv",
+          "e3_difficulty_gap_smoke.csv",
+          "e3_items_cogent_smoke.jsonl"
+        ]
+      }
+    },
+    "e2_pug_animals_smoke": {
+      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_dirty": true,
+      "cache_protocol": "v1",
+      "status": "success",
+      "started": "2026-10-27T15:24:31",
+      "last_success": {
+        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_dirty": true,
+        "cache_protocol": "v1",
+        "updated": "2026-10-27T15:26:39",
+        "outputs": [
+          "e2_delta_stats_smoke.csv",
+          "e2_transition_stats_smoke.csv"
+        ]
+      },
+      "replaces": []
+    },
+    "e2_pug_imagenet_smoke": {
+      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_dirty": true,
+      "cache_protocol": "v1",
+      "status": "success",
+      "started": "2026-10-27T15:26:40",
+      "replaces": [],
+      "last_success": {
+        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_dirty": true,
+        "cache_protocol": "v1",
+        "updated": "2026-10-27T15:28:05",
+        "outputs": [
+          "e2_delta_stats_pug_imagenet_smoke.csv",
+          "e2_transition_stats_pug_imagenet_smoke.csv"
+        ]
+      }
+    },
+    "e2_pug_imagenet": {
+      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_dirty": true,
+      "cache_protocol": "v1",
+      "status": "success",
+      "started": "2026-10-28T10:19:29",
+      "last_success": {
+        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_dirty": true,
+        "cache_protocol": "v1",
+        "updated": "2026-10-28T10:22:44",
+        "outputs": [
+          "e2_delta_stats_pug_imagenet.csv",
+          "e2_transition_stats_pug_imagenet.csv"
+        ]
+      },
+      "replaces": []
+    }
+  }
+}

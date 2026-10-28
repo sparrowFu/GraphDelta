@@ -1,0 +1,209 @@
+2026-10-27 13:50:13,097 | INFO | run_e1 | [extract] cache clevr_val: 15000 ids present
+2026-10-27 13:50:13,103 | INFO | run_e1 | [extract] cache complete, skip: clevr_val
+2026-10-27 13:50:16,126 | INFO | run_e1 | [E1] clevr/object: n=2000 acc=0.5608
+2026-10-27 13:50:16,266 | INFO | run_e1 | [E1] clevr/color: n=2000 acc=0.6756
+2026-10-27 13:50:16,406 | INFO | run_e1 | [E1] clevr/size: n=2000 acc=0.5301
+2026-10-27 13:50:16,546 | INFO | run_e1 | [E1] clevr/material: n=2000 acc=0.5566
+2026-10-27 13:50:18,950 | INFO | run_e1 | [E1] clevr/relation: n=2000 acc=0.5159
+2026-10-27 13:50:19,339 | INFO | run_e1 | [E1] clevr/binding: n=2000 acc=0.5076
+2026-10-27 13:50:19,363 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_items_clevr.jsonl (12000 items)
+2026-10-27 13:50:19,363 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_clevr_filter_stats.json (5 factors)
+2026-10-27 13:50:19,815 | INFO | run_e1 | [extract] cache pug_spar: 43560 ids present
+2026-10-27 13:50:19,826 | INFO | run_e1 | [extract] cache complete, skip: pug_spar
+2026-10-27 13:50:21,929 | INFO | run_e1 | [E1] spar/scene: n=2000 acc=0.8931
+2026-10-27 13:50:23,649 | INFO | run_e1 | [E1] spar/position: n=2000 acc=0.4080
+2026-10-27 13:50:25,263 | INFO | run_e1 | [E1] spar/attribute: n=2000 acc=0.5145
+2026-10-27 13:50:25,958 | INFO | run_e1 | [E1] spar/relation: n=2000 acc=0.4483
+2026-10-27 13:50:25,973 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_items_spar.jsonl (8000 items)
+2026-10-27 13:50:25,973 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_spar_filter_stats.json (6 factors)
+2026-10-27 13:50:25,975 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_results.csv (10 rows)
+2026-10-27 13:50:26,529 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_factor_gaps.csv (21 pairs)
+2026-10-28 09:19:07,336 | INFO | run_e1 | [run_e1] model clip_vitl14
+2026-10-28 09:19:12,332 | INFO | run_e1 | [extract] cache clevr_val: 15000 ids present
+2026-10-28 09:19:12,338 | INFO | run_e1 | [extract] cache complete, skip: clevr_val
+2026-10-28 09:19:15,071 | INFO | run_e1 | [E1] clevr/object: n=2000 acc=0.5608
+2026-10-28 09:19:15,214 | INFO | run_e1 | [E1] clevr/color: n=2000 acc=0.6756
+2026-10-28 09:19:15,356 | INFO | run_e1 | [E1] clevr/size: n=2000 acc=0.5301
+2026-10-28 09:19:15,498 | INFO | run_e1 | [E1] clevr/material: n=2000 acc=0.5566
+2026-10-28 09:19:15,733 | INFO | run_e1 | [E1] clevr/relation: n=2000 acc=0.5159
+2026-10-28 09:19:15,874 | INFO | run_e1 | [E1] clevr/binding: n=2000 acc=0.5076
+2026-10-28 09:19:15,898 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_items_clevr.jsonl (12000 items)
+2026-10-28 09:19:15,898 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_clevr_filter_stats.json (5 factors)
+2026-10-28 09:19:16,383 | INFO | run_e1 | [extract] cache pug_spar: 43560 ids present
+2026-10-28 09:19:16,395 | INFO | run_e1 | [extract] cache complete, skip: pug_spar
+2026-10-28 09:19:16,741 | INFO | run_e1 | [E1] spar/scene: n=2000 acc=0.8931
+2026-10-28 09:19:16,868 | INFO | run_e1 | [E1] spar/position: n=2000 acc=0.4080
+2026-10-28 09:19:16,988 | INFO | run_e1 | [E1] spar/attribute: n=2000 acc=0.5145
+2026-10-28 09:19:17,113 | INFO | run_e1 | [E1] spar/relation: n=2000 acc=0.4483
+2026-10-28 09:19:17,129 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_items_spar.jsonl (8000 items)
+2026-10-28 09:19:17,129 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_spar_filter_stats.json (6 factors)
+2026-10-28 09:19:17,130 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_results.csv (10 rows)
+2026-10-28 09:19:17,667 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e1_factor_gaps.csv (21 pairs)
+2026-10-28 09:19:18,004 | INFO | run_e1 | [run_e1] model clip_vitb32
+2026-10-28 09:19:21,167 | INFO | run_e1 | [extract] cache clevr_val: 15000 ids present
+2026-10-28 09:19:21,173 | INFO | run_e1 | [extract] cache complete, skip: clevr_val
+2026-10-28 09:19:24,213 | INFO | run_e1 | [E1] clevr/object: n=2000 acc=0.5775
+2026-10-28 09:19:24,329 | INFO | run_e1 | [E1] clevr/color: n=2000 acc=0.7081
+2026-10-28 09:19:24,441 | INFO | run_e1 | [E1] clevr/size: n=2000 acc=0.5289
+2026-10-28 09:19:24,556 | INFO | run_e1 | [E1] clevr/material: n=2000 acc=0.5161
+2026-10-28 09:19:26,189 | INFO | run_e1 | [E1] clevr/relation: n=2000 acc=0.5119
+2026-10-28 09:19:26,455 | INFO | run_e1 | [E1] clevr/binding: n=2000 acc=0.5094
+2026-10-28 09:19:26,478 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e1_items_clevr.jsonl (12000 items)
+2026-10-28 09:19:26,478 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e1_clevr_filter_stats.json (5 factors)
+2026-10-28 09:19:26,819 | INFO | run_e1 | [extract] cache pug_spar: 43560 ids present
+2026-10-28 09:19:26,830 | INFO | run_e1 | [extract] cache complete, skip: pug_spar
+2026-10-28 09:19:28,351 | INFO | run_e1 | [E1] spar/scene: n=2000 acc=0.7532
+2026-10-28 09:19:29,383 | INFO | run_e1 | [E1] spar/position: n=2000 acc=0.6329
+2026-10-28 09:19:30,375 | INFO | run_e1 | [E1] spar/attribute: n=2000 acc=0.4016
+2026-10-28 09:19:31,117 | INFO | run_e1 | [E1] spar/relation: n=2000 acc=0.4779
+2026-10-28 09:19:31,132 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e1_items_spar.jsonl (8000 items)
+2026-10-28 09:19:31,132 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e1_spar_filter_stats.json (6 factors)
+2026-10-28 09:19:31,133 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e1_results.csv (10 rows)
+2026-10-28 09:19:31,674 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e1_factor_gaps.csv (21 pairs)
+2026-10-28 09:19:32,006 | INFO | run_e1 | [run_e1] model siglip2_so400m
+2026-10-28 09:19:38,996 | INFO | run_e1 | [extract] cache clevr_val: 15000 ids present
+2026-10-28 09:19:39,002 | INFO | run_e1 | [extract] cache complete, skip: clevr_val
+2026-10-28 09:19:42,145 | INFO | run_e1 | [E1] clevr/object: n=2000 acc=0.6239
+2026-10-28 09:19:42,328 | INFO | run_e1 | [E1] clevr/color: n=2000 acc=0.6928
+2026-10-28 09:19:42,512 | INFO | run_e1 | [E1] clevr/size: n=2000 acc=0.5304
+2026-10-28 09:19:42,693 | INFO | run_e1 | [E1] clevr/material: n=2000 acc=0.5962
+2026-10-28 09:19:57,334 | INFO | run_e1 | [E1] clevr/relation: n=2000 acc=0.5007
+2026-10-28 09:19:58,890 | INFO | run_e1 | [E1] clevr/binding: n=2000 acc=0.5131
+2026-10-28 09:19:58,913 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e1_items_clevr.jsonl (12000 items)
+2026-10-28 09:19:58,913 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e1_clevr_filter_stats.json (5 factors)
+2026-10-28 09:19:59,383 | INFO | run_e1 | [extract] cache pug_spar: 43560 ids present
+2026-10-28 09:19:59,394 | INFO | run_e1 | [extract] cache complete, skip: pug_spar
+2026-10-28 09:20:12,872 | INFO | run_e1 | [E1] spar/scene: n=2000 acc=0.9873
+2026-10-28 09:20:21,983 | INFO | run_e1 | [E1] spar/position: n=2000 acc=0.5421
+2026-10-28 09:20:32,232 | INFO | run_e1 | [E1] spar/attribute: n=2000 acc=0.5296
+2026-10-28 09:20:35,070 | INFO | run_e1 | [E1] spar/relation: n=2000 acc=0.4976
+2026-10-28 09:20:35,085 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e1_items_spar.jsonl (8000 items)
+2026-10-28 09:20:35,085 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e1_spar_filter_stats.json (6 factors)
+2026-10-28 09:20:35,086 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e1_results.csv (10 rows)
+2026-10-28 09:20:35,623 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e1_factor_gaps.csv (21 pairs)
+2026-10-28 09:21:24,854 | INFO | run_e1 | [run_e1] model clip_vitl14
+2026-10-28 09:21:28,196 | INFO | run_e1 | [extract] cache clevr_val: 15000 ids present
+2026-10-28 09:21:28,202 | INFO | run_e1 | [extract] cache complete, skip: clevr_val
+2026-10-28 09:21:30,890 | INFO | run_e1 | [E1] clevr/object: n=2000 acc=0.5825
+2026-10-28 09:21:31,035 | INFO | run_e1 | [E1] clevr/color: n=2000 acc=0.6979
+2026-10-28 09:21:31,174 | INFO | run_e1 | [E1] clevr/size: n=2000 acc=0.5174
+2026-10-28 09:21:31,315 | INFO | run_e1 | [E1] clevr/material: n=2000 acc=0.5576
+2026-10-28 09:21:33,884 | INFO | run_e1 | [E1] clevr/relation: n=2000 acc=0.5047
+2026-10-28 09:21:34,029 | INFO | run_e1 | [E1] clevr/binding: n=2000 acc=0.4963
+2026-10-28 09:21:34,052 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e1_items_clevr.jsonl (12000 items)
+2026-10-28 09:21:34,053 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e1_clevr_filter_stats.json (5 factors)
+2026-10-28 09:21:34,333 | INFO | run_e1 | [extract] cache pug_spar: 43560 ids present
+2026-10-28 09:21:34,344 | INFO | run_e1 | [extract] cache complete, skip: pug_spar
+2026-10-28 09:21:36,219 | INFO | run_e1 | [E1] spar/scene: n=2000 acc=0.8895
+2026-10-28 09:21:37,073 | INFO | run_e1 | [E1] spar/position: n=2000 acc=0.3935
+2026-10-28 09:21:38,095 | INFO | run_e1 | [E1] spar/attribute: n=2000 acc=0.4834
+2026-10-28 09:21:39,017 | INFO | run_e1 | [E1] spar/relation: n=2000 acc=0.4520
+2026-10-28 09:21:39,032 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e1_items_spar.jsonl (8000 items)
+2026-10-28 09:21:39,032 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e1_spar_filter_stats.json (6 factors)
+2026-10-28 09:21:39,034 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e1_results.csv (10 rows)
+2026-10-28 09:21:39,637 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e1_factor_gaps.csv (21 pairs)
+2026-10-28 09:21:39,980 | INFO | run_e1 | [run_e1] model clip_vitb32
+2026-10-28 09:21:42,635 | INFO | run_e1 | [extract] cache clevr_val: 15000 ids present
+2026-10-28 09:21:42,641 | INFO | run_e1 | [extract] cache complete, skip: clevr_val
+2026-10-28 09:21:45,312 | INFO | run_e1 | [E1] clevr/object: n=2000 acc=0.6047
+2026-10-28 09:21:45,427 | INFO | run_e1 | [E1] clevr/color: n=2000 acc=0.7258
+2026-10-28 09:21:45,542 | INFO | run_e1 | [E1] clevr/size: n=2000 acc=0.5166
+2026-10-28 09:21:45,654 | INFO | run_e1 | [E1] clevr/material: n=2000 acc=0.5229
+2026-10-28 09:21:47,243 | INFO | run_e1 | [E1] clevr/relation: n=2000 acc=0.5166
+2026-10-28 09:21:47,357 | INFO | run_e1 | [E1] clevr/binding: n=2000 acc=0.5072
+2026-10-28 09:21:47,381 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e1_items_clevr.jsonl (12000 items)
+2026-10-28 09:21:47,381 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e1_clevr_filter_stats.json (5 factors)
+2026-10-28 09:21:47,645 | INFO | run_e1 | [extract] cache pug_spar: 43560 ids present
+2026-10-28 09:21:47,656 | INFO | run_e1 | [extract] cache complete, skip: pug_spar
+2026-10-28 09:21:48,961 | INFO | run_e1 | [E1] spar/scene: n=2000 acc=0.7761
+2026-10-28 09:21:49,487 | INFO | run_e1 | [E1] spar/position: n=2000 acc=0.6444
+2026-10-28 09:21:50,130 | INFO | run_e1 | [E1] spar/attribute: n=2000 acc=0.3919
+2026-10-28 09:21:50,541 | INFO | run_e1 | [E1] spar/relation: n=2000 acc=0.4872
+2026-10-28 09:21:50,556 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e1_items_spar.jsonl (8000 items)
+2026-10-28 09:21:50,556 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e1_spar_filter_stats.json (6 factors)
+2026-10-28 09:21:50,557 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e1_results.csv (10 rows)
+2026-10-28 09:21:51,120 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e1_factor_gaps.csv (21 pairs)
+2026-10-28 09:21:51,468 | INFO | run_e1 | [run_e1] model siglip2_so400m
+2026-10-28 09:21:57,347 | INFO | run_e1 | [extract] cache clevr_val: 15000 ids present
+2026-10-28 09:21:57,353 | INFO | run_e1 | [extract] cache complete, skip: clevr_val
+2026-10-28 09:22:00,076 | INFO | run_e1 | [E1] clevr/object: n=2000 acc=0.6504
+2026-10-28 09:22:00,259 | INFO | run_e1 | [E1] clevr/color: n=2000 acc=0.7083
+2026-10-28 09:22:00,443 | INFO | run_e1 | [E1] clevr/size: n=2000 acc=0.5179
+2026-10-28 09:22:00,626 | INFO | run_e1 | [E1] clevr/material: n=2000 acc=0.5871
+2026-10-28 09:22:13,754 | INFO | run_e1 | [E1] clevr/relation: n=2000 acc=0.5009
+2026-10-28 09:22:13,937 | INFO | run_e1 | [E1] clevr/binding: n=2000 acc=0.5211
+2026-10-28 09:22:13,961 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e1_items_clevr.jsonl (12000 items)
+2026-10-28 09:22:13,961 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e1_clevr_filter_stats.json (5 factors)
+2026-10-28 09:22:14,278 | INFO | run_e1 | [extract] cache pug_spar: 43560 ids present
+2026-10-28 09:22:14,289 | INFO | run_e1 | [extract] cache complete, skip: pug_spar
+2026-10-28 09:22:24,010 | INFO | run_e1 | [E1] spar/scene: n=2000 acc=0.9881
+2026-10-28 09:22:26,764 | INFO | run_e1 | [E1] spar/position: n=2000 acc=0.5459
+2026-10-28 09:22:31,019 | INFO | run_e1 | [E1] spar/attribute: n=2000 acc=0.5210
+2026-10-28 09:22:32,056 | INFO | run_e1 | [E1] spar/relation: n=2000 acc=0.5059
+2026-10-28 09:22:32,071 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e1_items_spar.jsonl (8000 items)
+2026-10-28 09:22:32,071 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e1_spar_filter_stats.json (6 factors)
+2026-10-28 09:22:32,072 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e1_results.csv (10 rows)
+2026-10-28 09:22:32,613 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e1_factor_gaps.csv (21 pairs)
+2026-10-28 09:26:16,982 | INFO | run_e1 | [run_e1] model clip_vitl14
+2026-10-28 09:26:20,990 | INFO | run_e1 | [extract] cache clevr_val: 15000 ids present
+2026-10-28 09:26:20,996 | INFO | run_e1 | [extract] cache complete, skip: clevr_val
+2026-10-28 09:26:23,691 | INFO | run_e1 | [E1] clevr/object: n=2000 acc=0.5788
+2026-10-28 09:26:23,834 | INFO | run_e1 | [E1] clevr/color: n=2000 acc=0.6914
+2026-10-28 09:26:23,977 | INFO | run_e1 | [E1] clevr/size: n=2000 acc=0.5158
+2026-10-28 09:26:24,117 | INFO | run_e1 | [E1] clevr/material: n=2000 acc=0.5661
+2026-10-28 09:26:26,558 | INFO | run_e1 | [E1] clevr/relation: n=2000 acc=0.5206
+2026-10-28 09:26:26,698 | INFO | run_e1 | [E1] clevr/binding: n=2000 acc=0.5029
+2026-10-28 09:26:26,721 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e1_items_clevr.jsonl (12000 items)
+2026-10-28 09:26:26,721 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e1_clevr_filter_stats.json (5 factors)
+2026-10-28 09:26:27,060 | INFO | run_e1 | [extract] cache pug_spar: 43560 ids present
+2026-10-28 09:26:27,070 | INFO | run_e1 | [extract] cache complete, skip: pug_spar
+2026-10-28 09:26:28,681 | INFO | run_e1 | [E1] spar/scene: n=2000 acc=0.8933
+2026-10-28 09:26:29,485 | INFO | run_e1 | [E1] spar/position: n=2000 acc=0.3981
+2026-10-28 09:26:30,342 | INFO | run_e1 | [E1] spar/attribute: n=2000 acc=0.5236
+2026-10-28 09:26:31,332 | INFO | run_e1 | [E1] spar/relation: n=2000 acc=0.4651
+2026-10-28 09:26:31,347 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e1_items_spar.jsonl (8000 items)
+2026-10-28 09:26:31,347 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e1_spar_filter_stats.json (6 factors)
+2026-10-28 09:26:31,348 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e1_results.csv (10 rows)
+2026-10-28 09:26:31,885 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e1_factor_gaps.csv (21 pairs)
+2026-10-28 09:26:32,220 | INFO | run_e1 | [run_e1] model clip_vitb32
+2026-10-28 09:26:35,135 | INFO | run_e1 | [extract] cache clevr_val: 15000 ids present
+2026-10-28 09:26:35,142 | INFO | run_e1 | [extract] cache complete, skip: clevr_val
+2026-10-28 09:26:37,789 | INFO | run_e1 | [E1] clevr/object: n=2000 acc=0.5944
+2026-10-28 09:26:37,904 | INFO | run_e1 | [E1] clevr/color: n=2000 acc=0.7060
+2026-10-28 09:26:38,019 | INFO | run_e1 | [E1] clevr/size: n=2000 acc=0.5150
+2026-10-28 09:26:38,132 | INFO | run_e1 | [E1] clevr/material: n=2000 acc=0.5440
+2026-10-28 09:26:39,766 | INFO | run_e1 | [E1] clevr/relation: n=2000 acc=0.5044
+2026-10-28 09:26:39,879 | INFO | run_e1 | [E1] clevr/binding: n=2000 acc=0.5087
+2026-10-28 09:26:39,902 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e1_items_clevr.jsonl (12000 items)
+2026-10-28 09:26:39,902 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e1_clevr_filter_stats.json (5 factors)
+2026-10-28 09:26:40,158 | INFO | run_e1 | [extract] cache pug_spar: 43560 ids present
+2026-10-28 09:26:40,168 | INFO | run_e1 | [extract] cache complete, skip: pug_spar
+2026-10-28 09:26:41,322 | INFO | run_e1 | [E1] spar/scene: n=2000 acc=0.7661
+2026-10-28 09:26:41,798 | INFO | run_e1 | [E1] spar/position: n=2000 acc=0.6375
+2026-10-28 09:26:42,344 | INFO | run_e1 | [E1] spar/attribute: n=2000 acc=0.4141
+2026-10-28 09:26:42,788 | INFO | run_e1 | [E1] spar/relation: n=2000 acc=0.4849
+2026-10-28 09:26:42,803 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e1_items_spar.jsonl (8000 items)
+2026-10-28 09:26:42,803 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e1_spar_filter_stats.json (6 factors)
+2026-10-28 09:26:42,804 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e1_results.csv (10 rows)
+2026-10-28 09:26:43,354 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e1_factor_gaps.csv (21 pairs)
+2026-10-28 09:26:43,681 | INFO | run_e1 | [run_e1] model siglip2_so400m
+2026-10-28 09:26:49,788 | INFO | run_e1 | [extract] cache clevr_val: 15000 ids present
+2026-10-28 09:26:49,794 | INFO | run_e1 | [extract] cache complete, skip: clevr_val
+2026-10-28 09:26:52,514 | INFO | run_e1 | [E1] clevr/object: n=2000 acc=0.6487
+2026-10-28 09:26:52,701 | INFO | run_e1 | [E1] clevr/color: n=2000 acc=0.7037
+2026-10-28 09:26:52,884 | INFO | run_e1 | [E1] clevr/size: n=2000 acc=0.5156
+2026-10-28 09:26:53,068 | INFO | run_e1 | [E1] clevr/material: n=2000 acc=0.6003
+2026-10-28 09:27:05,585 | INFO | run_e1 | [E1] clevr/relation: n=2000 acc=0.5099
+2026-10-28 09:27:05,771 | INFO | run_e1 | [E1] clevr/binding: n=2000 acc=0.5224
+2026-10-28 09:27:05,795 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e1_items_clevr.jsonl (12000 items)
+2026-10-28 09:27:05,795 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e1_clevr_filter_stats.json (5 factors)
+2026-10-28 09:27:06,136 | INFO | run_e1 | [extract] cache pug_spar: 43560 ids present
+2026-10-28 09:27:06,147 | INFO | run_e1 | [extract] cache complete, skip: pug_spar
+2026-10-28 09:27:13,307 | INFO | run_e1 | [E1] spar/scene: n=2000 acc=0.9885
+2026-10-28 09:27:14,918 | INFO | run_e1 | [E1] spar/position: n=2000 acc=0.5539
+2026-10-28 09:27:17,001 | INFO | run_e1 | [E1] spar/attribute: n=2000 acc=0.5284
+2026-10-28 09:27:17,914 | INFO | run_e1 | [E1] spar/relation: n=2000 acc=0.5096
+2026-10-28 09:27:17,929 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e1_items_spar.jsonl (8000 items)
+2026-10-28 09:27:17,930 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e1_spar_filter_stats.json (6 factors)
+2026-10-28 09:27:17,930 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e1_results.csv (10 rows)
+2026-10-28 09:27:18,481 | INFO | run_e1 | [E1] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e1_factor_gaps.csv (21 pairs)

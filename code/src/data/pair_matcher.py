@@ -8,6 +8,13 @@
 - 输出全部 meta_cols 列（变化因素记为 "src->tgt"），供跨因素
   same/different-context 判定使用（审查报告 P2-6）。
 
+重复行的处理（复核 B1 的守卫放宽为确定性去重 + 日志披露）：
+- Animals 是组合唯一的完整笛卡尔积，不会触发；
+- PUG:ImageNet 实测每个因素有 1,448 行（约 1.6%）与其余行在全部 meta_cols
+  上完全相同（同一 context 内同一因素值出现多次）。配对定义只需要每个
+  (context, 因素值) 一行，因此保留最小 row_id、丢弃其余，并在日志中
+  记录总数——不静默折叠。
+
 键的定义：
 - context_key：factor + 其余 metadata 组合（within-factor 的 context 身份）
 - cluster_key：除被测因素外的完整 metadata 组合（聚类 bootstrap 的单位，§66）
@@ -41,11 +48,13 @@ def canonical_values(factor, observed, orders=None):
 
 def build_factor_pairs(df: pd.DataFrame, factor: str, orders: dict,
                        max_pairs_per_context: int, max_total: int, seed: int,
-                       meta_cols=None) -> pd.DataFrame:
+                       meta_cols=None, logger=None) -> pd.DataFrame:
     """meta_cols：该数据集参与配对的语义列（默认 Animals 的 META_COLS）。
 
     context = meta_cols 中除被测因素外的全部列（审查 A1：PUG:ImageNet 的
     物体类别、其他相机角度、灯光、物体姿态等列也进入固定 context）。
+    同一 context 内重复的因素值（全部 meta_cols 相同的行）保留最小 row_id，
+    数量经 logger 披露（见模块 docstring）。
     """
     rng = np.random.default_rng(seed)
     meta_cols = list(meta_cols) if meta_cols is not None else META_COLS
@@ -59,6 +68,8 @@ def build_factor_pairs(df: pd.DataFrame, factor: str, orders: dict,
     ctx_order = rng.permutation(len(ctx_groups))
     counts = {}          # transition (src, tgt) -> 全局已选次数
     records = []
+    dup_rows_total = 0   # 去重的重复行数（跨 context 汇总，供日志披露）
+    dup_ctx_total = 0
 
     for gi in ctx_order:
         ctx_key, grp = ctx_groups[int(gi)]
@@ -71,17 +82,17 @@ def build_factor_pairs(df: pd.DataFrame, factor: str, orders: dict,
         n_dup = 0
         for r in grp.to_dict("records"):
             v = r[factor]
-            if v in by_val:
-                n_dup += 1          # 复核 B1：重复行不能被静默折叠
-            else:
+            if v not in by_val:
                 by_val[v] = r
+            else:
+                # 复核 B1：重复行不能被静默折叠——计数汇总后经 logger 披露；
+                # 保留最小 row_id，去重结果与输入行序无关（确定性）
+                n_dup += 1
+                if int(r["row_id"]) < int(by_val[v]["row_id"]):
+                    by_val[v] = r
         if n_dup:
-            ctx_show = "|".join(str(v) for v in (ctx_key if isinstance(ctx_key, tuple) else (ctx_key,)))
-            raise ValueError(
-                f"factor={factor!r} 的 context ({ctx_show}) 内有 {n_dup} 行重复因素值："
-                f"每 (context, 因素值) 应只有一行（Animals 为组合唯一的完整笛卡尔积；"
-                f"ImageNet 固定 character_name 后同类多实例不应重叠）。请检查数据或 "
-                f"meta_cols 的 context 列配置。")
+            dup_rows_total += n_dup
+            dup_ctx_total += 1
         vals = canonical_values(factor, by_val.keys(), orders)
         avail = [(vals[i], vals[j]) for i in range(len(vals)) for j in range(i + 1, len(vals))]
         n_take = min(max_pairs_per_context, len(avail))
@@ -112,6 +123,16 @@ def build_factor_pairs(df: pd.DataFrame, factor: str, orders: dict,
             records.append(rec)
 
     out = pd.DataFrame(records)
+    if dup_rows_total:
+        # 不静默：去重规模写日志。 Animals 不会触发（完整笛卡尔积）；
+        # 若因 context 列配置错误导致大量重复，这里的大数字也能暴露问题。
+        msg = (f"factor={factor!r}: 去重 {dup_rows_total} 行重复的 (context, 因素值) 行"
+               f"（涉及 {dup_ctx_total} 个 context，每组保留最小 row_id；"
+               f"PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）")
+        if logger is not None:
+            logger.warning(f"[pairs] {msg}")
+        else:
+            print(f"[pairs] WARNING: {msg}")
     if len(out) > max_total:
         keep = rng.choice(len(out), size=max_total, replace=False)
         out = out.iloc[sorted(keep.tolist())].reset_index(drop=True)

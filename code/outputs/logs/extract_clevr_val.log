@@ -1,0 +1,8 @@
+2026-10-27 11:16:42,692 | INFO | extract_clevr_val | [extract:clevr_val] 2000/15000
+2026-10-27 11:17:11,780 | INFO | extract_clevr_val | [extract:clevr_val] 4000/15000
+2026-10-27 11:17:35,892 | INFO | extract_clevr_val | [extract:clevr_val] 6000/15000
+2026-10-27 11:18:11,247 | INFO | extract_clevr_val | [extract:clevr_val] 8000/15000
+2026-10-27 11:18:43,261 | INFO | extract_clevr_val | [extract:clevr_val] 10000/15000
+2026-10-27 11:19:18,343 | INFO | extract_clevr_val | [extract:clevr_val] 12000/15000
+2026-10-27 11:19:49,588 | INFO | extract_clevr_val | [extract:clevr_val] 14000/15000
+2026-10-27 11:20:04,828 | INFO | extract_clevr_val | [extract] saved 15000 new / 15000 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitl14/clevr_val_images.npz

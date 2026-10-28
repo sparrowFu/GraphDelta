@@ -1,0 +1,208 @@
+2026-10-27 14:17:11,252 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-27 14:17:11,333 | INFO | run_e3 | [extract] cache cogent_valA@cb38ee6b302e: 15000 ids present
+2026-10-27 14:17:11,338 | INFO | run_e3 | [extract] cache complete, skip: cogent_valA@cb38ee6b302e
+2026-10-27 14:17:12,366 | INFO | run_e3 | [E3] A/cube_cylinder: n=3000 acc=0.6570
+2026-10-27 14:17:12,699 | INFO | run_e3 | [E3] A/sphere: n=3000 acc=0.7373
+2026-10-27 14:17:13,561 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-27 14:17:13,630 | INFO | run_e3 | [extract] cache cogent_valB@d6e8bfbd95aa: 15000 ids present
+2026-10-27 14:17:13,635 | INFO | run_e3 | [extract] cache complete, skip: cogent_valB@d6e8bfbd95aa
+2026-10-27 14:17:14,094 | INFO | run_e3 | [E3] B/cube_cylinder: n=3000 acc=0.6653
+2026-10-27 14:17:14,431 | INFO | run_e3 | [E3] B/sphere: n=3000 acc=0.7369
+2026-10-27 14:17:14,433 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_cogent.csv (12 rows)
+2026-10-27 14:17:14,619 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_difficulty_gap.csv (2 rows)
+2026-10-27 14:17:14,636 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_cogent_by_combo.csv (96 rows)
+2026-10-27 14:17:14,637 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_cogent_by_color.csv (32 rows)
+2026-10-27 14:17:14,660 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_items_cogent.jsonl (12000 items)
+2026-10-27 14:59:57,619 | INFO | run_e3 | [run_e3] model clip_vitl14
+2026-10-27 15:00:00,887 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-27 15:00:00,933 | INFO | run_e3 | [E3] cogent valA smoke subset: 300 scenes
+2026-10-27 15:00:02,747 | INFO | run_e3 | [extract] saved 300 new / 300 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitl14/cogent_valA_smoke@cb38ee6b302e_images.npz
+2026-10-27 15:00:02,777 | INFO | run_e3 | [E3] A/cube_cylinder: n=300 acc=0.6667
+2026-10-27 15:00:02,801 | INFO | run_e3 | [E3] A/sphere: n=300 acc=0.7371
+2026-10-27 15:00:03,553 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-27 15:00:03,583 | INFO | run_e3 | [E3] cogent valB smoke subset: 300 scenes
+2026-10-27 15:00:08,707 | INFO | run_e3 | [extract] saved 300 new / 300 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitl14/cogent_valB_smoke@d6e8bfbd95aa_images.npz
+2026-10-27 15:00:08,737 | INFO | run_e3 | [E3] B/cube_cylinder: n=300 acc=0.6538
+2026-10-27 15:00:08,762 | INFO | run_e3 | [E3] B/sphere: n=300 acc=0.7105
+2026-10-27 15:00:08,763 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_cogent_smoke.csv (12 rows)
+2026-10-27 15:00:08,804 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_difficulty_gap_smoke.csv (2 rows)
+2026-10-27 15:00:08,913 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_cogent_by_combo_smoke.csv (96 rows)
+2026-10-27 15:00:08,913 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_cogent_by_color_smoke.csv (32 rows)
+2026-10-27 15:00:08,916 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_items_cogent_smoke.jsonl (1200 items)
+2026-10-27 15:00:09,052 | INFO | run_e3 | [run_e3] model clip_vitb32
+2026-10-27 15:00:11,683 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-27 15:00:11,716 | INFO | run_e3 | [E3] cogent valA smoke subset: 300 scenes
+2026-10-27 15:00:13,117 | INFO | run_e3 | [extract] saved 300 new / 300 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitb32/cogent_valA_smoke@cb38ee6b302e_images.npz
+2026-10-27 15:00:13,185 | INFO | run_e3 | [E3] A/cube_cylinder: n=300 acc=0.7495
+2026-10-27 15:00:13,201 | INFO | run_e3 | [E3] A/sphere: n=300 acc=0.5738
+2026-10-27 15:00:13,980 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-27 15:00:14,026 | INFO | run_e3 | [E3] cogent valB smoke subset: 300 scenes
+2026-10-27 15:00:16,994 | INFO | run_e3 | [extract] saved 300 new / 300 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitb32/cogent_valB_smoke@d6e8bfbd95aa_images.npz
+2026-10-27 15:00:17,018 | INFO | run_e3 | [E3] B/cube_cylinder: n=300 acc=0.6676
+2026-10-27 15:00:17,036 | INFO | run_e3 | [E3] B/sphere: n=300 acc=0.5476
+2026-10-27 15:00:17,037 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e3_cogent_smoke.csv (12 rows)
+2026-10-27 15:00:17,077 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e3_difficulty_gap_smoke.csv (2 rows)
+2026-10-27 15:00:17,085 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e3_cogent_by_combo_smoke.csv (96 rows)
+2026-10-27 15:00:17,085 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e3_cogent_by_color_smoke.csv (32 rows)
+2026-10-27 15:00:17,088 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e3_items_cogent_smoke.jsonl (1200 items)
+2026-10-27 15:00:17,172 | INFO | run_e3 | [run_e3] model siglip2_so400m
+2026-10-27 15:00:22,036 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-27 15:00:22,078 | INFO | run_e3 | [E3] cogent valA smoke subset: 300 scenes
+2026-10-27 15:00:28,857 | INFO | run_e3 | [extract] saved 300 new / 300 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/siglip2_so400m/cogent_valA_smoke@cb38ee6b302e_images.npz
+2026-10-27 15:00:28,979 | INFO | run_e3 | [E3] A/cube_cylinder: n=300 acc=0.7443
+2026-10-27 15:00:29,014 | INFO | run_e3 | [E3] A/sphere: n=300 acc=0.7814
+2026-10-27 15:00:29,982 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-27 15:00:30,031 | INFO | run_e3 | [E3] cogent valB smoke subset: 300 scenes
+2026-10-27 15:00:37,821 | INFO | run_e3 | [extract] saved 300 new / 300 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/siglip2_so400m/cogent_valB_smoke@d6e8bfbd95aa_images.npz
+2026-10-27 15:00:37,865 | INFO | run_e3 | [E3] B/cube_cylinder: n=300 acc=0.6490
+2026-10-27 15:00:37,900 | INFO | run_e3 | [E3] B/sphere: n=300 acc=0.7524
+2026-10-27 15:00:37,901 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e3_cogent_smoke.csv (12 rows)
+2026-10-27 15:00:37,941 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e3_difficulty_gap_smoke.csv (2 rows)
+2026-10-27 15:00:37,950 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e3_cogent_by_combo_smoke.csv (96 rows)
+2026-10-27 15:00:37,950 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e3_cogent_by_color_smoke.csv (32 rows)
+2026-10-27 15:00:37,953 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e3_items_cogent_smoke.jsonl (1200 items)
+2026-10-28 11:28:58,967 | INFO | run_e3 | [run_e3] model clip_vitl14
+2026-10-28 11:29:02,776 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:29:02,847 | INFO | run_e3 | [extract] cache cogent_valA@cb38ee6b302e: 15000 ids present
+2026-10-28 11:29:02,852 | INFO | run_e3 | [extract] cache complete, skip: cogent_valA@cb38ee6b302e
+2026-10-28 11:29:03,292 | INFO | run_e3 | [E3] A/cube_cylinder: n=3000 acc=0.6570
+2026-10-28 11:29:03,611 | INFO | run_e3 | [E3] A/sphere: n=3000 acc=0.7373
+2026-10-28 11:29:04,477 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:29:04,545 | INFO | run_e3 | [extract] cache cogent_valB@d6e8bfbd95aa: 15000 ids present
+2026-10-28 11:29:04,550 | INFO | run_e3 | [extract] cache complete, skip: cogent_valB@d6e8bfbd95aa
+2026-10-28 11:29:04,996 | INFO | run_e3 | [E3] B/cube_cylinder: n=3000 acc=0.6653
+2026-10-28 11:29:05,310 | INFO | run_e3 | [E3] B/sphere: n=3000 acc=0.7369
+2026-10-28 11:29:05,312 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_cogent.csv (12 rows)
+2026-10-28 11:29:05,506 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_difficulty_gap.csv (2 rows)
+2026-10-28 11:29:05,526 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_cogent_by_combo.csv (96 rows)
+2026-10-28 11:29:05,526 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_cogent_by_color.csv (32 rows)
+2026-10-28 11:29:05,551 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e3_items_cogent.jsonl (12000 items)
+2026-10-28 11:29:05,551 | WARNING | run_e3 | [E3] 源结果已重写：旧 e3_unit_gaps.csv 已删除、sidecar 置 stale，请重跑 analyze_e3_units（四轮问题 3）
+2026-10-28 11:29:05,700 | INFO | run_e3 | [run_e3] model clip_vitb32
+2026-10-28 11:29:08,656 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:29:08,703 | INFO | run_e3 | [extract] cache cogent_valA@cb38ee6b302e: 15000 ids present
+2026-10-28 11:29:08,708 | INFO | run_e3 | [extract] cache complete, skip: cogent_valA@cb38ee6b302e
+2026-10-28 11:29:09,094 | INFO | run_e3 | [E3] A/cube_cylinder: n=3000 acc=0.7389
+2026-10-28 11:29:09,331 | INFO | run_e3 | [E3] A/sphere: n=3000 acc=0.5562
+2026-10-28 11:29:10,202 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:29:10,250 | INFO | run_e3 | [extract] cache cogent_valB@d6e8bfbd95aa: 15000 ids present
+2026-10-28 11:29:10,255 | INFO | run_e3 | [extract] cache complete, skip: cogent_valB@d6e8bfbd95aa
+2026-10-28 11:29:10,638 | INFO | run_e3 | [E3] B/cube_cylinder: n=3000 acc=0.7000
+2026-10-28 11:29:10,878 | INFO | run_e3 | [E3] B/sphere: n=3000 acc=0.5669
+2026-10-28 11:29:10,879 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e3_cogent.csv (12 rows)
+2026-10-28 11:29:11,074 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e3_difficulty_gap.csv (2 rows)
+2026-10-28 11:29:11,092 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e3_cogent_by_combo.csv (96 rows)
+2026-10-28 11:29:11,092 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e3_cogent_by_color.csv (32 rows)
+2026-10-28 11:29:11,117 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e3_items_cogent.jsonl (12000 items)
+2026-10-28 11:29:11,269 | INFO | run_e3 | [run_e3] model siglip2_so400m
+2026-10-28 11:29:16,657 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:29:16,754 | INFO | run_e3 | [extract] cache cogent_valA@cb38ee6b302e: 15000 ids present
+2026-10-28 11:29:16,760 | INFO | run_e3 | [extract] cache complete, skip: cogent_valA@cb38ee6b302e
+2026-10-28 11:29:17,350 | INFO | run_e3 | [E3] A/cube_cylinder: n=3000 acc=0.7090
+2026-10-28 11:29:17,802 | INFO | run_e3 | [E3] A/sphere: n=3000 acc=0.7590
+2026-10-28 11:29:19,069 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:29:19,167 | INFO | run_e3 | [extract] cache cogent_valB@d6e8bfbd95aa: 15000 ids present
+2026-10-28 11:29:19,172 | INFO | run_e3 | [extract] cache complete, skip: cogent_valB@d6e8bfbd95aa
+2026-10-28 11:29:19,747 | INFO | run_e3 | [E3] B/cube_cylinder: n=3000 acc=0.6742
+2026-10-28 11:29:20,193 | INFO | run_e3 | [E3] B/sphere: n=3000 acc=0.7362
+2026-10-28 11:29:20,194 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e3_cogent.csv (12 rows)
+2026-10-28 11:29:20,387 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e3_difficulty_gap.csv (2 rows)
+2026-10-28 11:29:20,405 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e3_cogent_by_combo.csv (96 rows)
+2026-10-28 11:29:20,405 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e3_cogent_by_color.csv (32 rows)
+2026-10-28 11:29:20,429 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e3_items_cogent.jsonl (12000 items)
+2026-10-28 11:29:44,821 | INFO | run_e3 | [run_e3] model clip_vitl14
+2026-10-28 11:29:47,038 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:29:47,072 | INFO | run_e3 | [extract] cache cogent_valA@cb38ee6b302e: 15000 ids present
+2026-10-28 11:29:47,077 | INFO | run_e3 | [extract] cache complete, skip: cogent_valA@cb38ee6b302e
+2026-10-28 11:29:47,524 | INFO | run_e3 | [E3] A/cube_cylinder: n=3000 acc=0.6570
+2026-10-28 11:29:47,820 | INFO | run_e3 | [E3] A/sphere: n=3000 acc=0.7320
+2026-10-28 11:29:48,663 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:29:48,692 | INFO | run_e3 | [extract] cache cogent_valB@d6e8bfbd95aa: 15000 ids present
+2026-10-28 11:29:48,697 | INFO | run_e3 | [extract] cache complete, skip: cogent_valB@d6e8bfbd95aa
+2026-10-28 11:29:49,145 | INFO | run_e3 | [E3] B/cube_cylinder: n=3000 acc=0.6641
+2026-10-28 11:29:49,456 | INFO | run_e3 | [E3] B/sphere: n=3000 acc=0.7376
+2026-10-28 11:29:49,457 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e3_cogent.csv (12 rows)
+2026-10-28 11:29:49,636 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e3_difficulty_gap.csv (2 rows)
+2026-10-28 11:29:49,653 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e3_cogent_by_combo.csv (96 rows)
+2026-10-28 11:29:49,653 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e3_cogent_by_color.csv (32 rows)
+2026-10-28 11:29:49,677 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e3_items_cogent.jsonl (12000 items)
+2026-10-28 11:29:49,840 | INFO | run_e3 | [run_e3] model clip_vitb32
+2026-10-28 11:29:52,437 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:29:52,461 | INFO | run_e3 | [extract] cache cogent_valA@cb38ee6b302e: 15000 ids present
+2026-10-28 11:29:52,466 | INFO | run_e3 | [extract] cache complete, skip: cogent_valA@cb38ee6b302e
+2026-10-28 11:29:52,835 | INFO | run_e3 | [E3] A/cube_cylinder: n=3000 acc=0.7533
+2026-10-28 11:29:53,079 | INFO | run_e3 | [E3] A/sphere: n=3000 acc=0.5515
+2026-10-28 11:29:53,950 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:29:53,973 | INFO | run_e3 | [extract] cache cogent_valB@d6e8bfbd95aa: 15000 ids present
+2026-10-28 11:29:53,978 | INFO | run_e3 | [extract] cache complete, skip: cogent_valB@d6e8bfbd95aa
+2026-10-28 11:29:54,350 | INFO | run_e3 | [E3] B/cube_cylinder: n=3000 acc=0.6961
+2026-10-28 11:29:54,594 | INFO | run_e3 | [E3] B/sphere: n=3000 acc=0.5601
+2026-10-28 11:29:54,595 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e3_cogent.csv (12 rows)
+2026-10-28 11:29:54,777 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e3_difficulty_gap.csv (2 rows)
+2026-10-28 11:29:54,794 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e3_cogent_by_combo.csv (96 rows)
+2026-10-28 11:29:54,794 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e3_cogent_by_color.csv (32 rows)
+2026-10-28 11:29:54,819 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e3_items_cogent.jsonl (12000 items)
+2026-10-28 11:29:54,999 | INFO | run_e3 | [run_e3] model siglip2_so400m
+2026-10-28 11:29:58,868 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:29:58,920 | INFO | run_e3 | [extract] cache cogent_valA@cb38ee6b302e: 15000 ids present
+2026-10-28 11:29:58,925 | INFO | run_e3 | [extract] cache complete, skip: cogent_valA@cb38ee6b302e
+2026-10-28 11:29:59,508 | INFO | run_e3 | [E3] A/cube_cylinder: n=3000 acc=0.7299
+2026-10-28 11:29:59,947 | INFO | run_e3 | [E3] A/sphere: n=3000 acc=0.7490
+2026-10-28 11:30:01,206 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:30:01,258 | INFO | run_e3 | [extract] cache cogent_valB@d6e8bfbd95aa: 15000 ids present
+2026-10-28 11:30:01,263 | INFO | run_e3 | [extract] cache complete, skip: cogent_valB@d6e8bfbd95aa
+2026-10-28 11:30:01,859 | INFO | run_e3 | [E3] B/cube_cylinder: n=3000 acc=0.6606
+2026-10-28 11:30:02,315 | INFO | run_e3 | [E3] B/sphere: n=3000 acc=0.7494
+2026-10-28 11:30:02,316 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e3_cogent.csv (12 rows)
+2026-10-28 11:30:02,507 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e3_difficulty_gap.csv (2 rows)
+2026-10-28 11:30:02,525 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e3_cogent_by_combo.csv (96 rows)
+2026-10-28 11:30:02,526 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e3_cogent_by_color.csv (32 rows)
+2026-10-28 11:30:02,551 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e3_items_cogent.jsonl (12000 items)
+2026-10-28 11:31:45,041 | INFO | run_e3 | [run_e3] model clip_vitl14
+2026-10-28 11:31:47,453 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:31:47,491 | INFO | run_e3 | [extract] cache cogent_valA@cb38ee6b302e: 15000 ids present
+2026-10-28 11:31:47,496 | INFO | run_e3 | [extract] cache complete, skip: cogent_valA@cb38ee6b302e
+2026-10-28 11:31:47,956 | INFO | run_e3 | [E3] A/cube_cylinder: n=3000 acc=0.6719
+2026-10-28 11:31:48,273 | INFO | run_e3 | [E3] A/sphere: n=3000 acc=0.7341
+2026-10-28 11:31:49,147 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:31:49,180 | INFO | run_e3 | [extract] cache cogent_valB@d6e8bfbd95aa: 15000 ids present
+2026-10-28 11:31:49,185 | INFO | run_e3 | [extract] cache complete, skip: cogent_valB@d6e8bfbd95aa
+2026-10-28 11:31:49,641 | INFO | run_e3 | [E3] B/cube_cylinder: n=3000 acc=0.6632
+2026-10-28 11:31:49,961 | INFO | run_e3 | [E3] B/sphere: n=3000 acc=0.7312
+2026-10-28 11:31:49,962 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e3_cogent.csv (12 rows)
+2026-10-28 11:31:50,149 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e3_difficulty_gap.csv (2 rows)
+2026-10-28 11:31:50,166 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e3_cogent_by_combo.csv (96 rows)
+2026-10-28 11:31:50,166 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e3_cogent_by_color.csv (32 rows)
+2026-10-28 11:31:50,190 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e3_items_cogent.jsonl (12000 items)
+2026-10-28 11:31:50,365 | INFO | run_e3 | [run_e3] model clip_vitb32
+2026-10-28 11:31:52,117 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:31:52,138 | INFO | run_e3 | [extract] cache cogent_valA@cb38ee6b302e: 15000 ids present
+2026-10-28 11:31:52,143 | INFO | run_e3 | [extract] cache complete, skip: cogent_valA@cb38ee6b302e
+2026-10-28 11:31:52,518 | INFO | run_e3 | [E3] A/cube_cylinder: n=3000 acc=0.7490
+2026-10-28 11:31:52,743 | INFO | run_e3 | [E3] A/sphere: n=3000 acc=0.5506
+2026-10-28 11:31:53,645 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:31:53,666 | INFO | run_e3 | [extract] cache cogent_valB@d6e8bfbd95aa: 15000 ids present
+2026-10-28 11:31:53,670 | INFO | run_e3 | [extract] cache complete, skip: cogent_valB@d6e8bfbd95aa
+2026-10-28 11:31:54,052 | INFO | run_e3 | [E3] B/cube_cylinder: n=3000 acc=0.7055
+2026-10-28 11:31:54,288 | INFO | run_e3 | [E3] B/sphere: n=3000 acc=0.5523
+2026-10-28 11:31:54,289 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e3_cogent.csv (12 rows)
+2026-10-28 11:31:54,480 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e3_difficulty_gap.csv (2 rows)
+2026-10-28 11:31:54,497 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e3_cogent_by_combo.csv (96 rows)
+2026-10-28 11:31:54,497 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e3_cogent_by_color.csv (32 rows)
+2026-10-28 11:31:54,523 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e3_items_cogent.jsonl (12000 items)
+2026-10-28 11:31:54,672 | INFO | run_e3 | [run_e3] model siglip2_so400m
+2026-10-28 11:32:00,067 | INFO | run_e3 | [E3] palette check A: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:32:00,115 | INFO | run_e3 | [extract] cache cogent_valA@cb38ee6b302e: 15000 ids present
+2026-10-28 11:32:00,120 | INFO | run_e3 | [extract] cache complete, skip: cogent_valA@cb38ee6b302e
+2026-10-28 11:32:00,703 | INFO | run_e3 | [E3] A/cube_cylinder: n=3000 acc=0.7137
+2026-10-28 11:32:01,153 | INFO | run_e3 | [E3] A/sphere: n=3000 acc=0.7442
+2026-10-28 11:32:02,056 | INFO | run_e3 | [E3] palette check B: 0 violations in first 5000 scenes（应为 0；sphere 不受限制）
+2026-10-28 11:32:02,103 | INFO | run_e3 | [extract] cache cogent_valB@d6e8bfbd95aa: 15000 ids present
+2026-10-28 11:32:02,108 | INFO | run_e3 | [extract] cache complete, skip: cogent_valB@d6e8bfbd95aa
+2026-10-28 11:32:02,692 | INFO | run_e3 | [E3] B/cube_cylinder: n=3000 acc=0.6605
+2026-10-28 11:32:03,154 | INFO | run_e3 | [E3] B/sphere: n=3000 acc=0.7430
+2026-10-28 11:32:03,155 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e3_cogent.csv (12 rows)
+2026-10-28 11:32:03,352 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e3_difficulty_gap.csv (2 rows)
+2026-10-28 11:32:03,370 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e3_cogent_by_combo.csv (96 rows)
+2026-10-28 11:32:03,370 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e3_cogent_by_color.csv (32 rows)
+2026-10-28 11:32:03,395 | INFO | run_e3 | [E3] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e3_items_cogent.jsonl (12000 items)

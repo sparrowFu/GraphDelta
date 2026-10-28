@@ -1,0 +1,328 @@
+2026-10-27 14:17:43,785 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-27 14:17:59,597 | INFO | run_e2_pug_animals | [E2] factor=texture: 30000 pairs, 24270 contexts
+2026-10-27 14:18:19,878 | INFO | run_e2_pug_animals | [E2] factor=size: 30000 pairs, 26045 contexts
+2026-10-27 14:18:36,232 | INFO | run_e2_pug_animals | [E2] factor=camera: 30000 pairs, 24270 contexts
+2026-10-27 14:18:37,662 | INFO | run_e2_pug_animals | [extract] cache pug_animals: 215040 ids present
+2026-10-27 14:18:37,733 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals
+2026-10-27 14:21:22,200 | INFO | run_e2_pug_animals | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-27 14:21:23,232 | INFO | run_e2_pug_animals | [E2] nuisance text: 1000 captions
+2026-10-27 14:21:23,246 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=5.0011 norm_visual_z=0.2846 norm_text_raw=1.8657 norm_text_z=0.1417 sim_visual_raw=0.0945 sim_visual_z=0.0918 sim_text_raw=0.6315 sim_text_z=0.6276
+2026-10-27 14:21:24,292 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 462/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 14:21:24,817 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=12.856 same_tr_z=0.6429 gap_z=0.6408 [0.6358, 0.6462] diff_factor_src={'camera': 6734, 'size': 6623, 'texture': 6643} diff_factor_sc_src={'camera': 157, 'size': 124, 'texture': 181}
+2026-10-27 14:21:25,876 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 6270/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 14:21:25,877 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 122/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 14:21:27,121 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=5.159 same_tr_z=0.1155 gap_z=0.1125 [0.1086, 0.1162] diff_factor_src={'camera': 8057, 'environment': 3707, 'size': 8236} diff_factor_sc_src={'camera': 13, 'environment': 98, 'size': 11}
+2026-10-27 14:21:28,136 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 4129/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 14:21:28,136 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 85/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 14:21:29,402 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=4.822 same_tr_z=0.0548 gap_z=0.0506 [0.0470, 0.0539] diff_factor_src={'camera': 8086, 'environment': 3721, 'texture': 8193} diff_factor_sc_src={'camera': 11, 'environment': 66, 'texture': 8}
+2026-10-27 14:21:30,439 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 6270/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 14:21:30,439 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 131/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 14:21:31,546 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=7.279 same_tr_z=0.0153 gap_z=0.0162 [0.0132, 0.0197] diff_factor_src={'environment': 3709, 'size': 8059, 'texture': 8232} diff_factor_sc_src={'environment': 101, 'size': 6, 'texture': 24}
+2026-10-27 14:21:31,548 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_delta_stats.csv (4 rows)
+2026-10-27 14:21:32,221 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-27 15:16:09,324 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model clip_vitl14
+2026-10-27 15:16:10,635 | INFO | run_e2_pug_animals | [E2] pug_animals smoke subset: 1728 rows (smoke_cols=['animal', 'environment'])
+2026-10-27 15:16:10,709 | INFO | run_e2_pug_animals | [E2] factor=environment: 1152 pairs, 288 contexts
+2026-10-27 15:16:10,813 | INFO | run_e2_pug_animals | [E2] factor=texture: 1728 pairs, 432 contexts
+2026-10-27 15:16:10,944 | INFO | run_e2_pug_animals | [E2] factor=size: 1728 pairs, 576 contexts
+2026-10-27 15:16:11,047 | INFO | run_e2_pug_animals | [E2] factor=camera: 1728 pairs, 432 contexts
+2026-10-27 15:18:32,857 | INFO | run_e2_pug_animals | [extract] saved 1728 new / 1728 total images -> /home/xpfu/WorkSpace/GraphDelta/code/data/cache/clip_vitl14/pug_animals_smoke_images.npz
+2026-10-27 15:20:33,212 | INFO | run_e2_pug_animals | [E2] nuisance visual: 200 images x 2 views (chunk=128)
+2026-10-27 15:20:34,182 | INFO | run_e2_pug_animals | [E2] nuisance text: 200 captions
+2026-10-27 15:20:34,191 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=5.3027 norm_visual_z=0.3013 norm_text_raw=1.7919 norm_text_z=0.1414 sim_visual_raw=0.1191 sim_visual_z=0.1206 sim_text_raw=0.6495 sim_text_z=0.6522
+2026-10-27 15:20:34,956 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/same_factor_dt_sc: 仅采样到 1728/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:20:34,956 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 5060/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:20:35,254 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=12.791 same_tr_z=0.6742 gap_z=0.6690 [0.6604, 0.6769] diff_factor_src={'camera': 6649, 'size': 6651, 'texture': 6700} diff_factor_sc_src={'camera': 1835, 'size': 1379, 'texture': 1846}
+2026-10-27 15:20:36,014 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 2592/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:20:36,014 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 3819/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:20:36,314 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=4.986 same_tr_z=0.1279 gap_z=0.1242 [0.1159, 0.1330] diff_factor_src={'camera': 7486, 'environment': 5017, 'size': 7497} diff_factor_sc_src={'camera': 1370, 'environment': 1392, 'size': 1057}
+2026-10-27 15:20:37,063 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 1728/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:20:37,064 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 3080/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:20:37,370 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=4.757 same_tr_z=0.0763 gap_z=0.0695 [0.0639, 0.0751] diff_factor_src={'camera': 7507, 'environment': 5012, 'texture': 7481} diff_factor_sc_src={'camera': 1022, 'environment': 1043, 'texture': 1015}
+2026-10-27 15:20:38,123 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 2592/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:20:38,123 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 3808/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:20:38,419 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=7.081 same_tr_z=0.0905 gap_z=0.0979 [0.0907, 0.1050] diff_factor_src={'environment': 5025, 'size': 7508, 'texture': 7467} diff_factor_sc_src={'environment': 1346, 'size': 1020, 'texture': 1442}
+2026-10-27 15:20:38,421 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_delta_stats_smoke.csv (4 rows)
+2026-10-27 15:20:38,566 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_transition_stats_smoke.csv (30 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-27 15:20:54,371 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model clip_vitl14
+2026-10-27 15:20:55,460 | INFO | run_e2_pug_animals | [E2] pug_animals smoke subset: 1728 rows (smoke_cols=['animal', 'environment'])
+2026-10-27 15:20:55,535 | INFO | run_e2_pug_animals | [E2] factor=environment: 1152 pairs, 288 contexts
+2026-10-27 15:20:55,637 | INFO | run_e2_pug_animals | [E2] factor=texture: 1728 pairs, 432 contexts
+2026-10-27 15:20:55,767 | INFO | run_e2_pug_animals | [E2] factor=size: 1728 pairs, 576 contexts
+2026-10-27 15:20:55,872 | INFO | run_e2_pug_animals | [E2] factor=camera: 1728 pairs, 432 contexts
+2026-10-27 15:20:55,883 | INFO | run_e2_pug_animals | [extract] cache pug_animals_smoke: 1728 ids present
+2026-10-27 15:20:55,883 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals_smoke
+2026-10-27 15:22:55,271 | INFO | run_e2_pug_animals | [E2] nuisance visual: 200 images x 2 views (chunk=128)
+2026-10-27 15:22:55,274 | INFO | run_e2_pug_animals | [E2] nuisance text: 200 captions
+2026-10-27 15:22:55,285 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=5.3027 norm_visual_z=0.3013 norm_text_raw=1.7919 norm_text_z=0.1414 sim_visual_raw=0.1191 sim_visual_z=0.1206 sim_text_raw=0.6495 sim_text_z=0.6522
+2026-10-27 15:22:56,196 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/same_factor_dt_sc: 仅采样到 1728/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:22:56,196 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 5060/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:22:56,502 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=12.791 same_tr_z=0.6742 gap_z=0.6690 [0.6604, 0.6769] diff_factor_src={'camera': 6649, 'size': 6651, 'texture': 6700} diff_factor_sc_src={'camera': 1835, 'size': 1379, 'texture': 1846}
+2026-10-27 15:22:57,268 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 2592/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:22:57,268 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 3819/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:22:57,573 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=4.986 same_tr_z=0.1279 gap_z=0.1242 [0.1159, 0.1330] diff_factor_src={'camera': 7486, 'environment': 5017, 'size': 7497} diff_factor_sc_src={'camera': 1370, 'environment': 1392, 'size': 1057}
+2026-10-27 15:22:58,333 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 1728/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:22:58,333 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 3080/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:22:58,641 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=4.757 same_tr_z=0.0763 gap_z=0.0695 [0.0639, 0.0751] diff_factor_src={'camera': 7507, 'environment': 5012, 'texture': 7481} diff_factor_sc_src={'camera': 1022, 'environment': 1043, 'texture': 1015}
+2026-10-27 15:22:59,406 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 2592/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:22:59,406 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 3808/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:22:59,712 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=7.081 same_tr_z=0.0905 gap_z=0.0979 [0.0907, 0.1050] diff_factor_src={'environment': 5025, 'size': 7508, 'texture': 7467} diff_factor_sc_src={'environment': 1346, 'size': 1020, 'texture': 1442}
+2026-10-27 15:22:59,713 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_delta_stats_smoke.csv (4 rows)
+2026-10-27 15:22:59,873 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_transition_stats_smoke.csv (30 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-27 15:24:30,827 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model clip_vitl14
+2026-10-27 15:24:31,890 | INFO | run_e2_pug_animals | [E2] pug_animals smoke subset: 1728 rows (smoke_cols=['animal', 'environment'])
+2026-10-27 15:24:31,966 | INFO | run_e2_pug_animals | [E2] factor=environment: 1152 pairs, 288 contexts
+2026-10-27 15:24:32,072 | INFO | run_e2_pug_animals | [E2] factor=texture: 1728 pairs, 432 contexts
+2026-10-27 15:24:32,204 | INFO | run_e2_pug_animals | [E2] factor=size: 1728 pairs, 576 contexts
+2026-10-27 15:24:32,310 | INFO | run_e2_pug_animals | [E2] factor=camera: 1728 pairs, 432 contexts
+2026-10-27 15:24:32,320 | INFO | run_e2_pug_animals | [extract] cache pug_animals_smoke: 1728 ids present
+2026-10-27 15:24:32,320 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals_smoke
+2026-10-27 15:26:35,301 | INFO | run_e2_pug_animals | [E2] nuisance visual: 200 images x 2 views (chunk=128)
+2026-10-27 15:26:35,304 | INFO | run_e2_pug_animals | [E2] nuisance text: 200 captions
+2026-10-27 15:26:35,314 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=5.3027 norm_visual_z=0.3013 norm_text_raw=1.7919 norm_text_z=0.1414 sim_visual_raw=0.1191 sim_visual_z=0.1206 sim_text_raw=0.6495 sim_text_z=0.6522
+2026-10-27 15:26:36,145 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/same_factor_dt_sc: 仅采样到 1728/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:26:36,145 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 5060/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:26:36,452 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=12.791 same_tr_z=0.6742 gap_z=0.6690 [0.6604, 0.6769] diff_factor_src={'camera': 6649, 'size': 6651, 'texture': 6700} diff_factor_sc_src={'camera': 1835, 'size': 1379, 'texture': 1846}
+2026-10-27 15:26:37,197 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 2592/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:26:37,197 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 3819/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:26:37,505 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=4.986 same_tr_z=0.1279 gap_z=0.1242 [0.1159, 0.1330] diff_factor_src={'camera': 7486, 'environment': 5017, 'size': 7497} diff_factor_sc_src={'camera': 1370, 'environment': 1392, 'size': 1057}
+2026-10-27 15:26:38,235 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 1728/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:26:38,235 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 3080/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:26:38,547 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=4.757 same_tr_z=0.0763 gap_z=0.0695 [0.0639, 0.0751] diff_factor_src={'camera': 7507, 'environment': 5012, 'texture': 7481} diff_factor_sc_src={'camera': 1022, 'environment': 1043, 'texture': 1015}
+2026-10-27 15:26:39,289 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 2592/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:26:39,289 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 3808/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-27 15:26:39,586 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=7.081 same_tr_z=0.0905 gap_z=0.0979 [0.0907, 0.1050] diff_factor_src={'environment': 5025, 'size': 7508, 'texture': 7467} diff_factor_sc_src={'environment': 1346, 'size': 1020, 'texture': 1442}
+2026-10-27 15:26:39,587 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_delta_stats_smoke.csv (4 rows)
+2026-10-27 15:26:39,726 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_transition_stats_smoke.csv (30 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 09:34:57,285 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model clip_vitl14
+2026-10-28 09:35:05,496 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-28 09:35:21,852 | INFO | run_e2_pug_animals | [E2] factor=texture: 30000 pairs, 24270 contexts
+2026-10-28 09:35:42,856 | INFO | run_e2_pug_animals | [E2] factor=size: 30000 pairs, 26045 contexts
+2026-10-28 09:35:59,826 | INFO | run_e2_pug_animals | [E2] factor=camera: 30000 pairs, 24270 contexts
+2026-10-28 09:36:00,865 | INFO | run_e2_pug_animals | [extract] cache pug_animals: 215040 ids present
+2026-10-28 09:36:00,939 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals
+2026-10-28 09:39:16,846 | INFO | run_e2_pug_animals | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 09:39:16,859 | INFO | run_e2_pug_animals | [E2] nuisance text: 1000 captions
+2026-10-28 09:39:16,872 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=5.0011 norm_visual_z=0.2846 norm_text_raw=1.8657 norm_text_z=0.1417 sim_visual_raw=0.0945 sim_visual_z=0.0918 sim_text_raw=0.6315 sim_text_z=0.6276
+2026-10-28 09:39:17,919 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 462/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 09:39:18,438 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=12.856 same_tr_z=0.6429 gap_z=0.6408 [0.6358, 0.6462] diff_factor_src={'camera': 6734, 'size': 6623, 'texture': 6643} diff_factor_sc_src={'camera': 157, 'size': 124, 'texture': 181}
+2026-10-28 09:39:19,466 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 6270/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 09:39:19,466 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 122/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 09:39:20,655 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=5.159 same_tr_z=0.1155 gap_z=0.1125 [0.1086, 0.1162] diff_factor_src={'camera': 8057, 'environment': 3707, 'size': 8236} diff_factor_sc_src={'camera': 13, 'environment': 98, 'size': 11}
+2026-10-28 09:39:21,660 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 4129/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 09:39:21,660 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 85/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 09:39:22,843 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=4.822 same_tr_z=0.0548 gap_z=0.0506 [0.0470, 0.0539] diff_factor_src={'camera': 8086, 'environment': 3721, 'texture': 8193} diff_factor_sc_src={'camera': 11, 'environment': 66, 'texture': 8}
+2026-10-28 09:39:23,851 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 6270/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 09:39:23,851 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 131/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 09:39:24,950 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=7.279 same_tr_z=0.0153 gap_z=0.0162 [0.0132, 0.0197] diff_factor_src={'environment': 3709, 'size': 8059, 'texture': 8232} diff_factor_sc_src={'environment': 101, 'size': 6, 'texture': 24}
+2026-10-28 09:39:24,952 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_delta_stats.csv (4 rows)
+2026-10-28 09:39:25,632 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 10:14:57,589 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model clip_vitl14
+2026-10-28 10:15:05,763 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-28 10:15:25,740 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model clip_vitl14
+2026-10-28 10:15:33,887 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-28 10:15:49,889 | INFO | run_e2_pug_animals | [E2] factor=texture: 30000 pairs, 24270 contexts
+2026-10-28 10:16:10,357 | INFO | run_e2_pug_animals | [E2] factor=size: 30000 pairs, 26045 contexts
+2026-10-28 10:16:26,911 | INFO | run_e2_pug_animals | [E2] factor=camera: 30000 pairs, 24270 contexts
+2026-10-28 10:16:28,069 | INFO | run_e2_pug_animals | [extract] cache pug_animals: 215040 ids present
+2026-10-28 10:16:28,131 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals
+2026-10-28 10:19:20,172 | INFO | run_e2_pug_animals | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 10:19:20,184 | INFO | run_e2_pug_animals | [E2] nuisance text: 1000 captions
+2026-10-28 10:19:20,196 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=5.0011 norm_visual_z=0.2846 norm_text_raw=1.8657 norm_text_z=0.1417 sim_visual_raw=0.0945 sim_visual_z=0.0918 sim_text_raw=0.6315 sim_text_z=0.6276
+2026-10-28 10:19:21,265 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 462/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:19:21,784 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=12.856 same_tr_z=0.6429 gap_z=0.6408 [0.6358, 0.6462] diff_factor_src={'camera': 6734, 'size': 6623, 'texture': 6643} diff_factor_sc_src={'camera': 157, 'size': 124, 'texture': 181}
+2026-10-28 10:19:22,823 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 6270/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:19:22,823 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 122/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:19:23,976 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=5.159 same_tr_z=0.1155 gap_z=0.1125 [0.1086, 0.1162] diff_factor_src={'camera': 8057, 'environment': 3707, 'size': 8236} diff_factor_sc_src={'camera': 13, 'environment': 98, 'size': 11}
+2026-10-28 10:19:24,999 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 4129/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:19:24,999 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 85/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:19:26,155 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=4.822 same_tr_z=0.0548 gap_z=0.0506 [0.0470, 0.0539] diff_factor_src={'camera': 8086, 'environment': 3721, 'texture': 8193} diff_factor_sc_src={'camera': 11, 'environment': 66, 'texture': 8}
+2026-10-28 10:19:27,170 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 6270/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:19:27,171 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 131/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:19:28,275 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=7.279 same_tr_z=0.0153 gap_z=0.0162 [0.0132, 0.0197] diff_factor_src={'environment': 3709, 'size': 8059, 'texture': 8232} diff_factor_sc_src={'environment': 101, 'size': 6, 'texture': 24}
+2026-10-28 10:19:28,276 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_delta_stats.csv (4 rows)
+2026-10-28 10:19:28,951 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 10:22:44,793 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model clip_vitb32
+2026-10-28 10:22:53,203 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-28 10:23:09,333 | INFO | run_e2_pug_animals | [E2] factor=texture: 30000 pairs, 24270 contexts
+2026-10-28 10:23:29,403 | INFO | run_e2_pug_animals | [E2] factor=size: 30000 pairs, 26045 contexts
+2026-10-28 10:23:45,710 | INFO | run_e2_pug_animals | [E2] factor=camera: 30000 pairs, 24270 contexts
+2026-10-28 10:23:46,685 | INFO | run_e2_pug_animals | [extract] cache pug_animals: 215040 ids present
+2026-10-28 10:23:46,756 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals
+2026-10-28 10:26:23,097 | INFO | run_e2_pug_animals | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 10:26:24,038 | INFO | run_e2_pug_animals | [E2] nuisance text: 1000 captions
+2026-10-28 10:26:24,047 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=2.8775 norm_visual_z=0.2711 norm_text_raw=0.8998 norm_text_z=0.1100 sim_visual_raw=0.0724 sim_visual_z=0.0691 sim_text_raw=0.6922 sim_text_z=0.6703
+2026-10-28 10:26:24,899 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 462/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:26:25,414 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=7.698 same_tr_z=0.6712 gap_z=0.6690 [0.6630, 0.6747] diff_factor_src={'camera': 6734, 'size': 6623, 'texture': 6643} diff_factor_sc_src={'camera': 157, 'size': 124, 'texture': 181}
+2026-10-28 10:26:26,301 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 6270/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:26:26,301 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 122/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:26:27,521 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=2.552 same_tr_z=0.1166 gap_z=0.1129 [0.1079, 0.1173] diff_factor_src={'camera': 8057, 'environment': 3707, 'size': 8236} diff_factor_sc_src={'camera': 13, 'environment': 98, 'size': 11}
+2026-10-28 10:26:28,379 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 4129/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:26:28,379 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 85/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:26:29,559 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=2.587 same_tr_z=0.0575 gap_z=0.0537 [0.0494, 0.0578] diff_factor_src={'camera': 8086, 'environment': 3721, 'texture': 8193} diff_factor_sc_src={'camera': 11, 'environment': 66, 'texture': 8}
+2026-10-28 10:26:30,412 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 6270/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:26:30,412 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 131/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:26:31,495 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=4.334 same_tr_z=0.0178 gap_z=0.0194 [0.0151, 0.0236] diff_factor_src={'environment': 3709, 'size': 8059, 'texture': 8232} diff_factor_sc_src={'environment': 101, 'size': 6, 'texture': 24}
+2026-10-28 10:26:31,496 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e2_delta_stats.csv (4 rows)
+2026-10-28 10:26:32,090 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 10:29:36,715 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model siglip2_so400m
+2026-10-28 10:29:46,229 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-28 10:30:02,124 | INFO | run_e2_pug_animals | [E2] factor=texture: 30000 pairs, 24270 contexts
+2026-10-28 10:30:22,304 | INFO | run_e2_pug_animals | [E2] factor=size: 30000 pairs, 26045 contexts
+2026-10-28 10:30:39,381 | INFO | run_e2_pug_animals | [E2] factor=camera: 30000 pairs, 24270 contexts
+2026-10-28 10:30:41,049 | INFO | run_e2_pug_animals | [extract] cache pug_animals: 215040 ids present
+2026-10-28 10:30:41,113 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals
+2026-10-28 10:33:48,090 | INFO | run_e2_pug_animals | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 10:33:51,100 | INFO | run_e2_pug_animals | [E2] nuisance text: 1000 captions
+2026-10-28 10:33:51,120 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=5.5725 norm_visual_z=0.3479 norm_text_raw=6.6655 norm_text_z=0.2002 sim_visual_raw=0.4080 sim_visual_z=0.4105 sim_text_raw=0.5251 sim_text_z=0.5292
+2026-10-28 10:33:52,446 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 462/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:33:52,949 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=10.113 same_tr_z=0.7269 gap_z=0.7258 [0.7208, 0.7307] diff_factor_src={'camera': 6734, 'size': 6623, 'texture': 6643} diff_factor_sc_src={'camera': 157, 'size': 124, 'texture': 181}
+2026-10-28 10:33:54,239 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 6270/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:33:54,240 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 122/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:33:55,369 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=4.254 same_tr_z=0.2627 gap_z=0.2588 [0.2532, 0.2642] diff_factor_src={'camera': 8057, 'environment': 3707, 'size': 8236} diff_factor_sc_src={'camera': 13, 'environment': 98, 'size': 11}
+2026-10-28 10:33:56,636 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 4129/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:33:56,636 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 85/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:33:57,815 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=3.399 same_tr_z=0.0906 gap_z=0.0870 [0.0835, 0.0902] diff_factor_src={'camera': 8086, 'environment': 3721, 'texture': 8193} diff_factor_sc_src={'camera': 11, 'environment': 66, 'texture': 8}
+2026-10-28 10:33:59,093 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 6270/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:33:59,093 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 131/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:34:00,186 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=5.067 same_tr_z=0.0320 gap_z=0.0335 [0.0301, 0.0369] diff_factor_src={'environment': 3709, 'size': 8059, 'texture': 8232} diff_factor_sc_src={'environment': 101, 'size': 6, 'texture': 24}
+2026-10-28 10:34:00,187 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e2_delta_stats.csv (4 rows)
+2026-10-28 10:34:01,016 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 10:38:10,342 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model clip_vitl14
+2026-10-28 10:38:19,080 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-28 10:38:34,990 | INFO | run_e2_pug_animals | [E2] factor=texture: 30000 pairs, 24225 contexts
+2026-10-28 10:38:55,523 | INFO | run_e2_pug_animals | [E2] factor=size: 30000 pairs, 26005 contexts
+2026-10-28 10:39:12,230 | INFO | run_e2_pug_animals | [E2] factor=camera: 30000 pairs, 24225 contexts
+2026-10-28 10:39:13,338 | INFO | run_e2_pug_animals | [extract] cache pug_animals: 215040 ids present
+2026-10-28 10:39:13,413 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals
+2026-10-28 10:42:02,656 | INFO | run_e2_pug_animals | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 10:42:04,031 | INFO | run_e2_pug_animals | [E2] nuisance text: 1000 captions
+2026-10-28 10:42:04,046 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=4.9948 norm_visual_z=0.2842 norm_text_raw=1.8698 norm_text_z=0.1419 sim_visual_raw=0.0883 sim_visual_z=0.0914 sim_text_raw=0.6277 sim_text_z=0.6252
+2026-10-28 10:42:05,079 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 423/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:42:05,598 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=12.874 same_tr_z=0.6441 gap_z=0.6429 [0.6379, 0.6475] diff_factor_src={'camera': 6738, 'size': 6617, 'texture': 6645} diff_factor_sc_src={'camera': 149, 'size': 120, 'texture': 154}
+2026-10-28 10:42:06,638 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 6410/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:42:06,638 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 99/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:42:07,750 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=5.161 same_tr_z=0.1144 gap_z=0.1100 [0.1060, 0.1138] diff_factor_src={'camera': 8054, 'environment': 3700, 'size': 8246} diff_factor_sc_src={'camera': 13, 'environment': 81, 'size': 5}
+2026-10-28 10:42:08,766 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 4177/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:42:08,766 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 94/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:42:09,963 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=4.827 same_tr_z=0.0557 gap_z=0.0524 [0.0489, 0.0561] diff_factor_src={'camera': 8094, 'environment': 3719, 'texture': 8187} diff_factor_sc_src={'camera': 7, 'environment': 74, 'texture': 13}
+2026-10-28 10:42:10,994 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 6410/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:42:10,994 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 107/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:42:12,090 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=7.285 same_tr_z=0.0155 gap_z=0.0172 [0.0142, 0.0205] diff_factor_src={'environment': 3695, 'size': 8057, 'texture': 8248} diff_factor_sc_src={'environment': 74, 'size': 10, 'texture': 23}
+2026-10-28 10:42:12,092 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e2_delta_stats.csv (4 rows)
+2026-10-28 10:42:12,759 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 10:45:24,450 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model clip_vitb32
+2026-10-28 10:45:32,709 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-28 10:45:48,616 | INFO | run_e2_pug_animals | [E2] factor=texture: 30000 pairs, 24225 contexts
+2026-10-28 10:46:08,299 | INFO | run_e2_pug_animals | [E2] factor=size: 30000 pairs, 26005 contexts
+2026-10-28 10:46:24,691 | INFO | run_e2_pug_animals | [E2] factor=camera: 30000 pairs, 24225 contexts
+2026-10-28 10:46:25,529 | INFO | run_e2_pug_animals | [extract] cache pug_animals: 215040 ids present
+2026-10-28 10:46:25,592 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals
+2026-10-28 10:49:10,326 | INFO | run_e2_pug_animals | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 10:49:11,340 | INFO | run_e2_pug_animals | [E2] nuisance text: 1000 captions
+2026-10-28 10:49:11,349 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=2.8338 norm_visual_z=0.2674 norm_text_raw=0.9073 norm_text_z=0.1108 sim_visual_raw=0.0697 sim_visual_z=0.0737 sim_text_raw=0.6891 sim_text_z=0.6662
+2026-10-28 10:49:12,066 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 423/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:49:12,549 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=7.694 same_tr_z=0.6723 gap_z=0.6708 [0.6644, 0.6765] diff_factor_src={'camera': 6738, 'size': 6617, 'texture': 6645} diff_factor_sc_src={'camera': 149, 'size': 120, 'texture': 154}
+2026-10-28 10:49:13,307 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 6410/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:49:13,307 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 99/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:49:14,506 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=2.544 same_tr_z=0.1168 gap_z=0.1115 [0.1070, 0.1165] diff_factor_src={'camera': 8054, 'environment': 3700, 'size': 8246} diff_factor_sc_src={'camera': 13, 'environment': 81, 'size': 5}
+2026-10-28 10:49:15,243 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 4177/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:49:15,244 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 94/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:49:16,429 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=2.591 same_tr_z=0.0611 gap_z=0.0561 [0.0521, 0.0602] diff_factor_src={'camera': 8094, 'environment': 3719, 'texture': 8187} diff_factor_sc_src={'camera': 7, 'environment': 74, 'texture': 13}
+2026-10-28 10:49:17,158 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 6410/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:49:17,158 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 107/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:49:18,253 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=4.337 same_tr_z=0.0156 gap_z=0.0152 [0.0111, 0.0193] diff_factor_src={'environment': 3695, 'size': 8057, 'texture': 8248} diff_factor_sc_src={'environment': 74, 'size': 10, 'texture': 23}
+2026-10-28 10:49:18,254 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e2_delta_stats.csv (4 rows)
+2026-10-28 10:49:18,841 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 10:52:25,669 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model siglip2_so400m
+2026-10-28 10:52:35,538 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-28 10:52:51,446 | INFO | run_e2_pug_animals | [E2] factor=texture: 30000 pairs, 24225 contexts
+2026-10-28 10:53:11,705 | INFO | run_e2_pug_animals | [E2] factor=size: 30000 pairs, 26005 contexts
+2026-10-28 10:53:28,667 | INFO | run_e2_pug_animals | [E2] factor=camera: 30000 pairs, 24225 contexts
+2026-10-28 10:53:30,317 | INFO | run_e2_pug_animals | [extract] cache pug_animals: 215040 ids present
+2026-10-28 10:53:30,389 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals
+2026-10-28 10:56:49,178 | INFO | run_e2_pug_animals | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 10:56:51,866 | INFO | run_e2_pug_animals | [E2] nuisance text: 1000 captions
+2026-10-28 10:56:51,888 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=5.6116 norm_visual_z=0.3505 norm_text_raw=6.7222 norm_text_z=0.2013 sim_visual_raw=0.4172 sim_visual_z=0.4248 sim_text_raw=0.5240 sim_text_z=0.5264
+2026-10-28 10:56:53,187 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 423/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:56:53,685 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=10.124 same_tr_z=0.7289 gap_z=0.7273 [0.7224, 0.7316] diff_factor_src={'camera': 6738, 'size': 6617, 'texture': 6645} diff_factor_sc_src={'camera': 149, 'size': 120, 'texture': 154}
+2026-10-28 10:56:54,984 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 6410/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:56:54,984 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 99/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:56:56,098 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=4.258 same_tr_z=0.2627 gap_z=0.2579 [0.2519, 0.2638] diff_factor_src={'camera': 8054, 'environment': 3700, 'size': 8246} diff_factor_sc_src={'camera': 13, 'environment': 81, 'size': 5}
+2026-10-28 10:56:57,340 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 4177/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:56:57,340 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 94/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:56:58,508 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=3.405 same_tr_z=0.0915 gap_z=0.0876 [0.0842, 0.0910] diff_factor_src={'camera': 8094, 'environment': 3719, 'texture': 8187} diff_factor_sc_src={'camera': 7, 'environment': 74, 'texture': 13}
+2026-10-28 10:56:59,757 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 6410/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:56:59,757 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 107/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 10:57:00,853 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=5.067 same_tr_z=0.0302 gap_z=0.0303 [0.0272, 0.0336] diff_factor_src={'environment': 3695, 'size': 8057, 'texture': 8248} diff_factor_sc_src={'environment': 74, 'size': 10, 'texture': 23}
+2026-10-28 10:57:00,855 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e2_delta_stats.csv (4 rows)
+2026-10-28 10:57:01,666 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 11:01:03,349 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model clip_vitl14
+2026-10-28 11:01:12,079 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-28 11:01:28,002 | INFO | run_e2_pug_animals | [E2] factor=texture: 30000 pairs, 24267 contexts
+2026-10-28 11:01:48,700 | INFO | run_e2_pug_animals | [E2] factor=size: 30000 pairs, 26002 contexts
+2026-10-28 11:02:05,470 | INFO | run_e2_pug_animals | [E2] factor=camera: 30000 pairs, 24267 contexts
+2026-10-28 11:02:06,575 | INFO | run_e2_pug_animals | [extract] cache pug_animals: 215040 ids present
+2026-10-28 11:02:06,646 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals
+2026-10-28 11:04:56,157 | INFO | run_e2_pug_animals | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 11:04:57,547 | INFO | run_e2_pug_animals | [E2] nuisance text: 1000 captions
+2026-10-28 11:04:57,559 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=5.0295 norm_visual_z=0.2863 norm_text_raw=1.8724 norm_text_z=0.1418 sim_visual_raw=0.0864 sim_visual_z=0.0860 sim_text_raw=0.6329 sim_text_z=0.6314
+2026-10-28 11:04:58,578 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 426/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:04:59,082 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=12.866 same_tr_z=0.6442 gap_z=0.6440 [0.6392, 0.6488] diff_factor_src={'camera': 6747, 'size': 6608, 'texture': 6645} diff_factor_sc_src={'camera': 160, 'size': 109, 'texture': 157}
+2026-10-28 11:05:00,119 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 6307/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:05:00,119 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 107/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:05:01,234 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=5.132 same_tr_z=0.1150 gap_z=0.1112 [0.1074, 0.1152] diff_factor_src={'camera': 8060, 'environment': 3701, 'size': 8239} diff_factor_sc_src={'camera': 15, 'environment': 81, 'size': 11}
+2026-10-28 11:05:02,249 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 4174/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:05:02,249 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 84/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:05:03,426 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=4.825 same_tr_z=0.0566 gap_z=0.0531 [0.0497, 0.0564] diff_factor_src={'camera': 8087, 'environment': 3725, 'texture': 8188} diff_factor_sc_src={'camera': 12, 'environment': 60, 'texture': 12}
+2026-10-28 11:05:04,453 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 6307/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:05:04,453 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 138/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:05:05,547 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=7.275 same_tr_z=0.0148 gap_z=0.0170 [0.0138, 0.0202] diff_factor_src={'environment': 3700, 'size': 8060, 'texture': 8240} diff_factor_sc_src={'environment': 99, 'size': 13, 'texture': 26}
+2026-10-28 11:05:05,549 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e2_delta_stats.csv (4 rows)
+2026-10-28 11:05:06,212 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 11:08:27,745 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model clip_vitb32
+2026-10-28 11:08:36,007 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-28 11:08:51,886 | INFO | run_e2_pug_animals | [E2] factor=texture: 30000 pairs, 24267 contexts
+2026-10-28 11:09:11,663 | INFO | run_e2_pug_animals | [E2] factor=size: 30000 pairs, 26002 contexts
+2026-10-28 11:09:28,174 | INFO | run_e2_pug_animals | [E2] factor=camera: 30000 pairs, 24267 contexts
+2026-10-28 11:09:28,966 | INFO | run_e2_pug_animals | [extract] cache pug_animals: 215040 ids present
+2026-10-28 11:09:29,039 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals
+2026-10-28 11:12:04,195 | INFO | run_e2_pug_animals | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 11:12:05,241 | INFO | run_e2_pug_animals | [E2] nuisance text: 1000 captions
+2026-10-28 11:12:05,250 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=2.8502 norm_visual_z=0.2690 norm_text_raw=0.9022 norm_text_z=0.1102 sim_visual_raw=0.0664 sim_visual_z=0.0690 sim_text_raw=0.6947 sim_text_z=0.6702
+2026-10-28 11:12:05,982 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 426/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:12:06,474 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=7.694 same_tr_z=0.6711 gap_z=0.6702 [0.6639, 0.6763] diff_factor_src={'camera': 6747, 'size': 6608, 'texture': 6645} diff_factor_sc_src={'camera': 160, 'size': 109, 'texture': 157}
+2026-10-28 11:12:07,240 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 6307/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:12:07,240 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 107/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:12:08,447 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=2.545 same_tr_z=0.1158 gap_z=0.1121 [0.1072, 0.1170] diff_factor_src={'camera': 8060, 'environment': 3701, 'size': 8239} diff_factor_sc_src={'camera': 15, 'environment': 81, 'size': 11}
+2026-10-28 11:12:09,197 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 4174/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:12:09,197 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 84/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:12:10,382 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=2.580 same_tr_z=0.0579 gap_z=0.0554 [0.0514, 0.0597] diff_factor_src={'camera': 8087, 'environment': 3725, 'texture': 8188} diff_factor_sc_src={'camera': 12, 'environment': 60, 'texture': 12}
+2026-10-28 11:12:11,123 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 6307/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:12:11,123 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 138/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:12:12,200 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=4.341 same_tr_z=0.0169 gap_z=0.0172 [0.0129, 0.0212] diff_factor_src={'environment': 3700, 'size': 8060, 'texture': 8240} diff_factor_sc_src={'environment': 99, 'size': 13, 'texture': 26}
+2026-10-28 11:12:12,201 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e2_delta_stats.csv (4 rows)
+2026-10-28 11:12:12,775 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 11:15:32,191 | INFO | run_e2_pug_animals | [run_e2_pug_animals] model siglip2_so400m
+2026-10-28 11:15:41,988 | INFO | run_e2_pug_animals | [E2] factor=environment: 13440 pairs, 3360 contexts
+2026-10-28 11:15:57,898 | INFO | run_e2_pug_animals | [E2] factor=texture: 30000 pairs, 24267 contexts
+2026-10-28 11:16:17,840 | INFO | run_e2_pug_animals | [E2] factor=size: 30000 pairs, 26002 contexts
+2026-10-28 11:16:34,625 | INFO | run_e2_pug_animals | [E2] factor=camera: 30000 pairs, 24267 contexts
+2026-10-28 11:16:36,886 | INFO | run_e2_pug_animals | [extract] cache pug_animals: 215040 ids present
+2026-10-28 11:16:36,960 | INFO | run_e2_pug_animals | [extract] cache complete, skip: pug_animals
+2026-10-28 11:19:48,547 | INFO | run_e2_pug_animals | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 11:19:51,248 | INFO | run_e2_pug_animals | [E2] nuisance text: 1000 captions
+2026-10-28 11:19:51,272 | INFO | run_e2_pug_animals | [E2] nuisance: norm_visual_raw=5.5482 norm_visual_z=0.3469 norm_text_raw=6.7300 norm_text_z=0.2020 sim_visual_raw=0.4128 sim_visual_z=0.4026 sim_text_raw=0.5281 sim_text_z=0.5326
+2026-10-28 11:19:52,567 | WARNING | run_e2_pug_animals | [E2] pug_animals/environment/diff_factor_sc: 仅采样到 426/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:19:53,061 | INFO | run_e2_pug_animals | [E2] pug_animals/environment: |Δ|raw=10.119 same_tr_z=0.7298 gap_z=0.7280 [0.7233, 0.7327] diff_factor_src={'camera': 6747, 'size': 6608, 'texture': 6645} diff_factor_sc_src={'camera': 160, 'size': 109, 'texture': 157}
+2026-10-28 11:19:54,284 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/same_factor_dt_sc: 仅采样到 6307/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:19:54,284 | WARNING | run_e2_pug_animals | [E2] pug_animals/texture/diff_factor_sc: 仅采样到 107/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:19:55,391 | INFO | run_e2_pug_animals | [E2] pug_animals/texture: |Δ|raw=4.242 same_tr_z=0.2638 gap_z=0.2605 [0.2551, 0.2664] diff_factor_src={'camera': 8060, 'environment': 3701, 'size': 8239} diff_factor_sc_src={'camera': 15, 'environment': 81, 'size': 11}
+2026-10-28 11:19:56,608 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/same_factor_dt_sc: 仅采样到 4174/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:19:56,608 | WARNING | run_e2_pug_animals | [E2] pug_animals/size/diff_factor_sc: 仅采样到 84/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:19:57,749 | INFO | run_e2_pug_animals | [E2] pug_animals/size: |Δ|raw=3.405 same_tr_z=0.0903 gap_z=0.0861 [0.0826, 0.0895] diff_factor_src={'camera': 8087, 'environment': 3725, 'texture': 8188} diff_factor_sc_src={'camera': 12, 'environment': 60, 'texture': 12}
+2026-10-28 11:19:58,995 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/same_factor_dt_sc: 仅采样到 6307/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:19:58,995 | WARNING | run_e2_pug_animals | [E2] pug_animals/camera/diff_factor_sc: 仅采样到 138/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 11:20:00,102 | INFO | run_e2_pug_animals | [E2] pug_animals/camera: |Δ|raw=5.071 same_tr_z=0.0312 gap_z=0.0309 [0.0276, 0.0344] diff_factor_src={'environment': 3700, 'size': 8060, 'texture': 8240} diff_factor_sc_src={'environment': 99, 'size': 13, 'texture': 26}
+2026-10-28 11:20:00,104 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e2_delta_stats.csv (4 rows)
+2026-10-28 11:20:00,916 | INFO | run_e2_pug_animals | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e2_transition_stats.csv (2031 transitions; 0 with n_contexts<2 → mean_sim=NaN)

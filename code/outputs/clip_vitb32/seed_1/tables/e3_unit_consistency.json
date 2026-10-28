@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "all_ok": true,
+  "atol": 1e-08,
+  "source_fingerprint": "faf5d8fa320d9bd9a5fd9651cf6c228a",
+  "unit_table_md5": "b3439f18b4467e957cfa9b3ee84f43fe",
+  "checks": [
+    {
+      "shape_group": "cube_cylinder",
+      "recomputed": 0.05678169348668294,
+      "report": 0.0567816934866829,
+      "abs_diff": 3.469446951953614e-17,
+      "ok": true
+    },
+    {
+      "shape_group": "sphere",
+      "recomputed": -0.008950689977239579,
+      "report": -0.0089506899772395,
+      "abs_diff": 7.806255641895632e-17,
+      "ok": true
+    }
+  ],
+  "tables_dir": "/home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables"
+}

@@ -170,7 +170,8 @@ def run(model, paths, logger, smoke=False, seed=None, dataset="pug_animals",
     pairs_by_factor = {}
     for f in factors:
         p = build_factor_pairs(meta, f, orders, samp["max_pairs_per_context"], max_total,
-                               seed=pair_seed, meta_cols=spec["meta_cols"])
+                               seed=pair_seed, meta_cols=spec["meta_cols"],
+                               logger=logger)
         if len(p) == 0:
             # 复核 B2：空因素此前在日志访问 p['context_key'] 时抛 KeyError；
             # 现在默认带原因停止，局部诊断可显式跳过。三轮审查问题 1：

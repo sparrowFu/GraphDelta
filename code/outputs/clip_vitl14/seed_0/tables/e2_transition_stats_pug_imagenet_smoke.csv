@@ -1,0 +1,16 @@
+factor,source_value,target_value,n_contexts,mean_sim_z,mean_sim_raw,mean_delta_norm_raw,mean_delta_norm_z
+environment,AmusementPark,AncientAgora,2,0.823817253112793,0.818512499332428,12.483204,0.7031989
+environment,AmusementPark,Appartment,1,,,11.946182,0.67733234
+environment,AmusementPark,ArcadeClub,2,0.7605037093162537,0.7657713890075684,10.079803,0.57357395
+environment,AmusementPark,Arena,1,,,12.872107,0.72044057
+environment,AmusementPark,AustralianRoad,1,,,14.002192,0.7637187
+environment,AncientAgora,Appartment,2,0.7137130498886108,0.7083752155303955,12.516922,0.71462214
+environment,AncientAgora,ArcadeClub,1,,,12.6061735,0.70785666
+environment,AncientAgora,Arena,1,,,11.827764,0.669043
+environment,AncientAgora,AustralianRoad,2,0.6960883140563965,0.6962828636169434,12.2231455,0.67576283
+environment,Appartment,ArcadeClub,2,0.6727791428565979,0.6729961633682251,9.141901,0.5416393
+environment,Appartment,Arena,2,0.8545105457305908,0.8525882959365845,12.631353,0.7337769
+environment,Appartment,AustralianRoad,2,0.884406566619873,0.8832817077636719,14.766052,0.8275589
+environment,ArcadeClub,Arena,1,,,11.982119,0.6961106
+environment,ArcadeClub,AustralianRoad,2,0.6415092349052429,0.6382683515548706,12.921967,0.7431294
+environment,Arena,AustralianRoad,2,0.7180672883987427,0.718963623046875,14.185959,0.8046341

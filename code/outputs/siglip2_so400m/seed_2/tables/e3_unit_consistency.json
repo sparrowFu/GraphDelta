@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "all_ok": true,
+  "atol": 1e-08,
+  "source_fingerprint": "65d05116e4b74086292ca0d52fc3571d",
+  "unit_table_md5": "c8f9ea0234e3773d9e39d61caa83c921",
+  "checks": [
+    {
+      "shape_group": "cube_cylinder",
+      "recomputed": 0.05212445675655064,
+      "report": 0.0521244567565506,
+      "abs_diff": 4.163336342344337e-17,
+      "ok": true
+    },
+    {
+      "shape_group": "sphere",
+      "recomputed": 0.0015323996581956267,
+      "report": 0.0015323996581956,
+      "abs_diff": 2.667137344314341e-17,
+      "ok": true
+    }
+  ],
+  "tables_dir": "/home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables"
+}

@@ -3,6 +3,10 @@
 
 进度日志统一为 "[extract:key] N/M"（每 2000 张）；缓存按 id 增量补齐，
 --force 删除后重抽。
+
+--dataset all：全部数据集串行依次抽取（辅助集 pug_imagenet 排最后）；
+--model all：全部已配置模型串行运行，一次只加载一个模型（模型在外层循环，
+数据集在内层，同一模型连抽全部数据集后再换下一个模型）。
 """
 import argparse
 import json
@@ -21,9 +25,18 @@ from src.data.pug_spar import META_COLUMNS as SPAR_META
 from src.experiments.e1_spar_official import extract_official_features
 from src.features.cache import ImageFeatureCache
 from src.features.extract import extract_clevr_images, extract_pug_images
-from src.models import build_encoder
+from src.models import build_encoder, free_encoder_memory, resolve_models
 from src.utils.io import load_config, load_paths
 from src.utils.logging import get_logger
+
+# --dataset 的全部取值；all 的串行顺序与此列表一致（辅助集最后）
+EXTRACT_DATASETS = ["clevr_val", "pug_spar", "pug_spar_official", "pug_animals",
+                    "cogent_valA", "cogent_valB", "pug_imagenet"]
+
+
+def resolve_datasets(dataset):
+    """--dataset 取值解析：'all' → 全部数据集（串行依次抽取）。"""
+    return list(EXTRACT_DATASETS) if dataset == "all" else [dataset]
 
 
 def _force_reset(cache_root, model, dataset, logger):
@@ -77,36 +90,26 @@ def _cogent_key_cfg(paths, dataset):
     return ccfg, key
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--dataset", required=True,
-                    choices=["clevr_val", "cogent_valA", "cogent_valB",
-                             "pug_spar", "pug_animals", "pug_imagenet",
-                             "pug_spar_official"])
-    ap.add_argument("--model", default="clip_vitl14")
-    ap.add_argument("--force", action="store_true", help="删除已有缓存重新抽取")
-    args = ap.parse_args()
-
-    paths = load_paths()
-    logger = get_logger(f"extract_{args.dataset}", paths["dirs"]["outputs"] / "logs")
-    model = build_encoder(args.model, paths, logger)
+def extract_dataset(model, paths, logger, dataset, force=False):
+    """单个 (model, dataset) 的特征抽取入口（含 --force 的缓存重建）。"""
     # cogent 的生效缓存 key 在 force 之前解析（复核缺口 4：此前 force 删裸
     # dataset 名的 NPZ，实际抽取用带指纹 key，同协议 force 删错目标、不重抽）
     cogent_ccfg = cogent_key = None
-    if args.dataset in ("cogent_valA", "cogent_valB"):
-        cogent_ccfg, cogent_key = _cogent_key_cfg(paths, args.dataset)
-    if args.force:
-        _force_reset(paths["dirs"]["cache"], model, cogent_key or args.dataset,
+    if dataset in ("cogent_valA", "cogent_valB"):
+        cogent_ccfg, cogent_key = _cogent_key_cfg(paths, dataset)
+    if force:
+        _force_reset(paths["dirs"]["cache"], model, cogent_key or dataset,
                      logger)
-    cache = ImageFeatureCache(paths["dirs"]["cache"], model.name, protocol=model.cache_protocol)
+    cache = ImageFeatureCache(paths["dirs"]["cache"], model.name,
+                              protocol=model.cache_protocol)
 
-    if args.dataset == "clevr_val":
+    if dataset == "clevr_val":
         cfg = load_config("e1_state")["clevr"]
         scenes = clevr.load_scenes(f"{paths['datasets']['clevr']}/{cfg['scene_file']}")
         extract_clevr_images(model, cache, "clevr_val", scenes,
                              f"{paths['datasets']['clevr']}/{cfg['image_dir']}", logger)
-    elif args.dataset in ("cogent_valA", "cogent_valB"):
-        cond = args.dataset[-1]
+    elif dataset in ("cogent_valA", "cogent_valB"):
+        cond = dataset[-1]
         # 四轮补充 A：与 run_e3 统一读取 configs/e3_cogent.yaml 的
         # conditions.<cond>.scene_file / image_dir；缓存 key 含数据根目录与
         # 生效路径的指纹，与实验入口、--force 三处共用同一 key
@@ -115,20 +118,46 @@ def main():
         extract_clevr_images(model, cache, cogent_key, scenes,
                              condition_image_dir(paths["datasets"]["cogent"], cond,
                                                  cogent_ccfg.get("image_dir")), logger)
-    elif args.dataset == "pug_spar":
+    elif dataset == "pug_spar":
         extract_pug_images(model, cache, "pug_spar", paths["datasets"]["pug_spar"],
                            SPAR_META, logger, id_prefix="pug_spar")
-    elif args.dataset == "pug_animals":
+    elif dataset == "pug_animals":
         extract_pug_images(model, cache, "pug_animals", paths["datasets"]["pug_animals"],
                            ANIMALS_META, logger, id_prefix="pug_animals")
-    elif args.dataset == "pug_imagenet":
+    elif dataset == "pug_imagenet":
         extract_pug_images(model, cache, "pug_imagenet",
                            paths["datasets"]["pug_imagenet"],
                            IMAGENET_META, logger, id_prefix="pug_imagenet")
-    elif args.dataset == "pug_spar_official":
+    elif dataset == "pug_spar_official":
         # 官方协议预处理（Resize224 + ImageNet mean/std），缓存 key 同名
         extract_official_features(model, cache, "pug_spar_official",
                                   paths["datasets"]["pug_spar"], logger)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dataset", required=True,
+                    choices=["all"] + EXTRACT_DATASETS,
+                    help="要抽取特征的数据集（all = 全部数据集串行依次抽取）")
+    ap.add_argument("--model", default="clip_vitl14",
+                    help="冻结 baseline（all = 依次运行全部已配置模型，"
+                         "串行执行、一次只加载一个）")
+    ap.add_argument("--force", action="store_true", help="删除已有缓存重新抽取")
+    args = ap.parse_args()
+
+    paths = load_paths()
+    datasets = resolve_datasets(args.dataset)
+    logger = get_logger(f"extract_{args.dataset}", paths["dirs"]["outputs"] / "logs")
+    # 嵌套顺序：模型在外层（一次只加载一个），数据集在内层；
+    # 某个 (model, dataset) 中途失败即停止，后面的不再运行
+    for name in resolve_models(args.model, paths):
+        logger.info(f"[extract] model {name}：{len(datasets)} 个数据集串行")
+        model = build_encoder(name, paths, logger)
+        for ds in datasets:
+            logger.info(f"[extract:{ds}] model {name}")
+            extract_dataset(model, paths, logger, ds, force=args.force)
+        del model
+        free_encoder_memory()
 
 
 if __name__ == "__main__":

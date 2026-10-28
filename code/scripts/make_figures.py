@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-"""生成 §67 五张图（只读 outputs/tables 的 CSV，不碰模型与缓存）。
+"""生成 §67 五张图（只读 outputs/<model>/seed_<seed>/tables 的 CSV，不碰模型与缓存）。
 
 配色取自经过验证的默认调色板（明暗两种模式均通过 CVD / 对比度检查，
 本次为浅色 PNG）：系列 1 蓝 #2a78d6、系列 2 橙 #eb6834、负向极 #e34948；
 网格 #e1e0d9、基线 #c3c2b7、弱化轴字 #898781、正文 #0b0b0b / #52514e。
-图内文字用英文（方案 §67 的图名为英文）。输出 outputs/figures/：
-PNG（300dpi）+ 合并 PDF。
+图内文字用英文（方案 §67 的图名为英文）。输出 outputs/figures/<model>_seed<k>/
+（所有模型与种子同一规则，互不覆盖）：PNG（300dpi）+ 合并 PDF。
 """
 import argparse
 import sys
@@ -20,6 +20,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from src.models import resolve_models
 from src.utils.io import (load_config, load_paths, verify_e3_consistency,
                           verify_experiment_committed,
                           verify_tables_identity)
@@ -228,36 +229,27 @@ def fig_cogent(tables, path, pdf):
     plt.close(fig)
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="clip_vitl14",
-                    help="结果所属模型：定位 tables 目录与图标题（R2/R7）")
-    ap.add_argument("--seed", type=int, default=0,
-                    help="结果所属种子：定位 tables 目录与图标题")
-    ap.add_argument("--tables-dir", default=None,
-                    help="直接指定 tables 目录（默认 outputs/<model>/seed_<seed>/tables，"
-                         "不存在时回退旧布局 outputs/tables）")
-    args = ap.parse_args()
-    paths = load_paths()
+def run_one(model_name, seed, tables_dir, paths):
+    """单个模型的绘图入口（tables 解析 + 身份/完成度校验 + 五图输出）。"""
     out = paths["dirs"]["outputs"]
     # 以所需的全量结果文件（而非目录存在）判定：只有 _smoke 文件的新目录不误选。
     # 旧布局 outputs/tables 只属于 clip_vitl14 seed 0（R2 隔离前的历史结果），
     # 其他模型/种子不得回退（R7：防错误标注身份）
     LEGACY_MODEL, LEGACY_SEED = "clip_vitl14", 0
-    new_tables = out / args.model / f"seed_{args.seed}" / "tables"
-    if args.tables_dir:
-        tables = Path(args.tables_dir)
+    new_tables = out / model_name / f"seed_{seed}" / "tables"
+    if tables_dir:
+        tables = Path(tables_dir)
     elif (new_tables / "e1_results.csv").exists():
         tables = new_tables
-    elif (args.model == LEGACY_MODEL and args.seed == LEGACY_SEED
+    elif (model_name == LEGACY_MODEL and seed == LEGACY_SEED
           and (out / "tables" / "e1_results.csv").exists()):
         tables = out / "tables"
     else:
-        raise SystemExit(f"找不到 {args.model} seed {args.seed} 的全量结果"
+        raise SystemExit(f"找不到 {model_name} seed {seed} 的全量结果"
                          f"（{new_tables}）；旧布局仅属于 clip_vitl14 seed 0。"
                          f"请先跑全量或用 --tables-dir 指定")
     # A5：显式目录也要可验证身份（有 run_meta 核对；无 run_meta 只认旧布局属主）
-    verify_tables_identity(tables, out, args.model, args.seed)
+    verify_tables_identity(tables, out, model_name, seed)
     # 复核缺口 2：未完成（status=running）或产物清单不含目标文件的实验结果
     # 不得进入正式图——运行中断后磁盘文件可能已部分改写
     verify_experiment_committed(tables, "e1_state", ["e1_results.csv"])
@@ -266,24 +258,42 @@ def main():
                                 ["e3_cogent.csv", "e3_difficulty_gap.csv"])
     # 三轮审查问题 2：E3 一致性检查失败的目录，其旧派生单元表已失效，不得绘图
     verify_e3_consistency(tables)
-    model_label = load_config(args.model).get("label", args.model)
-    # 默认组合（clip_vitl14, seed 0）沿用 outputs/figures 保持文件名兼容；
-    # 其他模型/种子写入独立子目录，互不覆盖（R2/R7）
-    if args.model == "clip_vitl14" and args.seed == 0 and not args.tables_dir:
-        figdir = out / "figures"
-    else:
-        figdir = out / "figures" / f"{args.model}_seed{args.seed}"
+    model_label = load_config(model_name).get("label", model_name)
+    # 所有模型/种子统一写 outputs/figures/<model>_seed<k>/，互不覆盖（R2/R7；
+    # 不再为 clip_vitl14 seed 0 特判顶层目录，避免 --model all 时路径规则不一致）
+    figdir = out / "figures" / f"{model_name}_seed{seed}"
     figdir.mkdir(parents=True, exist_ok=True)
-    print(f"tables={tables} | model={model_label} | seed={args.seed} | figures={figdir}")
+    print(f"tables={tables} | model={model_label} | seed={seed} | figures={figdir}")
 
     with PdfPages(figdir / "GraphDelta_stage1_figures.pdf") as pdf:
-        fig_e1(tables, "acc", figdir / "fig1_2afc_accuracy.png", pdf, model_label, args.seed)
-        fig_e1(tables, "margin", figdir / "fig2_matching_margin.png", pdf, model_label, args.seed)
+        fig_e1(tables, "acc", figdir / "fig1_2afc_accuracy.png", pdf, model_label, seed)
+        fig_e1(tables, "margin", figdir / "fig2_matching_margin.png", pdf, model_label, seed)
         fig_delta_magnitude(tables, figdir / "fig3_delta_magnitude.png", pdf)
         fig_ladder(tables, figdir / "fig4_delta_similarity_ladder.png", pdf)
         fig_cogent(tables, figdir / "fig5_cogent_ab.png", pdf)
     for f in sorted(figdir.iterdir()):
         print(f"written {f}")
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model", default="clip_vitl14",
+                    help="结果所属模型：定位 tables 目录与图标题（all = 依次给全部"
+                         "已配置模型绘图，串行执行、不加载模型；R2/R7）")
+    ap.add_argument("--seed", type=int, default=0,
+                    help="结果所属种子：定位 tables 目录与图标题")
+    ap.add_argument("--tables-dir", default=None,
+                    help="直接指定 tables 目录（默认 outputs/<model>/seed_<seed>/tables，"
+                         "不存在时回退旧布局 outputs/tables；只对应一个模型，"
+                         "不能与 --model all 同用）")
+    args = ap.parse_args()
+    paths = load_paths()
+    if args.tables_dir and args.model == "all":
+        raise SystemExit("--tables-dir 只对应一个模型，不能与 --model all 同用")
+    # --model all：串行依次绘图；某模型缺全量结果即停止，后面的不再绘制
+    for name in resolve_models(args.model, paths):
+        print(f"===== figures: {name} seed {args.seed} =====")
+        run_one(name, args.seed, args.tables_dir, paths)
 
 
 if __name__ == "__main__":
