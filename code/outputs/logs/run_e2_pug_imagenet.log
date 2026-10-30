@@ -329,3 +329,264 @@
 2026-10-28 11:23:49,987 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/camera: |Δ|raw=4.993 same_tr_z=0.0910 gap_z=0.0933 [0.0871, 0.1003] diff_factor_src={'environment': 6707, 'size': 6611, 'texture': 6682} diff_factor_sc_src={'environment': 182, 'size': 189}
 2026-10-28 11:23:49,989 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e2_delta_stats_pug_imagenet.csv (4 rows)
 2026-10-28 11:23:50,732 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e2_transition_stats_pug_imagenet.csv (2000 transitions; 1079 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 17:03:43,806 | INFO | run_e2_pug_imagenet | [run_e2_pug_imagenet] model clip_vitl14
+2026-10-28 17:04:00,553 | WARNING | run_e2_pug_imagenet | [pairs] factor='environment': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:04:00,656 | INFO | run_e2_pug_imagenet | [E2] factor=environment: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:04:27,767 | WARNING | run_e2_pug_imagenet | [pairs] factor='texture': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:04:27,998 | INFO | run_e2_pug_imagenet | [E2] factor=texture: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:04:55,574 | WARNING | run_e2_pug_imagenet | [pairs] factor='size': 去重 1448 行重复的 (context, 因素值) 行（涉及 724 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:04:55,802 | INFO | run_e2_pug_imagenet | [E2] factor=size: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:05:23,490 | WARNING | run_e2_pug_imagenet | [pairs] factor='camera': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:05:23,735 | INFO | run_e2_pug_imagenet | [E2] factor=camera: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:05:24,185 | INFO | run_e2_pug_imagenet | [extract] cache pug_imagenet: 88328 ids present
+2026-10-28 17:05:24,214 | INFO | run_e2_pug_imagenet | [extract] cache complete, skip: pug_imagenet
+2026-10-28 17:07:32,219 | INFO | run_e2_pug_imagenet | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 17:07:32,233 | INFO | run_e2_pug_imagenet | [E2] nuisance text: 1000 captions
+2026-10-28 17:07:32,246 | INFO | run_e2_pug_imagenet | [E2] nuisance: norm_visual_raw=5.1661 norm_visual_z=0.2958 norm_text_raw=1.7161 norm_text_z=0.1329 sim_visual_raw=0.0780 sim_visual_z=0.0785 sim_text_raw=0.6391 sim_text_z=0.6369
+2026-10-28 17:07:33,145 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_transition_dc: 仅采样到 1086/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:07:33,145 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:07:33,145 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/diff_factor_sc: 仅采样到 360/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:07:33,321 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/environment: |Δ|raw=12.981 same_tr_z=0.7180 gap_z=0.7176 [0.7052, 0.7299] diff_factor_src={'camera': 6756, 'size': 6584, 'texture': 6660} diff_factor_sc_src={'camera': 189, 'size': 171}
+2026-10-28 17:07:34,301 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:07:34,301 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/diff_factor_sc: 仅采样到 189/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:07:34,645 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/texture: |Δ|raw=7.765 same_tr_z=0.2219 gap_z=0.2247 [0.2121, 0.2360] diff_factor_src={'camera': 6611, 'environment': 6718, 'size': 6671} diff_factor_sc_src={'size': 189}
+2026-10-28 17:07:35,593 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:07:35,593 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/diff_factor_sc: 仅采样到 556/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:07:35,936 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/size: |Δ|raw=6.015 same_tr_z=0.1003 gap_z=0.1019 [0.0947, 0.1092] diff_factor_src={'camera': 6607, 'environment': 6713, 'texture': 6680} diff_factor_sc_src={'camera': 177, 'environment': 191, 'texture': 188}
+2026-10-28 17:07:36,905 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:07:36,905 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/diff_factor_sc: 仅采样到 376/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:07:37,252 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/camera: |Δ|raw=7.194 same_tr_z=0.1225 gap_z=0.1218 [0.1148, 0.1290] diff_factor_src={'environment': 6708, 'size': 6607, 'texture': 6685} diff_factor_sc_src={'environment': 174, 'size': 202}
+2026-10-28 17:07:37,254 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_delta_stats_pug_imagenet.csv (4 rows)
+2026-10-28 17:07:37,771 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables/e2_transition_stats_pug_imagenet.csv (2011 transitions; 1107 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 17:11:31,306 | INFO | run_e2_pug_imagenet | [run_e2_pug_imagenet] model clip_vitb32
+2026-10-28 17:11:47,741 | WARNING | run_e2_pug_imagenet | [pairs] factor='environment': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:11:47,855 | INFO | run_e2_pug_imagenet | [E2] factor=environment: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:12:14,044 | WARNING | run_e2_pug_imagenet | [pairs] factor='texture': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:12:14,270 | INFO | run_e2_pug_imagenet | [E2] factor=texture: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:12:42,025 | WARNING | run_e2_pug_imagenet | [pairs] factor='size': 去重 1448 行重复的 (context, 因素值) 行（涉及 724 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:12:42,262 | INFO | run_e2_pug_imagenet | [E2] factor=size: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:13:09,390 | WARNING | run_e2_pug_imagenet | [pairs] factor='camera': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:13:09,636 | INFO | run_e2_pug_imagenet | [E2] factor=camera: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:13:09,939 | INFO | run_e2_pug_imagenet | [extract] cache pug_imagenet: 88328 ids present
+2026-10-28 17:13:09,968 | INFO | run_e2_pug_imagenet | [extract] cache complete, skip: pug_imagenet
+2026-10-28 17:14:45,084 | INFO | run_e2_pug_imagenet | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 17:14:45,093 | INFO | run_e2_pug_imagenet | [E2] nuisance text: 1000 captions
+2026-10-28 17:14:45,101 | INFO | run_e2_pug_imagenet | [E2] nuisance: norm_visual_raw=2.7478 norm_visual_z=0.2566 norm_text_raw=0.7906 norm_text_z=0.0979 sim_visual_raw=0.0736 sim_visual_z=0.0808 sim_text_raw=0.7167 sim_text_z=0.6976
+2026-10-28 17:14:45,884 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_transition_dc: 仅采样到 1086/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:14:45,884 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:14:45,884 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/diff_factor_sc: 仅采样到 360/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:14:46,071 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/environment: |Δ|raw=7.734 same_tr_z=0.7952 gap_z=0.7958 [0.7852, 0.8068] diff_factor_src={'camera': 6756, 'size': 6584, 'texture': 6660} diff_factor_sc_src={'camera': 189, 'size': 171}
+2026-10-28 17:14:46,962 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:14:46,962 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/diff_factor_sc: 仅采样到 189/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:14:47,322 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/texture: |Δ|raw=3.739 same_tr_z=0.2820 gap_z=0.2809 [0.2655, 0.2939] diff_factor_src={'camera': 6611, 'environment': 6718, 'size': 6671} diff_factor_sc_src={'size': 189}
+2026-10-28 17:14:48,167 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:14:48,167 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/diff_factor_sc: 仅采样到 556/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:14:48,528 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/size: |Δ|raw=2.977 same_tr_z=0.0910 gap_z=0.0947 [0.0878, 0.1016] diff_factor_src={'camera': 6607, 'environment': 6713, 'texture': 6680} diff_factor_sc_src={'camera': 177, 'environment': 191, 'texture': 188}
+2026-10-28 17:14:49,385 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:14:49,386 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/diff_factor_sc: 仅采样到 376/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:14:49,741 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/camera: |Δ|raw=3.510 same_tr_z=0.1441 gap_z=0.1464 [0.1394, 0.1538] diff_factor_src={'environment': 6708, 'size': 6607, 'texture': 6685} diff_factor_sc_src={'environment': 174, 'size': 202}
+2026-10-28 17:14:49,742 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e2_delta_stats_pug_imagenet.csv (4 rows)
+2026-10-28 17:14:50,157 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables/e2_transition_stats_pug_imagenet.csv (2011 transitions; 1107 with n_contexts<2 → mean_sim=NaN)
+2026-10-28 17:19:33,660 | INFO | run_e2_pug_imagenet | [run_e2_pug_imagenet] model siglip2_so400m
+2026-10-28 17:19:51,515 | WARNING | run_e2_pug_imagenet | [pairs] factor='environment': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:19:51,665 | INFO | run_e2_pug_imagenet | [E2] factor=environment: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:20:18,959 | WARNING | run_e2_pug_imagenet | [pairs] factor='texture': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:20:19,188 | INFO | run_e2_pug_imagenet | [E2] factor=texture: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:20:45,958 | WARNING | run_e2_pug_imagenet | [pairs] factor='size': 去重 1448 行重复的 (context, 因素值) 行（涉及 724 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:20:46,197 | INFO | run_e2_pug_imagenet | [E2] factor=size: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:21:13,984 | WARNING | run_e2_pug_imagenet | [pairs] factor='camera': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-28 17:21:14,229 | INFO | run_e2_pug_imagenet | [E2] factor=camera: 2896 pairs, 724 contexts, instances=724
+2026-10-28 17:21:14,851 | INFO | run_e2_pug_imagenet | [extract] cache pug_imagenet: 88328 ids present
+2026-10-28 17:21:14,878 | INFO | run_e2_pug_imagenet | [extract] cache complete, skip: pug_imagenet
+2026-10-28 17:23:18,202 | INFO | run_e2_pug_imagenet | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-28 17:23:18,215 | INFO | run_e2_pug_imagenet | [E2] nuisance text: 1000 captions
+2026-10-28 17:23:18,237 | INFO | run_e2_pug_imagenet | [E2] nuisance: norm_visual_raw=5.8946 norm_visual_z=0.3652 norm_text_raw=6.1707 norm_text_z=0.1916 sim_visual_raw=0.4086 sim_visual_z=0.4103 sim_text_raw=0.5130 sim_text_z=0.5145
+2026-10-28 17:23:19,410 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_transition_dc: 仅采样到 1086/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:23:19,410 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:23:19,410 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/diff_factor_sc: 仅采样到 360/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:23:19,586 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/environment: |Δ|raw=10.007 same_tr_z=0.7643 gap_z=0.7659 [0.7537, 0.7770] diff_factor_src={'camera': 6756, 'size': 6584, 'texture': 6660} diff_factor_sc_src={'camera': 189, 'size': 171}
+2026-10-28 17:23:20,748 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:23:20,748 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/diff_factor_sc: 仅采样到 189/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:23:21,081 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/texture: |Δ|raw=6.029 same_tr_z=0.3542 gap_z=0.3565 [0.3368, 0.3735] diff_factor_src={'camera': 6611, 'environment': 6718, 'size': 6671} diff_factor_sc_src={'size': 189}
+2026-10-28 17:23:22,225 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:23:22,225 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/diff_factor_sc: 仅采样到 556/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:23:22,571 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/size: |Δ|raw=3.835 same_tr_z=0.1204 gap_z=0.1245 [0.1152, 0.1331] diff_factor_src={'camera': 6607, 'environment': 6713, 'texture': 6680} diff_factor_sc_src={'camera': 177, 'environment': 191, 'texture': 188}
+2026-10-28 17:23:23,814 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:23:23,814 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/diff_factor_sc: 仅采样到 376/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-28 17:23:24,156 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/camera: |Δ|raw=5.031 same_tr_z=0.0906 gap_z=0.0933 [0.0871, 0.0998] diff_factor_src={'environment': 6708, 'size': 6607, 'texture': 6685} diff_factor_sc_src={'environment': 174, 'size': 202}
+2026-10-28 17:23:24,158 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e2_delta_stats_pug_imagenet.csv (4 rows)
+2026-10-28 17:23:24,864 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables/e2_transition_stats_pug_imagenet.csv (2011 transitions; 1107 with n_contexts<2 → mean_sim=NaN)
+2026-10-29 08:52:57,166 | INFO | run_e2_pug_imagenet | [run_e2_pug_imagenet] model clip_vitl14
+2026-10-29 08:53:13,339 | WARNING | run_e2_pug_imagenet | [pairs] factor='environment': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 08:53:13,455 | INFO | run_e2_pug_imagenet | [E2] factor=environment: 2896 pairs, 724 contexts, instances=724
+2026-10-29 08:53:39,506 | WARNING | run_e2_pug_imagenet | [pairs] factor='texture': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 08:53:39,729 | INFO | run_e2_pug_imagenet | [E2] factor=texture: 2896 pairs, 724 contexts, instances=724
+2026-10-29 08:54:06,760 | WARNING | run_e2_pug_imagenet | [pairs] factor='size': 去重 1448 行重复的 (context, 因素值) 行（涉及 724 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 08:54:06,999 | INFO | run_e2_pug_imagenet | [E2] factor=size: 2896 pairs, 724 contexts, instances=724
+2026-10-29 08:54:34,250 | WARNING | run_e2_pug_imagenet | [pairs] factor='camera': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 08:54:34,497 | INFO | run_e2_pug_imagenet | [E2] factor=camera: 2896 pairs, 724 contexts, instances=724
+2026-10-29 08:54:34,909 | INFO | run_e2_pug_imagenet | [extract] cache pug_imagenet: 88328 ids present
+2026-10-29 08:54:34,938 | INFO | run_e2_pug_imagenet | [extract] cache complete, skip: pug_imagenet
+2026-10-29 08:56:10,783 | INFO | run_e2_pug_imagenet | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-29 08:56:10,794 | INFO | run_e2_pug_imagenet | [E2] nuisance text: 1000 captions
+2026-10-29 08:56:10,808 | INFO | run_e2_pug_imagenet | [E2] nuisance: norm_visual_raw=5.1514 norm_visual_z=0.2948 norm_text_raw=1.7144 norm_text_z=0.1320 sim_visual_raw=0.0787 sim_visual_z=0.0802 sim_text_raw=0.6263 sim_text_z=0.6328
+2026-10-29 08:56:11,739 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_transition_dc: 仅采样到 1132/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 08:56:11,739 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 08:56:11,739 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/diff_factor_sc: 仅采样到 346/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 08:56:11,924 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/environment: |Δ|raw=12.969 same_tr_z=0.7173 gap_z=0.7169 [0.7045, 0.7285] diff_factor_src={'camera': 6763, 'size': 6562, 'texture': 6675} diff_factor_sc_src={'camera': 164, 'size': 182}
+2026-10-29 08:56:12,915 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 08:56:12,916 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/diff_factor_sc: 仅采样到 176/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 08:56:13,271 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/texture: |Δ|raw=7.773 same_tr_z=0.2146 gap_z=0.2170 [0.2053, 0.2283] diff_factor_src={'camera': 6611, 'environment': 6718, 'size': 6671} diff_factor_sc_src={'size': 176}
+2026-10-29 08:56:14,235 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 08:56:14,235 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/diff_factor_sc: 仅采样到 565/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 08:56:14,589 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/size: |Δ|raw=6.006 same_tr_z=0.1021 gap_z=0.1030 [0.0964, 0.1101] diff_factor_src={'camera': 6607, 'environment': 6717, 'texture': 6676} diff_factor_sc_src={'camera': 193, 'environment': 203, 'texture': 169}
+2026-10-29 08:56:15,553 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 08:56:15,553 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/diff_factor_sc: 仅采样到 355/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 08:56:15,907 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/camera: |Δ|raw=7.218 same_tr_z=0.1199 gap_z=0.1197 [0.1130, 0.1272] diff_factor_src={'environment': 6712, 'size': 6606, 'texture': 6682} diff_factor_sc_src={'environment': 179, 'size': 176}
+2026-10-29 08:56:15,908 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e2_delta_stats_pug_imagenet.csv (4 rows)
+2026-10-29 08:56:16,442 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_1/tables/e2_transition_stats_pug_imagenet.csv (1996 transitions; 1100 with n_contexts<2 → mean_sim=NaN)
+2026-10-29 09:00:05,330 | INFO | run_e2_pug_imagenet | [run_e2_pug_imagenet] model clip_vitb32
+2026-10-29 09:00:21,455 | WARNING | run_e2_pug_imagenet | [pairs] factor='environment': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 09:00:21,566 | INFO | run_e2_pug_imagenet | [E2] factor=environment: 2896 pairs, 724 contexts, instances=724
+2026-10-29 09:00:47,242 | WARNING | run_e2_pug_imagenet | [pairs] factor='texture': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 09:00:47,462 | INFO | run_e2_pug_imagenet | [E2] factor=texture: 2896 pairs, 724 contexts, instances=724
+2026-10-29 09:01:14,967 | WARNING | run_e2_pug_imagenet | [pairs] factor='size': 去重 1448 行重复的 (context, 因素值) 行（涉及 724 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 09:01:15,201 | INFO | run_e2_pug_imagenet | [E2] factor=size: 2896 pairs, 724 contexts, instances=724
+2026-10-29 09:01:42,231 | WARNING | run_e2_pug_imagenet | [pairs] factor='camera': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 09:01:42,467 | INFO | run_e2_pug_imagenet | [E2] factor=camera: 2896 pairs, 724 contexts, instances=724
+2026-10-29 09:01:42,747 | INFO | run_e2_pug_imagenet | [extract] cache pug_imagenet: 88328 ids present
+2026-10-29 09:01:42,775 | INFO | run_e2_pug_imagenet | [extract] cache complete, skip: pug_imagenet
+2026-10-29 09:03:14,089 | INFO | run_e2_pug_imagenet | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-29 09:03:14,098 | INFO | run_e2_pug_imagenet | [E2] nuisance text: 1000 captions
+2026-10-29 09:03:14,105 | INFO | run_e2_pug_imagenet | [E2] nuisance: norm_visual_raw=2.7671 norm_visual_z=0.2582 norm_text_raw=0.7979 norm_text_z=0.0983 sim_visual_raw=0.0840 sim_visual_z=0.0829 sim_text_raw=0.7031 sim_text_z=0.6900
+2026-10-29 09:03:14,893 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_transition_dc: 仅采样到 1132/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:03:14,893 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:03:14,893 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/diff_factor_sc: 仅采样到 346/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:03:15,074 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/environment: |Δ|raw=7.710 same_tr_z=0.7940 gap_z=0.7947 [0.7828, 0.8055] diff_factor_src={'camera': 6763, 'size': 6562, 'texture': 6675} diff_factor_sc_src={'camera': 164, 'size': 182}
+2026-10-29 09:03:15,902 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:03:15,903 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/diff_factor_sc: 仅采样到 176/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:03:16,240 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/texture: |Δ|raw=3.744 same_tr_z=0.2753 gap_z=0.2751 [0.2607, 0.2882] diff_factor_src={'camera': 6611, 'environment': 6718, 'size': 6671} diff_factor_sc_src={'size': 176}
+2026-10-29 09:03:17,057 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:03:17,058 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/diff_factor_sc: 仅采样到 565/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:03:17,408 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/size: |Δ|raw=2.969 same_tr_z=0.0881 gap_z=0.0930 [0.0862, 0.1003] diff_factor_src={'camera': 6607, 'environment': 6717, 'texture': 6676} diff_factor_sc_src={'camera': 193, 'environment': 203, 'texture': 169}
+2026-10-29 09:03:18,234 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:03:18,234 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/diff_factor_sc: 仅采样到 355/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:03:18,580 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/camera: |Δ|raw=3.514 same_tr_z=0.1424 gap_z=0.1426 [0.1350, 0.1500] diff_factor_src={'environment': 6712, 'size': 6606, 'texture': 6682} diff_factor_sc_src={'environment': 179, 'size': 176}
+2026-10-29 09:03:18,581 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e2_delta_stats_pug_imagenet.csv (4 rows)
+2026-10-29 09:03:18,980 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_1/tables/e2_transition_stats_pug_imagenet.csv (1996 transitions; 1100 with n_contexts<2 → mean_sim=NaN)
+2026-10-29 09:07:53,701 | INFO | run_e2_pug_imagenet | [run_e2_pug_imagenet] model siglip2_so400m
+2026-10-29 09:08:11,029 | WARNING | run_e2_pug_imagenet | [pairs] factor='environment': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 09:08:11,137 | INFO | run_e2_pug_imagenet | [E2] factor=environment: 2896 pairs, 724 contexts, instances=724
+2026-10-29 09:08:37,766 | WARNING | run_e2_pug_imagenet | [pairs] factor='texture': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 09:08:37,993 | INFO | run_e2_pug_imagenet | [E2] factor=texture: 2896 pairs, 724 contexts, instances=724
+2026-10-29 09:09:05,371 | WARNING | run_e2_pug_imagenet | [pairs] factor='size': 去重 1448 行重复的 (context, 因素值) 行（涉及 724 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 09:09:05,610 | INFO | run_e2_pug_imagenet | [E2] factor=size: 2896 pairs, 724 contexts, instances=724
+2026-10-29 09:09:32,984 | WARNING | run_e2_pug_imagenet | [pairs] factor='camera': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-29 09:09:33,228 | INFO | run_e2_pug_imagenet | [E2] factor=camera: 2896 pairs, 724 contexts, instances=724
+2026-10-29 09:09:33,872 | INFO | run_e2_pug_imagenet | [extract] cache pug_imagenet: 88328 ids present
+2026-10-29 09:09:33,899 | INFO | run_e2_pug_imagenet | [extract] cache complete, skip: pug_imagenet
+2026-10-29 09:11:29,618 | INFO | run_e2_pug_imagenet | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-29 09:11:29,630 | INFO | run_e2_pug_imagenet | [E2] nuisance text: 1000 captions
+2026-10-29 09:11:29,650 | INFO | run_e2_pug_imagenet | [E2] nuisance: norm_visual_raw=5.8857 norm_visual_z=0.3636 norm_text_raw=6.2834 norm_text_z=0.1943 sim_visual_raw=0.4093 sim_visual_z=0.4091 sim_text_raw=0.4930 sim_text_z=0.5000
+2026-10-29 09:11:30,760 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_transition_dc: 仅采样到 1132/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:11:30,760 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:11:30,760 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/diff_factor_sc: 仅采样到 346/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:11:30,941 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/environment: |Δ|raw=9.992 same_tr_z=0.7629 gap_z=0.7628 [0.7508, 0.7739] diff_factor_src={'camera': 6763, 'size': 6562, 'texture': 6675} diff_factor_sc_src={'camera': 164, 'size': 182}
+2026-10-29 09:11:32,126 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:11:32,126 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/diff_factor_sc: 仅采样到 176/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:11:32,474 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/texture: |Δ|raw=6.021 same_tr_z=0.3464 gap_z=0.3471 [0.3282, 0.3647] diff_factor_src={'camera': 6611, 'environment': 6718, 'size': 6671} diff_factor_sc_src={'size': 176}
+2026-10-29 09:11:33,645 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:11:33,645 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/diff_factor_sc: 仅采样到 565/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:11:33,994 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/size: |Δ|raw=3.877 same_tr_z=0.1188 gap_z=0.1228 [0.1145, 0.1317] diff_factor_src={'camera': 6607, 'environment': 6717, 'texture': 6676} diff_factor_sc_src={'camera': 193, 'environment': 203, 'texture': 169}
+2026-10-29 09:11:35,167 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:11:35,167 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/diff_factor_sc: 仅采样到 355/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-29 09:11:35,514 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/camera: |Δ|raw=5.028 same_tr_z=0.0915 gap_z=0.0924 [0.0863, 0.0994] diff_factor_src={'environment': 6712, 'size': 6606, 'texture': 6682} diff_factor_sc_src={'environment': 179, 'size': 176}
+2026-10-29 09:11:35,515 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e2_delta_stats_pug_imagenet.csv (4 rows)
+2026-10-29 09:11:36,259 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_1/tables/e2_transition_stats_pug_imagenet.csv (1996 transitions; 1100 with n_contexts<2 → mean_sim=NaN)
+2026-10-30 08:39:15,246 | INFO | run_e2_pug_imagenet | [run_e2_pug_imagenet] model clip_vitl14
+2026-10-30 08:39:31,875 | WARNING | run_e2_pug_imagenet | [pairs] factor='environment': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:39:31,989 | INFO | run_e2_pug_imagenet | [E2] factor=environment: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:39:58,751 | WARNING | run_e2_pug_imagenet | [pairs] factor='texture': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:39:58,978 | INFO | run_e2_pug_imagenet | [E2] factor=texture: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:40:26,228 | WARNING | run_e2_pug_imagenet | [pairs] factor='size': 去重 1448 行重复的 (context, 因素值) 行（涉及 724 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:40:26,460 | INFO | run_e2_pug_imagenet | [E2] factor=size: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:40:53,688 | WARNING | run_e2_pug_imagenet | [pairs] factor='camera': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:40:53,929 | INFO | run_e2_pug_imagenet | [E2] factor=camera: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:40:54,328 | INFO | run_e2_pug_imagenet | [extract] cache pug_imagenet: 88328 ids present
+2026-10-30 08:40:54,357 | INFO | run_e2_pug_imagenet | [extract] cache complete, skip: pug_imagenet
+2026-10-30 08:43:14,126 | INFO | run_e2_pug_imagenet | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-30 08:43:14,137 | INFO | run_e2_pug_imagenet | [E2] nuisance text: 1000 captions
+2026-10-30 08:43:14,151 | INFO | run_e2_pug_imagenet | [E2] nuisance: norm_visual_raw=5.2038 norm_visual_z=0.2979 norm_text_raw=1.7166 norm_text_z=0.1324 sim_visual_raw=0.0750 sim_visual_z=0.0800 sim_text_raw=0.6312 sim_text_z=0.6340
+2026-10-30 08:43:15,189 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_transition_dc: 仅采样到 1093/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:43:15,189 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:43:15,189 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/diff_factor_sc: 仅采样到 392/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:43:15,373 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/environment: |Δ|raw=12.961 same_tr_z=0.7124 gap_z=0.7115 [0.6983, 0.7240] diff_factor_src={'camera': 6751, 'size': 6587, 'texture': 6662} diff_factor_sc_src={'camera': 191, 'size': 201}
+2026-10-30 08:43:16,383 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:43:16,384 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/diff_factor_sc: 仅采样到 183/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:43:16,739 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/texture: |Δ|raw=7.786 same_tr_z=0.2208 gap_z=0.2225 [0.2111, 0.2334] diff_factor_src={'camera': 6611, 'environment': 6718, 'size': 6671} diff_factor_sc_src={'size': 183}
+2026-10-30 08:43:17,738 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:43:17,739 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/diff_factor_sc: 仅采样到 552/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:43:18,097 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/size: |Δ|raw=6.036 same_tr_z=0.1023 gap_z=0.1038 [0.0968, 0.1112] diff_factor_src={'camera': 6608, 'environment': 6710, 'texture': 6682} diff_factor_sc_src={'camera': 180, 'environment': 188, 'texture': 184}
+2026-10-30 08:43:19,099 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:43:19,099 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/diff_factor_sc: 仅采样到 371/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:43:19,454 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/camera: |Δ|raw=7.164 same_tr_z=0.1206 gap_z=0.1201 [0.1137, 0.1269] diff_factor_src={'environment': 6707, 'size': 6611, 'texture': 6682} diff_factor_sc_src={'environment': 182, 'size': 189}
+2026-10-30 08:43:19,455 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e2_delta_stats_pug_imagenet.csv (4 rows)
+2026-10-30 08:43:19,979 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_2/tables/e2_transition_stats_pug_imagenet.csv (2000 transitions; 1079 with n_contexts<2 → mean_sim=NaN)
+2026-10-30 08:48:00,609 | INFO | run_e2_pug_imagenet | [run_e2_pug_imagenet] model clip_vitb32
+2026-10-30 08:48:17,275 | WARNING | run_e2_pug_imagenet | [pairs] factor='environment': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:48:17,387 | INFO | run_e2_pug_imagenet | [E2] factor=environment: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:48:43,600 | WARNING | run_e2_pug_imagenet | [pairs] factor='texture': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:48:43,821 | INFO | run_e2_pug_imagenet | [E2] factor=texture: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:49:11,471 | WARNING | run_e2_pug_imagenet | [pairs] factor='size': 去重 1448 行重复的 (context, 因素值) 行（涉及 724 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:49:11,702 | INFO | run_e2_pug_imagenet | [E2] factor=size: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:49:39,024 | WARNING | run_e2_pug_imagenet | [pairs] factor='camera': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:49:39,263 | INFO | run_e2_pug_imagenet | [E2] factor=camera: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:49:39,554 | INFO | run_e2_pug_imagenet | [extract] cache pug_imagenet: 88328 ids present
+2026-10-30 08:49:39,584 | INFO | run_e2_pug_imagenet | [extract] cache complete, skip: pug_imagenet
+2026-10-30 08:51:50,655 | INFO | run_e2_pug_imagenet | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-30 08:51:50,667 | INFO | run_e2_pug_imagenet | [E2] nuisance text: 1000 captions
+2026-10-30 08:51:50,675 | INFO | run_e2_pug_imagenet | [E2] nuisance: norm_visual_raw=2.7435 norm_visual_z=0.2564 norm_text_raw=0.7944 norm_text_z=0.0978 sim_visual_raw=0.0879 sim_visual_z=0.0809 sim_text_raw=0.7074 sim_text_z=0.6941
+2026-10-30 08:51:51,462 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_transition_dc: 仅采样到 1093/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:51:51,462 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:51:51,462 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/diff_factor_sc: 仅采样到 392/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:51:51,645 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/environment: |Δ|raw=7.703 same_tr_z=0.7887 gap_z=0.7893 [0.7771, 0.8008] diff_factor_src={'camera': 6751, 'size': 6587, 'texture': 6662} diff_factor_sc_src={'camera': 191, 'size': 201}
+2026-10-30 08:51:52,517 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:51:52,517 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/diff_factor_sc: 仅采样到 183/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:51:52,879 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/texture: |Δ|raw=3.764 same_tr_z=0.2776 gap_z=0.2752 [0.2610, 0.2890] diff_factor_src={'camera': 6611, 'environment': 6718, 'size': 6671} diff_factor_sc_src={'size': 183}
+2026-10-30 08:51:53,746 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:51:53,746 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/diff_factor_sc: 仅采样到 552/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:51:54,102 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/size: |Δ|raw=2.962 same_tr_z=0.0903 gap_z=0.0940 [0.0868, 0.1012] diff_factor_src={'camera': 6608, 'environment': 6710, 'texture': 6682} diff_factor_sc_src={'camera': 180, 'environment': 188, 'texture': 184}
+2026-10-30 08:51:54,973 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:51:54,974 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/diff_factor_sc: 仅采样到 371/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 08:51:55,330 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/camera: |Δ|raw=3.490 same_tr_z=0.1439 gap_z=0.1447 [0.1373, 0.1517] diff_factor_src={'environment': 6707, 'size': 6611, 'texture': 6682} diff_factor_sc_src={'environment': 182, 'size': 189}
+2026-10-30 08:51:55,332 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e2_delta_stats_pug_imagenet.csv (4 rows)
+2026-10-30 08:51:55,747 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_2/tables/e2_transition_stats_pug_imagenet.csv (2000 transitions; 1079 with n_contexts<2 → mean_sim=NaN)
+2026-10-30 08:57:21,270 | INFO | run_e2_pug_imagenet | [run_e2_pug_imagenet] model siglip2_so400m
+2026-10-30 08:57:38,858 | WARNING | run_e2_pug_imagenet | [pairs] factor='environment': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:57:38,974 | INFO | run_e2_pug_imagenet | [E2] factor=environment: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:58:06,000 | WARNING | run_e2_pug_imagenet | [pairs] factor='texture': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:58:06,226 | INFO | run_e2_pug_imagenet | [E2] factor=texture: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:58:33,299 | WARNING | run_e2_pug_imagenet | [pairs] factor='size': 去重 1448 行重复的 (context, 因素值) 行（涉及 724 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:58:33,536 | INFO | run_e2_pug_imagenet | [E2] factor=size: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:59:01,683 | WARNING | run_e2_pug_imagenet | [pairs] factor='camera': 去重 1448 行重复的 (context, 因素值) 行（涉及 1448 个 context，每组保留最小 row_id；PUG:ImageNet 存在 metadata 完全相同的重复行，Animals 无此情况）
+2026-10-30 08:59:01,928 | INFO | run_e2_pug_imagenet | [E2] factor=camera: 2896 pairs, 724 contexts, instances=724
+2026-10-30 08:59:02,539 | INFO | run_e2_pug_imagenet | [extract] cache pug_imagenet: 88328 ids present
+2026-10-30 08:59:02,568 | INFO | run_e2_pug_imagenet | [extract] cache complete, skip: pug_imagenet
+2026-10-30 09:01:46,096 | INFO | run_e2_pug_imagenet | [E2] nuisance visual: 2000 images x 2 views (chunk=128)
+2026-10-30 09:01:46,109 | INFO | run_e2_pug_imagenet | [E2] nuisance text: 1000 captions
+2026-10-30 09:01:46,130 | INFO | run_e2_pug_imagenet | [E2] nuisance: norm_visual_raw=5.8209 norm_visual_z=0.3602 norm_text_raw=6.1954 norm_text_z=0.1914 sim_visual_raw=0.4018 sim_visual_z=0.4074 sim_text_raw=0.4996 sim_text_z=0.5033
+2026-10-30 09:01:47,400 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_transition_dc: 仅采样到 1093/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 09:01:47,400 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 09:01:47,401 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/environment/diff_factor_sc: 仅采样到 392/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 09:01:47,589 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/environment: |Δ|raw=9.991 same_tr_z=0.7566 gap_z=0.7571 [0.7456, 0.7681] diff_factor_src={'camera': 6751, 'size': 6587, 'texture': 6662} diff_factor_sc_src={'camera': 191, 'size': 201}
+2026-10-30 09:01:48,824 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 09:01:48,825 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/texture/diff_factor_sc: 仅采样到 183/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 09:01:49,181 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/texture: |Δ|raw=6.050 same_tr_z=0.3472 gap_z=0.3496 [0.3319, 0.3671] diff_factor_src={'camera': 6611, 'environment': 6718, 'size': 6671} diff_factor_sc_src={'size': 183}
+2026-10-30 09:01:50,407 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 09:01:50,407 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/size/diff_factor_sc: 仅采样到 552/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 09:01:50,769 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/size: |Δ|raw=3.870 same_tr_z=0.1213 gap_z=0.1265 [0.1181, 0.1353] diff_factor_src={'camera': 6608, 'environment': 6710, 'texture': 6682} diff_factor_sc_src={'camera': 180, 'environment': 188, 'texture': 184}
+2026-10-30 09:01:52,002 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/same_factor_dt_sc: 仅采样到 4344/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 09:01:52,002 | WARNING | run_e2_pug_imagenet | [E2] pug_imagenet/camera/diff_factor_sc: 仅采样到 371/20000 条比较（候选不足或 same-context 匹配稀疏）
+2026-10-30 09:01:52,358 | INFO | run_e2_pug_imagenet | [E2] pug_imagenet/camera: |Δ|raw=4.993 same_tr_z=0.0910 gap_z=0.0933 [0.0871, 0.1003] diff_factor_src={'environment': 6707, 'size': 6611, 'texture': 6682} diff_factor_sc_src={'environment': 182, 'size': 189}
+2026-10-30 09:01:52,360 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e2_delta_stats_pug_imagenet.csv (4 rows)
+2026-10-30 09:01:53,110 | INFO | run_e2_pug_imagenet | [E2] written /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_2/tables/e2_transition_stats_pug_imagenet.csv (2000 transitions; 1079 with n_contexts<2 → mean_sim=NaN)

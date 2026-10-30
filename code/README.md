@@ -223,6 +223,13 @@ python scripts/run_e1_spar_official.py --model [clip_vitl14(默认), clip_vitb32
 注意：`run_e1.py` 一次运行同时覆盖 SPAR 和 CLEVR（Step 3 + Step 4），
 输出在 `e1_results.csv` 里用 `dataset` 列区分，不需要分开跑两遍。
 
+采样平衡（codex 审查 2026-10-28）：target 子样本按正例一侧的取值
+（`pos_value`）分层等额抽取（二值因素各 50%，多值因素等额），使“恒选
+某个词”的答题策略期望准确率恰为 50%；SPAR position 以 50% 概率从 c2
+视角出题，正例方位词覆盖 left/right/below/above。均衡后**总体准确率即
+干净的辨别指标，逐侧准确率之差即词偏好指标**（见 `e1_acc_by_pos_value.csv`；
+binding / SPAR attribute / relation 的正负例词集相同，天然免疫词偏好）。
+
 参数（`run_e1.py`，共 3 个）：
 
 | 参数 | 取值 | 默认 | 作用 |
@@ -451,7 +458,7 @@ SigLIP2 注意事项：当前实现是 FixRes checkpoint 路径（固定 384×38
 | `e1_results.csv` | 按 dataset × factor：2AFC accuracy + CI、margin 均值 / 中位数 / 标准差、模板方差、n | §63 |
 | `e1_factor_gaps.csv` | 同数据集内各因素两两 accuracy gap + bootstrap CI | §66 |
 | `e1_clevr_filter_stats.json` / `e1_spar_filter_stats.json` | 各过滤原因丢弃的样本计数 | §20a |
-| `e1_items_clevr.jsonl` / `e1_items_spar.jsonl` | 每条 2AFC 样本（正 / 负文本、图片、因素），可复查 | §60 |
+| `e1_items_clevr.jsonl` / `e1_items_spar.jsonl` | 每条 2AFC 样本（正 / 负文本、图片、因素、pos_value、逐题 item_acc / item_margin），可复查 | §60 |
 | `e1_spar_official.csv` | SPAR 官方协议：六个任务 × 检索 top1/top5 + hard-negative × 无背景 / 带背景 | §9 |
 | `e2_delta_stats.csv`（ImageNet 为 `e2_delta_stats_pug_imagenet.csv`） | 按因素：Δ 范数（raw/z）、nuisance 范数、分层相似度、Transition Gap + CI、Norm Gap + CI | §64 |
 | `e2_transition_stats.csv` | 逐 (factor, source, target)：n_contexts、相似度、Δ 范数 | §64 |
@@ -459,6 +466,7 @@ SigLIP2 注意事项：当前实现是 FixRes checkpoint 路径（固定 384×38
 | `e3_difficulty_gap.csv` | A−B 难度差（题型等权主指标 + 汇总口径对照；cube/cylinder 主指标 + sphere 对照） | §50 |
 | `e3_cogent_by_combo.csv` / `e3_cogent_by_color.csv` | 逐 (color, shape) / 逐颜色 accuracy 与 margin | §49 |
 | `e3_items_cogent.jsonl` | E3 每条 item 级结果，供逐单元分析复查 | §49 |
+| `e1_acc_by_pos_value.csv` | E1 按正例取值分层的准确率 + CI：二值因素两侧应接近；一侧趋近 1、另一侧趋近 0 即为词偏好（恒选某词）的直接证据 | §31 |
 | `e3_unit_gaps.csv` + `e3_unit_consistency.json` | 逐 (shape_group, color) 单元 A−B gap + CI；sidecar 记录一致性检查状态与输入指纹 | §49 |
 | `seed_stability.csv` | seeds 0/1/2 三种子关键判定稳定性汇总 | §66 |
 | `figures/<model>_seed<k>/` | §67 五图（PNG 300dpi + 合并 PDF） | §67 |

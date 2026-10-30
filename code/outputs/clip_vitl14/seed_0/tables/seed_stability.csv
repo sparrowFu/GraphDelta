@@ -1,35 +1,35 @@
 section,key,metric,seed0,seed1,seed2,stable,note,layout_seed0,layout_seed1,layout_seed2
-e1_acc,clevr/binding,accuracy,0.5076,0.4963,0.5029,True,CI-vs-0.5: contains/contains/contains,new,new,new
-e1_acc,clevr/color,accuracy,0.6756,0.6979,0.6914,True,CI-vs-0.5: above/above/above,new,new,new
-e1_acc,clevr/material,accuracy,0.5566,0.5576,0.5661,True,CI-vs-0.5: above/above/above,new,new,new
-e1_acc,clevr/object,accuracy,0.5608,0.5825,0.5788,True,CI-vs-0.5: above/above/above,new,new,new
-e1_acc,clevr/relation,accuracy,0.5159,0.5047,0.5206,False,CI-vs-0.5: contains/contains/above,new,new,new
-e1_acc,clevr/size,accuracy,0.5301,0.5174,0.5158,False,CI-vs-0.5: above/contains/contains,new,new,new
-e1_acc,pug_spar/attribute,accuracy,0.5145,0.4834,0.5236,False,CI-vs-0.5: contains/contains/above,new,new,new
-e1_acc,pug_spar/position,accuracy,0.408,0.3935,0.3981,True,CI-vs-0.5: below/below/below,new,new,new
-e1_acc,pug_spar/relation,accuracy,0.4483,0.452,0.4651,True,CI-vs-0.5: below/below/below,new,new,new
-e1_acc,pug_spar/scene,accuracy,0.8931,0.8895,0.8933,True,CI-vs-0.5: above/above/above,new,new,new
-e1_gap,clevr/object-color,gap,-0.1149,-0.1154,-0.1126,True,CI 符号: neg/neg/neg,new,new,new
-e1_gap,clevr/object-size,gap,0.0306,0.0651,0.063,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,clevr/object-material,gap,0.0042,0.0249,0.0126,True,CI 符号: ns/ns/ns,new,new,new
-e1_gap,clevr/object-relation,gap,0.0449,0.0778,0.0582,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,clevr/object-binding,gap,0.0532,0.0862,0.0759,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,clevr/color-size,gap,0.1455,0.1804,0.1756,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,clevr/color-material,gap,0.1191,0.1403,0.1253,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,clevr/color-relation,gap,0.1598,0.1931,0.1709,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,clevr/color-binding,gap,0.1681,0.2016,0.1886,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,clevr/size-material,gap,-0.0264,-0.0401,-0.0504,False,CI 符号: ns/neg/neg,new,new,new
-e1_gap,clevr/size-relation,gap,0.0143,0.0127,-0.0048,True,CI 符号: ns/ns/ns,new,new,new
-e1_gap,clevr/size-binding,gap,0.0226,0.0211,0.0129,True,CI 符号: ns/ns/ns,new,new,new
-e1_gap,clevr/material-relation,gap,0.0407,0.0529,0.0456,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,clevr/material-binding,gap,0.049,0.0613,0.0633,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,clevr/relation-binding,gap,0.0083,0.0084,0.0177,True,CI 符号: ns/ns/ns,new,new,new
-e1_gap,pug_spar/scene-position,gap,0.4851,0.496,0.4951,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,pug_spar/scene-attribute,gap,0.3786,0.4061,0.3697,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,pug_spar/scene-relation,gap,0.4449,0.4375,0.4281,True,CI 符号: pos/pos/pos,new,new,new
-e1_gap,pug_spar/position-attribute,gap,-0.1065,-0.0899,-0.1254,True,CI 符号: neg/neg/neg,new,new,new
-e1_gap,pug_spar/position-relation,gap,-0.0403,-0.0585,-0.067,True,CI 符号: neg/neg/neg,new,new,new
-e1_gap,pug_spar/attribute-relation,gap,0.0662,0.0314,0.0584,True,CI 符号: pos/pos/pos,new,new,new
+e1_acc,clevr/binding,accuracy,0.4973,0.4931,0.4949,True,CI-vs-0.5: contains/contains/contains,new,new,new
+e1_acc,clevr/color,accuracy,0.679,0.6864,0.6831,True,CI-vs-0.5: above/above/above,new,new,new
+e1_acc,clevr/material,accuracy,0.5736,0.5843,0.5661,True,CI-vs-0.5: above/above/above,new,new,new
+e1_acc,clevr/object,accuracy,0.5742,0.576,0.5757,True,CI-vs-0.5: above/above/above,new,new,new
+e1_acc,clevr/relation,accuracy,0.5196,0.5118,0.5084,True,CI-vs-0.5: contains/contains/contains,new,new,new
+e1_acc,clevr/size,accuracy,0.4984,0.4996,0.5016,True,CI-vs-0.5: contains/contains/contains,new,new,new
+e1_acc,pug_spar/attribute,accuracy,0.5111,0.5089,0.502,True,CI-vs-0.5: contains/contains/contains,new,new,new
+e1_acc,pug_spar/position,accuracy,0.498,0.4901,0.4791,False,CI-vs-0.5: contains/contains/below,new,new,new
+e1_acc,pug_spar/relation,accuracy,0.455,0.4664,0.4466,True,CI-vs-0.5: below/below/below,new,new,new
+e1_acc,pug_spar/scene,accuracy,0.8845,0.8911,0.8865,True,CI-vs-0.5: above/above/above,new,new,new
+e1_gap,clevr/object-color,gap,-0.1048,-0.1104,-0.1074,True,CI 符号: neg/neg/neg,new,new,new
+e1_gap,clevr/object-size,gap,0.0758,0.0764,0.0741,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/object-material,gap,0.0006,-0.0083,0.0096,True,CI 符号: ns/ns/ns,new,new,new
+e1_gap,clevr/object-relation,gap,0.0546,0.0642,0.0673,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/object-binding,gap,0.0769,0.0829,0.0809,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/color-size,gap,0.1806,0.1869,0.1814,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/color-material,gap,0.1054,0.1021,0.1169,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/color-relation,gap,0.1594,0.1746,0.1746,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/color-binding,gap,0.1817,0.1933,0.1882,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/size-material,gap,-0.0752,-0.0847,-0.0645,True,CI 符号: neg/neg/neg,new,new,new
+e1_gap,clevr/size-relation,gap,-0.0212,-0.0122,-0.0068,True,CI 符号: ns/ns/ns,new,new,new
+e1_gap,clevr/size-binding,gap,0.0011,0.0064,0.0068,True,CI 符号: ns/ns/ns,new,new,new
+e1_gap,clevr/material-relation,gap,0.054,0.0725,0.0577,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/material-binding,gap,0.0764,0.0911,0.0713,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,clevr/relation-binding,gap,0.0224,0.0186,0.0136,True,CI 符号: ns/ns/ns,new,new,new
+e1_gap,pug_spar/scene-position,gap,0.3865,0.4009,0.4074,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,pug_spar/scene-attribute,gap,0.3734,0.3822,0.3845,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,pug_spar/scene-relation,gap,0.4295,0.4247,0.4399,True,CI 符号: pos/pos/pos,new,new,new
+e1_gap,pug_spar/position-attribute,gap,-0.0131,-0.0187,-0.0229,True,CI 符号: ns/ns/ns,new,new,new
+e1_gap,pug_spar/position-relation,gap,0.043,0.0238,0.0325,False,CI 符号: pos/ns/pos,new,new,new
+e1_gap,pug_spar/attribute-relation,gap,0.0561,0.0425,0.0554,True,CI 符号: pos/pos/pos,new,new,new
 spar_official,scene_backgrounds|bg=False|tex=|pair=|hn=False|w=all,top1,1.0,1.0,1.0,,max|diff|=0.0,new,new,new
 spar_official,scene_backgrounds|bg=False|tex=|pair=|hn=False|w=all,top5,1.0,1.0,1.0,,max|diff|=0.0,new,new,new
 spar_official,one_object|bg=False|tex=Default|pair=|hn=False|w=all,top1,0.7367,0.7367,0.7367,,max|diff|=0.0,new,new,new

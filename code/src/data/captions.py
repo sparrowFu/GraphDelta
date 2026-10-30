@@ -74,13 +74,22 @@ def spar_scene_contents(row, other_animal):
     return pos, neg
 
 
-def spar_position_contents(row):
+def spar_position_contents(row, flip=False):
+    """flip=False：c1 视角（正例方位词 = character1_pos，只有 left/below）。
+    flip=True：c2 视角出题——真值 'c1 is left of c2' 与 'c2 is right of c1'
+    等价，因此反方位词（right/above）也能做正例（codex 审查 2026-10-28：
+    官方 metadata 只有 left/below，此前正例方位词 76% 是 left，词偏好会
+    污染准确率）。返回 (pos, neg, 正例方位词)。"""
     c1, c2 = row["character_name"], row["character2_name"]
     rel = row["character1_pos"]              # left / below
     anti = POS_ANTONYM[rel]                  # right / above
-    pos = f"the {c1} is {POS_PHRASE[rel]} the {c2}"
-    neg = f"the {c1} is {POS_PHRASE[anti]} the {c2}"
-    return pos, neg
+    if not flip:
+        pos = f"the {c1} is {POS_PHRASE[rel]} the {c2}"
+        neg = f"the {c1} is {POS_PHRASE[anti]} the {c2}"
+        return pos, neg, rel
+    pos = f"the {c2} is {POS_PHRASE[anti]} the {c1}"
+    neg = f"the {c2} is {POS_PHRASE[rel]} the {c1}"
+    return pos, neg, anti
 
 
 def spar_attribute_contents(row):

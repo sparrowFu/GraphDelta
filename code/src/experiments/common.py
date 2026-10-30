@@ -100,6 +100,62 @@ def subsample(items, target, rng):
     return items
 
 
+def balanced_subsample(items, target, rng):
+    """按 pos_value 分层等额抽样（codex 审查 2026-10-28）。
+
+    背景：此前 target 内的子样本是简单随机抽样，正例取值分布会随机偏斜
+    （如大小题正例偏 small 51.5%–52.9%），"恒选某个词"的答题策略期望
+    准确率 = 正例含该词的比例，准确率里混入了与辨别无关的词偏好。
+
+    规则：各 pos_value 等额（target//k，余数按值名排序补给前 r 个值）；
+    某值候选不足时取全部，缺口按其余值的剩余池量比例重分配（最多三轮），
+    仍填不满则少抽并保持各值尽量相等——宁可样本略少，不引入偏斜。
+    item 无 pos_value（binding/scene：正负例词集相同，天然免疫词偏好）
+    或池子本身不超过 target 时，回退普通随机抽样。
+    """
+    has_pv = bool(items) and all(it.get("pos_value") is not None for it in items)
+    if not has_pv or len(items) <= target:
+        return subsample(items, target, rng)
+    by_val = {}
+    for idx, it in enumerate(items):
+        by_val.setdefault(it["pos_value"], []).append(idx)
+    vals = sorted(by_val)                      # 排序保证配额分配确定
+    base, rem = divmod(target, len(vals))
+    quotas = {v: base + (1 if i < rem else 0) for i, v in enumerate(vals)}
+    for _ in range(3):
+        deficit = 0
+        for v in vals:
+            avail = len(by_val[v])
+            if quotas[v] > avail:
+                deficit += quotas[v] - avail
+                quotas[v] = avail
+        if deficit <= 0:
+            break
+        surplus = {v: len(by_val[v]) - quotas[v] for v in vals
+                   if len(by_val[v]) - quotas[v] > 0}
+        if not surplus:
+            break
+        tot = sum(surplus.values())
+        for v, s in sorted(surplus.items(), key=lambda kv: -kv[1]):
+            add = min(s, deficit, -(-deficit * s // tot))   # 缺口按剩余量分配
+            quotas[v] += add
+            deficit -= add
+        if deficit <= 0:
+            break
+    keep = []
+    for v in vals:
+        idxs = by_val[v]
+        k = quotas[v]
+        if k >= len(idxs):
+            sel = idxs
+        else:
+            picked = rng.choice(len(idxs), size=k, replace=False)
+            sel = [idxs[i] for i in sorted(picked.tolist())]
+        keep.extend(sel)
+    keep.sort()
+    return [items[i] for i in keep]
+
+
 def cap_per_image(items, cap, rng):
     """每张图像最多保留 cap 条 item（审查报告 P2-5；cap<=0 表示不限制）。"""
     if cap is None or cap <= 0 or not items:

@@ -11,6 +11,11 @@
   协议见 e1_spar_official.py（审查报告 P2-11）。
 - 只做 image → (T+, T-) 方向（29a）。
 - 每图每 factor 采样上限 per_scene_cap 生效；filter 原因计数写盘（P2-5）。
+- 采样平衡（codex 审查 2026-10-28）：target 子样本按 pos_value（正例一侧
+  的取值）分层等额抽取，"恒选某个词"的策略期望准确率被压到 50%/1/k；
+  SPAR position 以 50% 概率从 c2 视角出题，正例方位词覆盖 left/right/
+  below/above。逐题分数（item_acc/item_margin）写入 items jsonl，逐侧
+  准确率写 e1_acc_by_pos_value.csv。
 """
 import json
 from collections import Counter
@@ -32,9 +37,9 @@ from ..data.pug_spar import META_COLUMNS as SPAR_META_COLUMNS
 from ..data.pug_spar import build_metadata as build_spar_metadata
 from ..features.cache import ImageFeatureCache, TextCache
 from ..features.extract import extract_clevr_images, extract_pug_images
-from ..metrics.bootstrap import cluster_gap_ci
+from ..metrics.bootstrap import cluster_gap_ci, cluster_mean_ci
 from ..utils.io import commit_experiment, load_config, output_tables_dir, write_jsonl
-from .common import EXPORT_FIELDS, cap_per_image, eval_2afc_items, subsample
+from .common import EXPORT_FIELDS, balanced_subsample, cap_per_image, eval_2afc_items
 
 
 def _validate_spar_protocol(sp):
@@ -81,10 +86,14 @@ def build_clevr_items(scenes, factors, rng):
         def unique(o):
             return counts[clevr.combo(o)] == 1
 
-        def push(factor, kind, pos, neg):
+        def push(factor, kind, pos, neg, pos_value=None):
+            # pos_value：正例一侧的取值（codex 审查 2026-10-28）——用于分层
+            # 等额抽样与逐侧准确率报告；binding 正负例词集相同，天然免疫
+            # 词偏好，不标。
             items[factor].append({
                 "image_id": scene["image_filename"], "factor": factor,
-                "content_pos": pos, "content_neg": neg, "kind": kind})
+                "content_pos": pos, "content_neg": neg, "kind": kind,
+                **({"pos_value": pos_value} if pos_value is not None else {})})
 
         # 单属性负例：负例组合必须不在图中
         for o in objs:
@@ -110,7 +119,7 @@ def build_clevr_items(scenes, factors, rng):
                     st["no_valid_negative"] = st.get("no_valid_negative", 0) + 1
                     continue
                 pos, neg = clevr_attribute_contents(o, key, neg_v)
-                push(factor, "phrase", pos, neg)
+                push(factor, "phrase", pos, neg, pos_value=cur)
                 st["kept"] = st.get("kept", 0) + 1
 
         # relation 负例：官方 relationships 邻接表。
@@ -138,7 +147,7 @@ def build_clevr_items(scenes, factors, rng):
                             rst["antonym_conflict"] = rst.get("antonym_conflict", 0) + 1
                             continue
                         pos, neg = clevr_relation_contents(subj, ref, rel)
-                        push("relation", "sentence", pos, neg)
+                        push("relation", "sentence", pos, neg, pos_value=rel)
                         rst["kept"] = rst.get("kept", 0) + 1
 
         # binding-style：换绑后两个组合不得都在图中。
@@ -181,9 +190,10 @@ def build_spar_items(meta, factors, rng, require_diff_texture):
              "single_animal_rows": 0, "attribute_same_texture_filtered": 0,
              "scene_no_candidate": 0}
 
-    def push(factor, kind, rid, pos, neg):
+    def push(factor, kind, rid, pos, neg, pos_value=None):
         items[factor].append({"image_id": rid, "factor": factor,
-                              "content_pos": pos, "content_neg": neg, "kind": kind})
+                              "content_pos": pos, "content_neg": neg, "kind": kind,
+                              **({"pos_value": pos_value} if pos_value is not None else {})})
 
     for row in meta.to_dict("records"):
         c1, c2 = row["character_name"], row["character2_name"]
@@ -209,17 +219,26 @@ def build_spar_items(meta, factors, rng, require_diff_texture):
             stats["single_animal_rows"] += 1
             continue
         if "position" in factors:
-            pos, neg = spar_position_contents(row)
-            push("position", "sentence", rid, pos, neg)
+            # 视角随机翻转（codex 审查 2026-10-28）：官方 character1_pos 只有
+            # left/below，不翻转则正例方位词永远取不到 right/above，词偏好
+            # 会污染准确率；翻转后正例方位词覆盖全部四个词，抽样再等额。
+            flip = bool(rng.integers(2))
+            pos, neg, pos_word = spar_position_contents(row, flip=flip)
+            push("position", "sentence", rid, pos, neg, pos_value=pos_word)
         if "attribute" in factors:
             if require_diff_texture and row["character_texture"] == row["character2_texture"]:
                 stats["attribute_same_texture_filtered"] += 1
             else:
                 pos, neg = spar_attribute_contents(row)
-                push("attribute", "phrase", rid, pos, neg)
+                # 正负例含同一对纹理词（交换配对），词偏好天然无差别；
+                # pos_value 取正例首个纹理，仅供逐侧报告。
+                push("attribute", "phrase", rid, pos, neg,
+                     pos_value=str(row["character_texture"]).lower())
         if "relation" in factors:
             pos, neg = spar_relation_contents(row)
-            push("relation", "sentence", rid, pos, neg)
+            # 主客互换题两句共用方位词，词偏好天然无差别；pos_value 仅供报告
+            push("relation", "sentence", rid, pos, neg,
+                 pos_value=row["character1_pos"])
     return items, stats
 
 
@@ -245,6 +264,36 @@ def run(model, paths, logger, smoke=False, seed=None):
 
     rows = []
     acc_store = {}       # (dataset, factor) -> (item_acc, image_id)，用于 factor gap CI
+    pv_rows = []         # 逐正例取值的准确率（codex 审查 2026-10-28：暴露词偏好）
+
+    def eval_factor_items(dataset, f, its):
+        """共用流程：分层抽样 → 打分 → 逐题分数写回 item → 汇总行 + 逐侧行。"""
+        m = eval_2afc_items(model, tcache, cache, key, its,
+                            n_boot=bs["n_boot"], ci=bs["ci"],
+                            clusters=[it["image_id"] for it in its])
+        for it, ia, im in zip(its, m["item_acc"], m["item_margin"]):
+            it["item_acc"] = float(ia)
+            it["item_margin"] = float(im)
+        rows.append({"dataset": dataset, "factor": f, "protocol": "2afc_self_built",
+                     **{k: m[k] for k in EXPORT_FIELDS}})
+        acc_store[(dataset, f)] = (m["item_acc"], [it["image_id"] for it in its])
+        if its and its[0].get("pos_value") is not None:
+            groups = {}
+            for it, ia, im in zip(its, m["item_acc"], m["item_margin"]):
+                g = groups.setdefault(it["pos_value"], ([], [], []))
+                g[0].append(ia); g[1].append(im); g[2].append(it["image_id"])
+            for v in sorted(groups):
+                accs, mgs, clus = groups[v]
+                acc, lo, hi = cluster_mean_ci(np.asarray(accs), clus,
+                                              n_boot=bs["n_boot"], ci=bs["ci"], seed=0)
+                mm, mlo, mhi = cluster_mean_ci(np.asarray(mgs), clus,
+                                               n_boot=bs["n_boot"], ci=bs["ci"], seed=1)
+                pv_rows.append({"dataset": dataset, "factor": f, "pos_value": v,
+                                "n": len(accs), "accuracy": acc,
+                                "acc_ci_low": lo, "acc_ci_high": hi,
+                                "mean_margin": mm, "margin_ci_low": mlo,
+                                "margin_ci_high": mhi})
+        return m
 
     # ---- CLEVR val ----
     cl = cfg["clevr"]
@@ -260,17 +309,15 @@ def run(model, paths, logger, smoke=False, seed=None):
     clevr_all_items = []
     for f in cl["factors"]:
         its = cap_per_image(items_by_factor[f], cap, rng)
-        its = subsample(its, target, rng)
+        its = balanced_subsample(its, target, rng)
         if not its:
             logger.warning(f"[E1] clevr/{f}: no valid items")
             continue
-        m = eval_2afc_items(model, tcache, cache, key, its, n_boot=bs["n_boot"], ci=bs["ci"],
-                            clusters=[it["image_id"] for it in its])
-        rows.append({"dataset": "clevr", "factor": f, "protocol": "2afc_self_built",
-                     **{k: m[k] for k in EXPORT_FIELDS}})
-        acc_store[("clevr", f)] = (m["item_acc"], [it["image_id"] for it in its])
+        m = eval_factor_items("clevr", f, its)
         clevr_all_items.extend(its)
-        logger.info(f"[E1] clevr/{f}: n={m['n_samples']} acc={m['accuracy']:.4f}")
+        dist = Counter(it.get("pos_value") for it in its if it.get("pos_value"))
+        logger.info(f"[E1] clevr/{f}: n={m['n_samples']} acc={m['accuracy']:.4f} "
+                    f"pos_value_dist={dict(sorted(dist.items()))}")
     items_path = out_tables / ("e1_items_clevr_smoke.jsonl" if smoke else "e1_items_clevr.jsonl")
     write_jsonl(items_path, clevr_all_items)
     logger.info(f"[E1] written {items_path} ({len(clevr_all_items)} items)")
@@ -294,17 +341,15 @@ def run(model, paths, logger, smoke=False, seed=None):
     spar_all_items = []
     for f in sp["factors"]:
         its = cap_per_image(spar_items[f], cap, rng)
-        its = subsample(its, target, rng)
+        its = balanced_subsample(its, target, rng)
         if not its:
             logger.warning(f"[E1] spar/{f}: no valid items")
             continue
-        m = eval_2afc_items(model, tcache, cache, key, its, n_boot=bs["n_boot"], ci=bs["ci"],
-                            clusters=[it["image_id"] for it in its])
-        rows.append({"dataset": "pug_spar", "factor": f, "protocol": "2afc_self_built",
-                     **{k: m[k] for k in EXPORT_FIELDS}})
-        acc_store[("pug_spar", f)] = (m["item_acc"], [it["image_id"] for it in its])
+        m = eval_factor_items("pug_spar", f, its)
         spar_all_items.extend(its)
-        logger.info(f"[E1] spar/{f}: n={m['n_samples']} acc={m['accuracy']:.4f}")
+        dist = Counter(it.get("pos_value") for it in its if it.get("pos_value"))
+        logger.info(f"[E1] spar/{f}: n={m['n_samples']} acc={m['accuracy']:.4f} "
+                    f"pos_value_dist={dict(sorted(dist.items()))}")
     items_path = out_tables / ("e1_items_spar_smoke.jsonl" if smoke else "e1_items_spar.jsonl")
     write_jsonl(items_path, spar_all_items)
     logger.info(f"[E1] written {items_path} ({len(spar_all_items)} items)")
@@ -336,11 +381,19 @@ def run(model, paths, logger, smoke=False, seed=None):
     path_g = out_tables / ("e1_factor_gaps_smoke.csv" if smoke else "e1_factor_gaps.csv")
     gap_df.to_csv(path_g, index=False)
     logger.info(f"[E1] written {path_g} ({len(gap_df)} pairs)")
+    # 逐正例取值准确率（codex 审查 2026-10-28）：词偏好会表现为一侧趋近
+    # 100%、另一侧趋近 0%；有辨别无偏好的模型两侧接近总体值。
+    pv_df = pd.DataFrame(pv_rows)
+    path_pv = out_tables / ("e1_acc_by_pos_value_smoke.csv" if smoke
+                            else "e1_acc_by_pos_value.csv")
+    pv_df.to_csv(path_pv, index=False)
+    logger.info(f"[E1] written {path_pv} ({len(pv_df)} rows)")
     # 四轮问题 1：全部输出成功写出后才提交成功来源（含产物清单）；
     # 中途失败时 last_success 保持旧值，本次尝试只留在 status=running 里。
     suffix = "_smoke" if smoke else ""
     commit_experiment(out_tables, experiment, [
         f"e1_items_clevr{suffix}.jsonl", f"e1_clevr_filter_stats{suffix}.json",
         f"e1_items_spar{suffix}.jsonl", f"e1_spar_filter_stats{suffix}.json",
-        f"e1_results{suffix}.csv", f"e1_factor_gaps{suffix}.csv"])
+        f"e1_results{suffix}.csv", f"e1_factor_gaps{suffix}.csv",
+        f"e1_acc_by_pos_value{suffix}.csv"])
     return out

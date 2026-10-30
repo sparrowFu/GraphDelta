@@ -20,3 +20,15 @@
 2026-10-28 11:01:01,455 | INFO | run_e2_all | [run_e2] model clip_vitl14：2 个数据集串行
 2026-10-28 11:08:27,355 | INFO | run_e2_all | [run_e2] model clip_vitb32：2 个数据集串行
 2026-10-28 11:15:28,852 | INFO | run_e2_all | [run_e2] model siglip2_so400m：2 个数据集串行
+2026-10-28 16:59:39,627 | INFO | run_e2_all | [run_e2] datasets=['pug_animals', 'pug_imagenet']
+2026-10-28 16:59:39,627 | INFO | run_e2_all | [run_e2] model clip_vitl14：2 个数据集串行
+2026-10-28 17:07:37,910 | INFO | run_e2_all | [run_e2] model clip_vitb32：2 个数据集串行
+2026-10-28 17:14:50,286 | INFO | run_e2_all | [run_e2] model siglip2_so400m：2 个数据集串行
+2026-10-29 08:48:52,729 | INFO | run_e2_all | [run_e2] datasets=['pug_animals', 'pug_imagenet']
+2026-10-29 08:48:52,730 | INFO | run_e2_all | [run_e2] model clip_vitl14：2 个数据集串行
+2026-10-29 08:56:16,578 | INFO | run_e2_all | [run_e2] model clip_vitb32：2 个数据集串行
+2026-10-29 09:03:19,105 | INFO | run_e2_all | [run_e2] model siglip2_so400m：2 个数据集串行
+2026-10-30 08:34:21,590 | INFO | run_e2_all | [run_e2] datasets=['pug_animals', 'pug_imagenet']
+2026-10-30 08:34:21,590 | INFO | run_e2_all | [run_e2] model clip_vitl14：2 个数据集串行
+2026-10-30 08:43:20,129 | INFO | run_e2_all | [run_e2] model clip_vitb32：2 个数据集串行
+2026-10-30 08:51:55,885 | INFO | run_e2_all | [run_e2] model siglip2_so400m：2 个数据集串行

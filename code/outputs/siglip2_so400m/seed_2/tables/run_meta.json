@@ -7,18 +7,18 @@
   "cache_protocol": "siglip2-fixres-lowercase-v1",
   "experiments": {
     "e1_state": {
-      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_commit": "a513e31902a06fc156582fc2715da8988363446b",
       "git_dirty": true,
       "cache_protocol": "siglip2-fixres-lowercase-v1",
       "status": "success",
-      "started": "2026-10-28T09:26:48",
-      "replaces": [],
+      "started": "2026-10-28T16:59:01",
       "last_success": {
-        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_commit": "a513e31902a06fc156582fc2715da8988363446b",
         "git_dirty": true,
         "cache_protocol": "siglip2-fixres-lowercase-v1",
-        "updated": "2026-10-28T09:27:18",
+        "updated": "2026-10-28T16:59:08",
         "outputs": [
+          "e1_acc_by_pos_value.csv",
           "e1_clevr_filter_stats.json",
           "e1_factor_gaps.csv",
           "e1_items_clevr.jsonl",
@@ -26,7 +26,15 @@
           "e1_results.csv",
           "e1_spar_filter_stats.json"
         ]
-      }
+      },
+      "replaces": [
+        {
+          "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+          "git_dirty": true,
+          "cache_protocol": "siglip2-fixres-lowercase-v1",
+          "updated": "2026-10-28T09:27:18"
+        }
+      ]
     },
     "e1_spar_official": {
       "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
@@ -46,53 +54,66 @@
       }
     },
     "e2_pug_animals": {
-      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_commit": "a513e31902a06fc156582fc2715da8988363446b",
       "git_dirty": true,
       "cache_protocol": "siglip2-fixres-lowercase-v1",
       "status": "success",
-      "started": "2026-10-28T11:15:33",
-      "replaces": [],
+      "started": "2026-10-30T08:52:04",
       "last_success": {
-        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_commit": "a513e31902a06fc156582fc2715da8988363446b",
         "git_dirty": true,
         "cache_protocol": "siglip2-fixres-lowercase-v1",
-        "updated": "2026-10-28T11:20:00",
+        "updated": "2026-10-30T08:57:21",
         "outputs": [
           "e2_delta_stats.csv",
           "e2_transition_stats.csv"
         ]
-      }
+      },
+      "replaces": [
+        {
+          "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+          "git_dirty": true,
+          "cache_protocol": "siglip2-fixres-lowercase-v1",
+          "updated": "2026-10-28T11:20:00"
+        }
+      ]
     },
     "e2_pug_imagenet": {
-      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_commit": "a513e31902a06fc156582fc2715da8988363446b",
       "git_dirty": true,
       "cache_protocol": "siglip2-fixres-lowercase-v1",
       "status": "success",
-      "started": "2026-10-28T11:20:01",
-      "replaces": [],
+      "started": "2026-10-30T08:57:23",
       "last_success": {
-        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_commit": "a513e31902a06fc156582fc2715da8988363446b",
         "git_dirty": true,
         "cache_protocol": "siglip2-fixres-lowercase-v1",
-        "updated": "2026-10-28T11:23:50",
+        "updated": "2026-10-30T09:01:53",
         "outputs": [
           "e2_delta_stats_pug_imagenet.csv",
           "e2_transition_stats_pug_imagenet.csv"
         ]
-      }
+      },
+      "replaces": [
+        {
+          "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+          "git_dirty": true,
+          "cache_protocol": "siglip2-fixres-lowercase-v1",
+          "updated": "2026-10-28T11:23:50"
+        }
+      ]
     },
     "e3_cogent": {
-      "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+      "git_commit": "a513e31902a06fc156582fc2715da8988363446b",
       "git_dirty": true,
       "cache_protocol": "siglip2-fixres-lowercase-v1",
       "status": "success",
-      "started": "2026-10-28T11:31:58",
-      "replaces": [],
+      "started": "2026-10-30T09:28:24",
       "last_success": {
-        "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+        "git_commit": "a513e31902a06fc156582fc2715da8988363446b",
         "git_dirty": true,
         "cache_protocol": "siglip2-fixres-lowercase-v1",
-        "updated": "2026-10-28T11:32:03",
+        "updated": "2026-10-30T09:28:29",
         "outputs": [
           "e3_cogent.csv",
           "e3_cogent_by_color.csv",
@@ -100,7 +121,15 @@
           "e3_difficulty_gap.csv",
           "e3_items_cogent.jsonl"
         ]
-      }
+      },
+      "replaces": [
+        {
+          "git_commit": "1e5dd1ea6613c4ecfe3bd09377481e62cc744591",
+          "git_dirty": true,
+          "cache_protocol": "siglip2-fixres-lowercase-v1",
+          "updated": "2026-10-28T11:32:03"
+        }
+      ]
     }
   }
 }
