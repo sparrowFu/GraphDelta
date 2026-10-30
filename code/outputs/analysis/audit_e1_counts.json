@@ -1,0 +1,770 @@
+[
+  {
+    "seed": 0,
+    "factor": "size",
+    "positive_counts": {
+      "small": 1058,
+      "large": 942
+    },
+    "pair_counts": {
+      "large|small": 942,
+      "small|large": 1058
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "small",
+        "large"
+      ],
+      "n_correct": 1058,
+      "accuracy": 0.529
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.5288571428571429,
+        "ci_low": 0.5079232142857143,
+        "ci_high": 0.5501482142857143,
+        "margin": 0.002362119408295257,
+        "template_variance": 5.952380952382284e-8
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.5301428571428571,
+        "ci_low": 0.5091410714285715,
+        "ci_high": 0.5510089285714286,
+        "margin": 0.0021908771471571527,
+        "template_variance": 0.000002392857142857134
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.5304285714285715,
+        "ci_low": 0.5099232142857143,
+        "ci_high": 0.5512214285714286,
+        "margin": 0.0020553334046999223,
+        "template_variance": 0.0000032857142857142675
+      }
+    ]
+  },
+  {
+    "seed": 0,
+    "factor": "material",
+    "positive_counts": {
+      "metal": 1021,
+      "rubber": 979
+    },
+    "pair_counts": {
+      "rubber|metal": 979,
+      "metal|rubber": 1021
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "metal",
+        "rubber"
+      ],
+      "n_correct": 1021,
+      "accuracy": 0.5105
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.5160714285714285,
+        "ci_low": 0.4967107142857143,
+        "ci_high": 0.5360089285714286,
+        "margin": 0.0007425203795244215,
+        "template_variance": 0.000025035714285714272
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.5565714285714285,
+        "ci_low": 0.5362839285714286,
+        "ci_high": 0.5779285714285713,
+        "margin": 0.0024159410049983308,
+        "template_variance": 0.000008452380952380824
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.5962142857142857,
+        "ci_low": 0.5778446428571428,
+        "ci_high": 0.6152357142857143,
+        "margin": 0.004874432131661024,
+        "template_variance": 0.0003418214285714283
+      }
+    ]
+  },
+  {
+    "seed": 0,
+    "factor": "object",
+    "positive_counts": {
+      "cylinder": 698,
+      "cube": 670,
+      "sphere": 632
+    },
+    "pair_counts": {
+      "cylinder|sphere": 361,
+      "cube|sphere": 364,
+      "cylinder|cube": 337,
+      "sphere|cube": 324,
+      "sphere|cylinder": 308,
+      "cube|cylinder": 306
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "cylinder",
+        "cube",
+        "sphere"
+      ],
+      "n_correct": 1062,
+      "accuracy": 0.531
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.5775,
+        "ci_low": 0.5578535714285715,
+        "ci_high": 0.5992874999999999,
+        "margin": 0.006419132133209132,
+        "template_variance": 0.000030000000000000143
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.5607857142857142,
+        "ci_low": 0.5405696428571429,
+        "ci_high": 0.5827160714285714,
+        "margin": 0.00713937599077326,
+        "template_variance": 0.00003873809523809502
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.6238571428571429,
+        "ci_low": 0.6054267857142857,
+        "ci_high": 0.6449303571428571,
+        "margin": 0.012893867501486056,
+        "template_variance": 0.000047226190476190394
+      }
+    ]
+  },
+  {
+    "seed": 0,
+    "factor": "color",
+    "positive_counts": {
+      "gray": 241,
+      "red": 271,
+      "blue": 244,
+      "green": 253,
+      "yellow": 249,
+      "purple": 241,
+      "cyan": 259,
+      "brown": 242
+    },
+    "pair_counts": {
+      "blue|cyan": 34,
+      "purple|blue": 36,
+      "red|brown": 39,
+      "purple|green": 37,
+      "red|green": 35,
+      "green|yellow": 37,
+      "brown|gray": 37,
+      "gray|cyan": 39,
+      "cyan|yellow": 36,
+      "brown|blue": 36,
+      "gray|yellow": 24,
+      "red|gray": 43,
+      "blue|red": 33,
+      "yellow|red": 31,
+      "green|brown": 38,
+      "purple|red": 31,
+      "yellow|green": 40,
+      "green|purple": 38,
+      "blue|purple": 33,
+      "green|gray": 42,
+      "purple|yellow": 28,
+      "cyan|gray": 27,
+      "cyan|purple": 41,
+      "yellow|cyan": 37,
+      "brown|purple": 33,
+      "yellow|purple": 41,
+      "blue|green": 33,
+      "yellow|blue": 33,
+      "gray|green": 36,
+      "blue|yellow": 32,
+      "brown|yellow": 36,
+      "cyan|blue": 25,
+      "blue|gray": 46,
+      "cyan|red": 38,
+      "red|purple": 38,
+      "brown|green": 34,
+      "purple|brown": 44,
+      "gray|red": 40,
+      "green|cyan": 44,
+      "red|blue": 39,
+      "cyan|brown": 54,
+      "brown|red": 31,
+      "purple|gray": 38,
+      "green|blue": 24,
+      "brown|cyan": 35,
+      "green|red": 30,
+      "yellow|gray": 36,
+      "yellow|brown": 31,
+      "cyan|green": 38,
+      "blue|brown": 33,
+      "purple|cyan": 27,
+      "red|cyan": 44,
+      "red|yellow": 33,
+      "gray|blue": 33,
+      "gray|brown": 28,
+      "gray|purple": 41
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "red",
+        "yellow",
+        "blue",
+        "green",
+        "gray",
+        "cyan",
+        "purple",
+        "brown"
+      ],
+      "n_correct": 1077,
+      "accuracy": 0.5385
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.7081428571428571,
+        "ci_low": 0.6907089285714286,
+        "ci_high": 0.7268607142857143,
+        "margin": 0.012485622311183761,
+        "template_variance": 0.000030142857142857055
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.6756428571428572,
+        "ci_low": 0.6577839285714286,
+        "ci_high": 0.6937928571428571,
+        "margin": 0.009289781343029973,
+        "template_variance": 0.00003297619047619048
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.6927857142857143,
+        "ci_low": 0.6738571428571429,
+        "ci_high": 0.7125089285714286,
+        "margin": 0.012439126482869427,
+        "template_variance": 0.00003857142857142864
+      }
+    ]
+  },
+  {
+    "seed": 1,
+    "factor": "size",
+    "positive_counts": {
+      "small": 1034,
+      "large": 966
+    },
+    "pair_counts": {
+      "large|small": 966,
+      "small|large": 1034
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "small",
+        "large"
+      ],
+      "n_correct": 1034,
+      "accuracy": 0.517
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.5166428571428571,
+        "ci_low": 0.49320714285714284,
+        "ci_high": 0.5390071428571429,
+        "margin": 0.001507995667612704,
+        "template_variance": 1.4285714285715105e-7
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.5174285714285715,
+        "ci_low": 0.4946946428571429,
+        "ci_high": 0.5394303571428571,
+        "margin": 0.0014746111091808417,
+        "template_variance": 6.190476190476334e-7
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.5178571428571429,
+        "ci_low": 0.4951285714285714,
+        "ci_high": 0.5404285714285714,
+        "margin": 0.0008502975773199068,
+        "template_variance": 0.000002976190476190434
+      }
+    ]
+  },
+  {
+    "seed": 1,
+    "factor": "material",
+    "positive_counts": {
+      "metal": 996,
+      "rubber": 1004
+    },
+    "pair_counts": {
+      "rubber|metal": 1004,
+      "metal|rubber": 996
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "rubber",
+        "metal"
+      ],
+      "n_correct": 1004,
+      "accuracy": 0.502
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.5228571428571429,
+        "ci_low": 0.5006982142857143,
+        "ci_high": 0.5435732142857143,
+        "margin": 0.0010626543941757518,
+        "template_variance": 0.000021059523809523825
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.5575714285714287,
+        "ci_low": 0.5371392857142857,
+        "ci_high": 0.5777874999999999,
+        "margin": 0.002640815617160797,
+        "template_variance": 0.00001320238095238074
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.5870714285714286,
+        "ci_low": 0.5689928571428571,
+        "ci_high": 0.6050017857142855,
+        "margin": 0.005103924857643051,
+        "template_variance": 0.00042861904761904834
+      }
+    ]
+  },
+  {
+    "seed": 1,
+    "factor": "object",
+    "positive_counts": {
+      "cylinder": 692,
+      "cube": 617,
+      "sphere": 691
+    },
+    "pair_counts": {
+      "sphere|cube": 355,
+      "sphere|cylinder": 336,
+      "cylinder|sphere": 356,
+      "cylinder|cube": 336,
+      "cube|sphere": 313,
+      "cube|cylinder": 304
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "cylinder",
+        "sphere",
+        "cube"
+      ],
+      "n_correct": 1047,
+      "accuracy": 0.5235
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.6047142857142858,
+        "ci_low": 0.5856392857142857,
+        "ci_high": 0.6244375,
+        "margin": 0.007494481183479138,
+        "template_variance": 0.00008782142857142886
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.5825,
+        "ci_low": 0.5629196428571429,
+        "ci_high": 0.6033607142857144,
+        "margin": 0.008248638058613778,
+        "template_variance": 0.0000506666666666671
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.6503571428571429,
+        "ci_low": 0.631569642857143,
+        "ci_high": 0.6706464285714286,
+        "margin": 0.014745319971956633,
+        "template_variance": 0.00001772619047619057
+      }
+    ]
+  },
+  {
+    "seed": 1,
+    "factor": "color",
+    "positive_counts": {
+      "gray": 269,
+      "red": 241,
+      "blue": 241,
+      "green": 240,
+      "yellow": 245,
+      "purple": 255,
+      "cyan": 266,
+      "brown": 243
+    },
+    "pair_counts": {
+      "brown|yellow": 29,
+      "purple|brown": 39,
+      "purple|blue": 31,
+      "red|brown": 27,
+      "red|green": 48,
+      "brown|purple": 41,
+      "brown|gray": 44,
+      "green|brown": 39,
+      "blue|green": 34,
+      "green|red": 29,
+      "yellow|blue": 41,
+      "gray|yellow": 46,
+      "blue|cyan": 33,
+      "red|gray": 35,
+      "blue|red": 38,
+      "yellow|red": 32,
+      "brown|blue": 29,
+      "purple|red": 44,
+      "green|purple": 33,
+      "blue|purple": 38,
+      "green|gray": 38,
+      "purple|yellow": 31,
+      "cyan|gray": 32,
+      "cyan|purple": 36,
+      "yellow|cyan": 34,
+      "cyan|yellow": 41,
+      "yellow|purple": 36,
+      "gray|purple": 32,
+      "gray|green": 44,
+      "blue|yellow": 28,
+      "cyan|blue": 46,
+      "blue|gray": 40,
+      "cyan|red": 37,
+      "red|purple": 37,
+      "red|yellow": 25,
+      "red|blue": 40,
+      "gray|red": 41,
+      "purple|gray": 37,
+      "green|cyan": 38,
+      "cyan|green": 38,
+      "purple|green": 36,
+      "cyan|brown": 36,
+      "brown|red": 31,
+      "yellow|green": 33,
+      "green|blue": 29,
+      "brown|cyan": 35,
+      "gray|cyan": 36,
+      "yellow|gray": 38,
+      "yellow|brown": 31,
+      "green|yellow": 34,
+      "blue|brown": 30,
+      "red|cyan": 29,
+      "purple|cyan": 37,
+      "gray|blue": 33,
+      "gray|brown": 37,
+      "brown|green": 34
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "cyan",
+        "yellow",
+        "blue",
+        "brown",
+        "purple",
+        "gray",
+        "red",
+        "green"
+      ],
+      "n_correct": 1057,
+      "accuracy": 0.5285
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.7257857142857144,
+        "ci_low": 0.7073517857142858,
+        "ci_high": 0.7445035714285715,
+        "margin": 0.013065388973963308,
+        "template_variance": 0.00006773809523809545
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.6978571428571428,
+        "ci_low": 0.6803482142857143,
+        "ci_high": 0.7167892857142857,
+        "margin": 0.010058700125232918,
+        "template_variance": 0.00007314285714285708
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.7082857142857142,
+        "ci_low": 0.6890678571428571,
+        "ci_high": 0.7265035714285715,
+        "margin": 0.012946944473505938,
+        "template_variance": 0.0000626547619047619
+      }
+    ]
+  },
+  {
+    "seed": 2,
+    "factor": "size",
+    "positive_counts": {
+      "small": 1030,
+      "large": 970
+    },
+    "pair_counts": {
+      "large|small": 970,
+      "small|large": 1030
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "small",
+        "large"
+      ],
+      "n_correct": 1030,
+      "accuracy": 0.515
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.515,
+        "ci_low": 0.492,
+        "ci_high": 0.537,
+        "margin": 0.0015585442115552722,
+        "template_variance": 0
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.5157857142857142,
+        "ci_low": 0.49349464285714284,
+        "ci_high": 0.5375071428571429,
+        "margin": 0.0015386647166887996,
+        "template_variance": 0.0000012380952380952376
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.5155714285714286,
+        "ci_low": 0.49306964285714283,
+        "ci_high": 0.5373607142857143,
+        "margin": 0.0014209250068088295,
+        "template_variance": 0.0000023690476190476445
+      }
+    ]
+  },
+  {
+    "seed": 2,
+    "factor": "material",
+    "positive_counts": {
+      "metal": 969,
+      "rubber": 1031
+    },
+    "pair_counts": {
+      "rubber|metal": 1031,
+      "metal|rubber": 969
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "rubber",
+        "metal"
+      ],
+      "n_correct": 1031,
+      "accuracy": 0.5155
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.544,
+        "ci_low": 0.5233571428571429,
+        "ci_high": 0.5636446428571428,
+        "margin": 0.0018812991817503644,
+        "template_variance": 0.000038916666666666605
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.5661428571428572,
+        "ci_low": 0.5457839285714285,
+        "ci_high": 0.5877178571428572,
+        "margin": 0.0028363010842996344,
+        "template_variance": 0.000020642857142856868
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.6002857142857142,
+        "ci_low": 0.5822839285714285,
+        "ci_high": 0.6185089285714286,
+        "margin": 0.005419657453877562,
+        "template_variance": 0.000710571428571429
+      }
+    ]
+  },
+  {
+    "seed": 2,
+    "factor": "object",
+    "positive_counts": {
+      "cube": 656,
+      "cylinder": 651,
+      "sphere": 693
+    },
+    "pair_counts": {
+      "cylinder|sphere": 314,
+      "sphere|cylinder": 349,
+      "cylinder|cube": 337,
+      "sphere|cube": 344,
+      "cube|sphere": 340,
+      "cube|cylinder": 316
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "sphere",
+        "cylinder",
+        "cube"
+      ],
+      "n_correct": 1030,
+      "accuracy": 0.515
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.5944285714285714,
+        "ci_low": 0.5757107142857142,
+        "ci_high": 0.6129357142857143,
+        "margin": 0.007314287394962775,
+        "template_variance": 0.00007070238095238108
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.5787857142857142,
+        "ci_low": 0.5575,
+        "ci_high": 0.5997214285714286,
+        "margin": 0.009161842359460933,
+        "template_variance": 0.000028071428571428603
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.6487142857142858,
+        "ci_low": 0.6301410714285715,
+        "ci_high": 0.6676446428571428,
+        "margin": 0.014681205775308627,
+        "template_variance": 0.00003540476190476187
+      }
+    ]
+  },
+  {
+    "seed": 2,
+    "factor": "color",
+    "positive_counts": {
+      "gray": 263,
+      "red": 241,
+      "blue": 240,
+      "green": 222,
+      "yellow": 245,
+      "purple": 264,
+      "cyan": 269,
+      "brown": 256
+    },
+    "pair_counts": {
+      "brown|yellow": 43,
+      "cyan|blue": 22,
+      "red|brown": 22,
+      "blue|brown": 41,
+      "gray|cyan": 37,
+      "red|green": 30,
+      "green|yellow": 32,
+      "brown|gray": 34,
+      "green|brown": 34,
+      "blue|green": 36,
+      "yellow|blue": 42,
+      "gray|yellow": 28,
+      "blue|cyan": 31,
+      "brown|red": 34,
+      "blue|red": 34,
+      "yellow|red": 29,
+      "green|cyan": 32,
+      "purple|red": 36,
+      "yellow|green": 36,
+      "green|purple": 29,
+      "blue|purple": 30,
+      "gray|green": 39,
+      "purple|yellow": 38,
+      "cyan|gray": 50,
+      "cyan|purple": 45,
+      "yellow|cyan": 33,
+      "cyan|yellow": 34,
+      "yellow|purple": 43,
+      "purple|green": 35,
+      "purple|blue": 43,
+      "blue|gray": 29,
+      "cyan|red": 37,
+      "red|purple": 42,
+      "red|yellow": 29,
+      "purple|brown": 37,
+      "gray|red": 32,
+      "purple|gray": 38,
+      "red|gray": 33,
+      "red|blue": 42,
+      "cyan|brown": 40,
+      "brown|blue": 41,
+      "green|gray": 23,
+      "green|blue": 33,
+      "brown|cyan": 31,
+      "green|red": 39,
+      "yellow|gray": 28,
+      "yellow|brown": 34,
+      "cyan|green": 41,
+      "brown|purple": 41,
+      "blue|yellow": 39,
+      "brown|green": 32,
+      "red|cyan": 43,
+      "purple|cyan": 37,
+      "gray|blue": 48,
+      "gray|brown": 35,
+      "gray|purple": 44
+    },
+    "optimal_fixed_label_preference": {
+      "order": [
+        "cyan",
+        "brown",
+        "red",
+        "gray",
+        "yellow",
+        "purple",
+        "blue",
+        "green"
+      ],
+      "n_correct": 1064,
+      "accuracy": 0.532
+    },
+    "models": [
+      {
+        "model": "clip_vitb32",
+        "accuracy": 0.706,
+        "ci_low": 0.6880696428571429,
+        "ci_high": 0.7247142857142858,
+        "margin": 0.012672870252583379,
+        "template_variance": 0.00002566666666666651
+      },
+      {
+        "model": "clip_vitl14",
+        "accuracy": 0.6914285714285713,
+        "ci_low": 0.6724232142857143,
+        "ci_high": 0.7097232142857143,
+        "margin": 0.009997621752456325,
+        "template_variance": 0.000029202380952380734
+      },
+      {
+        "model": "siglip2_so400m",
+        "accuracy": 0.7037142857142857,
+        "ci_low": 0.6858571428571429,
+        "ci_high": 0.7224339285714284,
+        "margin": 0.012806579574540336,
+        "template_variance": 0.000185654761904762
+      }
+    ]
+  }
+]
