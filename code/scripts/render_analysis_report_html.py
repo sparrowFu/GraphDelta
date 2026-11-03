@@ -17,8 +17,9 @@ STEM = "预实验分析报告_平衡采样_2026-11-03"
 SOURCE = ROOT / "outputs" / "analysis" / f"{STEM}.md"
 OUTPUT = SOURCE.with_suffix(".html")
 
-SHORT_TITLES = ["一页结论", "数据与核验", "E1 静态结构诊断", "E2 单因素表示响应",
-                "E3 组合难度（CoGenT）", "阶段判定", "遗留缺口"]
+SHORT_TITLES = ["为什么做这轮实验", "模型、数据与准备", "E1 看图选描述",
+                "E2 图片变化怎样记录", "E3 哪组搭配更难",
+                "三个实验说明什么", "下一步与详细数据"]
 
 CSS = r"""
 :root{--ink:#172b41;--muted:#5e7081;--line:#dce5ec;--paper:#fff;--back:#f3f6f9;--blue:#225b85;--accent:#c5793e;--nav:246px;--radius:14px}
@@ -52,6 +53,7 @@ h2{font-size:23px;line-height:1.55;letter-spacing:-.4px;margin:25px 0 20px;paddi
 table{border-collapse:collapse;min-width:100%;font-size:13px;line-height:1.85;font-variant-numeric:tabular-nums}thead{background:#edf3f7;color:#274b65}th{font-weight:650;text-align:left}th,td{padding:12px 15px;border-bottom:1px solid #e5ebf0;vertical-align:top}th:not(:first-child),td:not(:first-child){min-width:100px}tbody tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#f8fafc}tbody tr:hover{background:#eef4f8}td strong{white-space:nowrap}
 code{background:#f0f3f6;border:1px solid #e4eaf0;border-radius:4px;padding:2px 5px;font-family:"Cascadia Code",Consolas,monospace;font-size:.83em;overflow-wrap:anywhere}
 .report-footer{font-size:12px;color:#788895;margin:23px 4px 0;line-height:1.9;display:flex;justify-content:space-between;gap:20px}.report-footer a{color:#688094}
+.report code{white-space:normal}.table-scroll table{width:100%}h4{font-size:16px;line-height:1.7;color:#304e65;margin:28px 0 12px}
 @media(min-width:1600px){.shell{padding-top:42px}.sidebar{top:42px}}@media(max-width:1100px){:root{--nav:200px}.shell{gap:24px;padding:22px}.hero{padding:34px}.report{padding:8px 28px 24px}.metric{padding:17px}.metric .value{font-size:22px}th,td{padding:10px 12px}}
 @media(max-width:820px){.shell{display:block;padding:18px 16px 36px}.sidebar{position:static;max-height:none;padding:0;margin-bottom:20px}.brand{font-size:19px}.sidebar .edition{display:inline-block;margin:0 0 0 15px;font-size:10px}.toc-details{margin-top:16px;background:#eaf0f5;border-radius:9px;padding:12px 14px}.toc-details>summary{margin:0;cursor:pointer;letter-spacing:1px}.toc-details>summary:after{content:"展开 / 收起";float:right;font-weight:400;font-size:10px;letter-spacing:0}.toc{margin-top:12px;grid-template-columns:1fr 1fr}.toc a{padding:7px 5px;font-size:12px}.sidebar-footer{display:none}.hero{padding:29px 25px}.hero h1{font-size:28px;letter-spacing:-.5px}.hero-desc{font-size:13px}.hero-meta{margin-top:21px;font-size:11px}.metrics{gap:9px;margin:13px 0 20px}.metric{padding:15px 12px}.metric .value{font-size:20px}.metric .label{font-size:10px}.report{padding:5px 22px 20px}.report-section{padding-top:12px}h2{font-size:21px}h3{font-size:17px}.report p,.report li{font-size:15px}.report-footer{display:block}}
 @media(max-width:480px){.hero{padding:24px 20px}.hero h1{font-size:25px}.hero-meta{gap:5px 13px}.metrics{grid-template-columns:1fr}.metric{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 17px}.metric .label{margin:0;font-size:11px;text-align:right;max-width:155px}.metric .value{font-size:21px;white-space:nowrap}.toolbar-note{font-size:10px}.report{padding:4px 16px 18px}.report-section{padding-bottom:17px}h2{font-size:19px;padding-left:10px}.table-scroll{margin:20px 0}.toc{grid-template-columns:1fr}}
@@ -129,7 +131,7 @@ def render():
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="GraphDelta 预实验（平衡采样）分析报告：数据审计、E1 词偏好诊断与因素分类、E2 单因素响应、E3 组合难度、阶段判定。">
+<meta name="description" content="GraphDelta 预实验分析报告：说明为什么做实验、E1/E2/E3 每一步怎样做、发现什么问题，以及结论和下一步。">
 <title>GraphDelta｜预实验分析报告（平衡采样）· 2026-11-03</title>
 <style>{CSS}</style>
 </head>
@@ -138,28 +140,28 @@ def render():
 <div class="shell">
 <aside class="sidebar" aria-label="报告目录">
   <a class="brand" href="#top">Graph<span>Delta</span></a>
-  <div class="edition">预实验 · 阶段一分析</div>
+  <div class="edition">预实验 · 实验过程与结果</div>
   <details class="toc-details" open>
     <summary>阅读目录</summary>
     <nav class="toc" aria-label="章节导航">{toc}</nav>
   </details>
-  <div class="sidebar-footer">分析日期 · 2026.11.03<br>平衡采样重跑后的正式产物<br>审计与数字可溯源<br><a href="{source_download}" download="{SOURCE.name}">下载 Markdown 分析稿</a></div>
+  <div class="sidebar-footer">分析日期 · 2026.11.03<br>从研究动机讲到实验结论<br>依据已有结果重写说明<br><a href="{source_download}" download="{SOURCE.name}">下载 Markdown 分析稿</a></div>
 </aside>
 <main>
   <header class="hero">
-    <p class="eyebrow">GRAPHDELTA RESEARCH NOTE · STAGE 01</p>
-    <h1>预实验分析报告（平衡采样）</h1>
-    <p class="hero-desc">直接从 9 个 run 的正式产物计算：哪些因素是真辨别、哪些只是词偏好。<br>E1 结构诊断、E2 单因素响应、E3 组合难度与阶段判定。</p>
-    <div class="hero-meta"><span>2026 年 11 月 3 日</span><span>9 个 run（3 模型 × 3 种子）</span><span>审计 A–G 全过</span></div>
+    <p class="eyebrow">GRAPHDELTA · 第一阶段：先确认问题</p>
+    <h1>预实验分析报告<br>实验怎么做，结果说明什么</h1>
+    <p class="hero-desc">模型认出了物体和颜色，是否也分得清颜色属于谁、谁在谁的左边？<br>从研究动机出发，逐步说明 E1、E2、E3 的做法、发现和结论。</p>
+    <div class="hero-meta"><span>2026 年 11 月 3 日</span><span>3 个模型 × 3 次抽样</span><span>平衡采样 · 模型参数保持不变</span></div>
   </header>
   <div class="metrics" aria-label="关键发现">
-    <div class="metric"><div class="value">90/90</div><div class="label">run×factor 审计项全部通过：配额等额、翻转 0.500、<br>汇总表可由逐题重算</div></div>
-    <div class="metric"><div class="value">0.500</div><div class="label">size / relation / position 的总体准确率：<br>分侧 ≈1/≈0，纯词偏好、辨别≈0</div></div>
-    <div class="metric"><div class="value">17.8–20.7<span class="unit">pp</span></div><div class="label">颜色−绑定准确率差距（三模型均值，9/9 CI 高于 0）</div></div>
+    <div class="metric"><div class="value">E1<span class="unit">看图选描述</span></div><div class="label">发现问题：颜色题较好<br>关系和颜色归属题明显更难</div></div>
+    <div class="metric"><div class="value">E2<span class="unit">比较图片变化</span></div><div class="label">检查内部变化：环境最清楚<br>尚未直接检查关系与归属变化</div></div>
+    <div class="metric"><div class="value">E3<span class="unit">比较搭配难度</span></div><div class="label">检查组合差异：两个模型在 B 更难<br>还未验证没见过的组合能否答对</div></div>
   </div>
-  <div class="toolbar"><span class="toolbar-note">阶段一分析 · 7 节 · 全部数字可溯源到 outputs 下产物</span><button class="print-button" id="print-report" type="button">打印 / 保存 PDF</button></div>
+  <div class="toolbar"><span class="toolbar-note">动机 → 实验步骤 → 发现的问题 → 结论 · 详细数值见文末</span><button class="print-button" id="print-report" type="button">打印 / 保存 PDF</button></div>
   <article class="report" aria-label="分析报告正文">{article}</article>
-  <footer class="report-footer"><span>GraphDelta · 预实验分析报告（平衡采样）· 2026-11-03<br>正文来源：Markdown 分析稿；配套审计见 audit_e1_sampling_2026-11-03。</span><a href="#top">返回顶部 ↑</a></footer>
+  <footer class="report-footer"><span>GraphDelta · 预实验分析报告（平衡采样）· 2026-11-03<br>依据已有实验结果重写说明；本次未重新运行模型。数据来源与限制见第 6 节。</span><a href="#top">返回顶部 ↑</a></footer>
 </main>
 </div>
 <script>{JS}</script>
