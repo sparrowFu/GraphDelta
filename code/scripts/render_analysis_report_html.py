@@ -1,9 +1,9 @@
-"""把《预实验复查与再分析（平衡采样后）》Markdown 渲染为单文件离线 HTML。
+"""把《预实验分析报告（平衡采样）》Markdown 渲染为单文件离线 HTML。
 
 与 render_preexperiment_report_html.py（预实验结论深化分析）同一设计系统；
 该脚本依赖 markdown + bs4，本脚本只依赖 markdown-it-py，且不处理图片
-（本报告无图）。用法：python code/scripts/render_recheck_report_html.py
-输出：outputs/analysis/预实验复查与再分析_平衡采样后_2026-11-03.html
+（本报告无图）。用法：python code/scripts/render_analysis_report_html.py
+输出：outputs/analysis/预实验分析报告_平衡采样_2026-11-03.html
 """
 import base64
 import html
@@ -13,13 +13,12 @@ from pathlib import Path
 from markdown_it import MarkdownIt
 
 ROOT = Path(__file__).resolve().parents[1]
-STEM = "预实验复查与再分析_平衡采样后_2026-11-03"
+STEM = "预实验分析报告_平衡采样_2026-11-03"
 SOURCE = ROOT / "outputs" / "analysis" / f"{STEM}.md"
 OUTPUT = SOURCE.with_suffix(".html")
 
-SHORT_TITLES = ["一页结论", "为什么需要这次复查", "数据核验（审计 A–G）",
-                "E1 再分析", "E2 / E3 复核", "既有报告勘误", "阶段判定",
-                "遗留缺口与建议"]
+SHORT_TITLES = ["一页结论", "数据与核验", "E1 静态结构诊断", "E2 单因素表示响应",
+                "E3 组合难度（CoGenT）", "阶段判定", "遗留缺口"]
 
 CSS = r"""
 :root{--ink:#172b41;--muted:#5e7081;--line:#dce5ec;--paper:#fff;--back:#f3f6f9;--blue:#225b85;--accent:#c5793e;--nav:246px;--radius:14px}
@@ -130,8 +129,8 @@ def render():
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
-<meta name="description" content="GraphDelta 预实验平衡采样后的复查与再分析：审计核验、E1 词偏好诊断与因素重分类、E2/E3 复核、既有报告勘误与阶段判定。">
-<title>GraphDelta｜预实验复查与再分析（平衡采样后）· 2026-11-03</title>
+<meta name="description" content="GraphDelta 预实验（平衡采样）分析报告：数据审计、E1 词偏好诊断与因素分类、E2 单因素响应、E3 组合难度、阶段判定。">
+<title>GraphDelta｜预实验分析报告（平衡采样）· 2026-11-03</title>
 <style>{CSS}</style>
 </head>
 <body id="top">
@@ -139,7 +138,7 @@ def render():
 <div class="shell">
 <aside class="sidebar" aria-label="报告目录">
   <a class="brand" href="#top">Graph<span>Delta</span></a>
-  <div class="edition">预实验 · 复查再分析</div>
+  <div class="edition">预实验 · 阶段一分析</div>
   <details class="toc-details" open>
     <summary>阅读目录</summary>
     <nav class="toc" aria-label="章节导航">{toc}</nav>
@@ -148,19 +147,19 @@ def render():
 </aside>
 <main>
   <header class="hero">
-    <p class="eyebrow">GRAPHDELTA RESEARCH NOTE · STAGE 01 RECHECK</p>
-    <h1>预实验复查与再分析（平衡采样后）</h1>
-    <p class="hero-desc">采样修复后哪些因素是真辨别、哪些只是词偏好。<br>E1 全部重读，E2/E3 核对沿用，既有报告逐条勘误。</p>
+    <p class="eyebrow">GRAPHDELTA RESEARCH NOTE · STAGE 01</p>
+    <h1>预实验分析报告（平衡采样）</h1>
+    <p class="hero-desc">直接从 9 个 run 的正式产物计算：哪些因素是真辨别、哪些只是词偏好。<br>E1 结构诊断、E2 单因素响应、E3 组合难度与阶段判定。</p>
     <div class="hero-meta"><span>2026 年 11 月 3 日</span><span>9 个 run（3 模型 × 3 种子）</span><span>审计 A–G 全过</span></div>
   </header>
   <div class="metrics" aria-label="关键发现">
     <div class="metric"><div class="value">90/90</div><div class="label">run×factor 审计项全部通过：配额等额、翻转 0.500、<br>汇总表可由逐题重算</div></div>
-    <div class="metric"><div class="value">0.500</div><div class="label">size / relation / position 平衡后总体准确率：<br>分侧 ≈1/≈0，纯词偏好、辨别≈0</div></div>
-    <div class="metric"><div class="value">17.8–20.7<span class="unit">pp</span></div><div class="label">颜色−绑定差距保持（三模型均值，9/9 CI 高于 0），<br>采样修复未改变真辨别读数</div></div>
+    <div class="metric"><div class="value">0.500</div><div class="label">size / relation / position 的总体准确率：<br>分侧 ≈1/≈0，纯词偏好、辨别≈0</div></div>
+    <div class="metric"><div class="value">17.8–20.7<span class="unit">pp</span></div><div class="label">颜色−绑定准确率差距（三模型均值，9/9 CI 高于 0）</div></div>
   </div>
-  <div class="toolbar"><span class="toolbar-note">复查与再分析 · 8 节 · 全部数字可溯源到 outputs 下产物</span><button class="print-button" id="print-report" type="button">打印 / 保存 PDF</button></div>
-  <article class="report" aria-label="复查与再分析正文">{article}</article>
-  <footer class="report-footer"><span>GraphDelta · 预实验复查与再分析（平衡采样后）· 2026-11-03<br>正文来源：Markdown 分析稿；配套审计见 audit_e1_sampling_2026-11-03。</span><a href="#top">返回顶部 ↑</a></footer>
+  <div class="toolbar"><span class="toolbar-note">阶段一分析 · 7 节 · 全部数字可溯源到 outputs 下产物</span><button class="print-button" id="print-report" type="button">打印 / 保存 PDF</button></div>
+  <article class="report" aria-label="分析报告正文">{article}</article>
+  <footer class="report-footer"><span>GraphDelta · 预实验分析报告（平衡采样）· 2026-11-03<br>正文来源：Markdown 分析稿；配套审计见 audit_e1_sampling_2026-11-03。</span><a href="#top">返回顶部 ↑</a></footer>
 </main>
 </div>
 <script>{JS}</script>

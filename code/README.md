@@ -471,7 +471,7 @@ SigLIP2 注意事项：当前实现是 FixRes checkpoint 路径（固定 384×38
 | `seed_stability.csv` | seeds 0/1/2 三种子关键判定稳定性汇总 | §66 |
 | `figures/<model>_seed<k>/` | §67 五图（PNG 300dpi + 合并 PDF） | §67 |
 | `../analysis/audit_e1_sampling_<date>.md` / `.json` | E1 平衡采样只读审计（A–G：配额平衡、position 翻转、恒选词上界、汇总表重算、run_meta 状态、跨 seed 重叠）；`scripts/audit_e1_sampling.py` 生成 | codex 审查 2026-10-28 |
-| `../analysis/预实验复查与再分析_平衡采样后_<date>.md` / `.html` | 平衡采样后 E1 再分析（词偏好诊断、因素重分类）、E2/E3 复核、既有报告勘误；HTML 由 `scripts/render_recheck_report_html.py` 渲染 | — |
+| `../analysis/预实验分析报告_平衡采样_<date>.md` / `.html` | 只从 `outputs/<model>/` 正式产物计算的阶段一分析（E1 词偏好诊断与因素分类、E2 单因素响应、E3 组合难度、阶段判定）；HTML 由 `scripts/render_analysis_report_html.py` 渲染 | — |
 | `../STAGE1_SUMMARY.md` | 阶段总结：三个核心问题判定 + 情况 A/B/C/D 对照 + 第二阶段入口建议 | §68–§72 |
 
 历史说明：`outputs/tables`、`outputs/tables_seed{1,2}` 是 2026-10-22 clip_vitl14

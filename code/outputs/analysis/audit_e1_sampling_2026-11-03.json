@@ -1,6 +1,6 @@
 {
  "date": "2026-11-03",
- "git_commit": "2ffa587ee73a336393bc30ffa16d7d41b63e6d98",
+ "git_commit": "2aaed6ac7daca348540bc3dabfb3cc63b14f212d",
  "tolerance": 1e-09,
  "models": [
   "clip_vitb32",
@@ -1872,7 +1872,7 @@
      "word_strategy": {
       "immune": false,
       "max_share": 0.25,
-      "argmax_word": "front",
+      "argmax_word": "of",
       "expected_share": 0.25,
       "immune_items": 0,
       "pass": true
@@ -3765,7 +3765,7 @@
      "word_strategy": {
       "immune": false,
       "max_share": 0.25,
-      "argmax_word": "front",
+      "argmax_word": "of",
       "expected_share": 0.25,
       "immune_items": 0,
       "pass": true
@@ -5658,7 +5658,7 @@
      "word_strategy": {
       "immune": false,
       "max_share": 0.25,
-      "argmax_word": "front",
+      "argmax_word": "of",
       "expected_share": 0.25,
       "immune_items": 0,
       "pass": true

@@ -1,6 +1,6 @@
 # E1 平衡采样审计（2026-11-03）
 
-- git commit：`2ffa587ee73a336393bc30ffa16d7d41b63e6d98`；数据源 45 个文件，SHA256 见同名 JSON。
+- git commit：`2aaed6ac7daca348540bc3dabfb3cc63b14f212d`；数据源 45 个文件，SHA256 见同名 JSON。
 - 检查 A–G 通过判定：全部通过；H 为描述性统计。
 - 消费文件与产物均为正式（非 smoke）表。
 
@@ -49,7 +49,7 @@
 | clevr/color | 0.125（blue）；0.125（cyan）；0.125（gray） | 0.125（blue）；0.125（cyan）；0.125（gray） | 0.125（blue）；0.125（cyan）；0.125（gray） |
 | clevr/size | 0.500（large）；0.500（small） | 0.500（large）；0.500（small） | 0.500（large）；0.500（small） |
 | clevr/material | 0.500（metal）；0.500（rubber） | 0.500（metal）；0.500（rubber） | 0.500（metal）；0.500（rubber） |
-| clevr/relation | 0.250（front）；0.250（right） | 0.250（front）；0.250（right） | 0.250（front）；0.250（right） |
+| clevr/relation | 0.250（of）；0.250（right） | 0.250（of）；0.250（right） | 0.250（of）；0.250（right） |
 | clevr/binding | immune | immune | immune |
 | pug_spar/scene | 0.037（zebra）；0.038（orca）；0.042（tarantula） | 0.037（zebra）；0.038（orca）；0.042（tarantula） | 0.037（zebra）；0.038（orca）；0.042（tarantula） |
 | pug_spar/position | 0.250（left）；0.250（right） | 0.250（left）；0.250（right） | 0.250（left）；0.250（right） |
