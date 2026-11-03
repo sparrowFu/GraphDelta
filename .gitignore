@@ -25,3 +25,4 @@ code/data/manifests/
 # 系统文件
 .DS_Store
 Thumbs.db
+.zcode/
