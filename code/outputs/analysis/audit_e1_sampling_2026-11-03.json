@@ -1,0 +1,6018 @@
+{
+ "date": "2026-11-03",
+ "git_commit": "2ffa587ee73a336393bc30ffa16d7d41b63e6d98",
+ "tolerance": 1e-09,
+ "models": [
+  "clip_vitb32",
+  "clip_vitl14",
+  "siglip2_so400m"
+ ],
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "all_checks_passed": true,
+ "failure_count": 0,
+ "failures": [],
+ "cross_seed_image_overlap": {
+  "clip_vitb32|clevr/binding": {
+   "max_pairwise_share": 0.1515,
+   "mean_pairwise_share": 0.1468,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitb32|clevr/color": {
+   "max_pairwise_share": 0.135,
+   "mean_pairwise_share": 0.1247,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitb32|clevr/material": {
+   "max_pairwise_share": 0.1475,
+   "mean_pairwise_share": 0.1367,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitb32|clevr/object": {
+   "max_pairwise_share": 0.1385,
+   "mean_pairwise_share": 0.1287,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitb32|clevr/relation": {
+   "max_pairwise_share": 0.143,
+   "mean_pairwise_share": 0.1363,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitb32|clevr/size": {
+   "max_pairwise_share": 0.146,
+   "mean_pairwise_share": 0.139,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitb32|pug_spar/attribute": {
+   "max_pairwise_share": 0.1075,
+   "mean_pairwise_share": 0.0975,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitb32|pug_spar/position": {
+   "max_pairwise_share": 0.0665,
+   "mean_pairwise_share": 0.0643,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitb32|pug_spar/relation": {
+   "max_pairwise_share": 0.0735,
+   "mean_pairwise_share": 0.0658,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitb32|pug_spar/scene": {
+   "max_pairwise_share": 0.0505,
+   "mean_pairwise_share": 0.0457,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitl14|clevr/binding": {
+   "max_pairwise_share": 0.1515,
+   "mean_pairwise_share": 0.1468,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitl14|clevr/color": {
+   "max_pairwise_share": 0.135,
+   "mean_pairwise_share": 0.1247,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitl14|clevr/material": {
+   "max_pairwise_share": 0.1475,
+   "mean_pairwise_share": 0.1367,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitl14|clevr/object": {
+   "max_pairwise_share": 0.1385,
+   "mean_pairwise_share": 0.1287,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitl14|clevr/relation": {
+   "max_pairwise_share": 0.143,
+   "mean_pairwise_share": 0.1363,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitl14|clevr/size": {
+   "max_pairwise_share": 0.146,
+   "mean_pairwise_share": 0.139,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitl14|pug_spar/attribute": {
+   "max_pairwise_share": 0.1075,
+   "mean_pairwise_share": 0.0975,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitl14|pug_spar/position": {
+   "max_pairwise_share": 0.0665,
+   "mean_pairwise_share": 0.0643,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitl14|pug_spar/relation": {
+   "max_pairwise_share": 0.0735,
+   "mean_pairwise_share": 0.0658,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "clip_vitl14|pug_spar/scene": {
+   "max_pairwise_share": 0.0505,
+   "mean_pairwise_share": 0.0457,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "siglip2_so400m|clevr/binding": {
+   "max_pairwise_share": 0.1515,
+   "mean_pairwise_share": 0.1468,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "siglip2_so400m|clevr/color": {
+   "max_pairwise_share": 0.135,
+   "mean_pairwise_share": 0.1247,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "siglip2_so400m|clevr/material": {
+   "max_pairwise_share": 0.1475,
+   "mean_pairwise_share": 0.1367,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "siglip2_so400m|clevr/object": {
+   "max_pairwise_share": 0.1385,
+   "mean_pairwise_share": 0.1287,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "siglip2_so400m|clevr/relation": {
+   "max_pairwise_share": 0.143,
+   "mean_pairwise_share": 0.1363,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "siglip2_so400m|clevr/size": {
+   "max_pairwise_share": 0.146,
+   "mean_pairwise_share": 0.139,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "siglip2_so400m|pug_spar/attribute": {
+   "max_pairwise_share": 0.1075,
+   "mean_pairwise_share": 0.0975,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "siglip2_so400m|pug_spar/position": {
+   "max_pairwise_share": 0.0665,
+   "mean_pairwise_share": 0.0643,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "siglip2_so400m|pug_spar/relation": {
+   "max_pairwise_share": 0.0735,
+   "mean_pairwise_share": 0.0658,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  },
+  "siglip2_so400m|pug_spar/scene": {
+   "max_pairwise_share": 0.0505,
+   "mean_pairwise_share": 0.0457,
+   "unique_images_per_seed": [
+    2000,
+    2000,
+    2000
+   ]
+  }
+ },
+ "runs": {
+  "clip_vitb32/seed_0": {
+   "tables_dir": "outputs/clip_vitb32/seed_0/tables",
+   "run_meta": {
+    "experiments": {
+     "e1_state": "success",
+     "e1_spar_official": "success",
+     "e2_pug_animals": "success",
+     "e2_pug_imagenet": "success",
+     "e3_cogent": "success"
+    },
+    "e1_outputs": [
+     "e1_acc_by_pos_value.csv",
+     "e1_clevr_filter_stats.json",
+     "e1_factor_gaps.csv",
+     "e1_items_clevr.jsonl",
+     "e1_items_spar.jsonl",
+     "e1_results.csv",
+     "e1_spar_filter_stats.json"
+    ],
+    "missing_outputs": [],
+    "pass": true
+   },
+   "factors": [
+    {
+     "dataset": "clevr",
+     "factor": "binding",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 2.6290081223123707e-13,
+       "abs_diff": 2.6290081223123707e-13
+      },
+      "margin_std": {
+       "diff": -1.3444504624177123e-10,
+       "abs_diff": 1.3444504624177123e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "color",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 250,
+      "brown": 250,
+      "cyan": 250,
+      "gray": 250,
+      "green": 250,
+      "purple": 250,
+      "red": 250,
+      "yellow": 250
+     },
+     "balance": {
+      "k_observed": 8,
+      "expected_k": 8,
+      "min": 250,
+      "max": 250,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -4.656612873077393e-10,
+       "abs_diff": 4.656612873077393e-10
+      },
+      "margin_std": {
+       "diff": 1.2993985991360812e-09,
+       "abs_diff": 1.2993985991360812e-09
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 8,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.708,
+      "accuracy": 0.708,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.125,
+      "argmax_word": "blue",
+      "expected_share": 0.125,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "material",
+     "n": 2000,
+     "pos_value_counts": {
+      "metal": 1000,
+      "rubber": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -5.820766091346741e-11,
+       "abs_diff": 5.820766091346741e-11
+      },
+      "margin_std": {
+       "diff": 8.79609884929522e-10,
+       "abs_diff": 8.79609884929522e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5225,
+      "accuracy": 0.5225,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "metal",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "object",
+     "n": 2000,
+     "pos_value_counts": {
+      "cube": 667,
+      "cylinder": 667,
+      "sphere": 666
+     },
+     "balance": {
+      "k_observed": 3,
+      "expected_k": 3,
+      "min": 666,
+      "max": 667,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 8.370130456791802e-10,
+       "abs_diff": 8.370130456791802e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 3,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5990714285714287,
+      "accuracy": 0.5990714285714286,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.3335,
+      "argmax_word": "cube",
+      "expected_share": 0.3333,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "behind": 500,
+      "front": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -2.8090104547962014e-10,
+       "abs_diff": 2.8090104547962014e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5254285714285715,
+      "accuracy": 0.5254285714285714,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "right",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "size",
+     "n": 2000,
+     "pos_value_counts": {
+      "large": 1000,
+      "small": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -9.71342541122855e-10,
+       "abs_diff": 9.71342541122855e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5,
+      "accuracy": 0.5,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "small",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "attribute",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 1000,
+      "grass": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": null,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 1.436578807301192e-11,
+       "abs_diff": 1.436578807301192e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.3977857142857143,
+      "accuracy": 0.3977857142857143,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "position",
+     "n": 2000,
+     "pos_value_counts": {
+      "above": 500,
+      "below": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "flip": {
+      "flip_share": 0.5,
+      "z": 0.0,
+      "pos_word_missing": 0,
+      "pass": true
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -8.758826129662278e-12,
+       "abs_diff": 8.758826129662278e-12
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.49492857142857144,
+      "accuracy": 0.49492857142857144,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "left",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "below": 1000,
+      "left": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -1.6629414945762422e-10,
+       "abs_diff": 1.6629414945762422e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.4699285714285714,
+      "accuracy": 0.4699285714285714,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "scene",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -4.656612873077393e-10,
+       "abs_diff": 4.656612873077393e-10
+      },
+      "margin_std": {
+       "diff": -7.007324720476049e-10,
+       "abs_diff": 7.007324720476049e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.0415,
+      "argmax_word": "tarantula",
+      "expected_share": null,
+      "immune_items": 0,
+      "pass": null
+     }
+    }
+   ]
+  },
+  "clip_vitb32/seed_1": {
+   "tables_dir": "outputs/clip_vitb32/seed_1/tables",
+   "run_meta": {
+    "experiments": {
+     "e1_state": "success",
+     "e1_spar_official": "success",
+     "e2_pug_animals": "success",
+     "e2_pug_imagenet": "success",
+     "e3_cogent": "success"
+    },
+    "e1_outputs": [
+     "e1_acc_by_pos_value.csv",
+     "e1_clevr_filter_stats.json",
+     "e1_factor_gaps.csv",
+     "e1_items_clevr.jsonl",
+     "e1_items_spar.jsonl",
+     "e1_results.csv",
+     "e1_spar_filter_stats.json"
+    ],
+    "missing_outputs": [],
+    "pass": true
+   },
+   "factors": [
+    {
+     "dataset": "clevr",
+     "factor": "binding",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 1.6294886273637843e-10,
+       "abs_diff": 1.6294886273637843e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "color",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 250,
+      "brown": 250,
+      "cyan": 250,
+      "gray": 250,
+      "green": 250,
+      "purple": 250,
+      "red": 250,
+      "yellow": 250
+     },
+     "balance": {
+      "k_observed": 8,
+      "expected_k": 8,
+      "min": 250,
+      "max": 250,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -1.4916647361751245e-09,
+       "abs_diff": 1.4916647361751245e-09
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 8,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.7038571428571428,
+      "accuracy": 0.7038571428571428,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.125,
+      "argmax_word": "gray",
+      "expected_share": 0.125,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "material",
+     "n": 2000,
+     "pos_value_counts": {
+      "metal": 1000,
+      "rubber": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 8.353694715135251e-10,
+       "abs_diff": 8.353694715135251e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5319285714285714,
+      "accuracy": 0.5319285714285714,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "rubber",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "object",
+     "n": 2000,
+     "pos_value_counts": {
+      "cube": 667,
+      "cylinder": 667,
+      "sphere": 666
+     },
+     "balance": {
+      "k_observed": 3,
+      "expected_k": 3,
+      "min": 666,
+      "max": 667,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 1.4040459003772376e-09,
+       "abs_diff": 1.4040459003772376e-09
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 3,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.6024285714285714,
+      "accuracy": 0.6024285714285714,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.3335,
+      "argmax_word": "cylinder",
+      "expected_share": 0.3333,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "behind": 500,
+      "front": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -2.3133057969193516e-11,
+       "abs_diff": 2.3133057969193516e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5112857142857143,
+      "accuracy": 0.5112857142857143,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "right",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "size",
+     "n": 2000,
+     "pos_value_counts": {
+      "large": 1000,
+      "small": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 1.0406380444860641e-09,
+       "abs_diff": 1.0406380444860641e-09
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.49992857142857144,
+      "accuracy": 0.49992857142857144,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "small",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "attribute",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 1000,
+      "grass": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": null,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 1.7214579935143082e-10,
+       "abs_diff": 1.7214579935143082e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.40342857142857147,
+      "accuracy": 0.40342857142857147,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "position",
+     "n": 2000,
+     "pos_value_counts": {
+      "above": 500,
+      "below": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "flip": {
+      "flip_share": 0.5,
+      "z": 0.0,
+      "pos_word_missing": 0,
+      "pass": true
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -5.972411541016465e-11,
+       "abs_diff": 5.972411541016465e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5055714285714286,
+      "accuracy": 0.5055714285714286,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "left",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "below": 1000,
+      "left": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 5.551115123125783e-17,
+       "abs_diff": 5.551115123125783e-17
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -8.601423392984309e-11,
+       "abs_diff": 8.601423392984309e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.48971428571428566,
+      "accuracy": 0.48971428571428566,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "scene",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -1.103490458731482e-10,
+       "abs_diff": 1.103490458731482e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.0385,
+      "argmax_word": "orca",
+      "expected_share": null,
+      "immune_items": 0,
+      "pass": null
+     }
+    }
+   ]
+  },
+  "clip_vitb32/seed_2": {
+   "tables_dir": "outputs/clip_vitb32/seed_2/tables",
+   "run_meta": {
+    "experiments": {
+     "e1_state": "success",
+     "e1_spar_official": "success",
+     "e2_pug_animals": "success",
+     "e2_pug_imagenet": "success",
+     "e3_cogent": "success"
+    },
+    "e1_outputs": [
+     "e1_acc_by_pos_value.csv",
+     "e1_clevr_filter_stats.json",
+     "e1_factor_gaps.csv",
+     "e1_items_clevr.jsonl",
+     "e1_items_spar.jsonl",
+     "e1_results.csv",
+     "e1_spar_filter_stats.json"
+    ],
+    "missing_outputs": [],
+    "pass": true
+   },
+   "factors": [
+    {
+     "dataset": "clevr",
+     "factor": "binding",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -1.5475453297303376e-10,
+       "abs_diff": 1.5475453297303376e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "color",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 250,
+      "brown": 250,
+      "cyan": 250,
+      "gray": 250,
+      "green": 250,
+      "purple": 250,
+      "red": 250,
+      "yellow": 250
+     },
+     "balance": {
+      "k_observed": 8,
+      "expected_k": 8,
+      "min": 250,
+      "max": 250,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 4.703997052990516e-10,
+       "abs_diff": 4.703997052990516e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 8,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.7031428571428571,
+      "accuracy": 0.7031428571428571,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.125,
+      "argmax_word": "cyan",
+      "expected_share": 0.125,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "material",
+     "n": 2000,
+     "pos_value_counts": {
+      "metal": 1000,
+      "rubber": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -5.820766091346741e-11,
+       "abs_diff": 5.820766091346741e-11
+      },
+      "margin_std": {
+       "diff": -1.05077877649018e-09,
+       "abs_diff": 1.05077877649018e-09
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5265714285714286,
+      "accuracy": 0.5265714285714286,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "metal",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "object",
+     "n": 2000,
+     "pos_value_counts": {
+      "cube": 667,
+      "cylinder": 667,
+      "sphere": 666
+     },
+     "balance": {
+      "k_observed": 3,
+      "expected_k": 3,
+      "min": 666,
+      "max": 667,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -2.3283064365386963e-10,
+       "abs_diff": 2.3283064365386963e-10
+      },
+      "margin_std": {
+       "diff": 1.6119509789469522e-09,
+       "abs_diff": 1.6119509789469522e-09
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 3,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5895714285714286,
+      "accuracy": 0.5895714285714286,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.3335,
+      "argmax_word": "cylinder",
+      "expected_share": 0.3333,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "behind": 500,
+      "front": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 2.842170943040401e-14,
+       "abs_diff": 2.842170943040401e-14
+      },
+      "margin_std": {
+       "diff": -3.33243602851363e-10,
+       "abs_diff": 3.33243602851363e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5002857142857143,
+      "accuracy": 0.5002857142857142,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "front",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "size",
+     "n": 2000,
+     "pos_value_counts": {
+      "large": 1000,
+      "small": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -8.043539098667729e-10,
+       "abs_diff": 8.043539098667729e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5000714285714286,
+      "accuracy": 0.5000714285714285,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "large",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "attribute",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 1000,
+      "grass": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": null,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 2.11906870523082e-10,
+       "abs_diff": 2.11906870523082e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.396,
+      "accuracy": 0.396,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "position",
+     "n": 2000,
+     "pos_value_counts": {
+      "above": 500,
+      "below": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "flip": {
+      "flip_share": 0.5,
+      "z": 0.0,
+      "pos_word_missing": 0,
+      "pass": true
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 5.551115123125783e-17,
+       "abs_diff": 5.551115123125783e-17
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -2.06142334972792e-10,
+       "abs_diff": 2.06142334972792e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.4987142857142857,
+      "accuracy": 0.49871428571428567,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "right",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "below": 1000,
+      "left": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 1.4551915228366852e-11,
+       "abs_diff": 1.4551915228366852e-11
+      },
+      "margin_std": {
+       "diff": 2.9304791752948756e-10,
+       "abs_diff": 2.9304791752948756e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.4838571428571428,
+      "accuracy": 0.4838571428571428,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "scene",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 1.610322066664116e-09,
+       "abs_diff": 1.610322066664116e-09
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.037,
+      "argmax_word": "zebra",
+      "expected_share": null,
+      "immune_items": 0,
+      "pass": null
+     }
+    }
+   ]
+  },
+  "clip_vitl14/seed_0": {
+   "tables_dir": "outputs/clip_vitl14/seed_0/tables",
+   "run_meta": {
+    "experiments": {
+     "e1_state": "success",
+     "e1_spar_official": "success",
+     "e2_pug_animals": "success",
+     "e2_pug_imagenet": "success",
+     "e3_cogent": "success"
+    },
+    "e1_outputs": [
+     "e1_acc_by_pos_value.csv",
+     "e1_clevr_filter_stats.json",
+     "e1_factor_gaps.csv",
+     "e1_items_clevr.jsonl",
+     "e1_items_spar.jsonl",
+     "e1_results.csv",
+     "e1_spar_filter_stats.json"
+    ],
+    "missing_outputs": [],
+    "pass": true
+   },
+   "factors": [
+    {
+     "dataset": "clevr",
+     "factor": "binding",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -1.8189894035458565e-12,
+       "abs_diff": 1.8189894035458565e-12
+      },
+      "margin_std": {
+       "diff": -4.258579443944255e-10,
+       "abs_diff": 4.258579443944255e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "color",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 250,
+      "brown": 250,
+      "cyan": 250,
+      "gray": 250,
+      "green": 250,
+      "purple": 250,
+      "red": 250,
+      "yellow": 250
+     },
+     "balance": {
+      "k_observed": 8,
+      "expected_k": 8,
+      "min": 250,
+      "max": 250,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -1.354545746401481e-10,
+       "abs_diff": 1.354545746401481e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 8,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.679,
+      "accuracy": 0.679,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.125,
+      "argmax_word": "blue",
+      "expected_share": 0.125,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "material",
+     "n": 2000,
+     "pos_value_counts": {
+      "metal": 1000,
+      "rubber": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -1.1641532182693481e-10,
+       "abs_diff": 1.1641532182693481e-10
+      },
+      "margin_std": {
+       "diff": -6.017183105944124e-10,
+       "abs_diff": 6.017183105944124e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5736428571428571,
+      "accuracy": 0.5736428571428571,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "metal",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "object",
+     "n": 2000,
+     "pos_value_counts": {
+      "cube": 667,
+      "cylinder": 667,
+      "sphere": 666
+     },
+     "balance": {
+      "k_observed": 3,
+      "expected_k": 3,
+      "min": 666,
+      "max": 667,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 4.656612873077393e-10,
+       "abs_diff": 4.656612873077393e-10
+      },
+      "margin_std": {
+       "diff": 3.725975084023503e-10,
+       "abs_diff": 3.725975084023503e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 3,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5742142857142857,
+      "accuracy": 0.5742142857142858,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.3335,
+      "argmax_word": "cube",
+      "expected_share": 0.3333,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "behind": 500,
+      "front": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -3.969564173894602e-11,
+       "abs_diff": 3.969564173894602e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5196428571428571,
+      "accuracy": 0.5196428571428571,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "right",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "size",
+     "n": 2000,
+     "pos_value_counts": {
+      "large": 1000,
+      "small": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -2.7116302259155844e-11,
+       "abs_diff": 2.7116302259155844e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.49842857142857144,
+      "accuracy": 0.49842857142857144,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "small",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "attribute",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 1000,
+      "grass": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": null,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 7.275957614183426e-12,
+       "abs_diff": 7.275957614183426e-12
+      },
+      "margin_std": {
+       "diff": -6.475651959103601e-10,
+       "abs_diff": 6.475651959103601e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5110714285714286,
+      "accuracy": 0.5110714285714285,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "position",
+     "n": 2000,
+     "pos_value_counts": {
+      "above": 500,
+      "below": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "flip": {
+      "flip_share": 0.5,
+      "z": 0.0,
+      "pos_word_missing": 0,
+      "pass": true
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 7.214714936587541e-14,
+       "abs_diff": 7.214714936587541e-14
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.498,
+      "accuracy": 0.498,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "left",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "below": 1000,
+      "left": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 5.820766091346741e-11,
+       "abs_diff": 5.820766091346741e-11
+      },
+      "margin_std": {
+       "diff": -1.762093890939065e-10,
+       "abs_diff": 1.762093890939065e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.455,
+      "accuracy": 0.455,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "scene",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 1.862645149230957e-09,
+       "abs_diff": 1.862645149230957e-09
+      },
+      "margin_std": {
+       "diff": -2.1644954925625903e-10,
+       "abs_diff": 2.1644954925625903e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.0415,
+      "argmax_word": "tarantula",
+      "expected_share": null,
+      "immune_items": 0,
+      "pass": null
+     }
+    }
+   ]
+  },
+  "clip_vitl14/seed_1": {
+   "tables_dir": "outputs/clip_vitl14/seed_1/tables",
+   "run_meta": {
+    "experiments": {
+     "e1_state": "success",
+     "e1_spar_official": "success",
+     "e2_pug_animals": "success",
+     "e2_pug_imagenet": "success",
+     "e3_cogent": "success"
+    },
+    "e1_outputs": [
+     "e1_acc_by_pos_value.csv",
+     "e1_clevr_filter_stats.json",
+     "e1_factor_gaps.csv",
+     "e1_items_clevr.jsonl",
+     "e1_items_spar.jsonl",
+     "e1_results.csv",
+     "e1_spar_filter_stats.json"
+    ],
+    "missing_outputs": [],
+    "pass": true
+   },
+   "factors": [
+    {
+     "dataset": "clevr",
+     "factor": "binding",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 1.4564354583468386e-10,
+       "abs_diff": 1.4564354583468386e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "color",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 250,
+      "brown": 250,
+      "cyan": 250,
+      "gray": 250,
+      "green": 250,
+      "purple": 250,
+      "red": 250,
+      "yellow": 250
+     },
+     "balance": {
+      "k_observed": 8,
+      "expected_k": 8,
+      "min": 250,
+      "max": 250,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 2.220446049250313e-16,
+       "abs_diff": 2.220446049250313e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -2.3068634849576775e-10,
+       "abs_diff": 2.3068634849576775e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 8,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.6864285714285715,
+      "accuracy": 0.6864285714285713,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.125,
+      "argmax_word": "gray",
+      "expected_share": 0.125,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "material",
+     "n": 2000,
+     "pos_value_counts": {
+      "metal": 1000,
+      "rubber": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -9.842539422377783e-10,
+       "abs_diff": 9.842539422377783e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5842857142857142,
+      "accuracy": 0.5842857142857142,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "rubber",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "object",
+     "n": 2000,
+     "pos_value_counts": {
+      "cube": 667,
+      "cylinder": 667,
+      "sphere": 666
+     },
+     "balance": {
+      "k_observed": 3,
+      "expected_k": 3,
+      "min": 666,
+      "max": 667,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -1.7583209888094586e-10,
+       "abs_diff": 1.7583209888094586e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 3,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.576,
+      "accuracy": 0.576,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.3335,
+      "argmax_word": "cylinder",
+      "expected_share": 0.3333,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "behind": 500,
+      "front": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 3.9269026051724776e-10,
+       "abs_diff": 3.9269026051724776e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5117857142857143,
+      "accuracy": 0.5117857142857143,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "right",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "size",
+     "n": 2000,
+     "pos_value_counts": {
+      "large": 1000,
+      "small": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -8.851262327247422e-10,
+       "abs_diff": 8.851262327247422e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.49957142857142856,
+      "accuracy": 0.49957142857142856,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "small",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "attribute",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 1000,
+      "grass": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": null,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -6.156458936396048e-10,
+       "abs_diff": 6.156458936396048e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5088571428571428,
+      "accuracy": 0.5088571428571429,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "position",
+     "n": 2000,
+     "pos_value_counts": {
+      "above": 500,
+      "below": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "flip": {
+      "flip_share": 0.5,
+      "z": 0.0,
+      "pos_word_missing": 0,
+      "pass": true
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -2.0932648149563082e-10,
+       "abs_diff": 2.0932648149563082e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.49014285714285716,
+      "accuracy": 0.4901428571428571,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "left",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "below": 1000,
+      "left": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -5.551115123125783e-17,
+       "abs_diff": 5.551115123125783e-17
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -5.820766091346741e-11,
+       "abs_diff": 5.820766091346741e-11
+      },
+      "margin_std": {
+       "diff": -6.704447639421796e-10,
+       "abs_diff": 6.704447639421796e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.46635714285714286,
+      "accuracy": 0.4663571428571429,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "scene",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -6.245356627687659e-10,
+       "abs_diff": 6.245356627687659e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.0385,
+      "argmax_word": "orca",
+      "expected_share": null,
+      "immune_items": 0,
+      "pass": null
+     }
+    }
+   ]
+  },
+  "clip_vitl14/seed_2": {
+   "tables_dir": "outputs/clip_vitl14/seed_2/tables",
+   "run_meta": {
+    "experiments": {
+     "e1_state": "success",
+     "e1_spar_official": "success",
+     "e2_pug_animals": "success",
+     "e2_pug_imagenet": "success",
+     "e3_cogent": "success"
+    },
+    "e1_outputs": [
+     "e1_acc_by_pos_value.csv",
+     "e1_clevr_filter_stats.json",
+     "e1_factor_gaps.csv",
+     "e1_items_clevr.jsonl",
+     "e1_items_spar.jsonl",
+     "e1_results.csv",
+     "e1_spar_filter_stats.json"
+    ],
+    "missing_outputs": [],
+    "pass": true
+   },
+   "factors": [
+    {
+     "dataset": "clevr",
+     "factor": "binding",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 5.551115123125783e-17,
+       "abs_diff": 5.551115123125783e-17
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -3.637978807091713e-12,
+       "abs_diff": 3.637978807091713e-12
+      },
+      "margin_std": {
+       "diff": -2.887648002658505e-10,
+       "abs_diff": 2.887648002658505e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "color",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 250,
+      "brown": 250,
+      "cyan": 250,
+      "gray": 250,
+      "green": 250,
+      "purple": 250,
+      "red": 250,
+      "yellow": 250
+     },
+     "balance": {
+      "k_observed": 8,
+      "expected_k": 8,
+      "min": 250,
+      "max": 250,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 4.656612873077393e-10,
+       "abs_diff": 4.656612873077393e-10
+      },
+      "margin_std": {
+       "diff": -4.540006912079342e-11,
+       "abs_diff": 4.540006912079342e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 8,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.6830714285714286,
+      "accuracy": 0.6830714285714286,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.125,
+      "argmax_word": "cyan",
+      "expected_share": 0.125,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "material",
+     "n": 2000,
+     "pos_value_counts": {
+      "metal": 1000,
+      "rubber": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 5.622261441129428e-10,
+       "abs_diff": 5.622261441129428e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5661428571428571,
+      "accuracy": 0.5661428571428572,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "metal",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "object",
+     "n": 2000,
+     "pos_value_counts": {
+      "cube": 667,
+      "cylinder": 667,
+      "sphere": 666
+     },
+     "balance": {
+      "k_observed": 3,
+      "expected_k": 3,
+      "min": 666,
+      "max": 667,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -1.0728101670909318e-09,
+       "abs_diff": 1.0728101670909318e-09
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 3,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5757142857142856,
+      "accuracy": 0.5757142857142857,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.3335,
+      "argmax_word": "cylinder",
+      "expected_share": 0.3333,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "behind": 500,
+      "front": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 3.4879337265647514e-11,
+       "abs_diff": 3.4879337265647514e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5084285714285715,
+      "accuracy": 0.5084285714285715,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "front",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "size",
+     "n": 2000,
+     "pos_value_counts": {
+      "large": 1000,
+      "small": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -7.199805057700459e-10,
+       "abs_diff": 7.199805057700459e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5016428571428572,
+      "accuracy": 0.5016428571428572,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "large",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "attribute",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 1000,
+      "grass": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": null,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 1.1368683772161603e-13,
+       "abs_diff": 1.1368683772161603e-13
+      },
+      "margin_std": {
+       "diff": -2.868689730206597e-10,
+       "abs_diff": 2.868689730206597e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.502,
+      "accuracy": 0.502,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "position",
+     "n": 2000,
+     "pos_value_counts": {
+      "above": 500,
+      "below": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "flip": {
+      "flip_share": 0.5,
+      "z": 0.0,
+      "pos_word_missing": 0,
+      "pass": true
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -2.9511630032091896e-10,
+       "abs_diff": 2.9511630032091896e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.4791428571428571,
+      "accuracy": 0.4791428571428571,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "right",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "below": 1000,
+      "left": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -5.551115123125783e-17,
+       "abs_diff": 5.551115123125783e-17
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 9.115581553476026e-12,
+       "abs_diff": 9.115581553476026e-12
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.4466428571428571,
+      "accuracy": 0.4466428571428572,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "scene",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -1.862645149230957e-09,
+       "abs_diff": 1.862645149230957e-09
+      },
+      "margin_std": {
+       "diff": 4.39002178359571e-10,
+       "abs_diff": 4.39002178359571e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.037,
+      "argmax_word": "zebra",
+      "expected_share": null,
+      "immune_items": 0,
+      "pass": null
+     }
+    }
+   ]
+  },
+  "siglip2_so400m/seed_0": {
+   "tables_dir": "outputs/siglip2_so400m/seed_0/tables",
+   "run_meta": {
+    "experiments": {
+     "e1_state": "success",
+     "e1_spar_official": "success",
+     "e2_pug_animals": "success",
+     "e2_pug_imagenet": "success",
+     "e3_cogent": "success"
+    },
+    "e1_outputs": [
+     "e1_acc_by_pos_value.csv",
+     "e1_clevr_filter_stats.json",
+     "e1_factor_gaps.csv",
+     "e1_items_clevr.jsonl",
+     "e1_items_spar.jsonl",
+     "e1_results.csv",
+     "e1_spar_filter_stats.json"
+    ],
+    "missing_outputs": [],
+    "pass": true
+   },
+   "factors": [
+    {
+     "dataset": "clevr",
+     "factor": "binding",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 7.684796332271815e-11,
+       "abs_diff": 7.684796332271815e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "color",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 250,
+      "brown": 250,
+      "cyan": 250,
+      "gray": 250,
+      "green": 250,
+      "purple": 250,
+      "red": 250,
+      "yellow": 250
+     },
+     "balance": {
+      "k_observed": 8,
+      "expected_k": 8,
+      "min": 250,
+      "max": 250,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -4.656612873077393e-10,
+       "abs_diff": 4.656612873077393e-10
+      },
+      "margin_std": {
+       "diff": 3.1761175980915546e-10,
+       "abs_diff": 3.1761175980915546e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 8,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.6992857142857143,
+      "accuracy": 0.6992857142857142,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.125,
+      "argmax_word": "blue",
+      "expected_share": 0.125,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "material",
+     "n": 2000,
+     "pos_value_counts": {
+      "metal": 1000,
+      "rubber": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -2.7471588892602483e-10,
+       "abs_diff": 2.7471588892602483e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.6002142857142858,
+      "accuracy": 0.6002142857142857,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "metal",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "object",
+     "n": 2000,
+     "pos_value_counts": {
+      "cube": 667,
+      "cylinder": 667,
+      "sphere": 666
+     },
+     "balance": {
+      "k_observed": 3,
+      "expected_k": 3,
+      "min": 666,
+      "max": 667,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 1.6827426466137219e-09,
+       "abs_diff": 1.6827426466137219e-09
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 3,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.6398571428571429,
+      "accuracy": 0.6398571428571429,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.3335,
+      "argmax_word": "cube",
+      "expected_share": 0.3333,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "behind": 500,
+      "front": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -1.8189894035458565e-12,
+       "abs_diff": 1.8189894035458565e-12
+      },
+      "margin_std": {
+       "diff": 2.0216290967656203e-10,
+       "abs_diff": 2.0216290967656203e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5054285714285713,
+      "accuracy": 0.5054285714285714,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "right",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "size",
+     "n": 2000,
+     "pos_value_counts": {
+      "large": 1000,
+      "small": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -1.4551915228366852e-11,
+       "abs_diff": 1.4551915228366852e-11
+      },
+      "margin_std": {
+       "diff": 9.427882780022045e-11,
+       "abs_diff": 9.427882780022045e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5008571428571429,
+      "accuracy": 0.5008571428571429,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "small",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "attribute",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 1000,
+      "grass": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": null,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 3.2291180493415617e-10,
+       "abs_diff": 3.2291180493415617e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5460714285714287,
+      "accuracy": 0.5460714285714285,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "position",
+     "n": 2000,
+     "pos_value_counts": {
+      "above": 500,
+      "below": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "flip": {
+      "flip_share": 0.5,
+      "z": 0.0,
+      "pos_word_missing": 0,
+      "pass": true
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -4.814074399533963e-11,
+       "abs_diff": 4.814074399533963e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5120714285714285,
+      "accuracy": 0.5120714285714284,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "left",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "below": 1000,
+      "left": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -7.290956033356721e-11,
+       "abs_diff": 7.290956033356721e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.49857142857142855,
+      "accuracy": 0.49857142857142855,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "scene",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 1.843620464625495e-10,
+       "abs_diff": 1.843620464625495e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.0415,
+      "argmax_word": "tarantula",
+      "expected_share": null,
+      "immune_items": 0,
+      "pass": null
+     }
+    }
+   ]
+  },
+  "siglip2_so400m/seed_1": {
+   "tables_dir": "outputs/siglip2_so400m/seed_1/tables",
+   "run_meta": {
+    "experiments": {
+     "e1_state": "success",
+     "e1_spar_official": "success",
+     "e2_pug_animals": "success",
+     "e2_pug_imagenet": "success",
+     "e3_cogent": "success"
+    },
+    "e1_outputs": [
+     "e1_acc_by_pos_value.csv",
+     "e1_clevr_filter_stats.json",
+     "e1_factor_gaps.csv",
+     "e1_items_clevr.jsonl",
+     "e1_items_spar.jsonl",
+     "e1_results.csv",
+     "e1_spar_filter_stats.json"
+    ],
+    "missing_outputs": [],
+    "pass": true
+   },
+   "factors": [
+    {
+     "dataset": "clevr",
+     "factor": "binding",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -5.973386195401442e-11,
+       "abs_diff": 5.973386195401442e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "color",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 250,
+      "brown": 250,
+      "cyan": 250,
+      "gray": 250,
+      "green": 250,
+      "purple": 250,
+      "red": 250,
+      "yellow": 250
+     },
+     "balance": {
+      "k_observed": 8,
+      "expected_k": 8,
+      "min": 250,
+      "max": 250,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 4.656612873077393e-10,
+       "abs_diff": 4.656612873077393e-10
+      },
+      "margin_std": {
+       "diff": 6.726891023378645e-10,
+       "abs_diff": 6.726891023378645e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 8,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.6880714285714286,
+      "accuracy": 0.6880714285714286,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.125,
+      "argmax_word": "gray",
+      "expected_share": 0.125,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "material",
+     "n": 2000,
+     "pos_value_counts": {
+      "metal": 1000,
+      "rubber": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -2.3283064365386963e-10,
+       "abs_diff": 2.3283064365386963e-10
+      },
+      "margin_std": {
+       "diff": -3.219175447044531e-10,
+       "abs_diff": 3.219175447044531e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5970714285714285,
+      "accuracy": 0.5970714285714285,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "rubber",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "object",
+     "n": 2000,
+     "pos_value_counts": {
+      "cube": 667,
+      "cylinder": 667,
+      "sphere": 666
+     },
+     "balance": {
+      "k_observed": 3,
+      "expected_k": 3,
+      "min": 666,
+      "max": 667,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -4.656612873077393e-10,
+       "abs_diff": 4.656612873077393e-10
+      },
+      "margin_std": {
+       "diff": -1.5965905750259246e-09,
+       "abs_diff": 1.5965905750259246e-09
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 3,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.6474285714285715,
+      "accuracy": 0.6474285714285715,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.3335,
+      "argmax_word": "cylinder",
+      "expected_share": 0.3333,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "behind": 500,
+      "front": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -1.1521338180373042e-10,
+       "abs_diff": 1.1521338180373042e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5077857142857143,
+      "accuracy": 0.5077857142857143,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "right",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "size",
+     "n": 2000,
+     "pos_value_counts": {
+      "large": 1000,
+      "small": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -1.213209418343686e-09,
+       "abs_diff": 1.213209418343686e-09
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5010000000000001,
+      "accuracy": 0.5009999999999999,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "small",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "attribute",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 1000,
+      "grass": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": null,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -2.482603914111259e-10,
+       "abs_diff": 2.482603914111259e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5303571428571427,
+      "accuracy": 0.5303571428571429,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "position",
+     "n": 2000,
+     "pos_value_counts": {
+      "above": 500,
+      "below": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "flip": {
+      "flip_share": 0.5,
+      "z": 0.0,
+      "pos_word_missing": 0,
+      "pass": true
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -9.094947017729282e-13,
+       "abs_diff": 9.094947017729282e-13
+      },
+      "margin_std": {
+       "diff": -2.6980497263434655e-10,
+       "abs_diff": 2.6980497263434655e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.4975,
+      "accuracy": 0.4975,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "left",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "below": 1000,
+      "left": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -1.4551915228366852e-11,
+       "abs_diff": 1.4551915228366852e-11
+      },
+      "margin_std": {
+       "diff": 2.6431852540031997e-10,
+       "abs_diff": 2.6431852540031997e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5120714285714285,
+      "accuracy": 0.5120714285714285,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "scene",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 1.143391596680754e-10,
+       "abs_diff": 1.143391596680754e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.0385,
+      "argmax_word": "orca",
+      "expected_share": null,
+      "immune_items": 0,
+      "pass": null
+     }
+    }
+   ]
+  },
+  "siglip2_so400m/seed_2": {
+   "tables_dir": "outputs/siglip2_so400m/seed_2/tables",
+   "run_meta": {
+    "experiments": {
+     "e1_state": "success",
+     "e1_spar_official": "success",
+     "e2_pug_animals": "success",
+     "e2_pug_imagenet": "success",
+     "e3_cogent": "success"
+    },
+    "e1_outputs": [
+     "e1_acc_by_pos_value.csv",
+     "e1_clevr_filter_stats.json",
+     "e1_factor_gaps.csv",
+     "e1_items_clevr.jsonl",
+     "e1_items_spar.jsonl",
+     "e1_results.csv",
+     "e1_spar_filter_stats.json"
+    ],
+    "missing_outputs": [],
+    "pass": true
+   },
+   "factors": [
+    {
+     "dataset": "clevr",
+     "factor": "binding",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 3.637978807091713e-12,
+       "abs_diff": 3.637978807091713e-12
+      },
+      "margin_std": {
+       "diff": 8.379022736065833e-11,
+       "abs_diff": 8.379022736065833e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "color",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 250,
+      "brown": 250,
+      "cyan": 250,
+      "gray": 250,
+      "green": 250,
+      "purple": 250,
+      "red": 250,
+      "yellow": 250
+     },
+     "balance": {
+      "k_observed": 8,
+      "expected_k": 8,
+      "min": 250,
+      "max": 250,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": -1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 4.656612873077393e-10,
+       "abs_diff": 4.656612873077393e-10
+      },
+      "margin_std": {
+       "diff": 7.239174537598814e-12,
+       "abs_diff": 7.239174537598814e-12
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 8,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.6915714285714285,
+      "accuracy": 0.6915714285714286,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.125,
+      "argmax_word": "cyan",
+      "expected_share": 0.125,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "material",
+     "n": 2000,
+     "pos_value_counts": {
+      "metal": 1000,
+      "rubber": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 9.232887163146408e-10,
+       "abs_diff": 9.232887163146408e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5963571428571429,
+      "accuracy": 0.5963571428571429,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "metal",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "object",
+     "n": 2000,
+     "pos_value_counts": {
+      "cube": 667,
+      "cylinder": 667,
+      "sphere": 666
+     },
+     "balance": {
+      "k_observed": 3,
+      "expected_k": 3,
+      "min": 666,
+      "max": 667,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 2.550091110498087e-10,
+       "abs_diff": 2.550091110498087e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 3,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.6305714285714286,
+      "accuracy": 0.6305714285714286,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.3335,
+      "argmax_word": "cylinder",
+      "expected_share": 0.3333,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "behind": 500,
+      "front": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -3.066499094581121e-11,
+       "abs_diff": 3.066499094581121e-11
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.4946428571428571,
+      "accuracy": 0.4946428571428571,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "front",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "clevr",
+     "factor": "size",
+     "n": 2000,
+     "pos_value_counts": {
+      "large": 1000,
+      "small": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -2.9103830456733704e-11,
+       "abs_diff": 2.9103830456733704e-11
+      },
+      "margin_std": {
+       "diff": -9.619942967220574e-10,
+       "abs_diff": 9.619942967220574e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5007857142857143,
+      "accuracy": 0.5007857142857143,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.5,
+      "argmax_word": "large",
+      "expected_share": 0.5,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "attribute",
+     "n": 2000,
+     "pos_value_counts": {
+      "blue": 1000,
+      "grass": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": null,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": -1.4551915228366852e-11,
+       "abs_diff": 1.4551915228366852e-11
+      },
+      "margin_std": {
+       "diff": 1.1082586758026647e-10,
+       "abs_diff": 1.1082586758026647e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5096428571428571,
+      "accuracy": 0.5096428571428571,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "position",
+     "n": 2000,
+     "pos_value_counts": {
+      "above": 500,
+      "below": 500,
+      "left": 500,
+      "right": 500
+     },
+     "balance": {
+      "k_observed": 4,
+      "expected_k": 4,
+      "min": 500,
+      "max": 500,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "flip": {
+      "flip_share": 0.5,
+      "z": 0.0,
+      "pos_word_missing": 0,
+      "pass": true
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -4.0749178857601986e-10,
+       "abs_diff": 4.0749178857601986e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 4,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5005714285714286,
+      "accuracy": 0.5005714285714286,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.25,
+      "argmax_word": "right",
+      "expected_share": 0.25,
+      "immune_items": 0,
+      "pass": true
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "relation",
+     "n": 2000,
+     "pos_value_counts": {
+      "below": 1000,
+      "left": 1000
+     },
+     "balance": {
+      "k_observed": 2,
+      "expected_k": 2,
+      "min": 1000,
+      "max": 1000,
+      "pass": true,
+      "note": "等额（±1 余数）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 1.1102230246251565e-16,
+       "abs_diff": 1.1102230246251565e-16
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": -5.081253265371011e-10,
+       "abs_diff": 5.081253265371011e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "groups": 2,
+      "sum_n": 2000,
+      "n_samples": 2000,
+      "weighted_acc": 0.5119285714285714,
+      "accuracy": 0.5119285714285713,
+      "pass": true
+     },
+     "word_strategy": {
+      "immune": true,
+      "pass": null,
+      "note": "正负例词集相同，恒选某词无判别力"
+     }
+    },
+    {
+     "dataset": "pug_spar",
+     "factor": "scene",
+     "n": 2000,
+     "pos_value_counts": null,
+     "balance": {
+      "pass": null,
+      "note": "fallback_random（无 pos_value，词集免疫）"
+     },
+     "items_fields": {
+      "missing_acc": 0,
+      "missing_margin": 0,
+      "acc_out_of_range": 0,
+      "pass": true
+     },
+     "recompute": {
+      "n_samples": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "accuracy": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "mean_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "median_margin": {
+       "diff": 0.0,
+       "abs_diff": 0.0
+      },
+      "margin_std": {
+       "diff": 7.463090111181625e-10,
+       "abs_diff": 7.463090111181625e-10
+      },
+      "pass": true
+     },
+     "pv_table": {
+      "pass": null,
+      "note": "无 pos_value，不在逐值表中（预期）"
+     },
+     "word_strategy": {
+      "immune": false,
+      "max_share": 0.037,
+      "argmax_word": "zebra",
+      "expected_share": null,
+      "immune_items": 0,
+      "pass": null
+     }
+    }
+   ]
+  }
+ },
+ "sources_sha256": {
+  "outputs/clip_vitb32/seed_0/tables/run_meta.json": "016df3445e9e6c87e8fc668782d272e2ac3e5ba976eafb07d6199b74b7d1f210",
+  "outputs/clip_vitb32/seed_0/tables/e1_items_clevr.jsonl": "12de6e70f1760f170579ef72d9ffc7fa24b1ced09d58dfd06165789d86207b13",
+  "outputs/clip_vitb32/seed_0/tables/e1_items_spar.jsonl": "80620e101745416fde0f960cfc0dea58901d7dbf2e538311ac1f41e7bc8464e5",
+  "outputs/clip_vitb32/seed_0/tables/e1_results.csv": "771236a49f09f1f95a4ecff40e5fc560d136a2deabf14579524fb14c4fe3465c",
+  "outputs/clip_vitb32/seed_0/tables/e1_acc_by_pos_value.csv": "8aa23e0aec558916f4f702b97673878835cdf9712f9a066aa7b7f925dd4e2141",
+  "outputs/clip_vitb32/seed_1/tables/run_meta.json": "258d3e2dca98c726b85472bd55508d562729cbf7561e1bf66eddca567a58af2a",
+  "outputs/clip_vitb32/seed_1/tables/e1_items_clevr.jsonl": "0973559661c6a630c8d79fbdb4729e6ffe30a9537aced513da673f119b0acfb4",
+  "outputs/clip_vitb32/seed_1/tables/e1_items_spar.jsonl": "536912294ec04792cd8c5ea744b32362f7fe18c2631fac00bada5a1c2991449f",
+  "outputs/clip_vitb32/seed_1/tables/e1_results.csv": "b07a9ed2bac9d3fef1c7b5880dffc8b261c734de166e30f8799ffb93d291cd09",
+  "outputs/clip_vitb32/seed_1/tables/e1_acc_by_pos_value.csv": "63a157eb38306c841cde5a163ebe0700b460cf868b963346e38f1c39231ffb2a",
+  "outputs/clip_vitb32/seed_2/tables/run_meta.json": "f255551acb9a91542c9233d9eb78e28341d2705d098454ef6ce7d28f78180363",
+  "outputs/clip_vitb32/seed_2/tables/e1_items_clevr.jsonl": "c0ea7338af1d072b1c351e99b4ccb82c029d85cf0b4b8c263e006d268d228b6d",
+  "outputs/clip_vitb32/seed_2/tables/e1_items_spar.jsonl": "fcc24f4480fe2884a605d38d04eb469068f3b6b3a701ec381b3deaef5465cc3c",
+  "outputs/clip_vitb32/seed_2/tables/e1_results.csv": "0a50fc04758bc0f1c18abbcb15cf4c99d4577407969d2da5442adb06f58bd0b4",
+  "outputs/clip_vitb32/seed_2/tables/e1_acc_by_pos_value.csv": "8633d1cbfd73271b35ca3c2305dcabf26459a2e86def7dffbfeccafe91eb6cf1",
+  "outputs/clip_vitl14/seed_0/tables/run_meta.json": "f2d0fbb99c18a1ff8085bda1f720fc595301dd6ed09c98837c5f36db03719e34",
+  "outputs/clip_vitl14/seed_0/tables/e1_items_clevr.jsonl": "9a1e75625c20aa6f68d75e40f506519e436b4cdc87242d889ab0e22933238cf3",
+  "outputs/clip_vitl14/seed_0/tables/e1_items_spar.jsonl": "319340fc3de8b9d380cb372aecb926f46136e6c92607d2744bd0624111415842",
+  "outputs/clip_vitl14/seed_0/tables/e1_results.csv": "67a609c38989d2020d9792d463bbdbb9bb2725181bfcfd30dc55e91f8628c54a",
+  "outputs/clip_vitl14/seed_0/tables/e1_acc_by_pos_value.csv": "22f15a4ba3b421bdb43ec49a50045006eb9550eca19d54d5653ec23925310884",
+  "outputs/clip_vitl14/seed_1/tables/run_meta.json": "21d0246ae75b4b3d78b67b9d707af5a02139812d07dcb819b9ea5d1f7f69e912",
+  "outputs/clip_vitl14/seed_1/tables/e1_items_clevr.jsonl": "196ca2d41538b14ba46af9bcff1f7441e4f58e1a09310e65818c9d8b0c0b5209",
+  "outputs/clip_vitl14/seed_1/tables/e1_items_spar.jsonl": "59b578075745d2346cff9092a56b5c04aafdcd5402023a8a604619d821f49a21",
+  "outputs/clip_vitl14/seed_1/tables/e1_results.csv": "147645e25d0d6ac3d307e8b2f5d5628777f5d639a827f8253f71310234468e8b",
+  "outputs/clip_vitl14/seed_1/tables/e1_acc_by_pos_value.csv": "3324a2a21619fd0c659914e2789fd3b6114a3095a2b5099a8db03e4e99ab59da",
+  "outputs/clip_vitl14/seed_2/tables/run_meta.json": "c8ac6595773992a1412c04d77ba21adbf2e0306abf24a8995ac770854e56bd15",
+  "outputs/clip_vitl14/seed_2/tables/e1_items_clevr.jsonl": "6e80449738e3db54f36fe6cbaf76891b78a1c6b8b3c817748029eae8fd6cade9",
+  "outputs/clip_vitl14/seed_2/tables/e1_items_spar.jsonl": "5566ab182549fb1d90617608cfe478e007fcecee77c738963706e5eb22a8f9ff",
+  "outputs/clip_vitl14/seed_2/tables/e1_results.csv": "5d808fd144609a1b58528e0867d91afa9dd3ae3f0e1f26897b476a2b46c122dd",
+  "outputs/clip_vitl14/seed_2/tables/e1_acc_by_pos_value.csv": "934a714a08f1b652441d46716859b43ac473c20a56b51512491e063374a76382",
+  "outputs/siglip2_so400m/seed_0/tables/run_meta.json": "811076b2462e617c8c082455777415b469b2bc6bd93a4c36a2bb5e418633be1e",
+  "outputs/siglip2_so400m/seed_0/tables/e1_items_clevr.jsonl": "acf93a22773638b1b232922aa428ed58a983c565e9bcefae12e10b5f65fd45ed",
+  "outputs/siglip2_so400m/seed_0/tables/e1_items_spar.jsonl": "bbd8ab99f149856ddbbc45bd36c3699c13857762bb80b4a8d31cda7f832f20df",
+  "outputs/siglip2_so400m/seed_0/tables/e1_results.csv": "f23f46d8e536718a424c0d0edd396c423f48041bd33da1e3069751ea0b835f9b",
+  "outputs/siglip2_so400m/seed_0/tables/e1_acc_by_pos_value.csv": "66bf5637fd5d00b285be8560641e77e747fc4cf83f2ac1e4b7e194f87a0c60fd",
+  "outputs/siglip2_so400m/seed_1/tables/run_meta.json": "ad38f6c09393cab4f25e63a6820e70fa4470dd75bd11c5731155300494e53548",
+  "outputs/siglip2_so400m/seed_1/tables/e1_items_clevr.jsonl": "f4bcb1ceb60723e5f05d90971c2c5d9f3fdbe636fb33ca5546b666fbfcfecc1d",
+  "outputs/siglip2_so400m/seed_1/tables/e1_items_spar.jsonl": "c70829428add159f7f0ccc9b2f92a57df9ace088d89a2434080e27b4d5e6c41e",
+  "outputs/siglip2_so400m/seed_1/tables/e1_results.csv": "1510a972597df1f89c9f5535c7a65772536ec119ee24dbc07d1678f29a1d6818",
+  "outputs/siglip2_so400m/seed_1/tables/e1_acc_by_pos_value.csv": "d9ba8219abda42be47f44b3e73c6fdfce5ab538567bcc003180898f402937f84",
+  "outputs/siglip2_so400m/seed_2/tables/run_meta.json": "f17d35fee98814e1b5ed648b484f51f91065d88aacd3f1c63a7fdc5dfdba8ad0",
+  "outputs/siglip2_so400m/seed_2/tables/e1_items_clevr.jsonl": "a724e9f62cf87b48f868b3b56209914b26c1d95ee674f93f7d7741ee28a5eb8d",
+  "outputs/siglip2_so400m/seed_2/tables/e1_items_spar.jsonl": "ff3a3792c7de9b1fd094355f5099ca4b0be41913eb07e33898719fd6125f7494",
+  "outputs/siglip2_so400m/seed_2/tables/e1_results.csv": "bfde2dd9d6050ae4bf8ab8115d7fd87c39770bd12b89a38df73d4a839d98c82b",
+  "outputs/siglip2_so400m/seed_2/tables/e1_acc_by_pos_value.csv": "6747b9d7bff61b57962f0966bede3bba40eea43d45c2cdd9d6b707300ea1711e"
+ }
+}

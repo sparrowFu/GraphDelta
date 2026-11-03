@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="GraphDelta 预实验平衡采样后的复查与再分析：审计核验、E1 词偏好诊断与因素重分类、E2/E3 复核、既有报告勘误与阶段判定。">
+<title>GraphDelta｜预实验复查与再分析（平衡采样后）· 2026-11-03</title>
+<style>
+:root{--ink:#172b41;--muted:#5e7081;--line:#dce5ec;--paper:#fff;--back:#f3f6f9;--blue:#225b85;--accent:#c5793e;--nav:246px;--radius:14px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:34px}
+body{margin:0;color:var(--ink);background:var(--back);font-family:Inter,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.9;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:thickness 1px;text-underline-offset:4px}a:hover{color:#a05b25}
+button{font:inherit;cursor:pointer}:focus-visible{outline:3px solid #b77b40;outline-offset:4px}
+.reading-progress{position:fixed;top:0;left:0;height:3px;background:#d49a5f;width:0;z-index:20;transition:width .1s linear}
+.shell{max-width:1460px;margin:auto;padding:30px 38px 70px;display:grid;grid-template-columns:var(--nav) minmax(0,1fr);gap:38px}
+.sidebar{align-self:start;position:sticky;top:30px;max-height:calc(100vh - 60px);overflow:auto;padding-right:12px;scrollbar-width:thin}
+.brand{font-size:20px;font-weight:750;letter-spacing:-.7px;color:#193c59;text-decoration:none}.brand span{color:var(--accent)}
+.sidebar .edition{font-size:12px;color:var(--muted);margin:4px 0 28px;letter-spacing:1px}
+.toc-details>summary{list-style:none;font-size:12px;font-weight:700;letter-spacing:2px;color:#768795;margin-bottom:14px;cursor:default}.toc-details>summary::-webkit-details-marker{display:none}
+.toc{display:grid;gap:4px}.toc a{display:grid;grid-template-columns:25px 1fr;gap:7px;text-decoration:none;color:#526576;font-size:13px;line-height:1.6;padding:9px 10px;border-radius:7px;border-left:2px solid transparent}
+.toc a .num{font-variant-numeric:tabular-nums;font-size:11px;color:#8b99a6;line-height:1.9}.toc a:hover{background:#e8eff4;color:var(--ink)}
+.toc a[aria-current="location"]{color:var(--blue);background:#e5eef5;border-left-color:var(--blue);font-weight:650}
+.sidebar-footer{border-top:1px solid var(--line);margin-top:26px;padding:18px 10px 0;font-size:12px;color:var(--muted);line-height:1.9}.sidebar-footer a{font-size:12px}
+main{min-width:0}.hero{border-radius:18px;background:#18354d;color:#fff;padding:42px 44px 36px;position:relative;overflow:hidden}
+.hero:after{content:"Δ";font-family:Georgia,serif;font-size:230px;line-height:1;position:absolute;right:16px;top:40px;color:#ffffff08;pointer-events:none}
+.eyebrow{font-size:11px;letter-spacing:2px;font-weight:600;color:#b2c4d2;margin:0 0 16px}
+h1{font-size:clamp(28px,3.1vw,41px);font-weight:700;line-height:1.4;letter-spacing:-1px;margin:0 0 18px;max-width:770px;position:relative;z-index:1}
+.hero-desc{font-size:15px;color:#c5d5e0;max-width:660px;margin:0;line-height:1.8}.hero-meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:26px;font-size:12px;color:#b3c7d6}.hero-meta span:before{content:"";display:inline-block;width:5px;height:5px;background:#d99b60;border-radius:50%;vertical-align:middle;margin-right:8px}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0 26px}.metric{border:1px solid var(--line);background:#fff;border-radius:10px;padding:20px 22px}.metric .value{font-size:25px;letter-spacing:-.6px;font-weight:700;line-height:1.3;color:#244e70;font-variant-numeric:tabular-nums}.metric .unit{font-size:12px;margin-left:4px;font-weight:500;letter-spacing:0}.metric .label{font-size:12px;color:var(--muted);line-height:1.7;margin-top:9px}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 3px 18px}.toolbar-note{font-size:12px;color:#718393}.print-button{background:#fff;border:1px solid #cbd8e2;border-radius:7px;color:#264862;padding:7px 13px;font-size:12px;line-height:1.6}.print-button:hover{background:#eaf1f6}
+.report{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:10px 42px 28px;box-shadow:0 7px 28px #1c354606}
+.report p{margin:16px 0;overflow-wrap:break-word}.report strong{font-weight:650;color:#173c59}.report li{margin:9px 0;padding-left:3px}.report ul,.report ol{padding-left:23px;margin:18px 0}
+.intro{padding:10px 0 22px;border-bottom:1px solid var(--line);font-size:15px}
+.report-section{padding:17px 0 26px;border-bottom:1px solid var(--line);scroll-margin-top:30px}.report-section:last-child{border-bottom:0;padding-bottom:5px}
+h2{font-size:23px;line-height:1.55;letter-spacing:-.4px;margin:25px 0 20px;padding-left:16px;border-left:4px solid #5182a4;color:#173a56}h3{font-size:18px;line-height:1.65;margin:27px 0 13px;color:#304e65}
+.table-scroll{overflow-x:auto;margin:24px 0;border:1px solid var(--line);border-radius:9px;max-width:100%;scrollbar-width:thin}
+table{border-collapse:collapse;min-width:100%;font-size:13px;line-height:1.85;font-variant-numeric:tabular-nums}thead{background:#edf3f7;color:#274b65}th{font-weight:650;text-align:left}th,td{padding:12px 15px;border-bottom:1px solid #e5ebf0;vertical-align:top}th:not(:first-child),td:not(:first-child){min-width:100px}tbody tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#f8fafc}tbody tr:hover{background:#eef4f8}td strong{white-space:nowrap}
+code{background:#f0f3f6;border:1px solid #e4eaf0;border-radius:4px;padding:2px 5px;font-family:"Cascadia Code",Consolas,monospace;font-size:.83em;overflow-wrap:anywhere}
+.report-footer{font-size:12px;color:#788895;margin:23px 4px 0;line-height:1.9;display:flex;justify-content:space-between;gap:20px}.report-footer a{color:#688094}
+@media(min-width:1600px){.shell{padding-top:42px}.sidebar{top:42px}}@media(max-width:1100px){:root{--nav:200px}.shell{gap:24px;padding:22px}.hero{padding:34px}.report{padding:8px 28px 24px}.metric{padding:17px}.metric .value{font-size:22px}th,td{padding:10px 12px}}
+@media(max-width:820px){.shell{display:block;padding:18px 16px 36px}.sidebar{position:static;max-height:none;padding:0;margin-bottom:20px}.brand{font-size:19px}.sidebar .edition{display:inline-block;margin:0 0 0 15px;font-size:10px}.toc-details{margin-top:16px;background:#eaf0f5;border-radius:9px;padding:12px 14px}.toc-details>summary{margin:0;cursor:pointer;letter-spacing:1px}.toc-details>summary:after{content:"展开 / 收起";float:right;font-weight:400;font-size:10px;letter-spacing:0}.toc{margin-top:12px;grid-template-columns:1fr 1fr}.toc a{padding:7px 5px;font-size:12px}.sidebar-footer{display:none}.hero{padding:29px 25px}.hero h1{font-size:28px;letter-spacing:-.5px}.hero-desc{font-size:13px}.hero-meta{margin-top:21px;font-size:11px}.metrics{gap:9px;margin:13px 0 20px}.metric{padding:15px 12px}.metric .value{font-size:20px}.metric .label{font-size:10px}.report{padding:5px 22px 20px}.report-section{padding-top:12px}h2{font-size:21px}h3{font-size:17px}.report p,.report li{font-size:15px}.report-footer{display:block}}
+@media(max-width:480px){.hero{padding:24px 20px}.hero h1{font-size:25px}.hero-meta{gap:5px 13px}.metrics{grid-template-columns:1fr}.metric{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 17px}.metric .label{margin:0;font-size:11px;text-align:right;max-width:155px}.metric .value{font-size:21px;white-space:nowrap}.toolbar-note{font-size:10px}.report{padding:4px 16px 18px}.report-section{padding-bottom:17px}h2{font-size:19px;padding-left:10px}.table-scroll{margin:20px 0}.toc{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reading-progress{transition:none}}
+@page{size:A4;margin:18mm 15mm}
+@media print{html{scroll-behavior:auto}body{background:#fff;font-size:10pt;line-height:1.65;color:#172b41}.shell{display:block;max-width:none;padding:0}.sidebar,.toolbar,.reading-progress{display:none!important}.hero{background:#fff!important;color:#173a56;padding:0 0 16pt;border-radius:0;border-bottom:2px solid #244e70;overflow:visible}.hero:after{display:none}.eyebrow{color:#5c7182;font-size:8pt;margin-bottom:8pt}h1{font-size:23pt;max-width:none}.hero-desc{color:#4e6273;font-size:10pt}.hero-meta{color:#617486;margin-top:12pt;font-size:8pt}.metrics{gap:10pt;margin:14pt 0}.metric{padding:10pt;border-color:#d6dfe7}.metric .value{font-size:17pt}.metric .label{font-size:8pt}.report{border:0;box-shadow:none;padding:0}.report p,.report li{font-size:10pt}.intro{font-size:10pt;padding-bottom:14pt}.report-section{padding:8pt 0 14pt;scroll-margin-top:0}h2{font-size:15pt;break-after:avoid;margin:16pt 0 12pt}h3{font-size:11.5pt;break-after:avoid;margin:16pt 0 8pt}.table-scroll{overflow:visible;border-radius:0;margin:14pt 0}table{font-size:8pt;min-width:100%;width:100%;table-layout:auto}th,td{padding:6pt 7pt;min-width:0!important;overflow-wrap:anywhere}thead{display:table-header-group}tr{break-inside:avoid}a{color:#245b80;text-decoration:none}a[href^="data:"]{text-decoration:underline}code{font-size:8pt}.report strong{color:inherit}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body id="top">
+<div class="reading-progress" aria-hidden="true"></div>
+<div class="shell">
+<aside class="sidebar" aria-label="报告目录">
+  <a class="brand" href="#top">Graph<span>Delta</span></a>
+  <div class="edition">预实验 · 复查再分析</div>
+  <details class="toc-details" open>
+    <summary>阅读目录</summary>
+    <nav class="toc" aria-label="章节导航"><a href="#section-1"><span class="num">01</span><span>一页结论</span></a><a href="#section-2"><span class="num">02</span><span>为什么需要这次复查</span></a><a href="#section-3"><span class="num">03</span><span>数据核验（审计 A–G）</span></a><a href="#section-4"><span class="num">04</span><span>E1 再分析</span></a><a href="#section-5"><span class="num">05</span><span>E2 / E3 复核</span></a><a href="#section-6"><span class="num">06</span><span>既有报告勘误</span></a><a href="#section-7"><span class="num">07</span><span>阶段判定</span></a><a href="#section-8"><span class="num">08</span><span>遗留缺口与建议</span></a></nav>
+  </details>
+  <div class="sidebar-footer">分析日期 · 2026.11.03<br>平衡采样重跑后的正式产物<br>审计与数字可溯源<br><a href="data:text/markdown;base64,IyDpooTlrp7pqozlpI3mn6XkuI7lho3liIbmnpDvvIjlubPooaHph4fmoLflkI7vvInCtyAyMDI2LTExLTAzCgotIOaVsOaNruWfuuWHhu+8mjkg5LiqIG1vZGVsw5dzZWVk77yIY2xpcF92aXRiMzIgLyBjbGlwX3ZpdGwxNCAvIHNpZ2xpcDJfc280MDBtIMOXIHNlZWQgMC8xLzLvvInnmoTmraPlvI/kuqfnianjgIJFMSDkuo4gMTAtMjggMTY6NTfigJMxNjo1OSDnlKjlubPooaHph4fmoLfph43ot5HvvJtFMiDkuo4gMTAtMjh+MTAtMzAg6YeN6LeR77ybRTPjgIFzZWVkX3N0YWJpbGl0eeOAgeS6lOWbvuS6jiAxMC0zMCAwOToyN+KAkzA5OjM1IOmHjei3keOAguWIhuaekOWfuuS6jiBnaXQgYDJmZmE1ODdg44CCCi0g5pWw5o2u5qC46aqM77yaYGF1ZGl0X2UxX3NhbXBsaW5nXzIwMjYtMTEtMDMue21kLGpzb259YO+8iOajgOafpSBB4oCTRyDlhajov4fvvIw0NSDkuKrovpPlhaXmlofku7YgU0hBMjU2IOWFqOiusOW9le+8ieOAggotIOacrOaKpeWRiuWPluS7o+atpOWJjeaJgOacieaKpeWRiueahCAqKkUxIOmDqOWIhioq77ybRTIvRTMg6YOo5YiG57uP5pWw5a2X5qC45a+55ZCO5rK/55So44CCCgojIyAwLiDkuIDpobXnu5PorroKCjEuICoq6YeH5qC35L+u5aSN5pyJ5pWI5LiU5Lil5qC85omn6KGMKirjgII5IOS4qiBydW4g55qEIHBvc192YWx1ZSDphY3pop3lhajpg6jnsr7noa7nrYnpop3vvIjlpoIgc2l6ZSAxMDAwLzEwMDDjgIFyZWxhdGlvbiA1MDDDlzTvvInvvIxTUEFSIHBvc2l0aW9uIOinhuinkue/u+i9rOavlOS+i+WFqOmDqOaBsOS4uiAwLjUwMO+8jCLmgZLpgInmn5Dor40i562W55Wl55qE5pyf5pyb5YeG56Gu546H6KKr5Y6L5Yiw5oGwIDEva++8jOaxh+aAu+ihqOWPr+eUsemAkOmimOaVsOaNrumHjeeul++8iOWBj+W3riDiiaQgMi4yZS0xNu+8ieOAggoyLiAqKkUxIOWboOe0oOmHjeaWsOWIhuexu++8iOacrOasoeWkjeafpeeahOaguOW/g+e7k+iuuu+8iSoq77yaCiAgIC0g55yf6L6o5Yir77yaYHNjZW5lYO+8iDAuNzUvMC44OS8wLjk577yJ44CBYGNvbG9yYO+8iDAuNjjigJMwLjcx77yMOS85IHJ1biBDSSDpq5jkuo4gMC4177yJ44CBYG9iamVjdGDvvIgwLjU44oCTMC42NO+8jOWFtuS4rSBjdWJlIOS+pyAwLjg44oCTMC45MuOAgWN5bGluZGVyIOS+pyAwLjE04oCTMC4zOO+8ie+8mwogICAtICoq57qv6K+N5YGP5aW944CB6L6o5Yir4omIMCoq77yaYHNpemVg77yI5LiJ5qih5Z6L5YiG5L6nIDEuMDAwLzAuMDAw77yM5oC75L2T5oGwIDAuNTAw77yJ44CBYGNsZXZyL3JlbGF0aW9uYO+8iHZpdGIzMiDmgZLpgInlkKsgbGVmdCDnmoTlj6XjgIF2aXRsMTQg5oGS6YCJ5ZCrIHJpZ2h0IOeahOWPpe+8ieOAgWBwdWdfc3Bhci9wb3NpdGlvbmDvvIjmgLvkvZMgMC40ODnigJMwLjUwM++8ie+8mwogICAtIOWBj+WlveS4uuS4uyArIOWwkemHj+i+qOWIq++8mmBtYXRlcmlhbGAg5ZyoIHZpdGIzMu+8iOWIhuino+KJiDAuMDMg6L6o5YirKzAuNzgg5YGP5aW977yJ44CBc2lnbGlwMiDkuIrmt7fmnYLvvJt2aXRsMTQg5p2Q6LSo5LiN5a+556ew5LuFIDAuMTjvvIzku6XnnJ/ovqjliKvkuLrkuLvvvIgwLjU3Ne+8ie+8mwogICAtIOWFjeeWq+WboOe0oO+8iOato+i0n+S+i+ivjembhuebuOWQjO+8ieeahOW5suWHgOe7k+aenO+8mmBiaW5kaW5nYCAwLjQ5NeKAkzAuNTE177yIOS85IOWQqyAwLjXvvIzlubLlh4DnmoTpm7bovqjliKvvvInvvJtgYXR0cmlidXRlYCB2aXRiMzIgKiowLjM5OSDkuInnp43lrZAgQ0kg5Z2H5L2O5LqOIDAuNSoq77yI57O757uf5oCn5Y+N5ZCR77yJ77ybYHB1Z19zcGFyL3JlbGF0aW9uYCB2aXRsMTQgMC40NTYg5LiJ56eN5a2Q5L2O5LqOIDAuNeOAggozLiAqKuS/ruWkjeaUueWPmOS6huS4ieS4quaXp+e7k+iuuioq77yaU1BBUiBwb3NpdGlvbiLmlrnlkJHpmo/mqKHlnovnv7vovawi77yINjMuMyUvNDAuOCUvNTQuMiXvvInihpIg5YWo6YOoIOKJiDAuNTDvvIzml6fmlbDlrZfmmK/or43lgY/lpb3kvKrlvbHvvJtzaXplIueVpemrmOS6jumaj+acuiA1MiUi4oaSIDAuNTAwIOaXoOi+qOWIq++8m2NsZXZyIHJlbGF0aW9uIjUx4oCTNTIlIOeVpemrmOS6jumaj+acuiLihpIg5Z+65pys5YWo6YOo5Y+v55Sx6K+N5YGP5aW96Kej6YeK44CC6aKc6Imy4oiS57uR5a6a5beu6Led5L+d5oyB77yI5LiJ5qih5Z6LIDMtc2VlZCDlnYflgLwgMTcuOOKAkzIwLjdwcO+8jOmAkCBydW4g6IyD5Zu0IDE3LjLigJMyMS4xcHDvvIw5LzkgQ0kg6auY5LqOIDDvvInjgIIKNC4gKipFMi9FMyDkuI3lj5fph4fmoLfkv67mlLnlvbHlk40qKu+8muaKpeWRiuOAiumihOWunumqjOe7k+iuuua3seWMluWIhuaekOOAi+eahCBFMi9FMyDmlbDlrZfkuI7lvZPliY3no4Hnm5jpgJDkvY3moLjlr7nkuIDoh7TvvIjmir3mo4DvvJpFMiBlbnYgdHJhbnNpdGlvbiBnYXAgMC42NjkvMC42NDEvMC43MjYg5YWo6YOoIENJPjDvvJtFMyB2aXRiMzIgc2VlZDAgKzMuOTY1cHAgWysxLjg5OCwrNS45Njhd44CBdml0bDE0IOKIkjAuNjVwcCDlkKsgMOOAgXNpZ2xpcDIgKzMuNThwcCBbMS41ODYsNS43MDVd77yJ77yM57uT6K665rK/55So44CCCjUuICoq6Zi25q615Yik5a6aKirvvIjor6bop4EgYG91dHB1dHMvU1RBR0UxX1NVTU1BUlkubWRg77yJ77yaRTEi57uT5p6E6JaE5byx54K5IuivgeaNruWcqOW5s+ihoemHh+agt+WQjuavlOS5i+WJjeabtOW5suWHgO+8iHJlbGF0aW9uL3Bvc2l0aW9uL3NpemUg5LuOIuW8seS/oeWPtyLlj5jkuLoi5Y+v6K+B5piO55qE6Zu26L6o5YirIu+8ie+8m0UyIOWPquaciSBlbnZpcm9ubWVudCDmu6HotrMi6KeE5b6L6LaF6L+HIG51aXNhbmNlIu+8m0UzIDIvMyDmqKHlnovmiJDnq4vjgILmgLvkvZPmjqXov5HmlrnmoYggwqc2OCDnmoTmg4XlhrUgQSDkvYYgRTIvRTMg5LiN5a6M5pW077yM5bu66K6u6L+b5YWl56ys5LqM6Zi25q6155qE5bCP6KeE5qih5Y+X5o6n57yW6L6R6aqM6K+B44CCCgojIyAxLiDkuLrku4DkuYjpnIDopoHov5nmrKHlpI3mn6UKCiMjIyAxLjEg6YeH5qC35L+u5pS55YaF5a6577yI6KeE6IyD5L6d5o2u77yaUkVBRE1FIFN0ZXAgMyDkuI4gYHNyYy9leHBlcmltZW50cy9jb21tb24ucHk6OmJhbGFuY2VkX3N1YnNhbXBsZWAgZG9jc3RyaW5n77yJCgotIHRhcmdldCDlrZDmoLfmnKzmjInmraPkvovkuIDkvqflj5blgLzvvIhwb3NfdmFsdWXvvInliIblsYLnrYnpop3mir3lj5bvvIjkuozlgLzlm6DntKDlkIQgNTAl77yM5aSa5YC85Zug57Sg562J6aKd77yJ77yM5L2/IuaBkumAieafkOS4quivjSLnmoTnrZTpopjnrZbnlaXmnJ/mnJvlh4bnoa7njofmgbDkuLogNTAlLzEva++8mwotIFNQQVIgcG9zaXRpb24g5LulIDUwJSDmpoLnjofku44gYzIg6KeG6KeS5Ye66aKY77yM5q2j5L6L5pa55L2N6K+N6KaG55uWIGxlZnQvcmlnaHQvYmVsb3cvYWJvdmXvvIjlrpjmlrkgbWV0YWRhdGEg5Y+q5pyJIGxlZnQvYmVsb3fvvIzkuI3nv7vovazml7bmraPkvovmlrnkvY3or40gNzYlIOaYryBsZWZ077yJ77ybCi0g5Z2H6KGh5ZCOKirmgLvkvZPlh4bnoa7njofljbPlubLlh4DnmoTovqjliKvmjIfmoIfvvIzpgJDkvqflh4bnoa7njofkuYvlt67ljbPor43lgY/lpb3mjIfmoIcqKu+8m2JpbmRpbmcgLyBTUEFSIGF0dHJpYnV0ZSAvIFNQQVIgcmVsYXRpb24g5q2j6LSf5L6L6K+N6ZuG55u45ZCM77yM5aSp54S25YWN55ar6K+N5YGP5aW944CCCi0g5rOo5oSP77ya5pa55qGI5paH5qGj77yI57uf5LiA5L+u6K6i54mI77yJ5rKh5pyJ6K+l5p2h5qy+77yI5bey5YWo5paH5qC45a+577yJ77yMwqczMSDlj6rop4Tlrpoi5q+PIGNlbGwg4omlMTAwMCArIOmaj+acuuS4i+mHh+agtyLjgILlvJXnlKjph4fmoLflubPooaHkvp3mja7ml7blupTlvJUgUkVBRE1FIFN0ZXAgM++8jOS4jeiDveW8lSDCpzMx44CCCgojIyMgMS4yIOaXouacieaKpeWRiuWFqOmDqOWfuuS6juaXpyBFMSDmlbDmja7vvIjor4Hmja7vvIkKCjEwLTI4IOeahOS4ieS7veWIhuaekOaKpeWRiuS4juS4pOS7vSBhdWRpdCDkuK3vvIxFMSDmlbDlrZflhajpg6jmnaXoh6ogMTAtMjgg5LiK5Y2I55qE5pen6L+Q6KGM77yaCgotIGBhdWRpdF9lMV9ub3Rlcy5tZGAg6K6w5b2V55qEIGBlMV9pdGVtc19jbGV2ci5qc29ubGAgU0hBMjU277yIc2VlZCAwIOS4uiBgMEE4NDU4RULigKZg77yJ5LiOIGBwcmVleHBlcmltZW50X3NvdXJjZV9hdWRpdF8yMDI2LTEwLTI4Lmpzb25gIOS4gOiHtO+8jOS9huS4juW9k+WJjeejgeebmOaWh+S7tu+8iGAxMmRlNmU3MOKApmDvvInkuI3ljLnphY3vvJtzb3VyY2UgYXVkaXQgSlNPTiDlhoXmmK8gV2luZG93cyDot6/lvoTvvIzor7TmmI7lrqHorqHlnKjlj6bkuIDku73mlbDmja7lv6vnhafkuIrlrozmiJDvvJsKLSBgcnVuX21ldGEuanNvbmAg5pi+56S6IGBlMV9zdGF0ZWAg5LqOIDEwLTI4IDE2OjU3IOmHjei3keW5tuabv+aNouaXp+e7k+aenO+8iCJyZXBsYWNlcyIg6ZO+77yJ77yM5paw5aKe6L6T5Ye6IGBlMV9hY2NfYnlfcG9zX3ZhbHVlLmNzdmDvvJsKLSDmiqXlkYogMu+8iDE1OjE1IOWGmeWujO+8icKnNC42IOiHquW3seaPkOWHuuS6hiLliIblsYLlubPooaHlkI7ph43ot5Ei55qE6KaB5rGC77yM6YeN6LeR5b2T5aSp5YKN5pma5bey5a6M5oiQ77yM5L2G5pu05pma5o+Q5Lqk55qE5oql5ZGKIDEg5LiOIGF1ZGl0IOS7jeWcqOW8leeUqOiiq+imhueblueahOaXp+aVsOWtl++8iHNpemUgNTIuOSXjgIFwb3NpdGlvbiA2My4zLzQwLjgvNTQuMiDnrYnvvInjgIIKCuWboOatpO+8mioq5rKh5pyJ5Lu75L2V5pei5pyJ5YiG5p6Q5paH5Lu25o+P6L+w5bmz6KGh6YeN6LeR5ZCO55qEIEUxIOe7k+aenCoq4oCU4oCU6L+Z5piv5pys5oql5ZGK55qE6IGM6LSj44CCRTIvRTMg55qE5pWw5a2X57uP5qC45a+55LiO56OB55uY5LiA6Ie077yIwqc077yJ77yM55u45YWz57uT6K665LuN5pyJ5pWI44CCCgojIyAyLiDmlbDmja7moLjpqoznu5PmnpzvvIjlrqHorqEgQeKAk0cg5YWo6YOo6YCa6L+H77yJCgrphY3lpZflrqHorqHohJrmnKwgYGNvZGUvc2NyaXB0cy9hdWRpdF9lMV9zYW1wbGluZy5weWDvvIjlj6ror7vvvIzkuI3orr/pl67mqKHlnosv5Zu+54mHL+e8k+WtmO+8ie+8jOe7k+aenOimgeeCue+8mgoKfCDmo4Dmn6UgfCDnu5PmnpwgfAp8LS0tfC0tLXwKfCBBIHBvc192YWx1ZSDphY3pop3lubPooaEgfCAxMCDkuKogZGF0YXNldMOXZmFjdG9yIOS4rSA4IOS4queyvuehruetiemine+8mm9iamVjdCA2NjcvNjY3LzY2NuOAgWNvbG9yIDI1MMOXOOOAgXNpemUgMTAwMC8xMDAw44CBbWF0ZXJpYWwgMTAwMC8xMDAw44CBY2xldnIgcmVsYXRpb24gNTAww5c044CBcG9zaXRpb24gNTAww5c044CBYXR0cmlidXRlIDEwMDAvMTAwMOOAgXNwYXIgcmVsYXRpb24gMTAwMC8xMDAw77ybYmluZGluZ+OAgXNjZW5lIOaMieiuvuiuoeWbnumAgOaZrumAmumaj+acuuaKveagt++8iOaXoCBwb3NfdmFsdWXvvIkgfAp8IEIgcG9zaXRpb24g6KeG6KeS57+76L2sIHwgOSDkuKogcnVuIOe/u+i9rOavlOS+i+WFqOmDqOaBsCAwLjUwMO+8iHo9MC4w77yJ77yb5pa55L2N6K+N55yf5Ye6546w5Zyo5q2j5L6L5paH5pys5Lit77yIMCDov53kvovvvIkgfAp8IEMgaXRlbSDnuqflrZfmrrUgfCBpdGVtX2FjYyAvIGl0ZW1fbWFyZ2luIOWFqOmDqOaciemZkOOAgeWPluWAvOWQiOazlSB8CnwgRCDmsYfmgLvooajph43nrpcgfCA5MCDkuKogcnVuw5dmYWN0b3LvvJpuX3NhbXBsZXPjgIFhY2N1cmFjeeOAgW1lYW5fbWFyZ2luIOWBj+W3riDiiaQyLjJlLTE277ybbWVkaWFuL3N0ZCDlgY/lt64g4omkMS45ZS0577yI5LiN5ZCM5rGC5ZKM566X5rOV55qE5pWw5YC85Zmq5aOw77yM5a655beuIDFlLTfvvIkgfAp8IEUg6YCQ5YC86KGo5LiA6Ie05oCnIHwg5YiG57uEIG4g5LmL5ZKMID0gbl9zYW1wbGVz44CB5Yqg5p2D5YeG56Gu546HID0g5oC75L2T5YeG56Gu546H77yMOTAvOTAg6YCa6L+HIHwKfCBGIOaBkumAieafkOivjeS4iueVjCB8IOW5s+ihoeWboOe0oOWFqOmDqOaBsCAxL2vvvIhzaXplL21hdGVyaWFsIDAuNTAw44CBcmVsYXRpb24vcG9zaXRpb24gMC4yNTDjgIFjb2xvciAwLjEyNeOAgW9iamVjdCAwLjMzNO+8ie+8m3NjZW5l77yI5Zue6YCA5oq95qC377yJ5pyA5aSnIDAuMDQy77yIdGFyYW50dWxh77yJ77yM6L+c5L2O5LqOIDAuNe+8jOaXoOazleino+mHiuWFtiAwLjc14oCTMC45OSDnmoTlh4bnoa7njocgfAp8IEcgcnVuX21ldGEgfCA5IHJ1biDDlyA1IOWunumqjOWFqOmDqCBzdWNjZXNz77yM5Lqn54mp5riF5Y2V6b2Q5YWo77yM5pegIHNtb2tlIOa3t+WFpSB8CnwgSCDot6ggc2VlZCDlm77niYfph43lj6AgfCDmj4/ov7DmgKfvvJpDTEVWUiDlkITlm6DntKAgMC4xMzXigJMwLjE1Me+8jFNQQVIgMC4wNTHigJMwLjEwN++8iOenjeWtkOmXtOaKveagt+eLrOeri+aAp+ato+W4uO+8iSB8Cgrms6jvvJpjbGV2ci9yZWxhdGlvbiDnmoQi5oGS6YCJ6K+NIuS4iueVjOihqOmHjCBhcmdtYXgg5Ye6546wICJvZiLvvIzmmK/lm6DkuLogZnJvbnQg55qE6K+05rOV5pivICJpbiBmcm9udCBvZiLvvIhvZi9pbiDlj6rlnKggZnJvbnQg5L6n5Ye6546w77yJ77yM5LiOIGZyb250IOWujOWFqOWFsee6v++8jOS4iueVjOS7jeaYryAwLjI1MO+8jOS4jeW9seWTjeWIpOWumuOAggoKIyMgMy4gRTEg5YaN5YiG5p6QCgojIyMgMy4xIOivu+aVsOaWueazlQoK5bmz6KGh5ZCO5q+P5Liq5Zug57Sg55qE6K+75pWw6KeE5YiZ77yaCgotICoq5oC75L2TIGFjY3VyYWN5ID0g5bmy5YeA6L6o5Yir5oyH5qCHKirvvIjmgZLpgInmn5Dor43nrZbnlaXmnJ/mnJvmgbAgMC4177yM5oC75L2T6LaF5Ye6IDAuNSDnmoTpg6jliIblj6rog73mnaXoh6rovqjliKvvvInvvJsKLSAqKuWIhuS+p++8iHBvc192YWx1Ze+8ieWHhuehrueOh+S5i+W3riA9IOivjeWBj+WlveW8uuW6pioq77yb5LiA5L6n6LaL6L+RIDHjgIHlj6bkuIDkvqfotovov5EgMCDljbMi5oGS6YCJ5p+Q6K+NIueahOebtOaOpeivgeaNru+8mwotIOS6jOWAvOWboOe0oOWPr+WIhuino++8mmDmgLvkvZMg4omIIDAuNSArIOi+qOWIq+mhuSDCsSDlgY/lpb0vMmDjgILkvovvvJpzaXplIOS4ieaooeWei+WIhuS+pyAxLjAwMC8wLjAwMCDihpIg5YGP5aW94omIMeOAgei+qOWIq+KJiDDvvJt2aXRsMTQgbWF0ZXJpYWwg5YiG5L6nIDAuNjY2LzAuNDgzIOKGkiDlgY/lpb0gMC4xOOOAgei+qOWIqyDiiYgwLjA3Ne+8mwotICoq5YWN55ar5Zug57SgKirvvIhiaW5kaW5n44CBYXR0cmlidXRl44CBc3BhciByZWxhdGlvbu+8muato+i0n+S+i+ivjembhuebuOWQjO+8ieaAu+S9k+WNs+W5suWHgOivu+aVsO+8jOaXoOivjeWBj+WlveWPr+a3t+WFpeOAggoKIyMjIDMuMiDmgLvkvZPlh4bnoa7njofkuI4gQ0kg5YiG57G777yIMyBzZWVkIOWdh+WAvO+8m+KGkS/ihpMvwrcgPSBDSSDlhajpq5gv5YWo5L2O5LqOIDAuNS/lkKsgMC4177yM5LiJ5L2N5a+55bqUIHNlZWQgMC8xLzLvvIkKCnwgZGF0YXNldC9mYWN0b3IgfCB2aXRiMzIgfCB2aXRsMTQgfCBzaWdsaXAyIHwKfC0tLXwtLS18LS0tfC0tLXwKfCBjbGV2ci9vYmplY3QgfCAwLjU5NyDihpHihpHihpEgfCAwLjU3NSDihpHihpHihpEgfCAwLjYzOSDihpHihpHihpEgfAp8IGNsZXZyL2NvbG9yIHwgMC43MDUg4oaR4oaR4oaRIHwgMC42ODMg4oaR4oaR4oaRIHwgMC42OTMg4oaR4oaR4oaRIHwKfCBjbGV2ci9zaXplIHwgMC41MDAgwrfCt8K3IHwgMC41MDAgwrfCt8K3IHwgMC41MDEgwrfCt8K3IHwKfCBjbGV2ci9tYXRlcmlhbCB8IDAuNTI3IOKGkeKGkeKGkSB8IDAuNTc1IOKGkeKGkeKGkSB8IDAuNTk4IOKGkeKGkeKGkSB8CnwgY2xldnIvcmVsYXRpb24gfCAwLjUxMiDihpHCt8K3IHwgMC41MTMgwrfCt8K3IHwgMC41MDMgwrfCt8K3IHwKfCBjbGV2ci9iaW5kaW5nIHwgMC40OTggwrfCt8K3IHwgMC40OTUgwrfCt8K3IHwgMC41MTUgwrfCt8K3IHwKfCBwdWdfc3Bhci9zY2VuZSB8IDAuNzQ5IOKGkeKGkeKGkSB8IDAuODg3IOKGkeKGkeKGkSB8IDAuOTkwIOKGkeKGkeKGkSB8CnwgcHVnX3NwYXIvcG9zaXRpb24gfCAwLjUwMCDCt8K3wrcgfCAwLjQ4OSDCt8K34oaTIHwgMC41MDMgwrfCt8K3IHwKfCBwdWdfc3Bhci9hdHRyaWJ1dGUgfCAwLjM5OSDihpPihpPihpMgfCAwLjUwNyDCt8K3wrcgfCAwLjUyOSDihpHihpHCtyB8CnwgcHVnX3NwYXIvcmVsYXRpb24gfCAwLjQ4MSDihpPCt8K3IHwgMC40NTYg4oaT4oaT4oaTIHwgMC41MDggwrfCt8K3IHwKCuaYvuiRl+mrmOS6jiAwLjUg55qE77yab2JqZWN044CBY29sb3LjgIFtYXRlcmlhbOOAgXNjZW5l77yI5Zub6ICFIDkvOSBydW4gQ0kg5YWo6auY5LqOIDAuNe+8ieOAguaYvuiRl+S9juS6jiAwLjUg55qE77yadml0YjMyIGF0dHJpYnV0Ze+8iDMvM++8ieOAgXZpdGwxNCBzcGFyIHJlbGF0aW9u77yIMy8z77yJ44CBdml0YjMyIHNwYXIgcmVsYXRpb27vvIgxLzPvvInjgIJzaXpl44CBY2xldnIgcmVsYXRpb27jgIFiaW5kaW5n44CBcG9zaXRpb24g5Z+65pys6YO95ZyoIDAuNSDkuIrjgIIKCiMjIyAzLjMg5YiG5L6n5YeG56Gu546H77yIMyBzZWVkIOWdh+WAvO+8ieKAlOKAlOivjeWBj+WlveiviuaWrQoKfCBkYXRhc2V0L2ZhY3RvciB8IHZpdGIzMiB8IHZpdGwxNCB8IHNpZ2xpcDIgfAp8LS0tfC0tLXwtLS18LS0tfAp8IGNsZXZyL29iamVjdCB8IGN1YmUgLjkxOSAvIGN5bCAuMzc5IC8gc3BoZXJlIC40OTMgfCBjdWJlIC45MTMgLyBjeWwgLjEzNiAvIHNwaGVyZSAuNjc3IHwgY3ViZSAuODc1IC8gY3lsIC4zMzEgLyBzcGhlcmUgLjcxMiB8CnwgY2xldnIvY29sb3IgfCDmnIDkvY4gYnJvd24gLjUxNu+8jOacgOmrmCBjeWFuIC45MzAgfCDmnIDkvY4gZ3JlZW4gLjQ0Nu+8jOacgOmrmCBwdXJwbGUgLjg1MyB8IOacgOS9jiBicm93biAuMjA177yM5pyA6auYIGN5YW4gLjkzNCB8CnwgY2xldnIvc2l6ZSB8IGxhcmdlICoqLjAwMCoqIC8gc21hbGwgKioxLjAwMCoqIHwgbGFyZ2UgLjAwNCAvIHNtYWxsIC45OTYgfCBsYXJnZSAuMDAzIC8gc21hbGwgLjk5OSB8CnwgY2xldnIvbWF0ZXJpYWwgfCBtZXRhbCAuMTM2IC8gcnViYmVyIC45MTggfCBtZXRhbCAuNjY2IC8gcnViYmVyIC40ODMgfCBtZXRhbCAuODczIC8gcnViYmVyIC4zMjIgfAp8IGNsZXZyL3JlbGF0aW9uIHwgbGVmdCAqKi45OTYqKiAvIHJpZ2h0ICoqLjAwNSoqIC8gZnJvbnQgLjQ1OSAvIGJlaGluZCAuNTkwIHwgbGVmdCAqKi4wMDkqKiAvIHJpZ2h0ICoqLjk5MSoqIC8gZnJvbnQgLjczMCAvIGJlaGluZCAuMzI0IHwgbGVmdCAuODIzIC8gcmlnaHQgLjE3MyAvIGZyb250IC41NDQgLyBiZWhpbmQgLjQ3MCB8CnwgcHVnX3NwYXIvcG9zaXRpb24gfCBhYm92ZSAuNTg2IC8gYmVsb3cgLjQ0NCAvIGxlZnQgLjcxNCAvIHJpZ2h0IC4yNTYgfCBhYm92ZSAuNzg4IC8gYmVsb3cgLjIwOCAvIGxlZnQgLjQ1OCAvIHJpZ2h0IC41MDIgfCBhYm92ZSAuNjcyIC8gYmVsb3cgLjMyMiAvIGxlZnQgLjYyOSAvIHJpZ2h0IC4zOTEgfAp8IHB1Z19zcGFyL2F0dHJpYnV0Ze+8iOWFjeeWq++8iSB8IGJsdWUgLjM5NyAvIGdyYXNzIC40MDEgfCBibHVlIC40OTQgLyBncmFzcyAuNTIxIHwgYmx1ZSAuNTAyIC8gZ3Jhc3MgLjU1NiB8CnwgcHVnX3NwYXIvcmVsYXRpb27vvIjlhY3nlqvvvIkgfCBiZWxvdyAuNDkxIC8gbGVmdCAuNDcxIHwgYmVsb3cgLjQ2NyAvIGxlZnQgLjQ0NSB8IGJlbG93IC41MjcgLyBsZWZ0IC40ODkgfAoK6K+75rOV77yaCgotICoqc2l6ZSDmmK/nuq/or43lgY/lpb3nmoTmlZnnp5HkuabmoYjkvosqKu+8muS4ieaooeWei+WFqOmDqCLmgZLpgInlkKsgc21hbGwg55qE5o+P6L+wIu+8jGxhcmdlIOS+pyDiiYgw44CBc21hbGwg5L6nIOKJiDHvvIzmgLvkvZPmgbAgMC41MDDjgILml6fmiqXlkYrph4wgc2l6ZSA1Mi4w4oCTNTIuOSUgIueVpemrmOS6jumaj+acuiLlsLHmmK/mraPkvovlgY8gc21hbGwg55qE5oq95qC35YGP5pac77yI5q2j5L6L5ZCrIHNtYWxsIDUxLjXigJM1Mi45Je+8ie+8jOW3suiiqyAxMC0yOCDlrqHorqHor4HmmI7vvIzmnKzmrKHlubPooaHmlbDmja7ku6Xmm7TmnoHnq6/nmoTlvaLlvI/noa7orqTjgIIKLSAqKmNsZXZyL3JlbGF0aW9uIOWQjOagt+aXoOi+qOWIqyoq77yadml0YjMyIOaBkumAieWQqyBsZWZ0IOeahOWPpeWtkO+8iGxlZnQg5L6nIC45OTbjgIFyaWdodCDkvqcgLjAwNe+8ie+8jHZpdGwxNCDlj43lkJHmgZLpgInlkKsgcmlnaHTvvIguOTkxLy4wMDnvvInvvIxzaWdsaXAyIOW8seWBj+WlvSBsZWZ077yILjgyMy8uMTcz77yJ44CC5pa55ZCR6K+N5YGP5aW95oqK5oC75L2T5oqsL+WOi+WIsCAwLjUwM+KAkzAuNTEz77yM5pen5oql5ZGKInJlbGF0aW9uIOeVpemrmOS6jumaj+acuiLnmoQgMeKAkzJwcCDlrozlhajlj6/nlLHlgY/lpb3op6Pph4rjgIIKLSAqKnB1Z19zcGFyL3Bvc2l0aW9uIOaXoOi+qOWIqyoq77ya5LiJ5qih5Z6LIGFib3ZlIOS+pyA+IGJlbG93IOS+p++8iHZpdGwxNCDlt64gLjU477yJ77yMdml0YjMyIGxlZnQg5L6nIC43MTQgLyByaWdodCDkvqcgLjI1Nu+8jOS9huaAu+S9k+mDveWcqCAwLjXjgILml6fmlbDmja4icG9zaXRpb24g5pa55ZCR6ZqP5qih5Z6L57+76L2sIu+8iDYzLjMvNDAuOC81NC4y77yJ5Zyo5bmz6KGh5ZCO5raI5aSx4oCU4oCU5pen5pWw5a2X5Y+q5piv5q2j5L6L5pa55L2N6K+NIDc2JSDmmK8gbGVmdCDnmoTkvKrlvbHjgIIKLSAqKm9iamVjdCDmmK/ovqjliKsr5YGP5aW95re35ZCIKirvvJpjdWJlIOS+pyAwLjg44oCTMC45Mu+8iOWBj+WlveaIluaYk+i+qOWIq++8ie+8jGN5bGluZGVyIOS+pyAwLjE04oCTMC4zOO+8iOiiq+mBv+W8gO+8ie+8jHNwaGVyZSDkvqflsYXkuK3jgILmgLvkvZMgMC41OOKAkzAuNjQg6YeM5pyJ55yf5a6e5oiQ5YiG77yI6LSf5L6L6K+N5LiO5q2j5L6L6K+N5Zyo5ZCE5L6n5a+556ew5Ye6546w77yM57qv5YGP5aW95Lya57uZIDAuNe+8ie+8jOS9huWQhOivjemavuW6puS4pemHjeS4jeWdh+OAggotICoqbWF0ZXJpYWwg5qih5Z6L6Ze06LSo55qE5LiN5ZCMKirvvJp2aXRsMTQg5YGP5aW95byx77yI5YiG5L6n5beuIDAuMTjvvInjgIHmgLvkvZMgMC41NzXvvIzku6XnnJ/ovqjliKvkuLrkuLvvvJt2aXRiMzIg5YGP5aW95by677yIMC43OO+8ieOAgeaAu+S9kyAwLjUyNyA9IOWwkemHj+i+qOWIqyArIOWBj+Wlve+8m3NpZ2xpcDIg5LuL5LqO5Lik6ICF77yI5YGP5aW9IDAuNTXjgIHmgLvkvZMgMC41OTjvvInjgIIKLSAqKmNvbG9yIOeahOWPluWAvOS+nei1lioq77ya5q+P5Liq5qih5Z6L6YO95pyJ5o6l6L+R6ZqP5py655qE6aKc6Imy77yIdml0YjMyIGJyb3duIC41MTbjgIF2aXRsMTQgZ3JlZW4gLjQ0NuOAgXNpZ2xpcDIgYnJvd24gLjIwNe+8ieWSjOW+iOmrmOeahOminOiJsu+8iGN5YW4gLjkzK++8ie+8jOaAu+S9kyAwLjY44oCTMC43MSDmmK/nnJ/lrp7kvYbkuKXph43kuI3lnYfnmoTovqjliKvjgIIKLSAqKuWFjeeWq+WboOe0oOeahOW5suWHgOivu+aVsCoq77yaYmluZGluZyA5Lzkg5ZCrIDAuNeKAlOKAlOWFqOWxgOmbtuagt+acrOaJk+WIhuacquiDveWIqeeUqOe7keWumuS/oeaBr++8jOS4juaXp+e7k+iuuuS4gOiHtOS4lOeOsOWcqOWujOWFqOaOkumZpOivjeWBj+Wlveino+mHiu+8m3ZpdGIzMiBhdHRyaWJ1dGUgMC4zOTkg5LiOIHZpdGwxNCBzcGFyIHJlbGF0aW9uIDAuNDU2IOaYvuiRlyoq5L2O5LqOKirpmo/mnLrvvIzmmK/ns7vnu5/mgKfnmoTlj43lkJHlgY/lpb3vvIjmqKHlnovmm7TlgY/lpb0i5o2i57uRL+aNouS4u+WuoiLnmoTplJnor6/mj4/ov7DvvInvvIzlgLzlvpflkI7nu63ljZXni6zliIbmnpDjgIIKCiMjIyAzLjQg5Zug57Sg5LiJ57qn5YiG57G777yI5bmz6KGh5ZCO55qE5pyA57uI6K+75rOV77yJCgp8IOexu+WIqyB8IOWboOe0oO+8iOaooeWei++8iSB8IOivgeaNriB8CnwtLS18LS0tfC0tLXwKfCDnnJ/ovqjliKsgfCBzY2VuZe+8iOS4ieaooeWei++8ieOAgWNvbG9y77yI5LiJ5qih5Z6L77yJ44CBb2JqZWN077yI5LiJ5qih5Z6L77yM5YC85LiN5Z2H77yJ44CBbWF0ZXJpYWzvvIh2aXRsMTQg5Li65Li777yMc2lnbGlwMiDpg6jliIbvvIkgfCDmgLvkvZPmmL7okZcgPjAuNSDkuJTliIbkvqfkuI3lr7nnp7Dml6Dms5Xop6Pph4rmgLvkvZPotoXlh7rph48gfAp8IOe6r+ivjeWBj+Wlve+8iOi+qOWIq+KJiDDvvIkgfCBzaXpl77yI5LiJ5qih5Z6L77yJ44CBY2xldnIvcmVsYXRpb27vvIjkuInmqKHlnovvvInjgIFwdWdfc3Bhci9wb3NpdGlvbu+8iOS4ieaooeWei++8iSB8IOWIhuS+pyDiiYgxL+KJiDDvvIzmgLvkvZMg4omIMC41MDAgfAp8IOWBj+WlveS4uuS4uyvlsJHph4/ovqjliKsgfCBtYXRlcmlhbO+8iHZpdGIzMu+8ieOAgWNsZXZyL3JlbGF0aW9u77yIdml0YjMyIHNlZWQwIOaAu+S9kyAwLjUyNe+8iSB8IOaAu+S9k+eVpeWBj+emuyAwLjXvvIzliIbkvqflt67lpKcgfAp8IOWFjeeWq+OAgeW5suWHgOWksei0pSB8IGJpbmRpbmfvvIjkuInmqKHlnovvvIkgfCA5Lzkg5ZCrIDAuNSB8Cnwg5YWN55ar44CB5pi+6JGX5Y+N5ZCRIHwgYXR0cmlidXRl77yIdml0YjMy77yJ44CBc3BhciByZWxhdGlvbu+8iHZpdGwxNO+8jHZpdGIzMiBzZWVkMO+8iSB8IENJIOWFqOS9juS6jiAwLjUgfAoKIyMjIDMuNSDkuI7kv67lpI3liY3vvIhnaXQgYTUxM2UzMe+8jDEwLTI4IOS4iuWNiOi/kOihjO+8ieWvueavlO+8iDMgc2VlZCDlnYflgLzvvIkKCnwgZGF0YXNldC9mYWN0b3IgfCB2aXRiMzIg5pen4oaS5pawIHwgdml0bDE0IOaXp+KGkuaWsCB8IHNpZ2xpcDIg5pen4oaS5pawIHwg6K+05piOIHwKfC0tLXwtLS18LS0tfC0tLXwtLS18CnwgcHVnX3NwYXIvcG9zaXRpb24gfCAwLjYzOOKGkjAuNTAw77yI4oiSMC4xMznvvIkgfCAwLjQwMOKGkjAuNDg577yIKzAuMDg577yJIHwgMC41NDfihpIwLjUwM++8iOKIkjAuMDQ077yJIHwg5penIuaWueWQkemaj+aooeWei+e/u+i9rCLmmK/or43lgY/lpb3kvKrlvbEgfAp8IGNsZXZyL3NpemUgfCAwLjUyMOKGkjAuNTAw77yI4oiSMC4wMjDvvIkgfCAwLjUyMeKGkjAuNTAw77yI4oiSMC4wMjHvvIkgfCAwLjUyMeKGkjAuNTAx77yI4oiSMC4wMjDvvIkgfCDml6fnmoQgKzJwcCA9IOato+S+i+WBjyBzbWFsbCDnmoTlgY/mlpwgfAp8IGNsZXZyL21hdGVyaWFsIHwgMC41MjjihpIwLjUyNyB8IDAuNTYw4oaSMC41NzUgfCAwLjU5NeKGkjAuNTk4IHwg5Y+Y5YyWIOKJpDEuNXBwIHwKfCBjbGV2ci9iaW5kaW5nIHwgMC41MDnihpIwLjQ5OCB8IDAuNTAy4oaSMC40OTUgfCAwLjUxOeKGkjAuNTE1IHwg5Y+Y5YyWIOKJpDEuMHBwIHwKfCDlhbbkvZnlm6DntKAgfCDlj5jljJYg4omkMS42cHAgfCDlj5jljJYg4omkMC44cHAgfCDlj5jljJYg4omkMC45cHAgfCDph4fmoLflmarlo7DnuqfliKsgfAoK57uT6K6677ya6YeH5qC35L+u5aSN5Y+q5pS55Y+Y5LqG6KKr6K+N5YGP5aW95rGh5p+T55qE6K+75pWw77yIcG9zaXRpb27jgIFzaXpl77yM5Lul5Y+KIHJlbGF0aW9uIOeahOino+mHiu+8ie+8jOecn+i+qOWIq+WboOe0oO+8iGNvbG9yL29iamVjdC9zY2VuZe+8ieivu+aVsOeos+WumuOAgui/meWQjOaXtuivtOaYjuaXp+aKpeWRiueahCBFMSDlrprmgKfnu5PorrrvvIjpopzoibIv6Lqr5Lu95by644CB57uR5a6aL+WFs+ezu+W8se+8ieaWueWQkeato+ehru+8jOS9hiJzaXplL3JlbGF0aW9uIOeVpemrmOS6jumaj+acuiLnmoTlrprph4/ooajov7DkvZzlup/jgIIKCiMjIyAzLjYg56eN5a2Q56iz5a6a5oCn77yIMTAtMzAg6YeN566X55qEIHNlZWRfc3RhYmlsaXR5LmNzdu+8iQoKLSDliKTlrprpobkgNTcv5qih5Z6L77ya5LiN56iz5a6aIHZpdGIzMiAxMeOAgXZpdGwxNCAy44CBc2lnbGlwMiA444CCCi0g5LiN56iz5a6a6aG55YWo6YOo5piv6LS06L65IENJIOWIhuexu+e/u+i9rO+8iOWmgiB2aXRsMTQgcG9zaXRpb24gc2VlZDIgQ0kg5L2O5LqOIDAuNeOAgXZpdGIzMiBjbGV2ci9yZWxhdGlvbiBzZWVkMCBhYm92ZeKGkmNvbnRhaW5z44CBRTMgc3BoZXJlIOWNleWFg+espuWPt+e/u+i9rO+8ie+8jCoq5peg5LiA5raJ5Y+K5qC45b+D57uT6K66KirvvIhvYmplY3QvY29sb3IvbWF0ZXJpYWwvc2NlbmUg6auY5LqOIDAuNeOAgWJpbmRpbmcvcmVsYXRpb24vcG9zaXRpb24vc2l6ZSDml6DovqjliKvvvIzov5nkupvliKTlrprlnKggOS85IHJ1biDkuIDoh7TvvInjgIIKCiMjIyAzLjcgU1BBUiDlrpjmlrnljY/orq7lr7nnhafvvIhgZTFfc3Bhcl9vZmZpY2lhbC5jc3Zg77yMMTAtMjgg5LiK5Y2I6L+Q6KGM44CB5pyq6YeN6LeR77yM5LiN5Y+X6YeH5qC35L+u5pS55b2x5ZON77yJCgpoYXJkLW5lZ2F0aXZlIOWPo+W+hCB0b3Ax77yIOSBydW4g6IyD5Zu077yJ77yab25lX29iamVjdF9wb3NpdGlvbiAwLjQ3N+KAkzAuNTA144CBdHdvX29iamVjdHNfcmVsYXRpb24gMC40OTDigJMwLjU0MeOAgXR3b19vYmplY3RzX2F0dHJpYnV0ZSAwLjUxM+KAkzAuNTg04oCU4oCU5LiO5bmz6KGh5ZCO6Ieq5bu65Y2P6K6u55qEIHBvc2l0aW9uL3JlbGF0aW9uL2F0dHJpYnV0ZSDiiYgwLjUg5LiA6Ie077yM5Lik5aWX5Y2P6K6u5LqS55u45Y2w6K+B44CCCgojIyA0LiBFMi9FMyDlpI3moLjvvIjnu5Porrrmsr/nlKjvvIzmlbDlrZflt7LmoLjlr7nvvIkKCkUyL0UzIOeahOS7o+eggei3r+W+hOS4jeWQqyBFMSDnmoTph4fmoLflh73mlbDvvIzph43ot5Hlj6rmmK/nu5/kuIDniYjmnKzvvJvjgIrpooTlrp7pqoznu5Porrrmt7HljJbliIbmnpDjgIvnmoQgRTIvRTMg5pWw5a2X5LiO5b2T5YmN56OB55uY5qC45a+55LiA6Ie044CC5pys5qyh54us56uL5qC45a+555qE5YWz6ZSu5pWw5a2X77yaCgoqKkUy77yIUFVHOiBBbmltYWxz77yMc2VlZCAw77yJKirvvJplbnZpcm9ubWVudCB0cmFuc2l0aW9uIHNpbWlsYXJpdHkgZ2Fw77yIeiDnqbrpl7TvvIk9IDAuNjY5IFswLjY2MywgMC42NzVd77yIdml0YjMy77yJLyAwLjY0MSBbMC42MzYsIDAuNjQ2Xe+8iHZpdGwxNO+8iS8gMC43MjYgWzAuNzIxLCAwLjczMV3vvIhzaWdsaXAy77yJ77yM5YWo6YOoIENJIOi/nOWkp+S6jiAw77ybZW52aXJvbm1lbnQgzpQg6IyD5pWw6LaF5Ye6IG51aXNhbmNl77yabm9ybSBnYXDvvIhyYXfvvIkrNC44MiAvICs3Ljg2IC8gKzQuNTTjgILkuI7miqXlkYogMSDCpzXigJM3IOS4gOiHtO+8muWFt+S9k+eOr+Wig+i9rOaNoui3qCBjb250ZXh0IOmrmOW6puWPr+WkjeeOsO+8jHRleHR1cmUg5pWw5o2u6ZuG5L6d6LWW77yMc2l6ZS9jYW1lcmEg5byx77ybU2lnTElQMiDnmoQgbnVpc2FuY2UgzpQg6Ieq6Lqr5pyJ5pa55ZCR5oCn77yI5L2Z5bymIOKJiDAuNDHvvInvvIxyYXcg6IyD5pWw5LiN6IO96Leo5qih5Z6L5o6S5ZCN44CCCgoqKkUz77yIQ29HZW5U77yM6aKY5Z6L562J5p2D5Li75oyH5qCH77yJKirvvJoKCnwg5qih5Z6LIHwgc2VlZCAwIHwgc2VlZCAxIHwgc2VlZCAyIHwg5Yik5a6aIHwKfC0tLXwtLS18LS0tfC0tLXwtLS18Cnwgdml0YjMyIGN1YmUvY3lsaW5kZXIgfCArMy45NjUgWysxLjg5OCwrNS45NjhdIHwgKzUuNjc4IFsrMy41NTQsKzcuODM5XSB8ICs0LjM0NiBbKzIuMzY0LCs2LjUyMV0gfCAzLzMgQ0k+MO+8jEEg6Zq+5LqOIEIgfAp8IHZpdGIzMiBzcGhlcmUg5a+554WnIHwg4oiSMC4yMDAgW+KIkjIuMDk2LCsxLjY2OV0gfCDiiJIwLjg5NSB8IOKIkjEuMDEwIHwgMy8zIOWQqyAwIHwKfCB2aXRsMTQgY3ViZS9jeWxpbmRlciB8IOKIkjAuNjUxIFviiJIyLjY0NiwrMS40MThdIHwg4oiSMC45MjYgfCArMC43MzMgfCDlkKsgMCDkuJTnrKblj7fkuI3nqLMgfAp8IHZpdGwxNCBzcGhlcmUg5a+554WnIHwgKzAuMjYwIHwg4oiSMC41OTEgfCArMC4xNDAgfCAzLzMg5ZCrIDAgfAp8IHNpZ2xpcDIgY3ViZS9jeWxpbmRlciB8ICszLjU4MCBbKzEuNTg2LCs1LjcwNV0gfCArNi44MTMgWys0LjU5OCwrOC45MzBdIHwgKzUuMjEyIFsrMy4yNzIsKzcuMTMyXSB8IDMvMyBDST4wIHwKfCBzaWdsaXAyIHNwaGVyZSDlr7nnhacgfCArMi4zMzEgWyswLjQ1MiwrNC4zNjRdIHwg4oiSMC4wNDEgfCArMC4xNTMgfCBzZWVkMCBDST4w77yIYXVkaXRfZTMg5bey5qCH6K6w55qE5L6L5aSW77yJIHwKCjkg5LiqIHJ1biDnmoQgYGUzX3VuaXRfY29uc2lzdGVuY3kuanNvbmAg5YWo6YOoIHBhc3NlZC9hbGxfb2vjgILnu5Porrrmsr/nlKjmiqXlkYogMSArIGF1ZGl0X2Uz77yaMi8zIOaooeWei++8iHZpdGIzMuOAgXNpZ2xpcDLvvIljdWJlL2N5bGluZGVyIEHiiJJCIOW3rui3neaYvuiRl+iAjCBzcGhlcmUg5a+554Wn5Z+65pys5ZCrIDDvvIhzaWdsaXAyIHNlZWQwIOS+i+Wklu+8ie+8m3ZpdGwxNCDml6DnqLPlrprmlbTkvZPlt67ot53vvJvmjaLlvaLpopjlrZjlnKjnqLPlrprnmoTlvaLnirbkuI3lr7nnp7DvvIhjdWJlIOKJiDg4JSB2cyBjeWxpbmRlciDiiYgzMuKAkzU5Je+8jFNpZ0xJUDIg5Y+N5ZCR77yJ44CCRTMg5Y+q5pSv5oyBIuadoeS7tuebuOWFs+OAgeaooeWei+ebuOWFs+eahOe7hOWQiOmavuW6puW8gui0qOaApyLvvIzkuI3mlK/mjIEi5pyq6KeB57uE5ZCI5rOb5YyW5LiL6ZmNIueahOihqOi/sOOAggoKIyMgNS4g5pei5pyJ5oql5ZGK5YuY6K+v5LiO6L+H5pe25riF5Y2VCgrku6XkuIvmlofku7YgRTEg5pWw5a2X5Z+65LqOIDEwLTI4IDE2OjU3IOmHjei3keWJjeeahOaVsOaNru+8jCoqRTEg6YOo5YiG5Lul5pys5oql5ZGK5Li65YeGKirvvIjlt7LlnKjov5nkupvmlofku7bpobbpg6jliqDms6jvvInvvJoKCnwg5paH5Lu2IHwg6L+H5pe25YaF5a65IHwg5LuN5pyJ5pWI5YaF5a65IHwKfC0tLXwtLS18LS0tfAp8IOmihOWunumqjOe7k+aenOWIhuaekF/lpJrmqKHlnovlpJrnp43lrZBfMjAyNi0xMC0yOC5tZCB8IOWFqOmDqCBFMSDmlbDlrZfvvIhzaXplIDUyLjkl44CBcG9zaXRpb24gNjMuMy80MC44LzU0LjLjgIFyZWxhdGlvbiA1MS4y4oCTNTEuNiDnrYnvvInvvJsiMTgg5Liq57uE5ZCIIuW6lOS4uiA5IOS4qiB8IEUy44CBRTPjgIFzZWVkIOeos+WumuaAp+ahhuaetiB8Cnwg6aKE5a6e6aqM5YiG5p6Q5oql5ZGKX+WunumqjOWBmuazleS4juWunumZheagt+S+i18yMDI2LTEwLTI4Lm1kIHwgRTEg5pWw5a2X77yb5YW26K+N5YGP5aW95Y+R546w77yIc2l6ZT3mraPkvovlkKsgc21hbGwg5q+U5L6L77yJ5pa55ZCR5q2j56Gu44CB5pWw5a2X5bey6KKr5bmz6KGh5pWw5o2u5Y+W5Luj5bm25by65YyWIHwg5a6e6aqM5YGa5rOV5o+P6L+w44CBRTIg6L2s5o2i5qC35L6L44CBRTMg5L6L6aKYIHwKfCDpooTlrp7pqoznu5Porrrmt7HljJbliIbmnpBf6K+B5o2u5by65bqm5LiO5py65Yi26L6555WMXzIwMjYtMTAtMjgubWQgfCDCpzLigJM0IOeahCBFMSDkuIkgc2VlZCDlnYflgLzkuI7liIbkvqfmlbDlrZcgfCDCpzXigJM477yIRTIvRTPvvInjgIHCpzkg6K+B5o2u5YiG57qn44CBwqcxMSDlrqHorqHmlrnms5UgfAp8IGF1ZGl0X2UxX25vdGVzLm1kIHwgU0hBMjU2IOaMh+WQkeW3suiiq+imhueblueahOaXpyBpdGVtcyDmlofku7bvvJtzaXplL3Bvc2l0aW9uIOeahOaXp+WBj+aWnOa1i+mHjyB8IOWfuue6v+aWueazleiuuu+8iOacgOS8mOWbuuWumumhuuW6jyBEUO+8ieOAgei3qCBzZWVkIOmHjeWPoOaWueazlSB8CnwgYXVkaXRfZTNfbm90ZXMubWQgfCDml6Dov4fml7bvvIhFMyDmnKrph43nrpflj5jljJbvvIkgfCDlhajpg6ggfAp8IOWIneatpee7k+aenOWIhuaekC5tZO+8iDEwLTIy77yJIHwg5bey6KKrIDEwLTI4IOaKpeWRiuaYjuehruagh+azqOWPluS7oyB8IOKAlCB8Cgrlj6bmnInkuKTlpIQqKuiHs+S7iuacquS/rioq55qE6K6w5b2V57y65Y+j77yIYXVkaXRfZTMg5o+Q5Ye677yJ77yaYGUzX2l0ZW1zX2NvZ2VudC5qc29ubGAg5LuN57y6IGBuZWdhdGl2ZV9jb2xvcmAgLyBgbmVnYXRpdmVfc2hhcGVgIOWtl+aute+8jCLotJ/kvovmmK8gcmVkIGN1YmUi5LiA57G75pat6KiA5pys5Zyw5LiN5Y+v54us56uL5aSN5qC477ybRTIg55qE6YWN5a+55riF5Y2V5ZCM5qC35pyq6JC955uY44CCCgojIyA2LiDpmLbmrrXliKTlrpoKCuingSBgY29kZS9vdXRwdXRzL1NUQUdFMV9TVU1NQVJZLm1kYO+8iOaMieaWueahiCDCpzY44oCTwqc3Mu+8ieOAguimgeeCue+8mkUxIOeahCJPYmplY3QvQ29sb3Ig5by644CBUmVsYXRpb24vQmluZGluZy9Qb3NpdGlvbi9TaXplIOaXoOi+qOWIqyLlnKjlubPooaHph4fmoLflkI7mmK/lubLlh4DmiJDnq4vnmoTlvLror4Hmja7vvJtFMiDku4UgZW52aXJvbm1lbnQg5Zug57Sg5ruh6LazIuinhOW+i+i2hei/hyBudWlzYW5jZSLvvJtFMyAyLzMg5qih5Z6L5ruh6LazIGN1YmUvY3lsaW5kZXIg5LiN5a+556ewICsgc3BoZXJlIOWvueeFp+OAguaAu+S9k+WIpOWumuS4uioq5oOF5Ya1IEEg55qE5LiN5a6M5pW054mI5pysKirvvIhFMSDlrozlhajmu6HotrPjgIFFMi9FMyDpg6jliIbmu6HotrPvvInvvIzlu7rorq7ov5vlhaXnrKzkuozpmLbmrrXlsI/op4TmqKHlj5fmjqfnvJbovpHpqozor4HjgIIKCiMjIDcuIOmBl+eVmee8uuWPo+S4juW7uuiurgoKMS4gYGUzX2l0ZW1zX2NvZ2VudC5qc29ubGAg6KGlIG5lZ2F0aXZlX2NvbG9yL25lZ2F0aXZlX3NoYXBlIOWtl+aute+8iOS4i+asoSBFMyDph43ot5Hml7bkuIDlubblgZrvvInvvJsKMi4gRTIg6YWN5a+55riF5Y2V6JC955uY77yI5a6h6K6h6ZyA6KaB77yJ77ybCjMuIOaWueahiOaWh+aho+ihpSLph4fmoLflubPooaEi5p2h5qy+77yI5b2T5YmN5Y+q5ZyoIFJFQURNRSBTdGVwIDMg5LiO5Luj56CBIGRvY3N0cmluZ++8jOinhOiMg+Wxgue6p+S4jeS4gOiHtO+8ie+8mwo0LiB2aXRiMzIgYXR0cmlidXRlIDAuMzk5IC8gdml0bDE0IHNwYXIgcmVsYXRpb24gMC40NTYg55qE5pi+6JGX5Y+N5ZCR6K+75pWw5YC85b6X5Y2V54us5YiG5p6Q77yI5piv5ZCm5LiO57q555CG6K+N44CB5Li75a6i6K+t5bqP5pyJ5YWz77yJ77ybCjUuIGBlMV9zcGFyX29mZmljaWFsYCDkuI7oh6rlu7rljY/orq7lt7LlnKggcG9zaXRpb24vcmVsYXRpb24vYXR0cmlidXRlIOS4iuS6kuebuOWNsOivge+8jHNjZW5lL29uZV9vYmplY3Qg55qE5a6Y5pa55Y+j5b6E77yIMS4wLzAuNzQg562J77yJ5LiO6Ieq5bu6IHNjZW5l77yIMC43NeKAkzAuOTnvvInlj6PlvoTkuI3lkIzlsZ7mraPluLjvvIjku7vliqHlrprkuYnkuI3lkIzvvInvvIzmiqXlkYrlvJXnlKjml7bms6jmhI/ljLrliIbjgIIK" download="预实验复查与再分析_平衡采样后_2026-11-03.md">下载 Markdown 分析稿</a></div>
+</aside>
+<main>
+  <header class="hero">
+    <p class="eyebrow">GRAPHDELTA RESEARCH NOTE · STAGE 01 RECHECK</p>
+    <h1>预实验复查与再分析（平衡采样后）</h1>
+    <p class="hero-desc">采样修复后哪些因素是真辨别、哪些只是词偏好。<br>E1 全部重读，E2/E3 核对沿用，既有报告逐条勘误。</p>
+    <div class="hero-meta"><span>2026 年 11 月 3 日</span><span>9 个 run（3 模型 × 3 种子）</span><span>审计 A–G 全过</span></div>
+  </header>
+  <div class="metrics" aria-label="关键发现">
+    <div class="metric"><div class="value">90/90</div><div class="label">run×factor 审计项全部通过：配额等额、翻转 0.500、<br>汇总表可由逐题重算</div></div>
+    <div class="metric"><div class="value">0.500</div><div class="label">size / relation / position 平衡后总体准确率：<br>分侧 ≈1/≈0，纯词偏好、辨别≈0</div></div>
+    <div class="metric"><div class="value">17.8–20.7<span class="unit">pp</span></div><div class="label">颜色−绑定差距保持（三模型均值，9/9 CI 高于 0），<br>采样修复未改变真辨别读数</div></div>
+  </div>
+  <div class="toolbar"><span class="toolbar-note">复查与再分析 · 8 节 · 全部数字可溯源到 outputs 下产物</span><button class="print-button" id="print-report" type="button">打印 / 保存 PDF</button></div>
+  <article class="report" aria-label="复查与再分析正文"><div class="intro"><ul>
+<li>数据基准：9 个 model×seed（clip_vitb32 / clip_vitl14 / siglip2_so400m × seed 0/1/2）的正式产物。E1 于 10-28 16:57–16:59 用平衡采样重跑；E2 于 10-28~10-30 重跑；E3、seed_stability、五图于 10-30 09:27–09:35 重跑。分析基于 git <code>2ffa587</code>。</li>
+<li>数据核验：<code>audit_e1_sampling_2026-11-03.{md,json}</code>（检查 A–G 全过，45 个输入文件 SHA256 全记录）。</li>
+<li>本报告取代此前所有报告的 <strong>E1 部分</strong>；E2/E3 部分经数字核对后沿用。</li>
+</ul>
+</div>
+<section class="report-section" id="section-1" aria-labelledby="section-1-heading"><h2 id="section-1-heading">0. 一页结论</h2>
+<ol>
+<li><strong>采样修复有效且严格执行</strong>。9 个 run 的 pos_value 配额全部精确等额（如 size 1000/1000、relation 500×4），SPAR position 视角翻转比例全部恰为 0.500，&quot;恒选某词&quot;策略的期望准确率被压到恰 1/k，汇总表可由逐题数据重算（偏差 ≤ 2.2e-16）。</li>
+<li><strong>E1 因素重新分类（本次复查的核心结论）</strong>：
+<ul>
+<li>真辨别：<code>scene</code>（0.75/0.89/0.99）、<code>color</code>（0.68–0.71，9/9 run CI 高于 0.5）、<code>object</code>（0.58–0.64，其中 cube 侧 0.88–0.92、cylinder 侧 0.14–0.38）；</li>
+<li><strong>纯词偏好、辨别≈0</strong>：<code>size</code>（三模型分侧 1.000/0.000，总体恰 0.500）、<code>clevr/relation</code>（vitb32 恒选含 left 的句、vitl14 恒选含 right 的句）、<code>pug_spar/position</code>（总体 0.489–0.503）；</li>
+<li>偏好为主 + 少量辨别：<code>material</code> 在 vitb32（分解≈0.03 辨别+0.78 偏好）、siglip2 上混杂；vitl14 材质不对称仅 0.18，以真辨别为主（0.575）；</li>
+<li>免疫因素（正负例词集相同）的干净结果：<code>binding</code> 0.495–0.515（9/9 含 0.5，干净的零辨别）；<code>attribute</code> vitb32 <strong>0.399 三种子 CI 均低于 0.5</strong>（系统性反向）；<code>pug_spar/relation</code> vitl14 0.456 三种子低于 0.5。</li>
+</ul>
+</li>
+<li><strong>修复改变了三个旧结论</strong>：SPAR position&quot;方向随模型翻转&quot;（63.3%/40.8%/54.2%）→ 全部 ≈0.50，旧数字是词偏好伪影；size&quot;略高于随机 52%&quot;→ 0.500 无辨别；clevr relation&quot;51–52% 略高于随机&quot;→ 基本全部可由词偏好解释。颜色−绑定差距保持（三模型 3-seed 均值 17.8–20.7pp，逐 run 范围 17.2–21.1pp，9/9 CI 高于 0）。</li>
+<li><strong>E2/E3 不受采样修改影响</strong>：报告《预实验结论深化分析》的 E2/E3 数字与当前磁盘逐位核对一致（抽检：E2 env transition gap 0.669/0.641/0.726 全部 CI&gt;0；E3 vitb32 seed0 +3.965pp [+1.898,+5.968]、vitl14 −0.65pp 含 0、siglip2 +3.58pp [1.586,5.705]），结论沿用。</li>
+<li><strong>阶段判定</strong>（详见 <code>outputs/STAGE1_SUMMARY.md</code>）：E1&quot;结构薄弱点&quot;证据在平衡采样后比之前更干净（relation/position/size 从&quot;弱信号&quot;变为&quot;可证明的零辨别&quot;）；E2 只有 environment 满足&quot;规律超过 nuisance&quot;；E3 2/3 模型成立。总体接近方案 §68 的情况 A 但 E2/E3 不完整，建议进入第二阶段的小规模受控编辑验证。</li>
+</ol>
+</section>
+<section class="report-section" id="section-2" aria-labelledby="section-2-heading"><h2 id="section-2-heading">1. 为什么需要这次复查</h2>
+<h3>1.1 采样修改内容（规范依据：README Step 3 与 <code>src/experiments/common.py::balanced_subsample</code> docstring）</h3>
+<ul>
+<li>target 子样本按正例一侧取值（pos_value）分层等额抽取（二值因素各 50%，多值因素等额），使&quot;恒选某个词&quot;的答题策略期望准确率恰为 50%/1/k；</li>
+<li>SPAR position 以 50% 概率从 c2 视角出题，正例方位词覆盖 left/right/below/above（官方 metadata 只有 left/below，不翻转时正例方位词 76% 是 left）；</li>
+<li>均衡后<strong>总体准确率即干净的辨别指标，逐侧准确率之差即词偏好指标</strong>；binding / SPAR attribute / SPAR relation 正负例词集相同，天然免疫词偏好。</li>
+<li>注意：方案文档（统一修订版）没有该条款（已全文核对），§31 只规定&quot;每 cell ≥1000 + 随机下采样&quot;。引用采样平衡依据时应引 README Step 3，不能引 §31。</li>
+</ul>
+<h3>1.2 既有报告全部基于旧 E1 数据（证据）</h3>
+<p>10-28 的三份分析报告与两份 audit 中，E1 数字全部来自 10-28 上午的旧运行：</p>
+<ul>
+<li><code>audit_e1_notes.md</code> 记录的 <code>e1_items_clevr.jsonl</code> SHA256（seed 0 为 <code>0A8458EB…</code>）与 <code>preexperiment_source_audit_2026-10-28.json</code> 一致，但与当前磁盘文件（<code>12de6e70…</code>）不匹配；source audit JSON 内是 Windows 路径，说明审计在另一份数据快照上完成；</li>
+<li><code>run_meta.json</code> 显示 <code>e1_state</code> 于 10-28 16:57 重跑并替换旧结果（&quot;replaces&quot; 链），新增输出 <code>e1_acc_by_pos_value.csv</code>；</li>
+<li>报告 2（15:15 写完）§4.6 自己提出了&quot;分层平衡后重跑&quot;的要求，重跑当天傍晚已完成，但更晚提交的报告 1 与 audit 仍在引用被覆盖的旧数字（size 52.9%、position 63.3/40.8/54.2 等）。</li>
+</ul>
+<p>因此：<strong>没有任何既有分析文件描述平衡重跑后的 E1 结果</strong>——这是本报告的职责。E2/E3 的数字经核对与磁盘一致（§4），相关结论仍有效。</p>
+</section>
+<section class="report-section" id="section-3" aria-labelledby="section-3-heading"><h2 id="section-3-heading">2. 数据核验结果（审计 A–G 全部通过）</h2>
+<p>配套审计脚本 <code>code/scripts/audit_e1_sampling.py</code>（只读，不访问模型/图片/缓存），结果要点：</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="数据表 1，可横向滚动"><table>
+<thead>
+<tr>
+<th>检查</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A pos_value 配额平衡</td>
+<td>10 个 dataset×factor 中 8 个精确等额：object 667/667/666、color 250×8、size 1000/1000、material 1000/1000、clevr relation 500×4、position 500×4、attribute 1000/1000、spar relation 1000/1000；binding、scene 按设计回退普通随机抽样（无 pos_value）</td>
+</tr>
+<tr>
+<td>B position 视角翻转</td>
+<td>9 个 run 翻转比例全部恰 0.500（z=0.0）；方位词真出现在正例文本中（0 违例）</td>
+</tr>
+<tr>
+<td>C item 级字段</td>
+<td>item_acc / item_margin 全部有限、取值合法</td>
+</tr>
+<tr>
+<td>D 汇总表重算</td>
+<td>90 个 run×factor：n_samples、accuracy、mean_margin 偏差 ≤2.2e-16；median/std 偏差 ≤1.9e-9（不同求和算法的数值噪声，容差 1e-7）</td>
+</tr>
+<tr>
+<td>E 逐值表一致性</td>
+<td>分组 n 之和 = n_samples、加权准确率 = 总体准确率，90/90 通过</td>
+</tr>
+<tr>
+<td>F 恒选某词上界</td>
+<td>平衡因素全部恰 1/k（size/material 0.500、relation/position 0.250、color 0.125、object 0.334）；scene（回退抽样）最大 0.042（tarantula），远低于 0.5，无法解释其 0.75–0.99 的准确率</td>
+</tr>
+<tr>
+<td>G run_meta</td>
+<td>9 run × 5 实验全部 success，产物清单齐全，无 smoke 混入</td>
+</tr>
+<tr>
+<td>H 跨 seed 图片重叠</td>
+<td>描述性：CLEVR 各因素 0.135–0.151，SPAR 0.051–0.107（种子间抽样独立性正常）</td>
+</tr>
+</tbody>
+</table></div>
+<p>注：clevr/relation 的&quot;恒选词&quot;上界表里 argmax 出现 &quot;of&quot;，是因为 front 的说法是 &quot;in front of&quot;（of/in 只在 front 侧出现），与 front 完全共线，上界仍是 0.250，不影响判定。</p>
+</section>
+<section class="report-section" id="section-4" aria-labelledby="section-4-heading"><h2 id="section-4-heading">3. E1 再分析</h2>
+<h3>3.1 读数方法</h3>
+<p>平衡后每个因素的读数规则：</p>
+<ul>
+<li><strong>总体 accuracy = 干净辨别指标</strong>（恒选某词策略期望恰 0.5，总体超出 0.5 的部分只能来自辨别）；</li>
+<li><strong>分侧（pos_value）准确率之差 = 词偏好强度</strong>；一侧趋近 1、另一侧趋近 0 即&quot;恒选某词&quot;的直接证据；</li>
+<li>二值因素可分解：<code>总体 ≈ 0.5 + 辨别项 ± 偏好/2</code>。例：size 三模型分侧 1.000/0.000 → 偏好≈1、辨别≈0；vitl14 material 分侧 0.666/0.483 → 偏好 0.18、辨别 ≈0.075；</li>
+<li><strong>免疫因素</strong>（binding、attribute、spar relation：正负例词集相同）总体即干净读数，无词偏好可混入。</li>
+</ul>
+<h3>3.2 总体准确率与 CI 分类（3 seed 均值；↑/↓/· = CI 全高/全低于 0.5/含 0.5，三位对应 seed 0/1/2）</h3>
+<div class="table-scroll" tabindex="0" role="region" aria-label="数据表 2，可横向滚动"><table>
+<thead>
+<tr>
+<th>dataset/factor</th>
+<th>vitb32</th>
+<th>vitl14</th>
+<th>siglip2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clevr/object</td>
+<td>0.597 ↑↑↑</td>
+<td>0.575 ↑↑↑</td>
+<td>0.639 ↑↑↑</td>
+</tr>
+<tr>
+<td>clevr/color</td>
+<td>0.705 ↑↑↑</td>
+<td>0.683 ↑↑↑</td>
+<td>0.693 ↑↑↑</td>
+</tr>
+<tr>
+<td>clevr/size</td>
+<td>0.500 ···</td>
+<td>0.500 ···</td>
+<td>0.501 ···</td>
+</tr>
+<tr>
+<td>clevr/material</td>
+<td>0.527 ↑↑↑</td>
+<td>0.575 ↑↑↑</td>
+<td>0.598 ↑↑↑</td>
+</tr>
+<tr>
+<td>clevr/relation</td>
+<td>0.512 ↑··</td>
+<td>0.513 ···</td>
+<td>0.503 ···</td>
+</tr>
+<tr>
+<td>clevr/binding</td>
+<td>0.498 ···</td>
+<td>0.495 ···</td>
+<td>0.515 ···</td>
+</tr>
+<tr>
+<td>pug_spar/scene</td>
+<td>0.749 ↑↑↑</td>
+<td>0.887 ↑↑↑</td>
+<td>0.990 ↑↑↑</td>
+</tr>
+<tr>
+<td>pug_spar/position</td>
+<td>0.500 ···</td>
+<td>0.489 ··↓</td>
+<td>0.503 ···</td>
+</tr>
+<tr>
+<td>pug_spar/attribute</td>
+<td>0.399 ↓↓↓</td>
+<td>0.507 ···</td>
+<td>0.529 ↑↑·</td>
+</tr>
+<tr>
+<td>pug_spar/relation</td>
+<td>0.481 ↓··</td>
+<td>0.456 ↓↓↓</td>
+<td>0.508 ···</td>
+</tr>
+</tbody>
+</table></div>
+<p>显著高于 0.5 的：object、color、material、scene（四者 9/9 run CI 全高于 0.5）。显著低于 0.5 的：vitb32 attribute（3/3）、vitl14 spar relation（3/3）、vitb32 spar relation（1/3）。size、clevr relation、binding、position 基本都在 0.5 上。</p>
+<h3>3.3 分侧准确率（3 seed 均值）——词偏好诊断</h3>
+<div class="table-scroll" tabindex="0" role="region" aria-label="数据表 3，可横向滚动"><table>
+<thead>
+<tr>
+<th>dataset/factor</th>
+<th>vitb32</th>
+<th>vitl14</th>
+<th>siglip2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clevr/object</td>
+<td>cube .919 / cyl .379 / sphere .493</td>
+<td>cube .913 / cyl .136 / sphere .677</td>
+<td>cube .875 / cyl .331 / sphere .712</td>
+</tr>
+<tr>
+<td>clevr/color</td>
+<td>最低 brown .516，最高 cyan .930</td>
+<td>最低 green .446，最高 purple .853</td>
+<td>最低 brown .205，最高 cyan .934</td>
+</tr>
+<tr>
+<td>clevr/size</td>
+<td>large <strong>.000</strong> / small <strong>1.000</strong></td>
+<td>large .004 / small .996</td>
+<td>large .003 / small .999</td>
+</tr>
+<tr>
+<td>clevr/material</td>
+<td>metal .136 / rubber .918</td>
+<td>metal .666 / rubber .483</td>
+<td>metal .873 / rubber .322</td>
+</tr>
+<tr>
+<td>clevr/relation</td>
+<td>left <strong>.996</strong> / right <strong>.005</strong> / front .459 / behind .590</td>
+<td>left <strong>.009</strong> / right <strong>.991</strong> / front .730 / behind .324</td>
+<td>left .823 / right .173 / front .544 / behind .470</td>
+</tr>
+<tr>
+<td>pug_spar/position</td>
+<td>above .586 / below .444 / left .714 / right .256</td>
+<td>above .788 / below .208 / left .458 / right .502</td>
+<td>above .672 / below .322 / left .629 / right .391</td>
+</tr>
+<tr>
+<td>pug_spar/attribute（免疫）</td>
+<td>blue .397 / grass .401</td>
+<td>blue .494 / grass .521</td>
+<td>blue .502 / grass .556</td>
+</tr>
+<tr>
+<td>pug_spar/relation（免疫）</td>
+<td>below .491 / left .471</td>
+<td>below .467 / left .445</td>
+<td>below .527 / left .489</td>
+</tr>
+</tbody>
+</table></div>
+<p>读法：</p>
+<ul>
+<li><strong>size 是纯词偏好的教科书案例</strong>：三模型全部&quot;恒选含 small 的描述&quot;，large 侧 ≈0、small 侧 ≈1，总体恰 0.500。旧报告里 size 52.0–52.9% &quot;略高于随机&quot;就是正例偏 small 的抽样偏斜（正例含 small 51.5–52.9%），已被 10-28 审计证明，本次平衡数据以更极端的形式确认。</li>
+<li><strong>clevr/relation 同样无辨别</strong>：vitb32 恒选含 left 的句子（left 侧 .996、right 侧 .005），vitl14 反向恒选含 right（.991/.009），siglip2 弱偏好 left（.823/.173）。方向词偏好把总体抬/压到 0.503–0.513，旧报告&quot;relation 略高于随机&quot;的 1–2pp 完全可由偏好解释。</li>
+<li><strong>pug_spar/position 无辨别</strong>：三模型 above 侧 &gt; below 侧（vitl14 差 .58），vitb32 left 侧 .714 / right 侧 .256，但总体都在 0.5。旧数据&quot;position 方向随模型翻转&quot;（63.3/40.8/54.2）在平衡后消失——旧数字只是正例方位词 76% 是 left 的伪影。</li>
+<li><strong>object 是辨别+偏好混合</strong>：cube 侧 0.88–0.92（偏好或易辨别），cylinder 侧 0.14–0.38（被避开），sphere 侧居中。总体 0.58–0.64 里有真实成分（负例词与正例词在各侧对称出现，纯偏好会给 0.5），但各词难度严重不均。</li>
+<li><strong>material 模型间质的不同</strong>：vitl14 偏好弱（分侧差 0.18）、总体 0.575，以真辨别为主；vitb32 偏好强（0.78）、总体 0.527 = 少量辨别 + 偏好；siglip2 介于两者（偏好 0.55、总体 0.598）。</li>
+<li><strong>color 的取值依赖</strong>：每个模型都有接近随机的颜色（vitb32 brown .516、vitl14 green .446、siglip2 brown .205）和很高的颜色（cyan .93+），总体 0.68–0.71 是真实但严重不均的辨别。</li>
+<li><strong>免疫因素的干净读数</strong>：binding 9/9 含 0.5——全局零样本打分未能利用绑定信息，与旧结论一致且现在完全排除词偏好解释；vitb32 attribute 0.399 与 vitl14 spar relation 0.456 显著<strong>低于</strong>随机，是系统性的反向偏好（模型更偏好&quot;换绑/换主客&quot;的错误描述），值得后续单独分析。</li>
+</ul>
+<h3>3.4 因素三级分类（平衡后的最终读法）</h3>
+<div class="table-scroll" tabindex="0" role="region" aria-label="数据表 4，可横向滚动"><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>因素（模型）</th>
+<th>证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>真辨别</td>
+<td>scene（三模型）、color（三模型）、object（三模型，值不均）、material（vitl14 为主，siglip2 部分）</td>
+<td>总体显著 &gt;0.5 且分侧不对称无法解释总体超出量</td>
+</tr>
+<tr>
+<td>纯词偏好（辨别≈0）</td>
+<td>size（三模型）、clevr/relation（三模型）、pug_spar/position（三模型）</td>
+<td>分侧 ≈1/≈0，总体 ≈0.500</td>
+</tr>
+<tr>
+<td>偏好为主+少量辨别</td>
+<td>material（vitb32）、clevr/relation（vitb32 seed0 总体 0.525）</td>
+<td>总体略偏离 0.5，分侧差大</td>
+</tr>
+<tr>
+<td>免疫、干净失败</td>
+<td>binding（三模型）</td>
+<td>9/9 含 0.5</td>
+</tr>
+<tr>
+<td>免疫、显著反向</td>
+<td>attribute（vitb32）、spar relation（vitl14，vitb32 seed0）</td>
+<td>CI 全低于 0.5</td>
+</tr>
+</tbody>
+</table></div>
+<h3>3.5 与修复前（git a513e31，10-28 上午运行）对比（3 seed 均值）</h3>
+<div class="table-scroll" tabindex="0" role="region" aria-label="数据表 5，可横向滚动"><table>
+<thead>
+<tr>
+<th>dataset/factor</th>
+<th>vitb32 旧→新</th>
+<th>vitl14 旧→新</th>
+<th>siglip2 旧→新</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pug_spar/position</td>
+<td>0.638→0.500（−0.139）</td>
+<td>0.400→0.489（+0.089）</td>
+<td>0.547→0.503（−0.044）</td>
+<td>旧&quot;方向随模型翻转&quot;是词偏好伪影</td>
+</tr>
+<tr>
+<td>clevr/size</td>
+<td>0.520→0.500（−0.020）</td>
+<td>0.521→0.500（−0.021）</td>
+<td>0.521→0.501（−0.020）</td>
+<td>旧的 +2pp = 正例偏 small 的偏斜</td>
+</tr>
+<tr>
+<td>clevr/material</td>
+<td>0.528→0.527</td>
+<td>0.560→0.575</td>
+<td>0.595→0.598</td>
+<td>变化 ≤1.5pp</td>
+</tr>
+<tr>
+<td>clevr/binding</td>
+<td>0.509→0.498</td>
+<td>0.502→0.495</td>
+<td>0.519→0.515</td>
+<td>变化 ≤1.0pp</td>
+</tr>
+<tr>
+<td>其余因素</td>
+<td>变化 ≤1.6pp</td>
+<td>变化 ≤0.8pp</td>
+<td>变化 ≤0.9pp</td>
+<td>采样噪声级别</td>
+</tr>
+</tbody>
+</table></div>
+<p>结论：采样修复只改变了被词偏好污染的读数（position、size，以及 relation 的解释），真辨别因素（color/object/scene）读数稳定。这同时说明旧报告的 E1 定性结论（颜色/身份强、绑定/关系弱）方向正确，但&quot;size/relation 略高于随机&quot;的定量表述作废。</p>
+<h3>3.6 种子稳定性（10-30 重算的 seed_stability.csv）</h3>
+<ul>
+<li>判定项 57/模型：不稳定 vitb32 11、vitl14 2、siglip2 8。</li>
+<li>不稳定项全部是贴边 CI 分类翻转（如 vitl14 position seed2 CI 低于 0.5、vitb32 clevr/relation seed0 above→contains、E3 sphere 单元符号翻转），<strong>无一涉及核心结论</strong>（object/color/material/scene 高于 0.5、binding/relation/position/size 无辨别，这些判定在 9/9 run 一致）。</li>
+</ul>
+<h3>3.7 SPAR 官方协议对照（<code>e1_spar_official.csv</code>，10-28 上午运行、未重跑，不受采样修改影响）</h3>
+<p>hard-negative 口径 top1（9 run 范围）：one_object_position 0.477–0.505、two_objects_relation 0.490–0.541、two_objects_attribute 0.513–0.584——与平衡后自建协议的 position/relation/attribute ≈0.5 一致，两套协议互相印证。</p>
+</section>
+<section class="report-section" id="section-5" aria-labelledby="section-5-heading"><h2 id="section-5-heading">4. E2/E3 复核（结论沿用，数字已核对）</h2>
+<p>E2/E3 的代码路径不含 E1 的采样函数，重跑只是统一版本；《预实验结论深化分析》的 E2/E3 数字与当前磁盘核对一致。本次独立核对的关键数字：</p>
+<p><strong>E2（PUG: Animals，seed 0）</strong>：environment transition similarity gap（z 空间）= 0.669 [0.663, 0.675]（vitb32）/ 0.641 [0.636, 0.646]（vitl14）/ 0.726 [0.721, 0.731]（siglip2），全部 CI 远大于 0；environment Δ 范数超出 nuisance：norm gap（raw）+4.82 / +7.86 / +4.54。与报告 1 §5–7 一致：具体环境转换跨 context 高度可复现，texture 数据集依赖，size/camera 弱；SigLIP2 的 nuisance Δ 自身有方向性（余弦 ≈0.41），raw 范数不能跨模型排名。</p>
+<p><strong>E3（CoGenT，题型等权主指标）</strong>：</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="数据表 6，可横向滚动"><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>seed 0</th>
+<th>seed 1</th>
+<th>seed 2</th>
+<th>判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vitb32 cube/cylinder</td>
+<td>+3.965 [+1.898,+5.968]</td>
+<td>+5.678 [+3.554,+7.839]</td>
+<td>+4.346 [+2.364,+6.521]</td>
+<td>3/3 CI&gt;0，A 难于 B</td>
+</tr>
+<tr>
+<td>vitb32 sphere 对照</td>
+<td>−0.200 [−2.096,+1.669]</td>
+<td>−0.895</td>
+<td>−1.010</td>
+<td>3/3 含 0</td>
+</tr>
+<tr>
+<td>vitl14 cube/cylinder</td>
+<td>−0.651 [−2.646,+1.418]</td>
+<td>−0.926</td>
+<td>+0.733</td>
+<td>含 0 且符号不稳</td>
+</tr>
+<tr>
+<td>vitl14 sphere 对照</td>
+<td>+0.260</td>
+<td>−0.591</td>
+<td>+0.140</td>
+<td>3/3 含 0</td>
+</tr>
+<tr>
+<td>siglip2 cube/cylinder</td>
+<td>+3.580 [+1.586,+5.705]</td>
+<td>+6.813 [+4.598,+8.930]</td>
+<td>+5.212 [+3.272,+7.132]</td>
+<td>3/3 CI&gt;0</td>
+</tr>
+<tr>
+<td>siglip2 sphere 对照</td>
+<td>+2.331 [+0.452,+4.364]</td>
+<td>−0.041</td>
+<td>+0.153</td>
+<td>seed0 CI&gt;0（audit_e3 已标记的例外）</td>
+</tr>
+</tbody>
+</table></div>
+<p>9 个 run 的 <code>e3_unit_consistency.json</code> 全部 passed/all_ok。结论沿用报告 1 + audit_e3：2/3 模型（vitb32、siglip2）cube/cylinder A−B 差距显著而 sphere 对照基本含 0（siglip2 seed0 例外）；vitl14 无稳定整体差距；换形题存在稳定的形状不对称（cube ≈88% vs cylinder ≈32–59%，SigLIP2 反向）。E3 只支持&quot;条件相关、模型相关的组合难度异质性&quot;，不支持&quot;未见组合泛化下降&quot;的表述。</p>
+</section>
+<section class="report-section" id="section-6" aria-labelledby="section-6-heading"><h2 id="section-6-heading">5. 既有报告勘误与过时清单</h2>
+<p>以下文件 E1 数字基于 10-28 16:57 重跑前的数据，<strong>E1 部分以本报告为准</strong>（已在这些文件顶部加注）：</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="数据表 7，可横向滚动"><table>
+<thead>
+<tr>
+<th>文件</th>
+<th>过时内容</th>
+<th>仍有效内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>预实验结果分析_多模型多种子_2026-10-28.md</td>
+<td>全部 E1 数字（size 52.9%、position 63.3/40.8/54.2、relation 51.2–51.6 等）；&quot;18 个组合&quot;应为 9 个</td>
+<td>E2、E3、seed 稳定性框架</td>
+</tr>
+<tr>
+<td>预实验分析报告_实验做法与实际样例_2026-10-28.md</td>
+<td>E1 数字；其词偏好发现（size=正例含 small 比例）方向正确、数字已被平衡数据取代并强化</td>
+<td>实验做法描述、E2 转换样例、E3 例题</td>
+</tr>
+<tr>
+<td>预实验结论深化分析_证据强度与机制边界_2026-10-28.md</td>
+<td>§2–4 的 E1 三 seed 均值与分侧数字</td>
+<td>§5–8（E2/E3）、§9 证据分级、§11 审计方法</td>
+</tr>
+<tr>
+<td>audit_e1_notes.md</td>
+<td>SHA256 指向已被覆盖的旧 items 文件；size/position 的旧偏斜测量</td>
+<td>基线方法论（最优固定顺序 DP）、跨 seed 重叠方法</td>
+</tr>
+<tr>
+<td>audit_e3_notes.md</td>
+<td>无过时（E3 未重算变化）</td>
+<td>全部</td>
+</tr>
+<tr>
+<td>初步结果分析.md（10-22）</td>
+<td>已被 10-28 报告明确标注取代</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>另有两处<strong>至今未修</strong>的记录缺口（audit_e3 提出）：<code>e3_items_cogent.jsonl</code> 仍缺 <code>negative_color</code> / <code>negative_shape</code> 字段，&quot;负例是 red cube&quot;一类断言本地不可独立复核；E2 的配对清单同样未落盘。</p>
+</section>
+<section class="report-section" id="section-7" aria-labelledby="section-7-heading"><h2 id="section-7-heading">6. 阶段判定</h2>
+<p>见 <code>code/outputs/STAGE1_SUMMARY.md</code>（按方案 §68–§72）。要点：E1 的&quot;Object/Color 强、Relation/Binding/Position/Size 无辨别&quot;在平衡采样后是干净成立的强证据；E2 仅 environment 因素满足&quot;规律超过 nuisance&quot;；E3 2/3 模型满足 cube/cylinder 不对称 + sphere 对照。总体判定为<strong>情况 A 的不完整版本</strong>（E1 完全满足、E2/E3 部分满足），建议进入第二阶段小规模受控编辑验证。</p>
+</section>
+<section class="report-section" id="section-8" aria-labelledby="section-8-heading"><h2 id="section-8-heading">7. 遗留缺口与建议</h2>
+<ol>
+<li><code>e3_items_cogent.jsonl</code> 补 negative_color/negative_shape 字段（下次 E3 重跑时一并做）；</li>
+<li>E2 配对清单落盘（审计需要）；</li>
+<li>方案文档补&quot;采样平衡&quot;条款（当前只在 README Step 3 与代码 docstring，规范层级不一致）；</li>
+<li>vitb32 attribute 0.399 / vitl14 spar relation 0.456 的显著反向读数值得单独分析（是否与纹理词、主客语序有关）；</li>
+<li><code>e1_spar_official</code> 与自建协议已在 position/relation/attribute 上互相印证，scene/one_object 的官方口径（1.0/0.74 等）与自建 scene（0.75–0.99）口径不同属正常（任务定义不同），报告引用时注意区分。</li>
+</ol>
+</section></article>
+  <footer class="report-footer"><span>GraphDelta · 预实验复查与再分析（平衡采样后）· 2026-11-03<br>正文来源：Markdown 分析稿；配套审计见 audit_e1_sampling_2026-11-03。</span><a href="#top">返回顶部 ↑</a></footer>
+</main>
+</div>
+<script>
+const tocDetails = document.querySelector('.toc-details');
+if (matchMedia('(max-width:820px)').matches) tocDetails.open = false;
+document.getElementById('print-report').addEventListener('click', () => window.print());
+const sections = [...document.querySelectorAll('.report-section')];
+const links = [...document.querySelectorAll('.toc a')];
+let ticking = false;
+function updateReading() {
+  const extent = document.documentElement.scrollHeight - innerHeight;
+  document.querySelector('.reading-progress').style.width = `${extent > 0 ? Math.min(100, scrollY/extent*100) : 100}%`;
+  let active = '';
+  for (const section of sections) if (section.getBoundingClientRect().top <= 140) active = section.id;
+  for (const link of links) {
+    if (link.hash === '#' + active) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  }
+  ticking = false;
+}
+addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateReading); ticking = true; } }, {passive:true});
+addEventListener('resize', updateReading);
+updateReading();
+</script>
+</body>
+</html>

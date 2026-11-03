@@ -470,6 +470,9 @@ SigLIP2 注意事项：当前实现是 FixRes checkpoint 路径（固定 384×38
 | `e3_unit_gaps.csv` + `e3_unit_consistency.json` | 逐 (shape_group, color) 单元 A−B gap + CI；sidecar 记录一致性检查状态与输入指纹 | §49 |
 | `seed_stability.csv` | seeds 0/1/2 三种子关键判定稳定性汇总 | §66 |
 | `figures/<model>_seed<k>/` | §67 五图（PNG 300dpi + 合并 PDF） | §67 |
+| `../analysis/audit_e1_sampling_<date>.md` / `.json` | E1 平衡采样只读审计（A–G：配额平衡、position 翻转、恒选词上界、汇总表重算、run_meta 状态、跨 seed 重叠）；`scripts/audit_e1_sampling.py` 生成 | codex 审查 2026-10-28 |
+| `../analysis/预实验复查与再分析_平衡采样后_<date>.md` / `.html` | 平衡采样后 E1 再分析（词偏好诊断、因素重分类）、E2/E3 复核、既有报告勘误；HTML 由 `scripts/render_recheck_report_html.py` 渲染 | — |
+| `../STAGE1_SUMMARY.md` | 阶段总结：三个核心问题判定 + 情况 A/B/C/D 对照 + 第二阶段入口建议 | §68–§72 |
 
 历史说明：`outputs/tables`、`outputs/tables_seed{1,2}` 是 2026-10-22 clip_vitl14
 三种子运行在目录隔离修复前的旧布局快照，只读保留；读取端只允许 clip_vitl14
