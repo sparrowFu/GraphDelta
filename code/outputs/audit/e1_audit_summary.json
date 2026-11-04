@@ -1,0 +1,54 @@
+{
+  "sample_seed": 20261103,
+  "models": [
+    "clip_vitl14",
+    "clip_vitb32",
+    "siglip2_so400m"
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "per_class_target": 100,
+  "clevr_target": 50,
+  "counts": {
+    "clevr|binding|一致对": 17,
+    "clevr|binding|一致错": 17,
+    "clevr|binding|分歧": 17,
+    "spar|attribute|一致对": 20,
+    "spar|attribute|一致错": 40,
+    "spar|attribute|分歧": 40,
+    "spar|relation|一致对": 20,
+    "spar|relation|一致错": 40,
+    "spar|relation|分歧": 40
+  },
+  "value_coverage": {
+    "attribute": [
+      "Blue|Red",
+      "Grass|Stone"
+    ],
+    "relation": [
+      "below-above",
+      "left-right"
+    ]
+  },
+  "images_exported": {
+    "spar": 200,
+    "clevr": 51
+  },
+  "audit_columns": [
+    "ck1_pos_true",
+    "ck2_neg_false",
+    "ck3_visible",
+    "ck4_clear",
+    "issue_note"
+  ],
+  "checklist_columns_note": {
+    "ck1_pos_true": "正句为真（对照图片与 gt_* 列）",
+    "ck2_neg_false": "负句为假",
+    "ck3_visible": "被描述对象完整可见，无遮挡/裁剪",
+    "ck4_clear": "指代无歧义（对象、视角、主客体顺序）",
+    "issue_note": "问题描述；发现系统性错误记录生成环节与受影响范围"
+  }
+}

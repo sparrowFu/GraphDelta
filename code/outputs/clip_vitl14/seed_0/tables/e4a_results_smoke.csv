@@ -1,0 +1,9 @@
+task,family,split,n_scenes,pair_acc,pair_acc_ci_low,pair_acc_ci_high,i2t_acc,t2i_acc,tie_rate,null_mean,null_std,perm_p,n_perm,exact
+binding,cube|sphere|blue|yellow,heldout,1,0.0,0.0,0.0,0.5,0.5,0.0,,,,,
+binding,cube|sphere|blue|yellow,train,1,0.42857142857142855,0.42857142857142855,0.42857142857142855,0.7142857142857143,0.5,0.0,,,,,
+binding,cube|sphere|blue|yellow,val,1,0.0,0.0,0.0,0.5,0.5,0.0,,,,,
+binding,cube|sphere|green|yellow,heldout,1,0.8571428571428571,0.8571428571428571,0.8571428571428571,0.9285714285714286,0.5,0.0,,,,,
+binding,cube|sphere|green|yellow,train,1,0.0,0.0,0.0,0.5,0.5,0.0,,,,,
+binding,cube|sphere|green|yellow,val,1,0.14285714285714285,0.14285714285714285,0.14285714285714285,0.5714285714285714,0.5714285714285714,0.0,,,,,
+binding,cube|sphere|red|blue,train,1,0.0,0.0,0.0,0.5,0.5,0.0,,,,,
+binding,__overall__,heldout,2,0.42857142857142855,,,,,,0.25,0.25,0.5,4.0,True

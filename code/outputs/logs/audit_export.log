@@ -1,0 +1,12 @@
+2026-11-04 09:33:48,007 | INFO | audit_export | [audit] spar/attribute: 抽取 100 题
+2026-11-04 09:33:48,012 | INFO | audit_export | [audit] spar/relation: 抽取 100 题
+2026-11-04 09:34:26,625 | INFO | audit_export | [audit] 清单 251 题 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/audit/e1_audit_checklist.csv
+2026-11-04 09:34:26,625 | INFO | audit_export | [audit] 图片 spar=200 clevr=51 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/audit/images
+2026-11-04 09:53:08,529 | INFO | audit_export | [audit] spar/attribute: 抽取 100 题
+2026-11-04 09:53:08,534 | INFO | audit_export | [audit] spar/relation: 抽取 100 题
+2026-11-04 09:53:34,464 | INFO | audit_export | [audit] 清单 251 题 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/audit/e1_audit_checklist.csv
+2026-11-04 09:53:34,464 | INFO | audit_export | [audit] 图片 spar=200 clevr=51 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/audit/images
+2026-11-04 11:14:13,108 | INFO | audit_export | [audit] spar/attribute: 抽取 100 题
+2026-11-04 11:14:13,113 | INFO | audit_export | [audit] spar/relation: 抽取 100 题
+2026-11-04 11:14:50,838 | INFO | audit_export | [audit] 清单 251 题 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/audit/e1_audit_checklist.csv
+2026-11-04 11:14:50,838 | INFO | audit_export | [audit] 图片 spar=200 clevr=51 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/audit/images

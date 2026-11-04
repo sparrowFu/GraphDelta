@@ -210,6 +210,31 @@
           "e1_spar_filter_stats_smoke.json"
         ]
       }
+    },
+    "e4_all_smoke": {
+      "git_commit": "24dea3c790b478b2802aa6d2f6eb8dec61a4de5d",
+      "git_dirty": true,
+      "cache_protocol": "v1",
+      "status": "success",
+      "started": "2026-11-04T11:25:17",
+      "replaces": [],
+      "last_success": {
+        "git_commit": "24dea3c790b478b2802aa6d2f6eb8dec61a4de5d",
+        "git_dirty": true,
+        "cache_protocol": "v1",
+        "updated": "2026-11-04T11:25:18",
+        "outputs": [
+          "e4a_items_smoke.jsonl",
+          "e4a_results_smoke.csv",
+          "e4b_delta_stats_smoke.csv",
+          "e4b_items_smoke.jsonl",
+          "e4b_probe_smoke.csv",
+          "e4c_conversion_stats_smoke.csv",
+          "e4c_identity_smoke.json",
+          "e4d_meta_smoke.json",
+          "e4d_retrieval_smoke.csv"
+        ]
+      }
     }
   }
 }

@@ -1,0 +1,7 @@
+{"task": "binding", "family": "cube|sphere|blue|yellow", "split": "train", "scene": "cubsph_blye_00000", "dv_norm": 0.2741166651248932, "cos_to_d_r": 0.9999999999999998}
+{"task": "binding", "family": "cube|sphere|blue|yellow", "split": "val", "scene": "cubsph_blye_00001", "dv_norm": 0.2424428015947342, "cos_to_d_r": 0.6368402035791771}
+{"task": "binding", "family": "cube|sphere|blue|yellow", "split": "heldout", "scene": "cubsph_blye_00002", "dv_norm": 0.2651163935661316, "cos_to_d_r": 0.5624561067568061}
+{"task": "binding", "family": "cube|sphere|green|yellow", "split": "train", "scene": "cubsph_grye_00000", "dv_norm": 0.27054479718208313, "cos_to_d_r": 0.9999999999999998}
+{"task": "binding", "family": "cube|sphere|green|yellow", "split": "val", "scene": "cubsph_grye_00001", "dv_norm": 0.17932455241680145, "cos_to_d_r": 0.2366987668535189}
+{"task": "binding", "family": "cube|sphere|green|yellow", "split": "heldout", "scene": "cubsph_grye_00002", "dv_norm": 0.304505854845047, "cos_to_d_r": 0.18495556123306722}
+{"task": "binding", "family": "cube|sphere|red|blue", "split": "train", "scene": "cubsph_rebl_00000", "dv_norm": 0.10155181586742401, "cos_to_d_r": 1.0}

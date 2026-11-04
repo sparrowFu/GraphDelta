@@ -16,3 +16,11 @@ dirs:
   manifests: data/manifests
   cache: data/cache
   outputs: outputs
+  edit_pairs: data/edit_pairs
+
+# 阶段二渲染环境（工作方案第 2、8 节；绝对路径，同 datasets/models 风格）。
+# output_dir 在仓库外：渲染图片与账本不进 git。
+render:
+  blender: /home/xpfu/WorkSpace/render/blender278c/blender
+  clevr_gen: /home/xpfu/WorkSpace/render/clevr-gen
+  output_dir: /mnt/disk1/xpfu/graphdelta_render

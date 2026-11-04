@@ -1,0 +1,39 @@
+{
+  "model": "clip_vitl14",
+  "seed": 0,
+  "tables_dir": "/home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables",
+  "smoke_inputs": [
+    "e4a_results_smoke.csv",
+    "e4c_conversion_stats_smoke.csv",
+    "e4d_retrieval_smoke.csv"
+  ],
+  "structure_identifiability": {
+    "binding": {
+      "pair_acc": 0.4285714285714285,
+      "perm_p": 0.5,
+      "null_mean": 0.25,
+      "label": "证据不足"
+    }
+  },
+  "crossmodal_alignment": {
+    "binding": {
+      "n_families": 2,
+      "frac_significant": 0.0,
+      "label": "证据不足"
+    }
+  },
+  "direction_transfer": {
+    "binding": {
+      "correct_top1": 0.0,
+      "controls": {
+        "alpha0": 0.0,
+        "random": 0.0,
+        "reverse": 0.0,
+        "text_delta": 0.0,
+        "wrong_conversion": 0.0
+      },
+      "label": "证据不足"
+    }
+  },
+  "missing": []
+}

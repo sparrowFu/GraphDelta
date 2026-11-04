@@ -1,0 +1,46 @@
+2026-11-04 11:07:35,063 | INFO | render_edit_pairs | [render] binding: 待渲染 18 态（账本跳过 0）
+2026-11-04 11:07:36,568 | WARNING | render_edit_pairs | [render] cubsph_blye_00000::before 未通过: code=0 problems=[]
+2026-11-04 11:07:37,917 | WARNING | render_edit_pairs | [render] cubsph_blye_00000::recolor 未通过: code=0 problems=[]
+2026-11-04 11:07:39,202 | WARNING | render_edit_pairs | [render] cubsph_blye_00000::swap 未通过: code=0 problems=[]
+2026-11-04 11:07:40,512 | WARNING | render_edit_pairs | [render] cubsph_blye_00001::before 未通过: code=0 problems=[]
+2026-11-04 11:07:41,895 | WARNING | render_edit_pairs | [render] cubsph_blye_00001::recolor 未通过: code=0 problems=[]
+2026-11-04 11:07:43,218 | WARNING | render_edit_pairs | [render] cubsph_blye_00001::swap 未通过: code=0 problems=[]
+2026-11-04 11:07:44,535 | WARNING | render_edit_pairs | [render] cubsph_blye_00002::before 未通过: code=0 problems=[]
+2026-11-04 11:07:45,808 | WARNING | render_edit_pairs | [render] cubsph_blye_00002::recolor 未通过: code=0 problems=[]
+2026-11-04 11:07:47,057 | WARNING | render_edit_pairs | [render] cubsph_blye_00002::swap 未通过: code=0 problems=[]
+2026-11-04 11:07:48,370 | WARNING | render_edit_pairs | [render] cubsph_grye_00000::before 未通过: code=0 problems=[]
+2026-11-04 11:07:49,726 | WARNING | render_edit_pairs | [render] cubsph_grye_00000::recolor 未通过: code=0 problems=[]
+2026-11-04 11:07:51,099 | WARNING | render_edit_pairs | [render] cubsph_grye_00000::swap 未通过: code=0 problems=[]
+2026-11-04 11:07:52,456 | WARNING | render_edit_pairs | [render] cubsph_grye_00001::before 未通过: code=0 problems=[]
+2026-11-04 11:07:53,781 | WARNING | render_edit_pairs | [render] cubsph_grye_00001::recolor 未通过: code=0 problems=[]
+2026-11-04 11:07:55,168 | WARNING | render_edit_pairs | [render] cubsph_grye_00001::swap 未通过: code=0 problems=[]
+2026-11-04 11:07:56,485 | WARNING | render_edit_pairs | [render] cubsph_grye_00002::before 未通过: code=0 problems=[]
+2026-11-04 11:07:57,752 | WARNING | render_edit_pairs | [render] cubsph_grye_00002::recolor 未通过: code=0 problems=[]
+2026-11-04 11:07:59,013 | WARNING | render_edit_pairs | [render] cubsph_grye_00002::swap 未通过: code=0 problems=[]
+2026-11-04 11:07:59,023 | INFO | render_edit_pairs | [render] binding 完成: {'task': 'binding', 'attempted': 18, 'skipped_in_ledger': 0, 'validated_total': 0, 'derived': 0, 'wall_seconds': 23.950183629989624, 'attempted_per_second': 0.7515599996260989, 'workers': 1}
+2026-11-04 11:09:43,745 | INFO | render_edit_pairs | [render] binding: 待渲染 3 态（账本跳过 0）
+2026-11-04 11:10:13,697 | INFO | render_edit_pairs | [render] cubsph_blye_00000::before OK (30.0s, retries=0)
+2026-11-04 11:10:43,676 | INFO | render_edit_pairs | [render] cubsph_blye_00000::recolor OK (30.0s, retries=0)
+2026-11-04 11:11:13,619 | INFO | render_edit_pairs | [render] cubsph_blye_00000::swap OK (29.9s, retries=0)
+2026-11-04 11:11:37,847 | INFO | render_edit_pairs | [render] binding: 待渲染 18 态（账本跳过 3）
+2026-11-04 11:12:09,318 | INFO | render_edit_pairs | [render] cubsph_blye_00001::before OK (31.5s, retries=0)
+2026-11-04 11:12:40,694 | INFO | render_edit_pairs | [render] cubsph_blye_00001::recolor OK (31.4s, retries=0)
+2026-11-04 11:13:12,160 | INFO | render_edit_pairs | [render] cubsph_blye_00001::swap OK (31.5s, retries=0)
+2026-11-04 11:13:49,406 | INFO | render_edit_pairs | [render] cubsph_blye_00002::before OK (37.2s, retries=0)
+2026-11-04 11:14:26,843 | INFO | render_edit_pairs | [render] cubsph_blye_00002::recolor OK (37.4s, retries=0)
+2026-11-04 11:15:04,656 | INFO | render_edit_pairs | [render] cubsph_blye_00002::swap OK (37.8s, retries=0)
+2026-11-04 11:15:36,775 | INFO | render_edit_pairs | [render] cubsph_grye_00000::before OK (32.1s, retries=0)
+2026-11-04 11:16:08,770 | INFO | render_edit_pairs | [render] cubsph_grye_00000::recolor OK (32.0s, retries=0)
+2026-11-04 11:16:40,902 | INFO | render_edit_pairs | [render] cubsph_grye_00000::swap OK (32.1s, retries=0)
+2026-11-04 11:17:12,999 | INFO | render_edit_pairs | [render] cubsph_grye_00001::before OK (32.1s, retries=0)
+2026-11-04 11:17:44,781 | INFO | render_edit_pairs | [render] cubsph_grye_00001::recolor OK (31.8s, retries=0)
+2026-11-04 11:18:16,804 | INFO | render_edit_pairs | [render] cubsph_grye_00001::swap OK (32.0s, retries=0)
+2026-11-04 11:18:47,714 | INFO | render_edit_pairs | [render] cubsph_grye_00002::before OK (30.9s, retries=0)
+2026-11-04 11:19:18,724 | INFO | render_edit_pairs | [render] cubsph_grye_00002::recolor OK (31.0s, retries=0)
+2026-11-04 11:19:49,616 | INFO | render_edit_pairs | [render] cubsph_grye_00002::swap OK (30.9s, retries=0)
+2026-11-04 11:20:23,225 | INFO | render_edit_pairs | [render] cubsph_rebl_00000::before OK (33.6s, retries=0)
+2026-11-04 11:20:57,022 | INFO | render_edit_pairs | [render] cubsph_rebl_00000::recolor OK (33.8s, retries=0)
+2026-11-04 11:21:30,635 | INFO | render_edit_pairs | [render] cubsph_rebl_00000::swap OK (33.6s, retries=0)
+2026-11-04 11:23:22,245 | INFO | render_edit_pairs | [render] binding: 待渲染 0 态（账本跳过 21）
+2026-11-04 11:23:43,670 | INFO | render_edit_pairs | [render] binding: 待渲染 0 态（账本跳过 21）
+2026-11-04 11:23:43,826 | INFO | render_edit_pairs | [render] binding 完成: {'task': 'binding', 'attempted': 0, 'skipped_in_ledger': 21, 'validated_total': 21, 'derived': 7, 'wall_seconds': 1.6689300537109375e-06, 'attempted_per_second': 0.0, 'workers': 1}

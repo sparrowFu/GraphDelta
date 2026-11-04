@@ -1,0 +1,15 @@
+2026-11-04 11:23:57,298 | INFO | run_e4 | [run_e4] model clip_vitl14
+2026-11-04 11:23:59,952 | WARNING | run_e4 | [e4] binding 以下家族 split 不全（小批数据正常）: ['cube|sphere|red|blue']
+2026-11-04 11:24:00,927 | INFO | run_e4 | [e4-extract] binding_states@89d5b91ba7c8: 28/28
+2026-11-04 11:24:00,927 | INFO | run_e4 | [e4-extract] binding_states@89d5b91ba7c8: 新抽 28 态，共 28
+2026-11-04 11:24:00,936 | WARNING | run_e4 | [e4] relation 渲染产物不可用，跳过该任务: 渲染产物缺失: /mnt/disk1/xpfu/graphdelta_render/relation/rendered_states.parquet；先运行 render_edit_pairs.py
+2026-11-04 11:24:54,211 | INFO | run_e4 | [run_e4] model clip_vitl14
+2026-11-04 11:24:56,071 | WARNING | run_e4 | [e4] binding 以下家族 split 不全（小批数据正常）: ['cube|sphere|red|blue']
+2026-11-04 11:24:56,072 | INFO | run_e4 | [e4-extract] binding_states@89d5b91ba7c8: 全部 28 态已缓存
+2026-11-04 11:24:56,074 | WARNING | run_e4 | [e4] relation 渲染产物不可用，跳过该任务: 渲染产物缺失: /mnt/disk1/xpfu/graphdelta_render/relation/rendered_states.parquet；先运行 render_edit_pairs.py
+2026-11-04 11:25:16,089 | INFO | run_e4 | [run_e4] model clip_vitl14
+2026-11-04 11:25:17,998 | WARNING | run_e4 | [e4] binding 以下家族 split 不全（小批数据正常）: ['cube|sphere|red|blue']
+2026-11-04 11:25:17,999 | INFO | run_e4 | [e4-extract] binding_states@89d5b91ba7c8: 全部 28 态已缓存
+2026-11-04 11:25:18,002 | WARNING | run_e4 | [e4] relation 渲染产物不可用，跳过该任务: 渲染产物缺失: /mnt/disk1/xpfu/graphdelta_render/relation/rendered_states.parquet；先运行 render_edit_pairs.py
+2026-11-04 11:25:18,270 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 2.267e-08
+2026-11-04 11:25:18,278 | INFO | run_e4 | [e4] 完成 e4_all_smoke: 9 个产物 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables

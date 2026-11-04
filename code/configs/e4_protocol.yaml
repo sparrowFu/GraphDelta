@@ -1,0 +1,57 @@
+# E4 冻结配置（工作方案第 5–7 节）。正式 E4 运行前冻结；改动须先登记。
+# smoke 只影响输出后缀与子采样，不改统计口径。
+
+seeds: [0, 1, 2]
+
+# 划分（第 4 节）：家族内按场景 60/20/20；同场景全部版本同组
+split: {train: 0.6, val: 0.2, heldout: 0.2}
+
+bootstrap: {n_boot: 1000, ci: 0.95}
+
+# 置换检验（第 7 节）：默认 1000 次、α=0.05；允许唯一重排不足时全枚举
+permutation: {n: 1000, alpha: 0.05}
+
+# 配对分数平局口径：记错（与第 9.4 节主实验一致）
+pair_accuracy: {tie: wrong}
+
+# 近零 Δ 判据（描述性）：||Δv|| 低于训练转换内该分位数视为近零
+near_zero: {train_quantile: 0.05}
+
+# E4-B 线性探针（numpy ridge 闭式解；标准化统计只用训练集）
+probe:
+  lambdas: [0.01, 0.1, 1.0, 10.0, 100.0]
+  tasks: [state_before_after, conversion_identity]
+
+# E4-D 方向迁移（第 6 节）
+transfer:
+  alpha_grid: [0.0, 0.05, 0.1, 0.2, 0.4, 0.8]   # 全局非负幅度，验证集选一次
+  n_random_directions: 32
+  random_seed: 20261104
+
+# E4-D 候选池（正式运行前固定）：原图、正确 after、同场景错误编辑
+# （绑定=换色，词集变化单列；关系=共同平移，关系未反转）、同指令异场景 after
+candidates:
+  include_before: true
+  include_wrong_edit: true
+  n_other_scene_after: 3
+
+# 文本构造：内容不套模板存清单，评测时按 kind 套 templates.yaml；
+# 对象列举顺序固定 target 在前（扰动开关全方法一致，默认关）
+captions:
+  object_order: target_first
+
+# 渲染（与试通记录一致）
+render:
+  width: 480
+  height: 320
+  samples: 512
+  min_pixels_per_object: 200
+  max_retries: 3
+
+# 后处理扰动对照（第 3 节：同图压缩 / 保持对象完整的轻微裁剪）
+postprocess:
+  jpeg_quality: 75
+  crop_scale: 0.9
+
+smoke:
+  min_scenes_per_conversion: 2   # 低于此数的转换在 smoke 下跳过并警告
