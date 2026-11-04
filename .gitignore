@@ -26,3 +26,4 @@ code/data/manifests/
 .DS_Store
 Thumbs.db
 .zcode/
+code/data/edit_pairs/
