@@ -314,20 +314,22 @@ def test_shared_file_rejected_when_overwritten(tmp_path):
 
 
 def test_scene_coverage_against_frozen_manifest(tmp_path, monkeypatch):
-    """留出场景覆盖与冻结清单逐一核对：e4d 少一个清单规定场景、e4a 的
-    n_scenes 少于清单规定数，对应轴都记数据不足。"""
+    """留出场景覆盖与冻结清单逐一核对：e4d 少清单规定场景、e4a 的
+    n_scenes 少于清单规定数、e4c 各转换场景数不足，对应轴都记数据不足。"""
     def _fake_manifest(d, t):
-        return {"pairs": pd.DataFrame(
-            [{"base_scene_id": f"s{i}", "edit_kind": "swap",
-              "split": "heldout"} for i in range(9)]
-            + [{"base_scene_id": f"t{i}", "edit_kind": "swap",
-                "split": "train"} for i in range(9)])}
+        fams = FAM_NAMES[t]
+        rows = [{"base_scene_id": f"t{i}", "family": fams[i % len(fams)],
+                 "edit_kind": "swap", "split": "train"} for i in range(6)]
+        for i in range(len(fams) + 1):     # 每家族 1 个留出 + 1 个多余
+            rows.append({"base_scene_id": f"s{i}", "family": fams[i % len(fams)],
+                         "edit_kind": "swap", "split": "heldout"})
+        return {"pairs": pd.DataFrame(rows)}
 
     monkeypatch.setattr(S, "load_manifest", _fake_manifest)
     paths, _ = _tables(
         tmp_path,
         {"e4a_results.csv": _e4a(), "e4c_conversion_stats.csv": _e4c(),
-         "e4d_retrieval.csv": _e4d(n_scenes=8)},   # 只覆盖 s0..s7，缺 s8
+         "e4d_retrieval.csv": _e4d(n_scenes=8)},   # 只覆盖 s0..s7
         committed=_COMMITTED_ALL)
     decision = summarize("clip_vitl14", 0, paths, _Logger())
     for task in ("binding", "relation"):
@@ -335,3 +337,86 @@ def test_scene_coverage_against_frozen_manifest(tmp_path, monkeypatch):
         assert decision["direction_transfer"][task]["label"] == "数据不足"
     assert any("留出场景覆盖不足 8/9" in m for m in decision["missing"])
     assert any("清单规定留出场景缺失 1 个" in m for m in decision["missing"])
+
+
+def test_e4c_partial_scenes_insufficient(tmp_path, monkeypatch):
+    """转换全部出现、但每个转换只有部分留出场景（渲染不完整被静默剔除）：
+    E4-C 记数据不足；场景数与清单一致时正常判定。"""
+    def _manifest(n_per_fam):
+        def _f(d, t):
+            rows = []
+            for i, fam in enumerate(FAM_NAMES[t]):
+                for k in range(n_per_fam):
+                    rows.append({"base_scene_id": f"s{i}_{k}", "family": fam,
+                                 "edit_kind": "swap", "split": "heldout"})
+            return {"pairs": pd.DataFrame(rows)}
+        return _f
+
+    files = {"e4a_results.csv": _e4a(),
+             "e4c_conversion_stats.csv": _e4c(),   # 每转换 n_heldout=2
+             "e4d_retrieval.csv": _e4d()}
+    monkeypatch.setattr(S, "load_manifest", _manifest(3))
+    paths, _ = _tables(tmp_path, files, committed=_COMMITTED_ALL)
+    decision = summarize("clip_vitl14", 0, paths, _Logger())
+    for task in ("binding", "relation"):
+        e = decision["crossmodal_alignment"][task]
+        assert e["label"] == "数据不足"
+        assert "cond_raw" not in e          # 被拦截，不进入确认性判定
+    assert any("e4c:binding:留出场景覆盖不足" in m for m in decision["missing"])
+    assert any("e4c:relation:留出场景覆盖不足" in m for m in decision["missing"])
+    # 场景数与清单一致（每转换 2 个）→ 正常判定
+    monkeypatch.setattr(S, "load_manifest", _manifest(2))
+    decision = summarize("clip_vitl14", 0, paths, _Logger())
+    for task in ("binding", "relation"):
+        e = decision["crossmodal_alignment"][task]
+        assert e["label"] == "有支持证据" and "cond_raw" in e
+
+
+def test_e4c_missing_heldout_column_no_crash(tmp_path, monkeypatch):
+    """整份 e4c CSV 无 n_heldout 列（全部转换无留出数据）：不崩溃，
+    两任务记数据不足，逐项列出转换缺失。"""
+    def _fake_manifest(d, t):
+        return {"pairs": pd.DataFrame(
+            [{"base_scene_id": f"s{i}", "family": fam, "edit_kind": "swap",
+              "split": "heldout"}
+             for i, fam in enumerate(FAM_NAMES[t])])}
+
+    monkeypatch.setattr(S, "load_manifest", _fake_manifest)
+    no_held = pd.DataFrame([{"task": t, "family": fam}
+                            for t in ("binding", "relation")
+                            for fam in FAM_NAMES[t]])
+    paths, _ = _tables(
+        tmp_path,
+        {"e4a_results.csv": _e4a(), "e4c_conversion_stats.csv": no_held,
+         "e4d_retrieval.csv": _e4d()},
+        committed=_COMMITTED_ALL)
+    decision = summarize("clip_vitl14", 0, paths, _Logger())
+    for task in ("binding", "relation"):
+        e = decision["crossmodal_alignment"][task]
+        assert e["label"] == "数据不足" and "cond_raw" not in e
+    assert any("e4c:binding:转换留出数据缺失" in m for m in decision["missing"])
+
+
+def test_newer_committed_single_stage_accepted(tmp_path):
+    """e4_all 成功 → e4_a 成功重跑且内容变化并提交新摘要 → 汇总接受
+    e4_a 的新提交；旧 e4_all 摘要不匹配不得提前拒绝整个文件。"""
+    paths, tables = _tables(
+        tmp_path,
+        {"e4a_results.csv": _e4a(), "e4c_conversion_stats.csv": _e4c(),
+         "e4d_retrieval.csv": _e4d(n_scenes=9)},
+        committed=_COMMITTED_ALL)
+    a = pd.read_csv(tables / "e4a_results.csv")
+    a.loc[a["family"] == "__overall__", "pair_acc"] = 0.55
+    a.to_csv(tables / "e4a_results.csv", index=False)
+    meta = json.loads((tables / "run_meta.json").read_text())
+    meta["experiments"]["e4_a"] = {
+        "status": "success", "started": "t2",
+        "last_success": {"outputs": ["e4a_results.csv"], "updated": "t2",
+                         "outputs_md5": {"e4a_results.csv":
+                                         md5_file(tables / "e4a_results.csv")}}}
+    (tables / "run_meta.json").write_text(json.dumps(meta))
+    decision = summarize("clip_vitl14", 0, paths, _Logger())
+    assert decision["provenance"]["e4a_results.csv"] == "e4_a"
+    assert not any("e4a_results.csv" in m for m in decision["missing"])
+    for task in ("binding", "relation"):
+        assert decision["structure_identifiability"][task]["label"] == "有支持证据"

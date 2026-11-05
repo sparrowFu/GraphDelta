@@ -80,8 +80,10 @@ def _committed(run_meta: dict, filename: str, path: Path):
 
     e4_all 与单阶段共享输出路径：只认任一生产者的历史成功记录，会把被
     中断重跑覆盖过的文件误当成功产物消费（另一个生产者 status=running
-    且已写出同名文件时尤其如此）。因此必须核对提交时的内容摘要——
-    摘要不符或记录无摘要（无法核对）一律拒绝。
+    且已写出同名文件时尤其如此）。因此必须核对提交时的内容摘要。单个
+    生产者摘要不符只说明文件不是它那份（如单阶段成功重跑后内容已更新），
+    须继续检查其余生产者；全部成功记录都不匹配（或无摘要、文件缺失）
+    才拒绝消费。
     """
     exps = (run_meta or {}).get("experiments", {})
     for name in PRODUCERS.get(filename, ()):
@@ -92,15 +94,18 @@ def _committed(run_meta: dict, filename: str, path: Path):
         if filename not in (last.get("outputs") or []):
             continue
         digest = (last.get("outputs_md5") or {}).get(filename)
-        if digest is None or not path.exists() or md5_file(path) != digest:
-            return None
+        if digest is None:
+            continue                       # 记录无摘要，无法核对
+        if not path.exists() or md5_file(path) != digest:
+            continue                       # 不是该生产者提交的那份
         return name
     return None
 
 
-def _expected_heldout_scenes(paths: dict, task: str):
-    """清单规定的语义编辑留出场景集合（冻结覆盖核对用）。
+def _expected_heldout(paths: dict, task: str):
+    """清单规定的语义编辑留出场景（冻结覆盖核对用）。
 
+    返回 {"scenes": 留出场景集合, "by_family": {family: 留出场景数}}；
     清单缺失返回 None（无法核对，missing 记一条提示，不据此改标签）。
     """
     edit_dir = (paths.get("dirs") or {}).get("edit_pairs")
@@ -112,7 +117,8 @@ def _expected_heldout_scenes(paths: dict, task: str):
         return None
     sp = m["pairs"]
     sp = sp[sp["edit_kind"].isin(["swap", "flip"]) & (sp["split"] == "heldout")]
-    return set(sp["base_scene_id"])
+    by_family = sp.groupby("family")["base_scene_id"].nunique().to_dict()
+    return {"scenes": set(sp["base_scene_id"]), "by_family": by_family}
 
 
 def _fnum(x, default=np.nan):
@@ -160,10 +166,10 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
     else:
         decision["missing"].append("run_meta.json（无实验来源记录）")
     confirmatory = {}   # key -> 原始 p，Holm 后回填标签
-    # 冻结清单的留出场景集合（E4-A / E4-D 覆盖核对共用）；清单缺失只记
-    # 提示，不据此改标签（正式流水线清单始终在）
-    expected_scenes = {t: _expected_heldout_scenes(paths, t) for t in tasks}
-    if any(v is None for v in expected_scenes.values()):
+    # 冻结清单的留出场景规定（E4-A / E4-C / E4-D 覆盖核对共用）；清单缺失
+    # 只记提示，不据此改标签（正式流水线清单始终在）
+    expected = {t: _expected_heldout(paths, t) for t in tasks}
+    if any(v is None for v in expected.values()):
         decision["missing"].append("edit_pairs 清单缺失：留出场景覆盖未核对")
 
     # ---------------- E4-A 结构可辨识 ----------------
@@ -196,8 +202,9 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
             # 冻结清单一致（渲染不完整会静默少场景，不得凭剩余行判定）
             fam_missing = EXPECTED_FAMILIES[task] - set(
                 fam_held[fam_held["task"] == task]["family"])
-            exp = expected_scenes[task]
-            scenes_short = exp is not None and entry["n_scenes"] < len(exp)
+            exp = expected[task]
+            scenes_short = (exp is not None
+                            and entry["n_scenes"] < len(exp["scenes"]))
             if fam_missing:
                 decision["missing"].append(
                     f"e4a:{task}:转换 heldout 行缺失 "
@@ -206,7 +213,7 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
             if scenes_short:
                 decision["missing"].append(
                     f"e4a:{task}:留出场景覆盖不足 {entry['n_scenes']}/"
-                    f"{len(exp)}（清单规定）")
+                    f"{len(exp['scenes'])}（清单规定）")
             if np.isnan(p) or fam_missing or scenes_short:
                 entry["label"] = SUPPORTED[2]
             else:
@@ -247,6 +254,22 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
                     f"e4c:{task}:转换留出数据缺失 "
                     f"{len(fam_missing)}/{len(EXPECTED_FAMILIES[task])}: "
                     f"{sorted(fam_missing)[:4]}")
+            # 留出场景数量核对：转换全部出现但每个只有部分场景（如渲染
+            # 不完整被 complete_semantic_pairs 静默剔除）同样不完整，
+            # 不得凭剩余场景判支持。with_held 为空（整任务无留出数据，
+            # CSV 可能不含 n_heldout 列）时 fam_missing 已全部覆盖，跳过
+            exp = expected[task]
+            fam_short = []
+            if exp is not None and not with_held.empty:
+                for fam, want in exp["by_family"].items():
+                    got = with_held.loc[with_held["family"] == fam, "n_heldout"]
+                    have = int(got.iloc[0]) if len(got) else 0
+                    if have < want:
+                        fam_short.append(f"{fam} {have}/{want}")
+            if fam_short:
+                decision["missing"].append(
+                    f"e4c:{task}:留出场景覆盖不足 {len(fam_short)}/"
+                    f"{len(exp['by_family'])} 个转换（示例 {fam_short[:2]}）")
             ov = c[(c["task"] == task) & (c["family"] == "__overall__")]
             if ov.empty or np.isnan(_fnum(ov.iloc[0].get("p_heldout"))):
                 decision["missing"].append(f"e4c:{task}:任务级 __overall__ 行缺失")
@@ -261,7 +284,7 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
                      "C_ci_high_heldout": _fnum(r.get("C_ci_high_heldout")),
                      "p_heldout": p, "n_perm": int(r.get("n_perm", 0)),
                      "exact": bool(r.get("exact", False))}
-            if fam_missing:
+            if fam_missing or fam_short:
                 entry["label"] = SUPPORTED[2]
             else:
                 confirmatory[f"C:{task}"] = p
@@ -312,8 +335,9 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
             controls_missing = [m for m in controls
                                 if m not in controls_present]
             # 场景覆盖核对：与冻结清单的留出场景逐一比对
-            exp = expected_scenes[task]
-            scenes_missing = sorted(exp - set(scenes)) if exp is not None else []
+            exp = expected[task]
+            scenes_missing = (sorted(exp["scenes"] - set(scenes))
+                              if exp is not None else [])
             entry = {"n_scenes": len(scenes),
                      "correct_top1": (float(np.mean([by_scene[s]["correct"]
                                                      for s in scenes]))
