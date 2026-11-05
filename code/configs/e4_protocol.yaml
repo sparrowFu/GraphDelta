@@ -28,6 +28,17 @@ transfer:
   n_random_directions: 32
   random_seed: 20261104
 
+# 方向可靠性程序（工作方案第 5 节、开篇待办 14）：正式 E4 运行前冻结。
+# 只用训练场景：重复对半划分比较子集平均方向；按基础场景重采样报告
+# 平均方向与长度波动。近零子集（范数低于 near_zero_norm）单列，不计入
+# cosine。结果为描述统计，不设 cosine 门槛。
+direction_reliability:
+  n_repeats: 20
+  train_fraction: 0.5
+  seed: 20261105
+  n_boot: 1000
+  near_zero_norm: 1.0e-8
+
 # E4-D 候选池（正式运行前固定）：原图、正确 after、同场景错误编辑
 # （绑定=换色，词集变化单列；关系=共同平移，关系未反转）、同指令异场景 after
 candidates:
@@ -55,3 +66,15 @@ postprocess:
 
 smoke:
   min_scenes_per_conversion: 2   # 低于此数的转换在 smoke 下跳过并警告
+
+# 汇总与阶段判断（第 7 节）：确认性检验族与校正规则，正式 E4 运行前冻结。
+# 汇总只消费已成功提交的正式产物（run_meta 核验），禁止回退 smoke 文件。
+# - E4-A 每任务 1 个 + E4-C 每任务 1 个（任务级 heldout C，方向须为正）+
+#   E4-D 每任务 × transfer_controls 各 1 个（同场景配对差，均值为正）；
+# - 族内 Holm step-down 校正后 p < alpha 才判"有支持证据"；
+# - 规定任务 = binding + relation；规定对照缺覆盖或任务缺失记"数据不足"。
+summary:
+  alpha: 0.05
+  tasks: [binding, relation]
+  transfer_controls: [wrong_conversion, random, reverse, text_delta]
+  multiplicity: holm

@@ -58,11 +58,34 @@ def test_scene_permutation_null():
         z0, z1 = _norm(rng.standard_normal(8)), _norm(rng.standard_normal(8))
         t0, t1 = 0.9 * z0 + 0.1 * rng.standard_normal(8), 0.9 * z1 + 0.1 * rng.standard_normal(8)
         t0, t1 = _norm(t0), _norm(t1)
-        mats.append(np.array([[t0 @ z0, t0 @ z1], [t1 @ z0, t1 @ z1]]))
+        mats.append(np.array([[[t0 @ z0, t0 @ z1], [t1 @ z0, t1 @ z1]]]))
     res = scene_permutation_pair_acc(mats, n_perm=1000, seed=0)
     assert res["exact"] and res["n_perm_used"] == 8
     assert res["obs"] == 1.0
     assert abs(res["p"] - 1 / 8) < 1e-12  # 只有恒等重排达到 1
+
+
+def test_scene_permutation_uses_reported_metric():
+    """审查问题 2 最小复现：8 场景 × 7 模板（4 个弱正确 + 3 个强反向）。
+
+    报告口径 pair_acc = 4/7；全枚举 256 种置换中只有恒等重排达到 4/7，
+    p = 1/256。旧实现（先平均相似度再判断）对该数据给出 p=1。
+    """
+    mats = []
+    for _ in range(8):
+        S = np.zeros((7, 2, 2))
+        for t in range(4):        # 弱正确：正确侧略高
+            S[t] = [[0.50, 0.49], [0.45, 0.46]]
+        for t in range(4, 7):     # 强反向：交换文本标签后才会"对"
+            S[t] = [[0.10, 0.90], [0.90, 0.10]]
+        mats.append(S)
+    res = scene_permutation_pair_acc(mats, n_perm=1000, seed=0)
+    assert res["exact"] and res["n_perm_used"] == 256
+    assert abs(res["obs"] - 4 / 7) < 1e-12
+    assert abs(res["p"] - 1 / 256) < 1e-12
+    # 观测值与报告口径（pair_metrics）逐场景一致，不得先平均相似度
+    from e4.paired import pair_metrics
+    assert all(abs(pair_metrics(m)["pair_acc"] - 4 / 7) < 1e-12 for m in mats)
 
 
 def test_ridge_probe_separable():

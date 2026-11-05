@@ -1,0 +1,4 @@
+axis,file,ran,n_rows,rows_per_task
+a,e4a_results_smoke.csv,True,56,"{'binding': 25, 'relation': 31}"
+c,e4c_conversion_stats_smoke.csv,True,20,"{'binding': 9, 'relation': 11}"
+d,e4d_retrieval_smoke.csv,True,666,"{'binding': 296, 'relation': 370}"

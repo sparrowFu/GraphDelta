@@ -49,12 +49,17 @@ def run(model, paths, logger, stage="all", smoke=False, seed=None):
         if lacking:
             logger.warning(f"[e4] {task} 以下家族 split 不全（小批数据正常）: "
                            f"{sorted(lacking)[:8]}")
-        key = state_dataset_key(task, m["meta"])
+        # 缓存键带清单与图片内容指纹：任一图片重渲染/被替换后旧特征失效
+        key = state_dataset_key(task, m["meta"], rendered)
         image_dir = Path(paths["render"]["output_dir"]) / task / "images"
         extract_state_images(model, icache, key, list(rendered["state_id"]),
                              image_dir, logger)
         raw_all, z_all = icache.get(key, list(rendered["state_id"]))
-        ctx[task] = {"manifest": m, "rendered": rendered, "sp": sp,
+        have = set(rendered["state_id"])
+        ctrl = e4delta.control_pairs(m["pairs"])
+        ctrl = ctrl[ctrl["before_state_id"].isin(have)
+                    & ctrl["after_state_id"].isin(have)]
+        ctx[task] = {"manifest": m, "rendered": rendered, "sp": sp, "ctrl": ctrl,
                      "z": dict(zip(rendered["state_id"], z_all)),
                      "raw": dict(zip(rendered["state_id"], raw_all))}
     if not ctx:
@@ -76,12 +81,27 @@ def run(model, paths, logger, stage="all", smoke=False, seed=None):
                     [{**{k: v for k, v in rec.items() if k != "S"},
                       "S": rec["S"].tolist()} for rec in S_records])
         files += [f, f"e4a_items{suffix}.jsonl"]
+    if stage in ("all", "a"):
+        # 换色正控制（方案第 3、7 节）：同一套配对评分，确认评分流程能识别
+        # 较简单的单对象换色（审查问题 5：控制不能只生成不评价）
+        ctrl_S = []
+        for task, c in ctx.items():
+            recolor_df = c["ctrl"][c["ctrl"]["edit_kind"] == "recolor"]
+            if not recolor_df.empty:
+                ctrl_S += e4paired.compute_S_records(recolor_df, c["z"],
+                                                     tcache, model)
+        if ctrl_S:
+            res = e4paired.run_e4a(ctrl_S, cfg, logger)
+            f = f"e4a_control_results{suffix}.csv"
+            pd.DataFrame(res["rows"]).to_csv(out / f, index=False)
+            files.append(f)
     if stage in ("all", "b") and ctx:
-        rows, items = [], []
+        rows, items, dirs_all = [], [], {}
         for task, c in ctx.items():
             st = e4delta.run_e4b_stats(c["sp"], c["z"], c["raw"], cfg, logger)
             rows += st["rows"]
             items += st["items"]
+            dirs_all.update(st["dirs"])
         if rows:
             f = f"e4b_delta_stats{suffix}.csv"
             pd.DataFrame(rows).to_csv(out / f, index=False)
@@ -89,6 +109,23 @@ def run(model, paths, logger, stage="all", smoke=False, seed=None):
         if items:
             write_jsonl(out / f"e4b_items{suffix}.jsonl", items)
             files.append(f"e4b_items{suffix}.jsonl")
+        # 对照 Δv 诊断（jpeg / crop / 平移 / 换色）：与结构编辑同口径比较
+        ctrl_rows = []
+        for task, c in ctx.items():
+            ctrl_rows += e4delta.run_e4b_controls(c["ctrl"], c["z"], dirs_all,
+                                                  cfg, logger)
+        if ctrl_rows:
+            f = f"e4b_control_delta{suffix}.csv"
+            pd.DataFrame(ctrl_rows).to_csv(out / f, index=False)
+            files.append(f)
+        # 方向可靠性（开篇待办 14）：训练内子集划分 + 按场景重采样波动
+        rel_rows = []
+        for task, c in ctx.items():
+            rel_rows += e4delta.run_e4b_reliability(c["sp"], c["z"], cfg, logger)
+        if rel_rows:
+            f = f"e4b_reliability{suffix}.csv"
+            pd.DataFrame(rel_rows).to_csv(out / f, index=False)
+            files.append(f)
         probe_rows = []
         for task, c in ctx.items():
             probe_rows += e4delta.run_e4b_probes(
@@ -118,7 +155,7 @@ def run(model, paths, logger, stage="all", smoke=False, seed=None):
         alpha, self_check = {}, {}
         for task, c in ctx.items():
             res = e4transfer.run_e4d(c["manifest"], c["rendered"], c["z"],
-                                     dt_by_family, cfg, logger)
+                                     dt_by_family, cfg, logger, smoke=smoke)
             rows += res["rows"]
             alpha.update(res["alpha"])
             self_check = res["self_check"]

@@ -1,2 +1,6 @@
 2026-11-04 11:25:38,191 | INFO | summarize_e4 | [e4-sum] clip_vitl14/seed_0: {}
 2026-11-04 11:26:14,104 | INFO | summarize_e4 | [e4-sum] clip_vitl14/seed_0: {"binding": "\u8bc1\u636e\u4e0d\u8db3"}
+2026-11-05 10:58:03,114 | INFO | summarize_e4 | [e4-sum] clip_vitl14/seed_0: {}
+2026-11-05 10:58:06,427 | INFO | summarize_e4 | [e4-sum-smoke] clip_vitl14/seed_0: {"a": true, "c": true, "d": true}
+2026-11-05 11:35:27,866 | INFO | summarize_e4 | [e4-sum] clip_vitl14/seed_0: {}
+2026-11-05 11:35:31,236 | INFO | summarize_e4 | [e4-sum-smoke] clip_vitl14/seed_0: {"a": true, "c": true, "d": true}

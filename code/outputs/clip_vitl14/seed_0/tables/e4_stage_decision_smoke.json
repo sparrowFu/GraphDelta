@@ -1,0 +1,38 @@
+{
+  "model": "clip_vitl14",
+  "seed": 0,
+  "smoke": true,
+  "tables_dir": "/home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables",
+  "axes": {
+    "a": {
+      "axis": "a",
+      "file": "e4a_results_smoke.csv",
+      "ran": true,
+      "n_rows": 56,
+      "rows_per_task": {
+        "binding": 25,
+        "relation": 31
+      }
+    },
+    "c": {
+      "axis": "c",
+      "file": "e4c_conversion_stats_smoke.csv",
+      "ran": true,
+      "n_rows": 20,
+      "rows_per_task": {
+        "binding": 9,
+        "relation": 11
+      }
+    },
+    "d": {
+      "axis": "d",
+      "file": "e4d_retrieval_smoke.csv",
+      "ran": true,
+      "n_rows": 666,
+      "rows_per_task": {
+        "binding": 296,
+        "relation": 370
+      }
+    }
+  }
+}

@@ -7,8 +7,10 @@
   同指令异场景 after；
 - 对照方向：α=0 不修改、错误转换方向（缩放到训练方向长度）、随机方向
   （种子与数量固定，汇总全部不挑最好）、反向方向、文本差等幅方向；
-  打乱配对均值方向只作代数自检（完整保留两端样本时与原均值一致），不作
-  性能对照（第 6 节）。
+  打乱配对均值方向只作代数自检（与 d_r 同一批训练场景、完整保留两端
+  样本时与原均值一致），不作性能对照（第 6 节）；
+- 候选池构成对每个查询固定（pool 列随行落盘）；正式运行缺规定候选直接
+  报错，smoke 只警告（审查问题 4）。
 """
 import numpy as np
 
@@ -26,8 +28,13 @@ def _top1(z_hat, cand_z, true_idx) -> bool:
     return int(np.argmax(sims)) == true_idx
 
 
-def run_e4d(manifest, rendered, z_by_state, dt_by_family, cfg, logger) -> dict:
-    """方向迁移评测。返回 {rows: [...], self_check: {...}, alpha: float}。"""
+def run_e4d(manifest, rendered, z_by_state, dt_by_family, cfg, logger,
+            smoke=False) -> dict:
+    """方向迁移评测。返回 {rows: [...], self_check: {...}, alpha: float}。
+
+    smoke=False（正式运行）时任何查询的规定候选缺失都直接报错（审查
+    问题 4：不得静默少放一张图后继续算正式结果）；smoke 只警告并继续。
+    """
     tcfg = cfg["transfer"]
     pcfg = cfg["candidates"]
     pairs_df = manifest["pairs"]
@@ -45,32 +52,47 @@ def run_e4d(manifest, rendered, z_by_state, dt_by_family, cfg, logger) -> dict:
             continue
         d_r = {f: np.mean([r["dv"] for r in by_fam[f] if r["split"] == "train"],
                           axis=0) for f in fams}
-        # 打乱配对代数自检：组内重配 before/after 后的均值仍 = mean(after)−mean(before)
+        # 打乱配对代数自检（第 6 节）：与 d_r 用同一批训练场景、完整保留
+        # 相同的 before/after 两端、只改配对关系（审查问题 9：原始方向只用
+        # 训练集，打乱配对不得混入 val/heldout 场景）
         for f in fams:
-            rs = by_fam[f]
+            rs = [r for r in by_fam[f] if r["split"] == "train"]
             if len(rs) < 2:
                 continue
             rng = np.random.default_rng(tcfg["random_seed"])
             perm = rng.permutation(len(rs))
             sh = np.mean([rs[i]["after"] - rs[perm[i]]["before"] for i in range(len(rs))],
                          axis=0)
-            self_checks.append({"task": task, "family": f,
+            self_checks.append({"task": task, "family": f, "n_train": len(rs),
                                 "shuffled_mean_max_diff": float(np.abs(sh - d_r[f]).max())})
         # 全局 α：验证集 + 正确方向，top1 平均最高者（并列取最小 α）
         def _scene_entries(split):
-            out = []
+            out, incomplete = [], []
             for f in fams:
                 for r in by_fam[f]:
                     if r["split"] != split:
                         continue
-                    pool = pair_state_ids(pcfg, manifest, rendered,
-                                          _pair_row_of(pairs_df, r), task)
+                    pool, missing = pair_state_ids(pcfg, manifest, rendered,
+                                                   _pair_row_of(pairs_df, r), task)
+                    if missing:
+                        incomplete.append({"scene": r["scene"], "missing": missing})
                     if len(pool) < 2:
                         continue
                     out.append((f, r, pool))
-            return out
+            return out, incomplete
 
-        val_entries = _scene_entries("val")
+        def _check_pools(split, entries, incomplete):
+            if not incomplete:
+                return
+            msg = (f"[e4d] {task} {split} 候选池不完整：{len(incomplete)} 个查询"
+                   f"缺少规定候选（示例 {incomplete[:2]}）")
+            if smoke:
+                logger.warning(msg + "；smoke 运行仅作流程检查")
+            else:
+                raise RuntimeError(msg + "；正式运行不得缩小候选池继续评测")
+
+        val_entries, val_incomplete = _scene_entries("val")
+        _check_pools("val", val_entries, val_incomplete)
         best_a, best_acc = tcfg["alpha_grid"][0], -1.0
         for a in tcfg["alpha_grid"]:
             accs = [_retrieval_acc(z_by_state, r, pool, d_r[f], a)[0]
@@ -81,7 +103,8 @@ def run_e4d(manifest, rendered, z_by_state, dt_by_family, cfg, logger) -> dict:
             if m > best_acc + 1e-12:
                 best_a, best_acc = a, m
         alphas[task] = best_a if val_entries else tcfg["alpha_grid"][0]
-        held_entries = _scene_entries("heldout")
+        held_entries, held_incomplete = _scene_entries("heldout")
+        _check_pools("heldout", held_entries, held_incomplete)
         rng = np.random.default_rng(tcfg["random_seed"])
         for f, r, pool in held_entries:
             n_rand = tcfg["n_random_directions"]
@@ -99,13 +122,13 @@ def run_e4d(manifest, rendered, z_by_state, dt_by_family, cfg, logger) -> dict:
                     z_by_state, r, pool, d_r[f], alphas[task],
                     override_direction=direction, method_name=name)
                 rows.append(_row(task, f, r, name, ok, rank, cos_true,
-                                 alphas[task], len(pool)))
+                                 alphas[task], pool))
             for k, rd in enumerate(rand_dirs):
                 ok, rank, cos_true = _retrieval_acc(
                     z_by_state, r, pool, d_r[f], alphas[task],
                     override_direction=rd, method_name="random")
                 rows.append(_row(task, f, r, "random", ok, rank, cos_true,
-                                 alphas[task], len(pool), random_k=k))
+                                 alphas[task], pool, random_k=k))
     return {"rows": rows,
             "self_check": {"shuffled_mean_max_diff": max(
                 [c["shuffled_mean_max_diff"] for c in self_checks], default=float("nan"))},
@@ -144,10 +167,13 @@ def _retrieval_acc(z_by_state, r, pool, d_r, alpha,
     return bool(rank == 0), rank, cos_true
 
 
-def _row(task, f, r, name, ok, rank, cos_true, alpha, pool_size, random_k=None):
+def _row(task, f, r, name, ok, rank, cos_true, alpha, pool, random_k=None):
+    # pool 逐 state_id 落盘：固定每个查询的实际候选清单（审查问题 4），
+    # 汇总与审计可核对池构成，不依赖运行期顺序
     row = {"task": task, "family": f, "scene": r["scene"], "method": name,
            "top1": float(ok), "rank_true_after": rank, "cos_to_true_after": cos_true,
-           "alpha": alpha, "pool_size": pool_size}
+           "alpha": alpha, "pool_size": len(pool),
+           "pool": ",".join(p[0] for p in pool)}
     if random_k is not None:
         row["random_k"] = random_k
     return row

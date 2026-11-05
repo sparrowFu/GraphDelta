@@ -40,39 +40,55 @@ def complete_semantic_pairs(manifest: dict, rendered: pd.DataFrame) -> pd.DataFr
 
 
 def pair_state_ids(pool_cfg: dict, manifest: dict, rendered: pd.DataFrame,
-                   pair_row, task: str) -> list:
-    """E4-D 候选池（第 6 节）：[(state_id, role, word_set_changed), ...]。
+                   pair_row, task: str) -> tuple:
+    """E4-D 候选池（第 6 节）：返回 (pool, missing)。
 
+    pool: [(state_id, role, word_set_changed), ...]，按登记顺序去重：
     - before：原图；
     - after：正确编辑图；
     - wrong_edit：同基础场景的错误编辑（绑定=换色，词集变化单列；关系=共同
       平移，关系未反转）；
-    - other_after：同转换、不同基础场景的 after，检查是否保留原场景信息。
-    池内按 state_id 去重，且必须已渲染。池构造规则在正式 E4 运行前冻结。
+    - other_after：同转换、不同基础场景的 after（按 state_id 升序固定取前
+      n 个，不随渲染进度漂移），检查是否保留原场景信息。
+    missing: 规定候选缺失清单（角色:state_id / 数量缺口）。正式运行出现
+    非空 missing 必须报错，不得静默缩小候选池后继续算正式结果（审查
+    问题 4）；smoke 运行仅警告。
     """
     have = set(rendered["state_id"])
-    pool = [(pair_row["before_state_id"], "before", False),
-            (pair_row["after_state_id"], "after", False)]
+    pool, missing = [], []
+
+    def _add(sid, role, ws=False):
+        if sid in have:
+            pool.append((sid, role, ws))
+        else:
+            missing.append(f"{role}:{sid}")
+
+    _add(pair_row["before_state_id"], "before")
+    _add(pair_row["after_state_id"], "after")
     states = manifest["states"]
     task_wrong = "recolor" if task == "binding" else "translate"
     if pool_cfg.get("include_wrong_edit", True):
         wrong_id = pair_row["base_scene_id"] + "::" + task_wrong
-        if wrong_id in have and wrong_id != pair_row["after_state_id"]:
+        if wrong_id != pair_row["after_state_id"]:
             ws = bool(states.loc[states["state_id"] == wrong_id, "state_tag"]
                       .eq("recolor").any())
-            pool.append((wrong_id, "wrong_edit", ws))
-    if pool_cfg.get("n_other_scene_after", 0) > 0:
+            _add(wrong_id, "wrong_edit", ws)
+    n_other = int(pool_cfg.get("n_other_scene_after", 0))
+    if n_other > 0:
         fam = pair_row["family"]
         others = manifest["pairs"][
             (manifest["pairs"]["family"] == fam)
             & (manifest["pairs"]["edit_kind"] == ("swap" if task == "binding" else "flip"))
-            & (manifest["pairs"]["base_scene_id"] != pair_row["base_scene_id"])
-            & (manifest["pairs"]["after_state_id"].isin(have))]
-        for sid in others["after_state_id"].head(pool_cfg["n_other_scene_after"]):
-            pool.append((sid, "other_after", False))
+            & (manifest["pairs"]["base_scene_id"] != pair_row["base_scene_id"])]
+        cands = sorted(set(others["after_state_id"])
+                       - {pair_row["after_state_id"]})
+        for sid in cands[:n_other]:
+            _add(sid, "other_after")
+        if len(cands) < n_other:
+            missing.append(f"other_after:同家族候选不足 {len(cands)}/{n_other}")
     seen, out = set(), []
     for sid, role, ws in pool:
-        if sid in have and sid not in seen:
+        if sid not in seen:
             seen.add(sid)
             out.append((sid, role, ws))
-    return out
+    return out, missing

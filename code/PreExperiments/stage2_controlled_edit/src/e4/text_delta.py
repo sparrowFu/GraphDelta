@@ -55,7 +55,12 @@ def _color_group(family: str) -> str:
 
 
 def run_e4c(S_records, z_by_state, dt_by_family, cfg, logger) -> dict:
-    """转换级 C 统计 + 符号翻转检验 + 跨组对照 + 代数自检。"""
+    """转换级 C 统计 + 符号翻转检验 + 跨组对照 + 代数自检。
+
+    逐转换行为探索性描述；任务级主统计（family="__overall__"，留出场景
+    合并 C 的均值 / 区间 / 符号翻转 p / 方向）单列，供汇总按预先固定的
+    规则判定（审查问题 3）。
+    """
     perm_cfg = cfg["permutation"]
     boot_cfg = cfg["bootstrap"]
     # 逐场景 C（模板平均）：C = Δv · Δt 对每个模板成立，直接由 S 算
@@ -75,8 +80,11 @@ def run_e4c(S_records, z_by_state, dt_by_family, cfg, logger) -> dict:
             {"C": C, "scene": rec["base_scene_id"], "dv": dv})
     rows = []
     all_fams = sorted({(k[0], k[1]) for k in by_fam})
+    n_cond_by_task = {}
+    for t2, _ in all_fams:
+        n_cond_by_task[t2] = n_cond_by_task.get(t2, 0) + 1
     for task, fam in all_fams:
-        row = {"task": task, "family": fam, "n_conditions": len(all_fams)}
+        row = {"task": task, "family": fam, "n_conditions": n_cond_by_task[task]}
         for split in ("train", "val", "heldout"):
             entries = by_fam.get((task, fam, split), [])
             if not entries:
@@ -109,6 +117,26 @@ def run_e4c(S_records, z_by_state, dt_by_family, cfg, logger) -> dict:
             cs = [float(np.mean([e["dv"] @ dt for dt in wrong_dts])) for e in held]
             row["C_crossgroup_heldout"] = float(np.mean(cs))
         rows.append(row)
+    # 任务级主统计（预先指定，工作方案第 7 节：逐转换结果只作探索性描述）：
+    # 留出场景合并的 C + 符号翻转检验；判定必须同时看方向（C_mean > 0），
+    # 双侧 p 小只能说明偏离 0，不能区分正向对应与反向对应（审查问题 3）
+    for task in sorted(n_cond_by_task):
+        held = [e for (t2, _f2, s2), es in by_fam.items()
+                if t2 == task and s2 == "heldout" for e in es]
+        if not held:
+            continue
+        Cs = [e["C"] for e in held]
+        mean, lo, hi = cluster_ci(Cs, [e["scene"] for e in held],
+                                  boot_cfg["n_boot"], boot_cfg["ci"])
+        test = sign_flip_test(Cs, perm_cfg["n"], seed=0)
+        rows.append({"task": task, "family": "__overall__",
+                     "n_conditions": n_cond_by_task[task],
+                     "n_heldout": len(held),
+                     "C_mean_heldout": mean,
+                     "C_ci_low_heldout": lo, "C_ci_high_heldout": hi,
+                     "p_heldout": test["p"], "n_perm": test["n_perm_used"],
+                     "exact": test["exact"],
+                     "direction_positive": bool(mean > 0)})
     logger.info(f"[e4c] 代数自检 max|C − Δv·Δt| = {identity_max_diff:.3e}")
     return {"rows": rows,
             "identity_check": {"max_abs_diff": identity_max_diff}}

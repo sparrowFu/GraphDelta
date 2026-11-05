@@ -73,13 +73,19 @@ assert len(_ALL_TYPE_PAIRS) == 12 and len(RELATION_TYPE_PAIRS_TRAIN) == 10
 
 
 def projection_along_left(pos_a, pos_b):
-    """b 相对 a 在 left 轴上的投影：> eps 表示 a 在 b 左侧。"""
-    return ((pos_b[0] - pos_a[0]) * CAMERA_LEFT_VEC[0]
-            + (pos_b[1] - pos_a[1]) * CAMERA_LEFT_VEC[1])
+    """a 相对 b 沿 left 轴的有向投影 dot(a−b, left)：> eps 表示 a 在 b 左侧。"""
+    return ((pos_a[0] - pos_b[0]) * CAMERA_LEFT_VEC[0]
+            + (pos_a[1] - pos_b[1]) * CAMERA_LEFT_VEC[1])
 
 
 def is_left_of(pos_a, pos_b, eps=REL_EPS):
-    """a 是否在 b 的左侧（相机坐标）。同官方：dot(b−a, left) > eps。"""
+    """a 是否在 b 的左侧（相机坐标）。
+
+    官方 compute_all_relationships 口径：j 出现在 relationships['left'][i]
+    中 ⟺ dot(pos_j − pos_i, left) > eps，即 j 在 i 左侧（官方
+    render_images.py 的 docstring 与实现均如此）。据此
+    is_left_of(a, b) 应为 dot(a − b, left) > eps。
+    """
     return projection_along_left(pos_a, pos_b) > eps
 
 
@@ -156,14 +162,16 @@ def _sample_context(rng, material=None):
 def _sample_pair_positions(rng, first_left, same_depth, r_a=0.7, r_b=0.7):
     """采样一对位置，返回 (pos_first, pos_second)；失败返回 (None, None)。
 
-    first 在左（first_left=True）或在右。偏移沿 left 轴分解：
+    first 在左（first_left=True）或在右（官方口径：first 在 second 左侧
+    ⟺ dot(pos_first − pos_second, left) > eps，即 second − first 沿 left
+    轴投影为负）。偏移沿 left 轴分解：
     proj 下限取 max(RELATION_MIN_PROJ, 由表面间距要求推出的下限)；
     横向分量（front 轴）在 same_depth=True 时恒为 0（关系任务同深度），
     否则从 {0} ∪ [±0.45, ±0.9] 采样（binding 任务布局多样性）。
     """
     lx, ly = CAMERA_LEFT_VEC
     px, py = -ly, lx              # front 轴单位向量
-    sign = 1.0 if first_left else -1.0
+    sign = -1.0 if first_left else 1.0
     need_dist = r_a + r_b + MIN_DIST + 0.05
     for _ in range(500):
         ax, ay = rng.uniform(-1.8, 1.8), rng.uniform(-1.8, 1.8)

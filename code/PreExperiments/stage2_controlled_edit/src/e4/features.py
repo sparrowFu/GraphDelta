@@ -2,17 +2,31 @@
 
 - 缓存目录 data/cache/f32/<model>/，与阶段一 float16 缓存（data/cache/<model>/）
   完全隔离；protocol.json 指纹机制照常生效；
-- dataset_key 带清单指纹（范式同 CoGenT 的 condition_cache_key）：清单重建后
-  指纹变化，缓存自动开新键，不会串用。
+- dataset_key 带清单指纹与图片内容指纹（范式同 CoGenT 的
+  condition_cache_key）：清单重建（md5 变化）或任一图片重渲染 / 被替换
+  （字节变化）都会开新键，不会串用旧特征（审查问题 6）。
 """
 import numpy as np
 
 from src.features.cache import ImageFeatureCache, TextCache
 
 
-def state_dataset_key(task: str, manifest_meta: dict) -> str:
-    fp = f"{manifest_meta['pairs_md5']}|{manifest_meta['states_md5']}"
+def state_dataset_key(task: str, manifest_meta: dict, rendered=None) -> str:
+    """缓存键 = 任务 + 清单指纹（+ 可选的图片内容指纹）。
+
+    rendered 传 rendered_states 表时逐图累加字节摘要：同一清单下重渲染或
+    替换图片（清单 md5 不变）也会失效旧缓存。
+    """
     import hashlib
+    fp = f"{task}|{manifest_meta['pairs_md5']}|{manifest_meta['states_md5']}"
+    if rendered is not None:
+        h = hashlib.md5()
+        for sid, path in zip(rendered["state_id"], rendered["image_path"]):
+            h.update(str(sid).encode("utf-8"))
+            with open(path, "rb") as f:
+                for chunk in iter(lambda: f.read(1 << 20), b""):
+                    h.update(chunk)
+        fp += "|" + h.hexdigest()
     return f"{task}_states@{hashlib.md5(fp.encode()).hexdigest()[:12]}"
 
 

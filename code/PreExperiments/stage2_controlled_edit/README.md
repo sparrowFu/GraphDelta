@@ -38,7 +38,8 @@ Python 环境与命令前缀同阶段一（`conda run -n CudaVersion128Fuxp`，�
 - 单进程实测约 30–39 秒 / 态（两对象场景偏快）；多进程加速比待实测写入账本，
   不按进程数线性外推；
 - 特征缓存：本阶段用独立 float32 命名空间（`data/cache/f32/<model>/`），与
-  阶段一的 float16 缓存互不影响；缓存键带清单指纹，清单重建自动换键。
+  阶段一的 float16 缓存互不影响；缓存键带清单指纹与图片内容指纹，清单重建
+  或任一图片重渲染/被替换都会自动换键，不串用旧特征。
 
 ## 2. 受控数据（工作方案第 3、4 节）
 
@@ -48,9 +49,9 @@ Python 环境与命令前缀同阶段一（`conda run -n CudaVersion128Fuxp`，�
 | 编辑 | 数量 | 必须保持或核验的条件 |
 |---|---:|---|
 | 颜色归属交换（主任务） | 800 对 | 对象身份和形状、位置、大小、材质、相机、光照、背景不变；颜色集合不变 |
-| 目标对象换色（正控制） | 200 对 | 只改 target 颜色；新色取其余 6 色（词集变化，`word_set_changed` 单列） |
+| 目标对象换色（正控制） | 200 对 + val/heldout 覆盖 | 只改 target 颜色；新色取其余 6 色（词集变化，`word_set_changed` 单列）；val/heldout 的全部交换场景另生成换色状态（E4-D 同场景错误编辑候选） |
 | 左右关系反转 | 500–1,000 对 | 仅移动 a 从 b 左侧到右侧（点反射）；间距与深度不变；核验可见性 |
-| 无语义变化（对照） | 约 200 对 | 绑定侧同图压缩 / 轻微裁剪（后处理，不占渲染账本）；关系侧共同平移（每 4 个反转场景取 1） |
+| 无语义变化（对照） | 约 200 对 + val/heldout 覆盖 | 绑定侧同图压缩 / 轻微裁剪（后处理，不占渲染账本）；关系侧共同平移（每 4 个训练场景取 1，val/heldout 全覆盖） |
 
 绑定任务用 8 个默认转换（`src/generation/scene_spec.py` 的
 `BINDING_CONVERSIONS`），每转换约 100 个互不相交的基础场景；关系任务从 10
@@ -77,15 +78,17 @@ Python 环境与命令前缀同阶段一（`conda run -n CudaVersion128Fuxp`，�
 
 | 子实验 | 内容 | 主要输出 |
 |---|---|---|
-| E4-A 配对结构判断 | 两图分别在同一对文本中选描述，两句文本分别在一对图中选图 | I2T / T2I / Pair Accuracy（平局记错；先模板内两图均对，再跨模板平均）；场景内匹配置换参考分布 |
-| E4-B 视觉变化诊断 | Δv = after − before（z 与 raw 双空间）；d_r 只用训练集 | 留出场景与 d_r 方向相似度、‖Δv‖、近零比例（训练分位数）；线性探针（状态二分类 / 转换身份）+ 颜色直方图 / 像素差 / 单端点参照 |
-| E4-C 转换级跨模态诊断 | Δt = after 文 − before 文；转换级条件 = 绑定 8 转换 + 关系 10 类型对 | C 的均值 + 区间 + 符号翻转 p；跨颜色组对照；C ≡ Δv·Δt 代数自检 |
-| E4-D 跨场景方向迁移 | d_r 固定符号，验证集选全局 α≥0，留出场景预测 after 表示 | 固定候选池 after 检索 top1（主终点）；对照：α=0、错误转换、随机、反向、文本差等幅；打乱配对代数自检 |
+| E4-A 配对结构判断 | 两图分别在同一对文本中选描述，两句文本分别在一对图中选图 | I2T / T2I / Pair Accuracy（平局记错；先模板内两图均对，再跨模板平均）；场景内匹配置换参考分布（与报告口径同一计分）；换色正控制的同套配对评分（`e4a_control_results`） |
+| E4-B 视觉变化诊断 | Δv = after − before（z 与 raw 双空间）；d_r 只用训练集 | 留出场景与 d_r 方向相似度、‖Δv‖、近零比例（训练分位数）+ 与随机/错误方向参照；方向可靠性（训练内对半划分子集比较 + 按场景重采样波动）；对照编辑（换色/jpeg/crop/平移）的 Δv 同口径诊断；线性探针（状态二分类 / 转换身份）+ 颜色直方图 / 像素差 / 单端点参照 |
+| E4-C 转换级跨模态诊断 | Δt = after 文 − before 文；转换级条件 = 绑定 8 转换 + 关系 10 类型对 | 逐转换 C 的均值 + 区间 + 探索性 p（不进判定）；任务级 `__overall__` 主统计（C 均值 / 区间 / 符号翻转 p / 方向）；跨颜色组对照；C ≡ Δv·Δt 代数自检 |
+| E4-D 跨场景方向迁移 | d_r 固定符号，验证集选全局 α≥0，留出场景预测 after 表示 | 固定候选池 after 检索 top1（主终点，pool 清单随行落盘）；对照：α=0、错误转换、随机、反向、文本差等幅；打乱配对代数自检（与 d_r 同批训练场景）；正式运行缺规定候选直接报错 |
 
 统计口径（`configs/e4_protocol.yaml`，正式 E4 运行前冻结）：默认 1,000 次
 置换、α=0.05，允许重排不足时全枚举；平局记错；配对分数 C 与 `Δv·Δt` 代数
-相等，不作两份独立证据；Pair Accuracy 参考分布用场景内匹配置换，不按 25%
-处理；E4-D 不能用测试图片的真实差向量当预测方向。
+相等，不作两份独立证据；Pair Accuracy 参考分布用场景内匹配置换（与报告
+口径同一计分函数），不按 25% 处理；E4-D 不能用测试图片的真实差向量当预测
+方向；确认性检验族（A 每任务 1 个 + C 每任务 1 个 + D 每任务×规定对照各
+1 个）族内 Holm 校正，方向必须为正。
 
 ---
 
@@ -159,10 +162,12 @@ python PreExperiments/stage2_controlled_edit/scripts/render_edit_pairs.py --task
 作用：读清单 → 展开唯一渲染状态 → 子进程调 Blender（`render/
 blend_render_driver.py`，可见性与关系计算直接 import 官方实现）→ 渲染回填
 的场景图逐项复核（字段 / 位置 / 高度 / 方向轴 / 关系矩阵）→ 回填
-`rendered_states.parquet` → 账本登记（`ledger.jsonl`：状态、秒、重试、字
-节；有效吞吐含校验与重试）→ 生成 jpeg / crop 后处理对照图。可见性检查失败
-是确定性失败（退出码 3，不重试），登记后该状态剔除。账本已完成的状态默认
-跳过。
+`rendered_states.parquet`（只登记当前清单对应的有效产物）→ 账本登记
+（`ledger.jsonl`：状态、秒、重试、字节、规格与资产指纹；有效吞吐含校验与
+重试）→ 生成 jpeg / crop 后处理对照图。可见性检查失败是确定性失败（退出码
+3，不重试），登记后该状态剔除。账本复用必须同时匹配场景规格（`spec_md5`）
+与渲染设置/资产指纹（`render_fp`）；换 seed、改规格或改设置后旧记录作废、
+重新渲染。
 
 参数（共 4 个）：
 
@@ -200,21 +205,27 @@ python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model [clip_vit
 命令（全部参数）：
 
 ```bash
-python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --seed [0(默认), 任意整数]
+python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --seed [0(默认), 任意整数] --smoke
 ```
 
 作用：读 `outputs/<model>/seed_<seed>/tables/` 的 e4 产物，写
-`e4_summary.csv` 与 `e4_stage_decision.json`。判定规则随产物落盘（避免事后
-换口径）：结构可辨识 = E4-A 任务级 heldout 置换 p < α 且高于零分布；跨模态
-对应 = 任务内 p < α 的转换占比 ≥ 1/2；方向迁移 = correct 的 top1 高于全部
-对照方法。缺失产物标"数据不足"。不加载模型。
+`e4_summary.csv` 与 `e4_stage_decision.json`。正式汇总只消费 run_meta 中
+**成功提交**的正式产物（`commit_experiment` 记录核验），不回退 smoke 文件；
+检查预先确定的任务（binding+relation）与转换数是否齐全，缺失逐项列出。
+判定规则随产物落盘（避免事后换口径）：确认性检验族 = E4-A 每任务 1 个 +
+E4-C 每任务 1 个（任务级 `__overall__` C，方向须为正）+ E4-D 每任务×规定
+对照各 1 个（同场景配对差，均值为正），族内 Holm 校正后 p < α 才判
+"有支持证据"；对照缺覆盖或任务缺失记"数据不足"。`--smoke` 只读
+`*_smoke.csv`，写独立的 `e4_summary_smoke.csv` / `e4_stage_decision_smoke.json`，
+仅记录流程是否跑通，不给出机制支持标签。不加载模型。
 
-参数（共 2 个）：
+参数（共 3 个）：
 
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
 | `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `clip_vitl14` | 汇总的模型 |
 | `--seed` | 任意整数 | `0` | 结果所属种子（定位 tables 目录） |
+| `--smoke` | 开关 | 不带 | 只汇总 smoke 产物（独立文件名，仅记录流程是否跑通） |
 
 ### 冻结时点（工作方案开篇待办表）
 
@@ -243,10 +254,14 @@ python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model [cl
 | `<render.output_dir>/<task>/rendered_states.parquet` | 已通过校验的状态（图路径 + 场景 JSON）+ 派生态 | Step 3 |
 | `outputs/audit/` | 题目审查清单 + 汇总 + 图片（251 题） | Step 1 |
 | `outputs/<model>/seed_<k>/tables/e4a_results.csv` + `e4a_items.jsonl` | E4-A 逐任务 × 家族 × split 的 Pair Accuracy + 置换参考分布；逐对 2×2 矩阵 | Step 4 |
-| `outputs/<model>/seed_<k>/tables/e4b_delta_stats.csv` + `e4b_items.jsonl` + `e4b_probe.csv` | E4-B 方向相似度 / 范数 / 近零比例；探针与参照 | Step 4 |
-| `outputs/<model>/seed_<k>/tables/e4c_conversion_stats.csv` + `e4c_identity.json` | E4-C 转换级 C + p + 跨组对照；代数自检 | Step 4 |
-| `outputs/<model>/seed_<k>/tables/e4d_retrieval.csv` + `e4d_meta.json` | E4-D 各方法 top1 / 秩 / 相似度；α 与打乱配对自检 | Step 4 |
-| `outputs/<model>/seed_<k>/tables/e4_summary.csv` + `e4_stage_decision.json` | 三轴判定（有支持证据 / 证据不足 / 数据不足） | Step 5 |
+| `outputs/<model>/seed_<k>/tables/e4a_control_results.csv` | 换色正控制的同套配对评分（pair_acc + 区间 + 置换参考） | Step 4 |
+| `outputs/<model>/seed_<k>/tables/e4b_delta_stats.csv` + `e4b_items.jsonl` + `e4b_probe.csv` | E4-B 方向相似度 / 范数 / 近零比例（含留出 vs 随机/错误方向参照）；探针与参照 | Step 4 |
+| `outputs/<model>/seed_<k>/tables/e4b_control_delta.csv` | 对照编辑（换色/jpeg/crop/平移）的 Δv 长度与方向诊断 | Step 4 |
+| `outputs/<model>/seed_<k>/tables/e4b_reliability.csv` | 方向可靠性：训练内对半划分子集比较 + 按场景重采样波动 | Step 4 |
+| `outputs/<model>/seed_<k>/tables/e4c_conversion_stats.csv` + `e4c_identity.json` | E4-C 逐转换 C（探索性）+ 任务级 `__overall__` 主统计 + 跨组对照；代数自检 | Step 4 |
+| `outputs/<model>/seed_<k>/tables/e4d_retrieval.csv` + `e4d_meta.json` | E4-D 各方法 top1 / 秩 / 相似度（pool 清单随行落盘）；α 与打乱配对自检 | Step 4 |
+| `outputs/<model>/seed_<k>/tables/e4_summary.csv` + `e4_stage_decision.json` | 三轴判定（有支持证据 / 证据不足 / 数据不足；来源核验 + 任务完整性 + Holm 校正） | Step 5 |
+| `outputs/<model>/seed_<k>/tables/e4_summary_smoke.csv` + `e4_stage_decision_smoke.json` | smoke 汇总（仅流程是否跑通，无机制标签） | Step 5（`--smoke`） |
 
 ## 6. 快速自检（小样本，分钟级）
 

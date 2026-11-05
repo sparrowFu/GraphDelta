@@ -1,9 +1,10 @@
 """规格驱动渲染调度（阶段二 Step 3 的核心逻辑，脚本 render_edit_pairs.py 调用）。
 
-流程：读清单 → 展开唯一渲染状态 → 查账本跳过已完成 → 子进程调 Blender
-（blend_render_driver.py）→ 用渲染回填的场景图复核规格 → 回填
-rendered_states.parquet → 账本登记（状态数 / 秒 / 重试 / 字节数）→ 生成
-jpeg / crop 后处理对照图。
+流程：读清单 → 展开唯一渲染状态 → 查账本跳过已完成（须同时匹配场景
+规格 spec_md5 与渲染设置 / 资产指纹 render_fp，审查问题 6）→ 子进程调
+Blender（blend_render_driver.py）→ 用渲染回填的场景图复核规格 → 回填
+rendered_states.parquet（只登记当前清单对应的有效产物）→ 账本登记
+（状态数 / 秒 / 重试 / 字节数）→ 生成 jpeg / crop 后处理对照图。
 
 账本口径（工作方案第 8 节）：唯一状态是渲染单位；吞吐含校验与重试的
 重试不重复计费；--force 重渲染已完成状态；--limit 只渲前 N 态（小批试运行）。
@@ -32,6 +33,45 @@ def _gen_paths(paths: dict) -> dict:
             "props": gen / "data" / "properties.json",
             "shapes": gen / "data" / "shapes",
             "mats": gen / "data" / "materials"}
+
+
+def _spec_md5(spec: str) -> str:
+    import hashlib
+    return hashlib.md5(spec.encode("utf-8")).hexdigest()
+
+
+def _asset_fingerprint(paths: dict, rcfg: dict) -> str:
+    """渲染设置与资产指纹（审查问题 6）。
+
+    覆盖：渲染参数、Blender 与生成器路径、本驱动脚本、base_scene.blend、
+    properties.json 及 shapes/materials 全部资产文件。账本复用必须同时
+    匹配场景规格（spec_md5）与本指纹；任一变化即视为不同产物，不复用
+    旧图。state_id 不含 seed / 规格指纹，单凭它判断"已完成"会让换种子
+    或改规格后的新清单直接跳过渲染并沿用旧场景。
+    """
+    import hashlib
+    gp = _gen_paths(paths)
+    h = hashlib.md5()
+
+    def _add_file(p):
+        p = Path(p)
+        h.update(str(p).encode("utf-8"))
+        with open(p, "rb") as f:
+            for chunk in iter(lambda: f.read(1 << 20), b""):
+                h.update(chunk)
+
+    h.update(json.dumps({k: rcfg.get(k) for k in sorted(rcfg)},
+                        sort_keys=True).encode("utf-8"))
+    h.update(str(paths["render"]["blender"]).encode("utf-8"))
+    h.update(str(paths["render"]["clevr_gen"]).encode("utf-8"))
+    _add_file(DRIVER)
+    for p in (gp["base"], gp["props"]):
+        _add_file(p)
+    for d in (gp["shapes"], gp["mats"]):
+        for f in sorted(Path(d).iterdir()):
+            if f.is_file():
+                _add_file(f)
+    return h.hexdigest()
 
 
 def expected_relationships(spec: dict, eps: float = REL_EPS) -> dict:
@@ -80,7 +120,8 @@ def validate_scene_json(scene: dict, spec: dict, tol: float = 1e-4) -> list:
     return problems
 
 
-def _render_one(state, root: Path, gp: dict, paths: dict, rcfg: dict, logger):
+def _render_one(state, root: Path, gp: dict, paths: dict, rcfg: dict, logger,
+                spec_md5: str = "", render_fp: str = ""):
     sid = state["state_id"]
     img, scn = root / "images" / f"{sid}.png", root / "scenes" / f"{sid}.json"
     spec_p = root / "specs" / f"{sid}.json"
@@ -126,7 +167,7 @@ def _render_one(state, root: Path, gp: dict, paths: dict, rcfg: dict, logger):
             problems = [f"渲染产物不可读: {e}"]
     rec = {"state_id": sid, "start": start, "end": time.time(), "seconds": seconds,
            "exit_code": code, "retries": retries, "validated": validated,
-           "problems": problems,
+           "problems": problems, "spec_md5": spec_md5, "render_fp": render_fp,
            "image_bytes": img.stat().st_size if img.exists() else 0}
     if not validated:
         logger.warning(f"[render] {sid} 未通过: code={code} problems={problems[:3]}")
@@ -170,34 +211,51 @@ def render_manifest(task: str, manifest: dict, paths: dict, cfg: dict,
     for sub in ("images", "scenes", "specs", "logs"):
         (root / sub).mkdir(parents=True, exist_ok=True)
     ledger = root / "ledger.jsonl"
-    done = set()
-    if ledger.exists() and not force:
-        for line in ledger.read_text().splitlines():
-            if line.strip():
-                rec = json.loads(line)
-                if rec.get("validated"):
-                    done.add(rec["state_id"])
+    rcfg = cfg["render"]
+    render_fp = _asset_fingerprint(paths, rcfg)
     states = [r for r in manifest["states"].to_dict("records") if r["needs_render"]]
     states.sort(key=lambda r: r["state_id"])
+    spec_md5 = {s["state_id"]: _spec_md5(s["spec"]) for s in states}
+
+    def _ledger_matches(rec: dict) -> bool:
+        """账本记录是否为当前清单 + 当前规格 / 资产指纹下的有效产物。"""
+        sid = rec.get("state_id")
+        return bool(rec.get("validated") and sid in spec_md5
+                    and rec.get("spec_md5") == spec_md5[sid]
+                    and rec.get("render_fp") == render_fp)
+
+    done, stale = set(), 0
+    if ledger.exists() and not force:
+        for line in ledger.read_text().splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            if rec.get("validated"):
+                if _ledger_matches(rec):
+                    done.add(rec["state_id"])
+                else:
+                    stale += 1
     todo = [s for s in states if s["state_id"] not in done]
     skipped = len(states) - len(todo)
     if limit is not None:
         todo = todo[:int(limit)]
-    logger.info(f"[render] {task}: 待渲染 {len(todo)} 态（账本跳过 {skipped}）")
+    logger.info(f"[render] {task}: 待渲染 {len(todo)} 态（账本跳过 {skipped}，"
+                f"指纹不符作废 {stale}）")
     gp = _gen_paths(paths)
-    rcfg = cfg["render"]
     ledger_f = ledger.open("a")
     scene_jsons = {}
     t0 = time.time()
     if workers <= 1:
         for st in todo:
-            rec, sj = _render_one(st, root, gp, paths, rcfg, logger)
+            rec, sj = _render_one(st, root, gp, paths, rcfg, logger,
+                                  spec_md5[st["state_id"]], render_fp)
             ledger_f.write(json.dumps(rec) + "\n")
             if sj is not None:
                 scene_jsons[rec["state_id"]] = sj
     else:
         with ThreadPoolExecutor(max_workers=workers) as ex:
-            futures = {ex.submit(_render_one, st, root, gp, paths, rcfg, logger): st
+            futures = {ex.submit(_render_one, st, root, gp, paths, rcfg, logger,
+                                 spec_md5[st["state_id"]], render_fp): st
                        for st in todo}
             for fut in futures:
                 rec, sj = fut.result()
@@ -207,20 +265,25 @@ def render_manifest(task: str, manifest: dict, paths: dict, cfg: dict,
     ledger_f.close()
     wall = time.time() - t0
 
-    # 汇总 rendered_states.parquet：已通过校验的渲染态 + 派生对照态
-    rows, ok_render = [], 0
-    for line in ledger.read_text().splitlines():
-        if not line.strip():
-            continue
-        rec = json.loads(line)
-        if rec.get("validated"):
-            ok_render += 1
-            scene = json.loads((root / "scenes" / f"{rec['state_id']}.json").read_text())
-            rows.append({"state_id": rec["state_id"],
-                         "image_path": str(root / "images" / f"{rec['state_id']}.png"),
-                         "scene_json": json.dumps(scene, sort_keys=True),
-                         "validated": True,
-                         "render_seconds": rec["seconds"], "derived": False})
+    # 汇总 rendered_states.parquet：只登记当前清单 + 当前指纹下最新一次
+    # 校验通过的渲染态（审查问题 6：旧清单 / 旧规格的遗留产物不得混入），
+    # 另加派生对照态。同状态多次渲染取账本最后一条匹配记录。
+    ok = {}
+    if ledger.exists():
+        for line in ledger.read_text().splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            if _ledger_matches(rec):
+                ok[rec["state_id"]] = rec
+    rows, ok_render = [], len(ok)
+    for sid in sorted(ok):
+        scene = json.loads((root / "scenes" / f"{sid}.json").read_text())
+        rows.append({"state_id": sid,
+                     "image_path": str(root / "images" / f"{sid}.png"),
+                     "scene_json": json.dumps(scene, sort_keys=True),
+                     "validated": True,
+                     "render_seconds": ok[sid]["seconds"], "derived": False})
     by_id = {r["state_id"]: r["scene_json"] for r in rows}
     n_derived = 0
     for st in manifest["states"].to_dict("records"):
@@ -233,6 +296,7 @@ def render_manifest(task: str, manifest: dict, paths: dict, cfg: dict,
     pd.DataFrame(rows).to_parquet(root / "rendered_states.parquet", index=False)
     throughput = len(todo) / wall if wall > 0 else 0.0
     summary = {"task": task, "attempted": len(todo), "skipped_in_ledger": skipped,
+               "stale_fingerprint": stale,
                "validated_total": ok_render, "derived": n_derived,
                "wall_seconds": wall, "attempted_per_second": throughput,
                "workers": workers}

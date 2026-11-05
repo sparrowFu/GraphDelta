@@ -15,7 +15,7 @@ from src.data.captions import templates, wrap
 from src.metrics.bootstrap import cluster_mean_ci
 
 from .captions import pair_texts
-from .stats import scene_permutation_pair_acc
+from .stats import scene_pair_acc, scene_permutation_pair_acc
 
 
 def compute_S_records(pairs_df, z_by_state, tcache, model) -> list:
@@ -56,14 +56,15 @@ def pair_metrics(S: np.ndarray) -> dict:
     """单对指标（输入 (T,2,2)）。平局记错（cfg pair_accuracy.tie=wrong 冻结）。
 
     - i2t / t2i：单图 / 单文本 2AFC 口径（t×i 或 t×j 平均）；
-    - pair_acc：先在同一模板内两张图均选对（c00 & c11），再跨模板平均。
+    - pair_acc：先在同一模板内两张图均选对（c00 & c11），再跨模板平均，
+      与置换参考分布共用 stats.scene_pair_acc（同一计分逻辑）。
     """
     c00 = S[:, 0, 0] > S[:, 0, 1]   # before 图在 (T0,T1) 中选对
     c11 = S[:, 1, 1] > S[:, 1, 0]   # after 图选对
     t00 = S[:, 0, 0] > S[:, 1, 0]   # T0 在 (I0,I1) 中选对
     t11 = S[:, 1, 1] > S[:, 0, 1]   # T1 选对
     tie = (S[:, 0, 0] == S[:, 0, 1]) | (S[:, 1, 1] == S[:, 1, 0])
-    return {"pair_acc": float((c00 & c11).mean()),
+    return {"pair_acc": scene_pair_acc(S),
             "i2t_acc": float(np.concatenate([c00, c11]).mean()),
             "t2i_acc": float(np.concatenate([t00, t11]).mean()),
             "tie_rate": float(tie.mean()),
@@ -94,14 +95,16 @@ def run_e4a(S_records, cfg, logger) -> dict:
                      "i2t_acc": float(np.mean([m["i2t_acc"] for _, m in entries])),
                      "t2i_acc": float(np.mean([m["t2i_acc"] for _, m in entries])),
                      "tie_rate": float(np.mean([m["tie_rate"] for _, m in entries]))})
-    # 任务级 heldout 参考分布（第 5 节：场景内匹配置换，不按 25% 处理）
+    # 任务级 heldout 参考分布（第 5 节：场景内匹配置换，不按 25% 处理）。
+    # 传入完整 (T,2,2) 模板矩阵：置换与报告口径同为"先模板内判断、再平均"
+    #（审查问题 2：不得先平均相似度再判断）
     for task in sorted({r["task"] for r in rows}):
         held = [rec for rec in S_records
                 if rec["task"] == task and rec["split"] == "heldout"]
         if not held:
             continue
-        S_mean = [rec["S"].mean(axis=0) for rec in held]
-        null = scene_permutation_pair_acc(S_mean, perm_cfg["n"], seed=0)
+        null = scene_permutation_pair_acc([rec["S"] for rec in held],
+                                          perm_cfg["n"], seed=0)
         obs = float(np.mean([pair_metrics(r["S"])["pair_acc"] for r in held]))
         rows.append({"task": task, "family": "__overall__", "split": "heldout",
                      "n_scenes": len(held), "pair_acc": obs,

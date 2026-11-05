@@ -97,3 +97,39 @@ def test_manifest_roundtrip_and_tamper(tmp_path):
     df.to_parquet(pp, index=False)
     with pytest.raises(RuntimeError):
         P.load_manifest(tmp_path, "binding")
+
+
+def test_wrong_edit_states_cover_eval_scenes():
+    """审查问题 4：val/heldout 的语义编辑场景必须拥有同场景错误编辑状态。"""
+    for data, wrong in ((_build_binding(), "recolor"), (_build_relation(), "translate")):
+        states = {s["state_id"] for s in data["states"]}
+        semantic = {p["base_scene_id"]: p["split"] for p in data["pairs"]
+                    if p["edit_kind"] in ("swap", "flip")}
+        for sid, split in semantic.items():
+            if split == "train":
+                continue
+            assert f"{sid}::{wrong}" in states, \
+                f"{split} 场景 {sid} 缺同场景错误编辑状态"
+
+
+def test_pair_state_ids_reports_missing_candidates():
+    """候选缺失必须显式报告（返回 missing），不得静默缩小候选池。"""
+    from e4.data import pair_state_ids
+
+    data = _build_binding()
+    manifest = {"pairs": pd.DataFrame(data["pairs"]),
+                "states": pd.DataFrame(data["states"])}
+    swap = next(p for p in data["pairs"] if p["edit_kind"] == "swap")
+    all_ids = [s["state_id"] for s in data["states"]]
+    full_rendered = pd.DataFrame({"state_id": all_ids})
+    pcfg = {"include_wrong_edit": True, "n_other_scene_after": 2}
+    pool, missing = pair_state_ids(pcfg, manifest, full_rendered, swap, "binding")
+    roles = {r for _, r, _ in pool}
+    assert {"before", "after", "wrong_edit", "other_after"} <= roles
+    assert missing == []
+    # 换色态未渲染 → missing 必须列出 wrong_edit，而不是少放一张图
+    partial = pd.DataFrame({"state_id":
+                            [s for s in all_ids if not s.endswith("::recolor")]})
+    pool2, missing2 = pair_state_ids(pcfg, manifest, partial, swap, "binding")
+    assert any(m.startswith("wrong_edit:") for m in missing2)
+    assert all(not sid.endswith("::recolor") for sid, _, _ in pool2)

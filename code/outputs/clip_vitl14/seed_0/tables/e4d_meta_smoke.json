@@ -1,8 +1,9 @@
 {
   "alpha": {
-    "binding": 0.8
+    "binding": 0.0,
+    "relation": 0.8
   },
   "self_check": {
-    "shuffled_mean_max_diff": 0.025523915886878967
+    "shuffled_mean_max_diff": 1.862645149230957e-09
   }
 }

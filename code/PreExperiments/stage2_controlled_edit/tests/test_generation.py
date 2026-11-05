@@ -27,6 +27,17 @@ from generation.scene_spec import BaseSceneSpec, projection_along_left
 SEED = 20261103
 
 
+def official_left_of(spec_dict, i, j, eps=0.2):
+    """官方 render_images.py 口径的独立复算（不复用 generation.is_left_of，
+    审查问题 1 要求：测试须依据官方关系判定核对方向）：
+    j 在 i 左侧 ⟺ dot(pos_j − pos_i, left) > eps。
+    """
+    oi, oj = spec_dict["objects"][i], spec_dict["objects"][j]
+    d = ((oj["pos"][0] - oi["pos"][0]) * CAMERA_LEFT_VEC[0]
+         + (oj["pos"][1] - oi["pos"][1]) * CAMERA_LEFT_VEC[1])
+    return d > eps
+
+
 # ---------------- 基础事实 ----------------
 
 def test_constants_match_plan():
@@ -62,8 +73,11 @@ def test_binding_scene_placement(conversion):
                                SIZES[t["size"]], SIZES[s["size"]])
         # before 颜色符合转换定义
         assert t["color"] == conversion[2] and s["color"] == conversion[3]
-        # 交叉平衡：偶数索引 target 在左，奇数在右
-        assert is_left_of(t["pos"], s["pos"]) == (idx % 2 == 0)
+        # 交叉平衡：偶数索引 target 在左，奇数在右（按官方口径独立核验：
+        # target（对象 0）在 sphere（对象 1）左侧 ⟺ official_left_of(i=1, j=0)）
+        assert official_left_of(spec.as_dict(), 1, 0) == (idx % 2 == 0)
+        assert is_left_of(t["pos"], s["pos"]) == official_left_of(
+            spec.as_dict(), 1, 0)
 
 
 @pytest.mark.parametrize("type_pair", RELATION_TYPE_PAIRS_TRAIN)
@@ -75,7 +89,10 @@ def test_relation_scene_placement(type_pair):
         a, b = spec.obj("a"), spec.obj("b")
         assert check_placement(a["pos"], b["pos"],
                                SIZES[a["size"]], SIZES[b["size"]])
-        assert is_left_of(a["pos"], b["pos"]) == (idx % 2 == 0)
+        # a_left 参数语义按官方口径独立核验：a（对象 0）在 b（对象 1）左侧
+        assert official_left_of(spec.as_dict(), 1, 0) == (idx % 2 == 0)
+        assert is_left_of(a["pos"], b["pos"]) == official_left_of(
+            spec.as_dict(), 1, 0)
         # 关系场景同深度：front 轴偏移≈0（浮点残差，容差同 ALIGN_TOL）
         off = (b["pos"][0] - a["pos"][0], b["pos"][1] - a["pos"][1])
         lat = off[0] * CAMERA_FRONT_VEC[0] + off[1] * CAMERA_FRONT_VEC[1]
@@ -208,3 +225,27 @@ def test_spec_serialization_roundtrip():
     assert restored.as_dict() == spec.as_dict()
     after = apply_binding_swap(restored)
     validate_edit(spec, after, "binding_swap")
+
+
+# ---------------- 关系文本真假（审查问题 1）----------------
+
+def test_relation_caption_truth_against_official_matrix():
+    """默认关系编辑确实从"a 在 b 左侧"变为"a 在 b 右侧"，句子真假按官方
+    关系矩阵独立核验（不调用 is_left_of 验证生成器）。"""
+    from e4.captions import pair_texts, relation_contents
+    rng = random.Random(SEED + 7)
+    for tp in RELATION_TYPE_PAIRS_TRAIN[:3]:
+        before = build_relation_base_scene(rng, 0, tp, a_left=True)
+        after = apply_relation_flip(before)
+        bd, ad = before.as_dict(), after.as_dict()
+        # a_left=True：对象 0 在对象 1 左侧（官方口径）
+        assert official_left_of(bd, 1, 0)
+        t0, kind, rel0 = relation_contents(bd)
+        assert kind == "sentence" and rel0 == "left"
+        assert t0 == f"the {bd['objects'][0]['shape']} is to the left of the {bd['objects'][1]['shape']}"
+        t1, _, rel1 = relation_contents(ad)
+        assert rel1 == "right"
+        assert official_left_of(ad, 0, 1)   # after：a 在 b 右侧 ⟺ b 在 a 左侧
+        # pair_texts 的 t0/t1 与 relation_contents 一致
+        pt = pair_texts(bd, ad, "relation")
+        assert (pt["t0_content"], pt["t1_content"]) == (t0, t1)

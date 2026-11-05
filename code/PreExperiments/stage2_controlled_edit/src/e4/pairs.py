@@ -149,11 +149,33 @@ def _even_split(n: int, k: int) -> list:
     return [n // k + (1 if i < n % k else 0) for i in range(k)]
 
 
+def _coverage_scenes(scenes: list, scene_split: dict, n_control: int,
+                     n_semantic: int) -> list:
+    """错误编辑状态（换色 / 平移）的场景选择（审查问题 4）。
+
+    正控制 / 对照取每家族前 n_control 个场景；另为前 n_semantic 个语义
+    编辑场景中全部 val/heldout 场景生成同场景错误编辑状态（E4-D 候选池
+    第 6 节要求：纳入评价的每个查询都必须有原图、正确编辑图与同场景错误
+    编辑图）。train 场景不因候选池额外增加（d_r 估计不进检索评价）。
+    """
+    control = list(scenes[:n_control])
+    extra = [s for s in scenes[:n_semantic]
+             if scene_split[s.base_scene_id] != "train"]
+    out, seen = [], set()
+    for s in control + extra:
+        if s.base_scene_id not in seen:
+            seen.add(s.base_scene_id)
+            out.append(s)
+    return out
+
+
 def build_binding(rng: random.Random, n_swap: int, n_recolor: int,
                   ratios: dict):
-    """绑定任务：8 个转换均分场景；换色正控制复用同转换前段场景。
+    """绑定任务：8 个转换均分场景；换色状态覆盖全部 val/heldout 交换场景。
 
-    换色新颜色取 COLORS ∖ {c1, c2}（词集变化，word_set_changed=True）。
+    换色正控制取前 n_rc 个场景；val/heldout 的交换场景全部生成换色状态
+    （E4-D 同场景错误编辑候选，审查问题 4）。换色新颜色取
+    COLORS ∖ {c1, c2}（词集变化，word_set_changed=True）。
     返回 (pairs, states, scenes_by_family, scene_split, resamples)。
     """
     pairs, states = [], {}
@@ -179,7 +201,7 @@ def build_binding(rng: random.Random, n_swap: int, n_recolor: int,
             _record_pair(pairs, "binding", "swap", family, sid, spec, after,
                          {"op": "binding_swap", "conversion": list(conv)},
                          "before", "swap", split)
-        for spec in scenes[:n_rc]:
+        for spec in _coverage_scenes(scenes, scene_split, n_rc, n_sw):
             sid, split = spec.base_scene_id, scene_split[spec.base_scene_id]
             new_color = rng.choice(other_colors)
             recolored = apply_recolor(spec, "target", new_color)
@@ -193,8 +215,9 @@ def build_binding(rng: random.Random, n_swap: int, n_recolor: int,
 def build_relation(rng: random.Random, n_flip: int, ratios: dict):
     """关系任务：10 个类型对均分场景（统一 a 在 b 左），编辑为左右反转。
 
-    共同平移对照按每 4 个反转场景取 1 个（至少 1），平移量在 [-0.6, 0.6]²
-    采样、越界重采样；平移态同时用作 E4-D 关系任务的错误编辑候选。
+    共同平移对照按每 4 个训练场景取 1 个（至少 1）；val/heldout 的全部
+    反转场景另生成平移状态（E4-D 同场景错误编辑候选，审查问题 4）。
+    平移量在 [-0.6, 0.6]² 采样、越界重采样。
     """
     pairs, states = [], {}
     resamples = 0
@@ -215,7 +238,10 @@ def build_relation(rng: random.Random, n_flip: int, ratios: dict):
             _record_pair(pairs, "relation", "flip", family, sid, spec, after,
                          {"op": "relation_flip", "mover": "a", "anchor": "b"},
                          "before", "flip", split)
-        for spec in scenes[:max(1, len(scenes) // 4)]:
+        train_scenes = [s for s in scenes
+                        if scene_split[s.base_scene_id] == "train"]
+        n_ctrl = max(1, len(train_scenes) // 4)
+        for spec in _coverage_scenes(scenes, scene_split, n_ctrl, len(scenes)):
             sid, split = spec.base_scene_id, scene_split[spec.base_scene_id]
             for _try in range(50):
                 dx, dy = rng.uniform(-0.6, 0.6), rng.uniform(-0.6, 0.6)

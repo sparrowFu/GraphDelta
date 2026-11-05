@@ -2,38 +2,22 @@
   "model": "clip_vitl14",
   "seed": 0,
   "tables_dir": "/home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables",
-  "smoke_inputs": [
-    "e4a_results_smoke.csv",
-    "e4c_conversion_stats_smoke.csv",
-    "e4d_retrieval_smoke.csv"
-  ],
-  "structure_identifiability": {
-    "binding": {
-      "pair_acc": 0.4285714285714285,
-      "perm_p": 0.5,
-      "null_mean": 0.25,
-      "label": "证据不足"
-    }
+  "alpha": 0.05,
+  "rules": {
+    "confirmatory_family": "E4-A 每任务 1 个 + E4-C 每任务 1 个 + E4-D 每任务×规定对照['wrong_conversion', 'random', 'reverse', 'text_delta']各 1 个",
+    "multiplicity": "Holm step-down，族内校正后 p < alpha 才判支持",
+    "structure": "E4-A 任务级 heldout 置换 Holm p < α 且 pair_acc > null_mean",
+    "crossmodal": "E4-C 任务级 heldout C 符号翻转 Holm p < α 且 C_mean > 0（方向检查；逐转换结果仅探索性）",
+    "transfer": "E4-D 正确方向 vs 每个规定对照：同场景配对差 Holm p < α且差均值 > 0；覆盖场景不一致记数据不足"
   },
-  "crossmodal_alignment": {
-    "binding": {
-      "n_families": 2,
-      "frac_significant": 0.0,
-      "label": "证据不足"
-    }
-  },
-  "direction_transfer": {
-    "binding": {
-      "correct_top1": 0.0,
-      "controls": {
-        "alpha0": 0.0,
-        "random": 0.0,
-        "reverse": 0.0,
-        "text_delta": 0.0,
-        "wrong_conversion": 0.0
-      },
-      "label": "证据不足"
-    }
-  },
-  "missing": []
+  "provenance": {},
+  "holm_family": [],
+  "structure_identifiability": {},
+  "crossmodal_alignment": {},
+  "direction_transfer": {},
+  "missing": [
+    "e4a_results.csv（文件缺失）",
+    "e4c_conversion_stats.csv（文件缺失）",
+    "e4d_retrieval.csv（文件缺失）"
+  ]
 }

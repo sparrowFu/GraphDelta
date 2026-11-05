@@ -35,23 +35,38 @@ def sign_flip_test(values, n_perm: int, seed: int) -> dict:
             "obs_mean": float(obs)}
 
 
+def scene_pair_acc(S) -> float:
+    """单场景 Pair Accuracy（E4-A 主口径，平局记错）。
+
+    先在同一模板内判断两张图是否均选对，再跨模板平均（七模板不增加独立
+    样本数）。paired.pair_metrics 与 scene_permutation_pair_acc 共用本计分，
+    保证报告的观测值与置换值是同一个指标（审查问题 2：不得先平均相似度
+    再判断）。
+    """
+    S = np.asarray(S, dtype=np.float64)
+    c00 = S[:, 0, 0] > S[:, 0, 1]   # before 图在 (T0,T1) 中选对
+    c11 = S[:, 1, 1] > S[:, 1, 0]   # after 图选对
+    return float((c00 & c11).mean())
+
+
 def scene_permutation_pair_acc(S_by_scene: list, n_perm: int, seed: int) -> dict:
     """E4-A 参考分布（第 5 节）：场景内随机交换两文本标签后的 Pair Accuracy。
 
-    S_by_scene：每场景模板平均后的 2×2 相似度矩阵（S[i,j]=sim(img_i,text_j)）。
-    交换文本标签 = 列交换；2^n <= n_perm 时全枚举。返回观测口径下的
-    零分布均值 / 标准差与 p（单侧上尾：真实配对应高于随机配对）。
+    S_by_scene：每场景的 (T,2,2) 模板相似度矩阵（S[t,i,j]=sim(img_i,text_j)）。
+    交换文本标签 = 该场景全部模板的文本列一起交换（模板不分开换）；
+    每个置换值与观测值同用 scene_pair_acc 计算（先模板内判断、再跨模板
+    平均）。2^n <= n_perm 时全枚举（含观测自身）。返回零分布均值 / 标准差
+    与 p（单侧上尾：真实配对应高于随机配对）。
     """
 
     def _pair_acc(mats, swaps):
         acc = []
         for m, s in zip(mats, swaps):
-            mm = m if s == 0 else m[:, [1, 0]]
-            ok = (mm[0, 0] > mm[0, 1]) and (mm[1, 1] > mm[1, 0])  # 平局记错
-            acc.append(float(ok))
-        return np.mean(acc)
+            mm = m if s == 0 else m[:, :, [1, 0]]
+            acc.append(scene_pair_acc(mm))
+        return float(np.mean(acc))
 
-    mats = [np.asarray(m) for m in S_by_scene]
+    mats = [np.asarray(m, dtype=np.float64) for m in S_by_scene]
     n = len(mats)
     if n == 0:
         return {"null_mean": float("nan"), "null_std": float("nan"),
