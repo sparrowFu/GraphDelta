@@ -1,4 +1,5 @@
-"""e4.delta 单元测试：对照 Δv 诊断接入、方向可靠性（审查问题 5、10）。"""
+"""e4.delta 单元测试：对照 Δv 诊断接入、方向可靠性、随机方向全组合、
+双任务方向合并（审查问题 5、10 与随机方向/合并两处修复）。"""
 import sys
 from pathlib import Path
 
@@ -9,8 +10,9 @@ import numpy as np
 import pandas as pd
 
 from e4 import pairs as P
-from e4.delta import (control_pairs, run_e4b_controls, run_e4b_reliability,
-                      run_e4b_stats)
+from e4.delta import (control_pairs, merge_dirs, run_e4b_controls,
+                      run_e4b_reliability, run_e4b_stats)
+from e4.stats import cosine_rows
 
 SEED = 20261103
 DIM = 8
@@ -106,3 +108,115 @@ def test_controls_enter_evaluation():
         assert r["n"] >= 1 and r["dv_norm_mean"] > 0
         # 换色对照与结构方向同族：字段口径一致
         assert "cos_to_structural_d_r" in r or r["family"] not in st["dirs"]["d_r"]
+
+
+def _manual_pairs(n_train, n_val, n_held, dim=8, seed=0):
+    """单家族手工对：dv = 固定方向 + 小噪声，留出数可任意指定。"""
+    rows, z = [], {}
+    rng = np.random.default_rng(seed)
+    d = rng.standard_normal(dim)
+    for split, n in (("train", n_train), ("val", n_val), ("heldout", n_held)):
+        for i in range(n):
+            scene = f"{split}_{i}"
+            b, a = f"s_{scene}_b", f"s_{scene}_a"
+            base = rng.standard_normal(dim)
+            z[b], z[a] = base, base + d + 0.01 * rng.standard_normal(dim)
+            rows.append({"task": "binding", "family": "fam0", "edit_kind": "swap",
+                         "base_scene_id": scene, "split": split,
+                         "before_state_id": b, "after_state_id": a})
+    return pd.DataFrame(rows), z, d
+
+
+def test_random_direction_reference_all_pairs():
+    """留出数 ≠ 1 且 ≠ 随机方向数时不崩溃，值与逐场景全组合手工计算一致。
+
+    修复前 cosine_rows 逐行配对要求行数可广播：留出 ≥2 即 ValueError，
+    默认规模（绑定 20 / 关系 10 个留出 vs 32 个随机方向）必崩。
+    """
+    n_rand = 5
+    cfg = {**CFG, "transfer": {"n_random_directions": n_rand, "random_seed": 7}}
+    pairs, z, _ = _manual_pairs(n_train=8, n_val=2, n_held=3)
+    res = run_e4b_stats(pairs, z, dict(z), cfg, _Logger())
+    held = [r for r in res["rows"] if r["split"] == "heldout"][0]
+    # 手工重放随机方向（单家族：heldout 块只抽一次），独立计算期望值
+    rng = np.random.default_rng(7)
+    rand_mat = rng.standard_normal((n_rand, 8))
+    dv = np.stack([z[f"s_heldout_{i}_a"] - z[f"s_heldout_{i}_b"]
+                   for i in range(3)])
+    An = dv / np.linalg.norm(dv, axis=1, keepdims=True)
+    Bn = rand_mat / np.linalg.norm(rand_mat, axis=1, keepdims=True)
+    expected = float((An @ Bn.T).mean(axis=1).mean())
+    assert abs(held["cos_to_random_mean"] - expected) < 1e-12
+    # 每场景与自身固定方向高度同向，应明显优于随机方向参照
+    assert held["cos_to_d_r"] > held["cos_to_random_mean"] + 0.3
+
+
+def test_random_direction_one_scene_still_valid():
+    """留出恰为 1 个场景（旧行为的隐含前提）仍给出同样的全组合口径。"""
+    cfg = {**CFG, "transfer": {"n_random_directions": 4, "random_seed": 3}}
+    pairs, z, _ = _manual_pairs(n_train=6, n_val=2, n_held=1)
+    res = run_e4b_stats(pairs, z, dict(z), cfg, _Logger())
+    held = [r for r in res["rows"] if r["split"] == "heldout"][0]
+    rng = np.random.default_rng(3)
+    rand_mat = rng.standard_normal((4, 8))
+    dv = (z["s_heldout_0_a"] - z["s_heldout_0_b"]).reshape(1, -1)
+    expected = float(cosine_rows(
+        np.tile(dv / np.linalg.norm(dv), (4, 1)),
+        rand_mat / np.linalg.norm(rand_mat, axis=1, keepdims=True)).mean())
+    assert abs(held["cos_to_random_mean"] - expected) < 1e-12
+
+
+def test_merge_dirs_keeps_both_tasks():
+    """逐内层合并：两任务的 d_r/thr 都保留（顶层 update 会整体覆盖）。"""
+    d1 = {"d_r": {"binding|f": "b"}, "thr": {"binding|f": 1.0}}
+    d2 = {"d_r": {"relation|g": "r"}, "thr": {"relation|g": 2.0}}
+    merged = merge_dirs([d1, d2])
+    assert set(merged["d_r"]) == {"binding|f", "relation|g"}
+    assert set(merged["thr"]) == {"binding|f", "relation|g"}
+
+
+def test_controls_keep_direction_after_two_task_merge():
+    """按 run.py 的实际编排（双任务 stats → merge_dirs → 对照诊断）：
+    绑定对照仍能拿到自己任务的结构方向，不被关系任务覆盖。"""
+    dirs_list, ctrl_ctx = [], {}
+    for task, kw in (("binding", dict(n_swap=48, n_recolor=8, n_control=4)),
+                     ("relation", dict(n_flip=40, n_control=4))):
+        data = P.build_task(task, SEED, **kw)
+        pairs = pd.DataFrame(data["pairs"])
+        z = _two_task_features(data["states"])
+        sp = pairs[pairs["edit_kind"].isin(["swap", "flip"])]
+        st = run_e4b_stats(sp, z, dict(z),
+                           {**CFG, "transfer": {"n_random_directions": 1,
+                                                "random_seed": 3}}, _Logger())
+        dirs_list.append(st["dirs"])
+        ctrl = control_pairs(pairs)
+        have = set(z)
+        ctrl_ctx[task] = (ctrl[ctrl["before_state_id"].isin(have)
+                               & ctrl["after_state_id"].isin(have)], z)
+    dirs_all = merge_dirs(dirs_list)
+    prefixes = {k.split("|")[0] for k in dirs_all["d_r"]}
+    assert prefixes == {"binding", "relation"}
+    for task, (ctrl, z) in ctrl_ctx.items():
+        rows = run_e4b_controls(ctrl, z, dirs_all, CFG, _Logger())
+        assert rows, f"{task} 应有对照行"
+        for r in rows:
+            assert "cos_to_structural_d_r" in r and "near_zero_frac" in r
+
+
+def _two_task_features(states):
+    """两任务通用特征：before 向量 + 家族方向的 after（含 flip/translate）。"""
+    rng = np.random.default_rng(1)
+    fam_dir, base_of, z = {}, {}, {}
+    for s in states:
+        if s["state_tag"] == "before":
+            base_of[s["base_scene_id"]] = rng.standard_normal(DIM)
+    for s in states:
+        fam = s["family"]
+        if fam not in fam_dir:
+            fam_dir[fam] = rng.standard_normal(DIM)
+        if s["state_tag"] == "before":
+            z[s["state_id"]] = base_of[s["base_scene_id"]]
+        else:
+            z[s["state_id"]] = (base_of[s["base_scene_id"]] + 0.8 * fam_dir[fam]
+                                + 0.02 * rng.standard_normal(DIM))
+    return z

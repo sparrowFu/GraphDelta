@@ -9,7 +9,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.utils.io import commit_experiment, load_config, output_tables_dir, write_jsonl
+from src.utils.io import (commit_experiment, load_config, output_tables_dir,
+                          write_jsonl, write_text_atomic)
 
 from . import delta as e4delta
 from . import paired as e4paired
@@ -18,6 +19,14 @@ from . import transfer as e4transfer
 from .data import complete_semantic_pairs, load_rendered
 from .features import e4_caches, extract_state_images, state_dataset_key
 from .pairs import load_manifest
+
+
+def _to_csv_atomic(path: Path, df) -> None:
+    """先写临时文件再原子替换：中断不会留下半写的正式产物（审查问题 5
+    配套——被中断的覆盖运行要么写出完整新文件，要么不动旧文件）。"""
+    tmp = path.with_name(path.name + ".tmp")
+    df.to_csv(tmp, index=False)
+    tmp.replace(path)
 
 
 def run(model, paths, logger, stage="all", smoke=False, seed=None):
@@ -76,7 +85,7 @@ def run(model, paths, logger, stage="all", smoke=False, seed=None):
     if stage in ("all", "a") and S_records:
         res = e4paired.run_e4a(S_records, cfg, logger)
         f = f"e4a_results{suffix}.csv"
-        pd.DataFrame(res["rows"]).to_csv(out / f, index=False)
+        _to_csv_atomic(out / f, pd.DataFrame(res["rows"]))
         write_jsonl(out / f"e4a_items{suffix}.jsonl",
                     [{**{k: v for k, v in rec.items() if k != "S"},
                       "S": rec["S"].tolist()} for rec in S_records])
@@ -93,18 +102,21 @@ def run(model, paths, logger, stage="all", smoke=False, seed=None):
         if ctrl_S:
             res = e4paired.run_e4a(ctrl_S, cfg, logger)
             f = f"e4a_control_results{suffix}.csv"
-            pd.DataFrame(res["rows"]).to_csv(out / f, index=False)
+            _to_csv_atomic(out / f, pd.DataFrame(res["rows"]))
             files.append(f)
     if stage in ("all", "b") and ctx:
-        rows, items, dirs_all = [], [], {}
+        rows, items, dirs_list = [], [], []
         for task, c in ctx.items():
             st = e4delta.run_e4b_stats(c["sp"], c["z"], c["raw"], cfg, logger)
             rows += st["rows"]
             items += st["items"]
-            dirs_all.update(st["dirs"])
+            dirs_list.append(st["dirs"])
+        # 逐内层合并（键带 task 前缀）：顶层 update 会让后处理任务覆盖
+        # 先处理任务的全部方向，绑定对照丢失结构方向比较（审查问题 2）
+        dirs_all = e4delta.merge_dirs(dirs_list)
         if rows:
             f = f"e4b_delta_stats{suffix}.csv"
-            pd.DataFrame(rows).to_csv(out / f, index=False)
+            _to_csv_atomic(out / f, pd.DataFrame(rows))
             files.append(f)
         if items:
             write_jsonl(out / f"e4b_items{suffix}.jsonl", items)
@@ -116,7 +128,7 @@ def run(model, paths, logger, stage="all", smoke=False, seed=None):
                                                   cfg, logger)
         if ctrl_rows:
             f = f"e4b_control_delta{suffix}.csv"
-            pd.DataFrame(ctrl_rows).to_csv(out / f, index=False)
+            _to_csv_atomic(out / f, pd.DataFrame(ctrl_rows))
             files.append(f)
         # 方向可靠性（开篇待办 14）：训练内子集划分 + 按场景重采样波动
         rel_rows = []
@@ -124,7 +136,7 @@ def run(model, paths, logger, stage="all", smoke=False, seed=None):
             rel_rows += e4delta.run_e4b_reliability(c["sp"], c["z"], cfg, logger)
         if rel_rows:
             f = f"e4b_reliability{suffix}.csv"
-            pd.DataFrame(rel_rows).to_csv(out / f, index=False)
+            _to_csv_atomic(out / f, pd.DataFrame(rel_rows))
             files.append(f)
         probe_rows = []
         for task, c in ctx.items():
@@ -132,7 +144,7 @@ def run(model, paths, logger, stage="all", smoke=False, seed=None):
                 c["manifest"]["pairs"], c["z"], c["rendered"], cfg, logger)
         if probe_rows:
             f = f"e4b_probe{suffix}.csv"
-            pd.DataFrame(probe_rows).to_csv(out / f, index=False)
+            _to_csv_atomic(out / f, pd.DataFrame(probe_rows))
             files.append(f)
     if stage in ("all", "c") and S_records:
         rows, identity = [], 0.0
@@ -145,9 +157,9 @@ def run(model, paths, logger, stage="all", smoke=False, seed=None):
             identity = max(identity, res["identity_check"]["max_abs_diff"])
         if rows:
             f = f"e4c_conversion_stats{suffix}.csv"
-            pd.DataFrame(rows).to_csv(out / f, index=False)
+            _to_csv_atomic(out / f, pd.DataFrame(rows))
             files.append(f)
-            (out / f"e4c_identity{suffix}.json").write_text(json.dumps(
+            write_text_atomic(out / f"e4c_identity{suffix}.json", json.dumps(
                 {"max_abs_diff_C_vs_dv_dot_dt": identity}, indent=2))
             files.append(f"e4c_identity{suffix}.json")
     if stage in ("all", "d") and ctx:
@@ -161,9 +173,9 @@ def run(model, paths, logger, stage="all", smoke=False, seed=None):
             self_check = res["self_check"]
         if rows:
             f = f"e4d_retrieval{suffix}.csv"
-            pd.DataFrame(rows).to_csv(out / f, index=False)
+            _to_csv_atomic(out / f, pd.DataFrame(rows))
             files.append(f)
-            (out / f"e4d_meta{suffix}.json").write_text(json.dumps(
+            write_text_atomic(out / f"e4d_meta{suffix}.json", json.dumps(
                 {"alpha": alpha, "self_check": self_check}, indent=2))
             files.append(f"e4d_meta{suffix}.json")
     commit_experiment(out, experiment, files)

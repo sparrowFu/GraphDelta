@@ -163,11 +163,13 @@ python PreExperiments/stage2_controlled_edit/scripts/render_edit_pairs.py --task
 blend_render_driver.py`，可见性与关系计算直接 import 官方实现）→ 渲染回填
 的场景图逐项复核（字段 / 位置 / 高度 / 方向轴 / 关系矩阵）→ 回填
 `rendered_states.parquet`（只登记当前清单对应的有效产物）→ 账本登记
-（`ledger.jsonl`：状态、秒、重试、字节、规格与资产指纹；有效吞吐含校验与
-重试）→ 生成 jpeg / crop 后处理对照图。可见性检查失败是确定性失败（退出码
-3，不重试），登记后该状态剔除。账本复用必须同时匹配场景规格（`spec_md5`）
-与渲染设置/资产指纹（`render_fp`）；换 seed、改规格或改设置后旧记录作废、
-重新渲染。
+（`ledger.jsonl`：状态、秒、重试、字节、规格与资产指纹、图片与场景内容
+摘要；有效吞吐含校验与重试）→ 生成 jpeg / crop 后处理对照图（来源必须在
+当前有效状态集合内，磁盘残留的旧 PNG 不作依据）。可见性检查失败是确定性
+失败（退出码 3，不重试），登记后该状态剔除。账本复用必须同时匹配场景规格
+（`spec_md5`）、渲染设置/资产指纹（`render_fp`）且磁盘产物内容摘要与成功
+记录一致；换 seed、改规格、改设置或磁盘文件被后续尝试/另一清单的同名状态
+覆盖后旧记录作废、重新渲染；无内容摘要的旧记录无法核对，同样作废重渲染。
 
 参数（共 4 个）：
 
@@ -210,14 +212,17 @@ python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model [cl
 
 作用：读 `outputs/<model>/seed_<seed>/tables/` 的 e4 产物，写
 `e4_summary.csv` 与 `e4_stage_decision.json`。正式汇总只消费 run_meta 中
-**成功提交**的正式产物（`commit_experiment` 记录核验），不回退 smoke 文件；
-检查预先确定的任务（binding+relation）与转换数是否齐全，缺失逐项列出。
+**成功提交且内容摘要相符**的正式产物（`commit_experiment` 记录 + 逐产物
+md5 核对；共享输出路径的文件被中断运行覆盖过即拒绝），不回退 smoke 文件；
+完整性是判定的前置条件：预先确定的任务（binding+relation）、规定转换、
+规定对照与清单规定的留出场景覆盖缺失时对应轴记"数据不足"，缺失逐项列出。
 判定规则随产物落盘（避免事后换口径）：确认性检验族 = E4-A 每任务 1 个 +
 E4-C 每任务 1 个（任务级 `__overall__` C，方向须为正）+ E4-D 每任务×规定
 对照各 1 个（同场景配对差，均值为正），族内 Holm 校正后 p < α 才判
-"有支持证据"；对照缺覆盖或任务缺失记"数据不足"。`--smoke` 只读
-`*_smoke.csv`，写独立的 `e4_summary_smoke.csv` / `e4_stage_decision_smoke.json`，
-仅记录流程是否跑通，不给出机制支持标签。不加载模型。
+"有支持证据"；族规模冻结，缺数据而不含的检验按 p=1 计入，不缩小族。
+`--smoke` 只读 `*_smoke.csv`，写独立的 `e4_summary_smoke.csv` /
+`e4_stage_decision_smoke.json`，仅记录流程是否跑通，不给出机制支持标签。
+不加载模型。
 
 参数（共 3 个）：
 

@@ -1,7 +1,9 @@
-"""e4.summarize 单元测试：来源核验、方向检查、Holm 校正（审查问题 3、7、8）。
+"""e4.summarize 单元测试：来源核验、方向检查、Holm 校正、完整性前置
+（审查问题 3、7、8 及完整性/摘要两处修复）。
 
-正式汇总只消费 run_meta 中成功提交的正式产物；smoke 文件不回退；E4-C
-必须检查 C 方向；E4-D 用同场景配对差 + Holm，对照缺失记数据不足。
+正式汇总只消费 run_meta 中成功提交且内容摘要相符的正式产物；smoke 文件
+不回退；E4-C 必须检查 C 方向；E4-D 用同场景配对差 + Holm，任一规定对照、
+规定转换或清单规定留出场景缺失即记数据不足；Holm 族规模冻结。
 """
 import json
 import sys
@@ -14,7 +16,16 @@ import numpy as np
 import pandas as pd
 import pytest
 
+import e4.summarize as S
+from e4.pairs import family_of_binding, family_of_relation
 from e4.summarize import _holm, summarize, summarize_smoke
+from generation.scene_spec import (BINDING_CONVERSIONS,
+                                   RELATION_TYPE_PAIRS_TRAIN)
+from src.utils.io import md5_file
+
+FAM_NAMES = {"binding": [family_of_binding(c) for c in BINDING_CONVERSIONS],
+             "relation": [family_of_relation(p)
+                          for p in RELATION_TYPE_PAIRS_TRAIN]}
 
 
 class _Logger:
@@ -26,7 +37,11 @@ class _Logger:
 
 
 def _tables(tmp_path, files: dict, committed=None):
-    """构造 outputs/<model>/seed_0/tables 与 run_meta；files: {名: DataFrame}。"""
+    """构造 outputs/<model>/seed_0/tables 与 run_meta；files: {名: DataFrame}。
+
+    committed 不为 None 时按 e4_all 成功提交登记，含逐产物内容摘要
+    （outputs_md5），与 commit_experiment 的写出格式一致。
+    """
     tables = tmp_path / "clip_vitl14" / "seed_0" / "tables"
     tables.mkdir(parents=True)
     for name, df in files.items():
@@ -34,27 +49,38 @@ def _tables(tmp_path, files: dict, committed=None):
     meta = {"model": "clip_vitl14", "seed": 0,
             "experiments": {} if committed is None else {
                 "e4_all": {"status": "success", "started": "t",
-                           "last_success": {"outputs": sorted(committed),
-                                            "updated": "t"}}}}
+                           "last_success": {
+                               "outputs": sorted(committed), "updated": "t",
+                               "outputs_md5": {n: md5_file(tables / n)
+                                               for n in committed}}}}}
     (tables / "run_meta.json").write_text(json.dumps(meta))
-    return {"dirs": {"outputs": tmp_path}}, tables
+    return {"dirs": {"outputs": tmp_path,
+                     "edit_pairs": tmp_path / "edit_pairs"}}, tables
 
 
-def _e4a(p=0.001, acc=0.9, null=0.3):
+def _e4a(p=0.001, acc=0.9, null=0.3, drop_families=()):
+    """E4-A 夹具：每任务全部规定转换的 heldout 行 + 任务级 __overall__ 行。"""
     rows = []
     for task in ("binding", "relation"):
+        for fam in FAM_NAMES[task]:
+            if fam in drop_families and task == "binding":
+                continue
+            rows.append({"task": task, "family": fam, "split": "heldout",
+                         "n_scenes": 1, "pair_acc": acc})
         rows.append({"task": task, "family": "__overall__", "split": "heldout",
                      "n_scenes": 8, "pair_acc": acc, "perm_p": p,
                      "null_mean": null})
     return pd.DataFrame(rows)
 
 
-def _e4c(c_mean=0.5, p=0.002, n_fam={"binding": 8, "relation": 10}):
+def _e4c(c_mean=0.5, p=0.002, n_fam=None):
+    """E4-C 夹具：规定转换名的家族行（n_heldout 齐全）+ __overall__ 行。"""
+    n_fam = n_fam or {"binding": 8, "relation": 10}
     rows = []
     for task, n in n_fam.items():
-        for i in range(n):
-            rows.append({"task": task, "family": f"f{i}",
-                         "p_heldout": np.nan})
+        for fam in FAM_NAMES[task][:n]:
+            rows.append({"task": task, "family": fam, "p_heldout": np.nan,
+                         "n_heldout": 2})
         rows.append({"task": task, "family": "__overall__",
                      "n_conditions": n, "n_heldout": 4,
                      "C_mean_heldout": c_mean, "C_ci_low_heldout": c_mean - 0.1,
@@ -104,7 +130,10 @@ def test_summary_rejects_smoke_fallback(tmp_path):
     decision = summarize("clip_vitl14", 0, {"dirs": {"outputs": tmp_path}},
                          _Logger())
     assert any("e4a_results.csv" in m for m in decision["missing"])
-    assert decision["structure_identifiability"] == {}
+    # 文件不可消费时该轴显式记数据不足（不留空）
+    assert all(e["label"] == "数据不足"
+               for e in decision["structure_identifiability"].values())
+    assert set(decision["structure_identifiability"]) == {"binding", "relation"}
 
 
 def test_crossmodal_direction_guard(tmp_path):
@@ -185,10 +214,124 @@ def test_smoke_summary_separate_files_only(tmp_path):
     _e4a().to_csv(tables / "e4a_results_smoke.csv", index=False)
     out = summarize_smoke("clip_vitl14", 0, {"dirs": {"outputs": tmp_path}},
                           _Logger())
-    assert out["axes"]["a"]["ran"] and out["axes"]["a"]["n_rows"] == 2
+    assert out["axes"]["a"]["ran"] and out["axes"]["a"]["n_rows"] == len(_e4a())
     assert out["axes"]["c"]["ran"] is False
     assert (tables / "e4_summary_smoke.csv").exists()
     assert (tables / "e4_stage_decision_smoke.json").exists()
     assert not (tables / "e4_stage_decision.json").exists()
     # smoke 汇总不产出机制支持标签
     assert "label" not in json.dumps(out)
+
+
+_COMMITTED_ALL = ["e4a_results.csv", "e4c_conversion_stats.csv",
+                  "e4d_retrieval.csv"]
+
+
+def test_partial_controls_insufficient_and_frozen_holm_family(tmp_path):
+    """缺任一规定对照（哪怕只剩一个对照可用）即数据不足；Holm 族保持
+    冻结规模 12，缺失的检验按 p=1 计入（computed=False），不因缺数据
+    缩小族、放宽其余检验的校正。"""
+    d = _e4d(n_scenes=9)
+    d = d[~d["method"].isin(["wrong_conversion", "random", "text_delta"])]
+    paths, _ = _tables(
+        tmp_path,
+        {"e4a_results.csv": _e4a(), "e4c_conversion_stats.csv": _e4c(),
+         "e4d_retrieval.csv": d},
+        committed=_COMMITTED_ALL)
+    decision = summarize("clip_vitl14", 0, paths, _Logger())
+    for task in ("binding", "relation"):
+        e = decision["direction_transfer"][task]
+        assert e["label"] == "数据不足"
+        assert set(e["missing_controls"]) == {"wrong_conversion", "random",
+                                              "text_delta"}
+        assert e["controls"] == {}
+    assert len(decision["holm_family"]) == 12
+    # 不完整任务的 D 检验全部不进入确认族（按 p=1 填充，computed=False）
+    uncomputed = {h["key"] for h in decision["holm_family"]
+                  if not h["computed"]}
+    assert uncomputed == {f"D:{t}:{m}" for t in ("binding", "relation")
+                          for m in ("wrong_conversion", "random",
+                                    "reverse", "text_delta")}
+    assert all(h["p_raw"] == 1.0 and h["p_holm"] == 1.0
+               for h in decision["holm_family"] if not h["computed"])
+    # 完整的轴不受影响
+    assert decision["structure_identifiability"]["binding"]["label"] == "有支持证据"
+    assert decision["crossmodal_alignment"]["binding"]["label"] == "有支持证据"
+
+
+def test_e4c_incomplete_conversions_insufficient(tmp_path):
+    """E4-C 转换不齐全（1/8）：只登记 missing 不够，必须判数据不足；
+    转换齐全的任务正常判定。"""
+    paths, _ = _tables(
+        tmp_path,
+        {"e4a_results.csv": _e4a(),
+         "e4c_conversion_stats.csv": _e4c(n_fam={"binding": 1, "relation": 10}),
+         "e4d_retrieval.csv": _e4d()},
+        committed=_COMMITTED_ALL)
+    decision = summarize("clip_vitl14", 0, paths, _Logger())
+    assert decision["crossmodal_alignment"]["binding"]["label"] == "数据不足"
+    assert decision["crossmodal_alignment"]["relation"]["label"] == "有支持证据"
+    assert any("e4c:binding:转换留出数据缺失" in m for m in decision["missing"])
+
+
+def test_e4a_missing_family_insufficient(tmp_path):
+    """E4-A 缺规定转换的 heldout 行：数据不足，不能凭 __overall__ 行判支持。"""
+    paths, _ = _tables(
+        tmp_path,
+        {"e4a_results.csv": _e4a(drop_families=FAM_NAMES["binding"][:2]),
+         "e4c_conversion_stats.csv": _e4c(),
+         "e4d_retrieval.csv": _e4d()},
+        committed=_COMMITTED_ALL)
+    decision = summarize("clip_vitl14", 0, paths, _Logger())
+    assert decision["structure_identifiability"]["binding"]["label"] == "数据不足"
+    assert decision["structure_identifiability"]["relation"]["label"] == "有支持证据"
+    assert any("e4a:binding:转换 heldout 行缺失" in m for m in decision["missing"])
+
+
+def test_shared_file_rejected_when_overwritten(tmp_path):
+    """共享输出路径被中断的单阶段重跑覆盖：内容与 e4_all 的提交摘要不符，
+    必须拒绝消费（即使 e4_all 仍是 success、e4_a 只是 running）。"""
+    paths, tables = _tables(
+        tmp_path,
+        {"e4a_results.csv": _e4a(), "e4c_conversion_stats.csv": _e4c(),
+         "e4d_retrieval.csv": _e4d(n_scenes=9)},
+        committed=_COMMITTED_ALL)
+    # 模拟：重跑 e4_a 写出了新的 e4a_results.csv 后中断（未提交）
+    a = pd.read_csv(tables / "e4a_results.csv")
+    a.loc[a["family"] == "__overall__", "pair_acc"] = 0.42
+    a.to_csv(tables / "e4a_results.csv", index=False)
+    meta = json.loads((tables / "run_meta.json").read_text())
+    meta["experiments"]["e4_a"] = {"status": "running", "started": "t2"}
+    (tables / "run_meta.json").write_text(json.dumps(meta))
+    decision = summarize("clip_vitl14", 0, paths, _Logger())
+    assert any("摘要" in m and "e4a_results.csv" in m
+               for m in decision["missing"])
+    assert all(e["label"] == "数据不足"
+               for e in decision["structure_identifiability"].values())
+    assert "e4a_results.csv" not in decision["provenance"]
+    # 其余产物未被覆盖，正常判定
+    assert decision["crossmodal_alignment"]["binding"]["label"] == "有支持证据"
+
+
+def test_scene_coverage_against_frozen_manifest(tmp_path, monkeypatch):
+    """留出场景覆盖与冻结清单逐一核对：e4d 少一个清单规定场景、e4a 的
+    n_scenes 少于清单规定数，对应轴都记数据不足。"""
+    def _fake_manifest(d, t):
+        return {"pairs": pd.DataFrame(
+            [{"base_scene_id": f"s{i}", "edit_kind": "swap",
+              "split": "heldout"} for i in range(9)]
+            + [{"base_scene_id": f"t{i}", "edit_kind": "swap",
+                "split": "train"} for i in range(9)])}
+
+    monkeypatch.setattr(S, "load_manifest", _fake_manifest)
+    paths, _ = _tables(
+        tmp_path,
+        {"e4a_results.csv": _e4a(), "e4c_conversion_stats.csv": _e4c(),
+         "e4d_retrieval.csv": _e4d(n_scenes=8)},   # 只覆盖 s0..s7，缺 s8
+        committed=_COMMITTED_ALL)
+    decision = summarize("clip_vitl14", 0, paths, _Logger())
+    for task in ("binding", "relation"):
+        assert decision["structure_identifiability"][task]["label"] == "数据不足"
+        assert decision["direction_transfer"][task]["label"] == "数据不足"
+    assert any("留出场景覆盖不足 8/9" in m for m in decision["missing"])
+    assert any("清单规定留出场景缺失 1 个" in m for m in decision["missing"])

@@ -1,13 +1,19 @@
 """规格驱动渲染调度（阶段二 Step 3 的核心逻辑，脚本 render_edit_pairs.py 调用）。
 
 流程：读清单 → 展开唯一渲染状态 → 查账本跳过已完成（须同时匹配场景
-规格 spec_md5 与渲染设置 / 资产指纹 render_fp，审查问题 6）→ 子进程调
-Blender（blend_render_driver.py）→ 用渲染回填的场景图复核规格 → 回填
+规格 spec_md5 与渲染设置 / 资产指纹 render_fp，且磁盘产物内容摘要与
+成功记录一致，审查问题 6 与复用核对）→ 子进程调 Blender
+（blend_render_driver.py）→ 用渲染回填的场景图复核规格 → 回填
 rendered_states.parquet（只登记当前清单对应的有效产物）→ 账本登记
-（状态数 / 秒 / 重试 / 字节数）→ 生成 jpeg / crop 后处理对照图。
+（状态数 / 秒 / 重试 / 字节数 / 图片与场景内容摘要）→ 生成 jpeg / crop
+后处理对照图。
 
 账本口径（工作方案第 8 节）：唯一状态是渲染单位；吞吐含校验与重试的
 重试不重复计费；--force 重渲染已完成状态；--limit 只渲前 N 态（小批试运行）。
+复用核对：图片与场景按 state_id 覆盖保存，历史成功记录不能证明磁盘上
+仍是该次产物（可能被后续失败尝试或另一清单的同名状态覆盖），因此复用
+和回填都要求记录自带的 image_md5 / scene_md5 与当前磁盘内容一致；无
+摘要的旧记录无法核对，作废重渲染。
 """
 import io
 import json
@@ -21,6 +27,7 @@ import pandas as pd
 from generation.scene_spec import (
     CAMERA_FRONT_VEC, CAMERA_LEFT_VEC, REL_EPS, SIZES,
 )
+from src.utils.io import md5_file
 
 DRIVER = Path(__file__).resolve().parents[2] / "render" / "blend_render_driver.py"
 BLENDER_TIMEOUT = 900  # 秒；单态标称约 39 秒，留足余量
@@ -169,6 +176,10 @@ def _render_one(state, root: Path, gp: dict, paths: dict, rcfg: dict, logger,
            "exit_code": code, "retries": retries, "validated": validated,
            "problems": problems, "spec_md5": spec_md5, "render_fp": render_fp,
            "image_bytes": img.stat().st_size if img.exists() else 0}
+    if validated:
+        # 内容摘要：复用与回填据此核对磁盘产物仍是本次的（防覆盖串台）
+        rec["image_md5"] = md5_file(img)
+        rec["scene_md5"] = md5_file(scn)
     if not validated:
         logger.warning(f"[render] {sid} 未通过: code={code} problems={problems[:3]}")
         scene_json = ""
@@ -178,10 +189,17 @@ def _render_one(state, root: Path, gp: dict, paths: dict, rcfg: dict, logger,
 
 
 def _postprocess_derived(state, root: Path, scene_jsons: dict, pcfg: dict):
-    """生成 jpeg / crop 派生对照图（无语义变化，第 3 节）；场景图不变。"""
+    """生成 jpeg / crop 派生对照图（无语义变化，第 3 节）；场景图不变。
+
+    来源必须位于当前有效状态集合（scene_jsons 只含账本核对通过的态）：
+    磁盘上残留的旧 PNG 存在不能作为派生依据——来源可能已被失败重渲染
+    或另一清单的同名状态覆盖。
+    """
     from PIL import Image
     sid = state["state_id"]
     src_id = state["source_state_id"]
+    if src_id not in scene_jsons:
+        return None
     src_png = root / "images" / f"{src_id}.png"
     out_png = root / "images" / f"{sid}.png"
     if not src_png.exists():
@@ -201,8 +219,44 @@ def _postprocess_derived(state, root: Path, scene_jsons: dict, pcfg: dict):
         return None
     img.save(out_png)
     return {"state_id": sid, "image_path": str(out_png),
-            "scene_json": scene_jsons.get(src_id, ""), "validated": True,
+            "scene_json": scene_jsons[src_id], "validated": True,
             "render_seconds": 0.0, "derived": True}
+
+
+def _ledger_scan(ledger: Path, matches) -> tuple:
+    """一遍扫描账本：返回 (每 state_id 最新一条匹配的成功记录, 指纹不符的
+    成功记录数)。同状态多条匹配记录取最后一条（最新尝试）。"""
+    latest, stale = {}, 0
+    if not ledger.exists():
+        return latest, stale
+    for line in ledger.read_text().splitlines():
+        if not line.strip():
+            continue
+        rec = json.loads(line)
+        if not rec.get("validated"):
+            continue
+        if matches(rec):
+            latest[rec["state_id"]] = rec
+        else:
+            stale += 1
+    return latest, stale
+
+
+def _record_matches_disk(rec: dict, root: Path) -> bool:
+    """成功记录与磁盘当前产物是否一致（复用与回填共用的核对）。
+
+    图片/场景按 state_id 覆盖保存：记录自带的 image_md5 / scene_md5 必须
+    与当前磁盘内容一致，否则该记录对应的是已被覆盖的旧产物。无摘要的
+    旧记录无法核对，一律视为不可复用（重渲染一次即换取摘要）。
+    """
+    img = root / "images" / f"{rec['state_id']}.png"
+    scn = root / "scenes" / f"{rec['state_id']}.json"
+    if not (img.exists() and scn.exists()):
+        return False
+    if "image_md5" not in rec or "scene_md5" not in rec:
+        return False
+    return (md5_file(img) == rec["image_md5"]
+            and md5_file(scn) == rec["scene_md5"])
 
 
 def render_manifest(task: str, manifest: dict, paths: dict, cfg: dict,
@@ -218,29 +272,29 @@ def render_manifest(task: str, manifest: dict, paths: dict, cfg: dict,
     spec_md5 = {s["state_id"]: _spec_md5(s["spec"]) for s in states}
 
     def _ledger_matches(rec: dict) -> bool:
-        """账本记录是否为当前清单 + 当前规格 / 资产指纹下的有效产物。"""
+        """账本记录是否为当前清单 + 当前规格 / 资产指纹下的成功记录。"""
         sid = rec.get("state_id")
         return bool(rec.get("validated") and sid in spec_md5
                     and rec.get("spec_md5") == spec_md5[sid]
                     and rec.get("render_fp") == render_fp)
 
-    done, stale = set(), 0
-    if ledger.exists() and not force:
-        for line in ledger.read_text().splitlines():
-            if not line.strip():
-                continue
-            rec = json.loads(line)
-            if rec.get("validated"):
-                if _ledger_matches(rec):
-                    done.add(rec["state_id"])
-                else:
-                    stale += 1
+    latest, stale = _ledger_scan(ledger, _ledger_matches) if not force else ({}, 0)
+    done = set()
+    legacy_no_digest, disk_mismatch = 0, 0
+    for sid, rec in latest.items():
+        if _record_matches_disk(rec, root):
+            done.add(sid)
+        elif "image_md5" in rec:
+            disk_mismatch += 1
+        else:
+            legacy_no_digest += 1
     todo = [s for s in states if s["state_id"] not in done]
     skipped = len(states) - len(todo)
     if limit is not None:
         todo = todo[:int(limit)]
     logger.info(f"[render] {task}: 待渲染 {len(todo)} 态（账本跳过 {skipped}，"
-                f"指纹不符作废 {stale}）")
+                f"指纹不符作废 {stale}，磁盘与记录不符 {disk_mismatch}，"
+                f"无摘要旧记录 {legacy_no_digest}）")
     gp = _gen_paths(paths)
     ledger_f = ledger.open("a")
     scene_jsons = {}
@@ -266,16 +320,12 @@ def render_manifest(task: str, manifest: dict, paths: dict, cfg: dict,
     wall = time.time() - t0
 
     # 汇总 rendered_states.parquet：只登记当前清单 + 当前指纹下最新一次
-    # 校验通过的渲染态（审查问题 6：旧清单 / 旧规格的遗留产物不得混入），
-    # 另加派生对照态。同状态多次渲染取账本最后一条匹配记录。
-    ok = {}
-    if ledger.exists():
-        for line in ledger.read_text().splitlines():
-            if not line.strip():
-                continue
-            rec = json.loads(line)
-            if _ledger_matches(rec):
-                ok[rec["state_id"]] = rec
+    # 校验通过、且磁盘内容摘要核对一致的渲染态（审查问题 6：旧清单 / 旧
+    # 规格的遗留产物不得混入；复用核对：历史成功记录不得套用到已被覆盖
+    # 的文件上），另加派生对照态（来源必须在上述有效集合内）。
+    latest, _ = _ledger_scan(ledger, _ledger_matches)
+    ok = {sid: rec for sid, rec in latest.items()
+          if _record_matches_disk(rec, root)}
     rows, ok_render = [], len(ok)
     for sid in sorted(ok):
         scene = json.loads((root / "scenes" / f"{sid}.json").read_text())
@@ -285,7 +335,7 @@ def render_manifest(task: str, manifest: dict, paths: dict, cfg: dict,
                      "validated": True,
                      "render_seconds": ok[sid]["seconds"], "derived": False})
     by_id = {r["state_id"]: r["scene_json"] for r in rows}
-    n_derived = 0
+    n_derived, derived_skipped = 0, 0
     for st in manifest["states"].to_dict("records"):
         if st["needs_render"]:
             continue
@@ -293,11 +343,15 @@ def render_manifest(task: str, manifest: dict, paths: dict, cfg: dict,
         if d is not None:
             rows.append(d)
             n_derived += 1
+        else:
+            derived_skipped += 1
     pd.DataFrame(rows).to_parquet(root / "rendered_states.parquet", index=False)
     throughput = len(todo) / wall if wall > 0 else 0.0
     summary = {"task": task, "attempted": len(todo), "skipped_in_ledger": skipped,
                "stale_fingerprint": stale,
+               "disk_mismatch": disk_mismatch, "legacy_no_digest": legacy_no_digest,
                "validated_total": ok_render, "derived": n_derived,
+               "derived_skipped": derived_skipped,
                "wall_seconds": wall, "attempted_per_second": throughput,
                "workers": workers}
     logger.info(f"[render] {task} 完成: {summary}")

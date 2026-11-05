@@ -146,3 +146,16 @@ def cosine_rows(A, B) -> np.ndarray:
     good = den > 1e-12
     out[good] = num[good] / den[good]
     return out
+
+
+def cosine_matrix(A, B) -> np.ndarray:
+    """A 每行与 B 每行的 cosine 全组合，形状 (len(A), len(B))；近零行记 0。
+
+    行数不同的两组向量（如留出 Δv vs 全部随机方向）不能用 cosine_rows
+    逐行配对——那要求行数可广播，行数恰好相等时还会算成逐对错配。
+    """
+    A = np.asarray(A, dtype=np.float64)
+    B = np.asarray(B, dtype=np.float64)
+    An = A / np.clip(np.linalg.norm(A, axis=1, keepdims=True), 1e-12, None)
+    Bn = B / np.clip(np.linalg.norm(B, axis=1, keepdims=True), 1e-12, None)
+    return An @ Bn.T

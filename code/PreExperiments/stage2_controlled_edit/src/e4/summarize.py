@@ -1,14 +1,19 @@
 """E4 汇总与阶段判断（阶段二 Step 5，工作方案第 7 节）。
 
-正式汇总（summarize）只消费已成功提交的正式产物：核对 run_meta.json 中
-实验记录（status=success）与产物清单（last_success.outputs），禁止回退到
-smoke 文件（审查问题 7）；检查预先确定的任务、转换是否齐全，缺失逐项
-列入 missing。smoke 汇总走 summarize_smoke，输出独立文件名，只记录流程
-是否跑通，不给出机制支持标签。
+正式汇总（summarize）只消费已成功提交且内容摘要相符的正式产物：核对
+run_meta.json 中实验记录（status=success）、产物清单
+（last_success.outputs）与逐产物摘要（last_success.outputs_md5，磁盘
+文件被中断运行覆盖过即拒绝），禁止回退到 smoke 文件（审查问题 7）；
+完整性是正式判定的前置条件：预先规定的任务、转换、对照或场景覆盖缺失
+时对应轴记"数据不足"，不得凭已出现的行给支持标签。smoke 汇总走
+summarize_smoke，输出独立文件名，只记录流程是否跑通，不给出机制支持
+标签。
 
 判定规则（正式 E4 运行前冻结，随产物写进 e4_stage_decision.json，避免
 事后口径漂移；确认性检验族 = E4-A 每任务 1 个 + E4-C 每任务 1 个 +
-E4-D 每任务 × 规定对照各 1 个，族内 Holm step-down 校正，审查问题 8）：
+E4-D 每任务 × 规定对照各 1 个，族内 Holm step-down 校正，审查问题 8。
+族规模固定：缺数据而不含的检验按 p=1 计入，不因缺数据缩小族、放宽
+其余检验的校正）：
 - 结构可辨识（E4-A）：任务级 heldout pair_acc 的场景内置换 Holm p < α
   且 pair_acc > null_mean；
 - 跨模态对应（E4-C）：任务级（__overall__）heldout C 的符号翻转 Holm
@@ -16,7 +21,8 @@ E4-D 每任务 × 规定对照各 1 个，族内 Holm step-down 校正，审查�
   反向；逐转换结果仅探索性描述，不进入判定）；
 - 方向迁移（E4-D）：正确方向相对每个规定对照的同场景配对差 Holm p < α
   且差均值 > 0；随机方向的多次重复先按场景平均（不当作额外独立场景），
-  正确方向与全部规定对照必须覆盖同一批留出场景，否则记数据不足。
+  正确方向与全部规定对照必须覆盖同一批留出场景，任一规定对照缺失即记
+  数据不足。
 """
 import json
 from pathlib import Path
@@ -26,14 +32,18 @@ import pandas as pd
 
 from generation.scene_spec import BINDING_CONVERSIONS, RELATION_TYPE_PAIRS_TRAIN
 from src.metrics.bootstrap import cluster_mean_ci
-from src.utils.io import load_config
+from src.utils.io import load_config, md5_file
 
+from .pairs import family_of_binding, family_of_relation, load_manifest
 from .stats import sign_flip_test
 
 SUPPORTED = ("有支持证据", "证据不足", "数据不足")
 TASKS = ("binding", "relation")
-EXPECTED_FAMILIES = {"binding": len(BINDING_CONVERSIONS),
-                     "relation": len(RELATION_TYPE_PAIRS_TRAIN)}
+# 冻结的规定转换（名称口径与清单一致），覆盖核对按名称逐一进行
+EXPECTED_FAMILIES = {
+    "binding": {family_of_binding(c) for c in BINDING_CONVERSIONS},
+    "relation": {family_of_relation(p) for p in RELATION_TYPE_PAIRS_TRAIN},
+}
 # 各产物由哪些正式实验产生（run_meta.experiments 键；smoke 实验不在其列）
 PRODUCERS = {
     "e4a_results.csv": ("e4_all", "e4_a"),
@@ -65,15 +75,44 @@ def _holm(pvals: dict, alpha: float) -> dict:
     return adj
 
 
-def _committed(run_meta: dict, filename: str):
-    """filename 是否由某个正式实验成功提交（返回实验名，否则 None）。"""
+def _committed(run_meta: dict, filename: str, path: Path):
+    """filename 是否由某个正式实验成功提交、且磁盘内容与提交摘要一致。
+
+    e4_all 与单阶段共享输出路径：只认任一生产者的历史成功记录，会把被
+    中断重跑覆盖过的文件误当成功产物消费（另一个生产者 status=running
+    且已写出同名文件时尤其如此）。因此必须核对提交时的内容摘要——
+    摘要不符或记录无摘要（无法核对）一律拒绝。
+    """
     exps = (run_meta or {}).get("experiments", {})
     for name in PRODUCERS.get(filename, ()):
         rec = exps.get(name) or {}
-        outs = (rec.get("last_success") or {}).get("outputs") or []
-        if rec.get("status") == "success" and filename in outs:
-            return name
+        if rec.get("status") != "success":
+            continue
+        last = rec.get("last_success") or {}
+        if filename not in (last.get("outputs") or []):
+            continue
+        digest = (last.get("outputs_md5") or {}).get(filename)
+        if digest is None or not path.exists() or md5_file(path) != digest:
+            return None
+        return name
     return None
+
+
+def _expected_heldout_scenes(paths: dict, task: str):
+    """清单规定的语义编辑留出场景集合（冻结覆盖核对用）。
+
+    清单缺失返回 None（无法核对，missing 记一条提示，不据此改标签）。
+    """
+    edit_dir = (paths.get("dirs") or {}).get("edit_pairs")
+    if edit_dir is None:
+        return None
+    try:
+        m = load_manifest(edit_dir, task)
+    except (FileNotFoundError, RuntimeError):
+        return None
+    sp = m["pairs"]
+    sp = sp[sp["edit_kind"].isin(["swap", "flip"]) & (sp["split"] == "heldout")]
+    return set(sp["base_scene_id"])
 
 
 def _fnum(x, default=np.nan):
@@ -97,13 +136,17 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
         "rules": {
             "confirmatory_family":
                 "E4-A 每任务 1 个 + E4-C 每任务 1 个 + E4-D 每任务×规定"
-                f"对照{list(controls)}各 1 个",
+                f"对照{list(controls)}各 1 个（族规模冻结：缺数据的检验按 "
+                "p=1 计入，不缩小族）",
             "multiplicity": "Holm step-down，族内校正后 p < alpha 才判支持",
+            "completeness": "完整性是前置条件：规定转换 / 对照 / 留出场景"
+                            "覆盖缺失时对应轴记数据不足，不凭已出现的行判定",
             "structure": "E4-A 任务级 heldout 置换 Holm p < α 且 pair_acc > null_mean",
             "crossmodal": "E4-C 任务级 heldout C 符号翻转 Holm p < α 且 C_mean > 0"
                           "（方向检查；逐转换结果仅探索性）",
             "transfer": "E4-D 正确方向 vs 每个规定对照：同场景配对差 Holm p < α"
-                        "且差均值 > 0；覆盖场景不一致记数据不足",
+                        "且差均值 > 0；任一规定对照或清单规定留出场景缺失"
+                        "记数据不足",
         },
         "provenance": {}, "holm_family": [],
         "structure_identifiability": {}, "crossmodal_alignment": {},
@@ -117,18 +160,27 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
     else:
         decision["missing"].append("run_meta.json（无实验来源记录）")
     confirmatory = {}   # key -> 原始 p，Holm 后回填标签
+    # 冻结清单的留出场景集合（E4-A / E4-D 覆盖核对共用）；清单缺失只记
+    # 提示，不据此改标签（正式流水线清单始终在）
+    expected_scenes = {t: _expected_heldout_scenes(paths, t) for t in tasks}
+    if any(v is None for v in expected_scenes.values()):
+        decision["missing"].append("edit_pairs 清单缺失：留出场景覆盖未核对")
 
     # ---------------- E4-A 结构可辨识 ----------------
     e4a_p = tables / "e4a_results.csv"
-    src = _committed(run_meta, "e4a_results.csv")
+    src = _committed(run_meta, "e4a_results.csv", e4a_p)
     if src is None or not e4a_p.exists():
         decision["missing"].append(
-            "e4a_results.csv" + ("（无成功提交记录）" if e4a_p.exists()
+            "e4a_results.csv" + ("（无内容摘要相符的成功提交记录——可能被"
+                                 "中断运行覆盖）" if e4a_p.exists()
                                  else "（文件缺失）"))
+        for task in tasks:
+            decision["structure_identifiability"][task] = {"label": SUPPORTED[2]}
     else:
         decision["provenance"]["e4a_results.csv"] = src
         a = pd.read_csv(e4a_p)
         overall = a[(a["family"] == "__overall__") & (a["split"] == "heldout")]
+        fam_held = a[(a["family"] != "__overall__") & (a["split"] == "heldout")]
         for task in tasks:
             rows_t = overall[overall["task"] == task]
             if rows_t.empty:
@@ -140,7 +192,22 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
             entry = {"pair_acc": _fnum(r["pair_acc"]), "perm_p": p,
                      "null_mean": _fnum(r.get("null_mean")),
                      "n_scenes": int(r.get("n_scenes", 0))}
-            if np.isnan(p):
+            # 完整性前置条件：规定转换的 heldout 行齐全，且留出场景数与
+            # 冻结清单一致（渲染不完整会静默少场景，不得凭剩余行判定）
+            fam_missing = EXPECTED_FAMILIES[task] - set(
+                fam_held[fam_held["task"] == task]["family"])
+            exp = expected_scenes[task]
+            scenes_short = exp is not None and entry["n_scenes"] < len(exp)
+            if fam_missing:
+                decision["missing"].append(
+                    f"e4a:{task}:转换 heldout 行缺失 "
+                    f"{len(fam_missing)}/{len(EXPECTED_FAMILIES[task])}: "
+                    f"{sorted(fam_missing)[:4]}")
+            if scenes_short:
+                decision["missing"].append(
+                    f"e4a:{task}:留出场景覆盖不足 {entry['n_scenes']}/"
+                    f"{len(exp)}（清单规定）")
+            if np.isnan(p) or fam_missing or scenes_short:
                 entry["label"] = SUPPORTED[2]
             else:
                 confirmatory[f"A:{task}"] = p
@@ -150,26 +217,36 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
 
     # ---------------- E4-C 跨模态对应（任务级主统计 + 方向）----------------
     e4c_p = tables / "e4c_conversion_stats.csv"
-    src = _committed(run_meta, "e4c_conversion_stats.csv")
+    src = _committed(run_meta, "e4c_conversion_stats.csv", e4c_p)
     if src is None or not e4c_p.exists():
         decision["missing"].append(
-            "e4c_conversion_stats.csv" + ("（无成功提交记录）" if e4c_p.exists()
+            "e4c_conversion_stats.csv" + ("（无内容摘要相符的成功提交记录——"
+                                          "可能被中断运行覆盖）" if e4c_p.exists()
                                           else "（文件缺失）"))
+        for task in tasks:
+            decision["crossmodal_alignment"][task] = {"label": SUPPORTED[2]}
     else:
         decision["provenance"]["e4c_conversion_stats.csv"] = src
         c = pd.read_csv(e4c_p)
         fam_rows = c[c["family"] != "__overall__"]
         for task in tasks:
             grp = fam_rows[fam_rows["task"] == task]
+            # 覆盖核对按冻结名称逐一进行，且要求每个转换有留出数据
+            #（n_heldout 缺失 = 该转换无留出行）
+            with_held = grp[grp["n_heldout"].notna()] \
+                if "n_heldout" in grp.columns else grp.iloc[0:0]
+            fam_missing = EXPECTED_FAMILIES[task] - set(with_held["family"])
             n_fam = len(grp["family"].unique())
-            if n_fam and n_fam < EXPECTED_FAMILIES[task]:
-                decision["missing"].append(
-                    f"e4c:{task}:转换不齐全 {n_fam}/{EXPECTED_FAMILIES[task]}")
             entry = {}
             if n_fam == 0:
                 decision["missing"].append(f"e4c:{task}:任务缺失")
                 decision["crossmodal_alignment"][task] = {"label": SUPPORTED[2]}
                 continue
+            if fam_missing:
+                decision["missing"].append(
+                    f"e4c:{task}:转换留出数据缺失 "
+                    f"{len(fam_missing)}/{len(EXPECTED_FAMILIES[task])}: "
+                    f"{sorted(fam_missing)[:4]}")
             ov = c[(c["task"] == task) & (c["family"] == "__overall__")]
             if ov.empty or np.isnan(_fnum(ov.iloc[0].get("p_heldout"))):
                 decision["missing"].append(f"e4c:{task}:任务级 __overall__ 行缺失")
@@ -184,18 +261,25 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
                      "C_ci_high_heldout": _fnum(r.get("C_ci_high_heldout")),
                      "p_heldout": p, "n_perm": int(r.get("n_perm", 0)),
                      "exact": bool(r.get("exact", False))}
-            confirmatory[f"C:{task}"] = p
-            # 方向检查：C 显著为负同样 p<α，不能算跨模态对应成立
-            entry["cond_raw"] = bool(p < alpha and entry["C_mean_heldout"] > 0)
+            if fam_missing:
+                entry["label"] = SUPPORTED[2]
+            else:
+                confirmatory[f"C:{task}"] = p
+                # 方向检查：C 显著为负同样 p<α，不能算跨模态对应成立
+                entry["cond_raw"] = bool(p < alpha
+                                         and entry["C_mean_heldout"] > 0)
             decision["crossmodal_alignment"][task] = entry
 
     # ---------------- E4-D 方向迁移（同场景配对差 + Holm）----------------
     e4d_p = tables / "e4d_retrieval.csv"
-    src = _committed(run_meta, "e4d_retrieval.csv")
+    src = _committed(run_meta, "e4d_retrieval.csv", e4d_p)
     if src is None or not e4d_p.exists():
         decision["missing"].append(
-            "e4d_retrieval.csv" + ("（无成功提交记录）" if e4d_p.exists()
+            "e4d_retrieval.csv" + ("（无内容摘要相符的成功提交记录——可能被"
+                                   "中断运行覆盖）" if e4d_p.exists()
                                    else "（文件缺失）"))
+        for task in tasks:
+            decision["direction_transfer"][task] = {"label": SUPPORTED[2]}
     else:
         decision["provenance"]["e4d_retrieval.csv"] = src
         d = pd.read_csv(e4d_p)
@@ -227,6 +311,9 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
                                 if all(by_scene[s][m] is not None for s in scenes)]
             controls_missing = [m for m in controls
                                 if m not in controls_present]
+            # 场景覆盖核对：与冻结清单的留出场景逐一比对
+            exp = expected_scenes[task]
+            scenes_missing = sorted(exp - set(scenes)) if exp is not None else []
             entry = {"n_scenes": len(scenes),
                      "correct_top1": (float(np.mean([by_scene[s]["correct"]
                                                      for s in scenes]))
@@ -238,26 +325,45 @@ def summarize(model_name: str, seed: int, paths: dict, logger) -> dict:
             if bad_correct:
                 decision["missing"].append(
                     f"e4d:{task}:correct 行异常的场景 {len(bad_correct)} 个")
-            for m in controls_present:
-                # 同场景配对差（工作方案第 7 节：差值在同一批测试场景上
-                # 配对计算，按基础场景聚类 bootstrap）
-                diffs = [by_scene[s]["correct"] - by_scene[s][m] for s in scenes]
-                mean, lo, hi = cluster_mean_ci(
-                    diffs, list(scenes), n_boot=cfg["bootstrap"]["n_boot"],
-                    ci=cfg["bootstrap"]["ci"], seed=0)
-                test = sign_flip_test(diffs, cfg["permutation"]["n"], seed=0)
-                confirmatory[f"D:{task}:{m}"] = test["p"]
-                entry["controls"][m] = {
-                    "mean_diff": mean, "diff_ci_low": lo, "diff_ci_high": hi,
-                    "p_signflip": test["p"], "n_scenes": len(scenes)}
-            if not controls_present or not scenes or bad_correct:
+            if scenes_missing:
+                decision["missing"].append(
+                    f"e4d:{task}:清单规定留出场景缺失 {len(scenes_missing)} 个"
+                    f"（示例 {scenes_missing[:3]}）")
+            incomplete = bool(controls_missing) or bad_correct or \
+                not scenes or bool(scenes_missing)
+            if not incomplete:
+                for m in controls_present:
+                    # 同场景配对差（工作方案第 7 节：差值在同一批测试场景上
+                    # 配对计算，按基础场景聚类 bootstrap）
+                    diffs = [by_scene[s]["correct"] - by_scene[s][m]
+                             for s in scenes]
+                    mean, lo, hi = cluster_mean_ci(
+                        diffs, list(scenes), n_boot=cfg["bootstrap"]["n_boot"],
+                        ci=cfg["bootstrap"]["ci"], seed=0)
+                    test = sign_flip_test(diffs, cfg["permutation"]["n"], seed=0)
+                    confirmatory[f"D:{task}:{m}"] = test["p"]
+                    entry["controls"][m] = {
+                        "mean_diff": mean, "diff_ci_low": lo,
+                        "diff_ci_high": hi,
+                        "p_signflip": test["p"], "n_scenes": len(scenes)}
+            # 完整性是前置条件：任一规定对照 / 场景缺失即数据不足，
+            # 已出现对照的结果不进入判定（Holm 族保持冻结规模）
+            if incomplete:
                 entry["label"] = SUPPORTED[2]
             decision["direction_transfer"][task] = entry
 
     # ---------------- Holm 校正并回填标签 ----------------
-    adj = _holm(confirmatory, alpha)
-    decision["holm_family"] = [{"key": k, **v} for k, v in
-                               sorted(adj.items(), key=lambda kv: kv[1]["p_holm"])]
+    # 确认性检验族按预先规定冻结（A/C 每任务 1 个 + D 每任务×规定对照）：
+    # 缺数据而不含的检验按 p=1 计入族内，不因缺数据缩小族、放宽其余检验
+    # 的校正（completeness 缺口的任务已记数据不足，不参与判定）。
+    frozen = {f"A:{t}": confirmatory.get(f"A:{t}", 1.0) for t in tasks}
+    frozen.update({f"C:{t}": confirmatory.get(f"C:{t}", 1.0) for t in tasks})
+    frozen.update({f"D:{t}:{m}": confirmatory.get(f"D:{t}:{m}", 1.0)
+                   for t in tasks for m in controls})
+    adj = _holm(frozen, alpha)
+    decision["holm_family"] = [
+        {"key": k, "computed": k in confirmatory, **v} for k, v in
+        sorted(adj.items(), key=lambda kv: kv[1]["p_holm"])]
     for task in tasks:
         e = decision["structure_identifiability"].get(task)
         if e and "cond_raw" in e:

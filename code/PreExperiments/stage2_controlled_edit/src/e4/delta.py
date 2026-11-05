@@ -17,7 +17,7 @@
 """
 import numpy as np
 
-from .stats import RidgeProbe, cluster_ci, cosine_rows
+from .stats import RidgeProbe, cluster_ci, cosine_matrix, cosine_rows
 
 
 def _dv_matrices(pairs_df, feat: dict):
@@ -104,10 +104,12 @@ def run_e4b_stats(pairs_df, z_by_state, raw_by_state, cfg, logger) -> dict:
                 "near_zero_thr": thr,
             }
             if split == "heldout":
-                # 随机方向参照：每场景与全部固定随机方向的 cosine 取平均
+                # 随机方向参照：每场景与全部固定随机方向的 cosine 取平均，
+                # 再跨场景平均。留出数与随机方向数不相等，必须算全组合，
+                # 不能逐行配对（cosine_rows 要求行数对齐）
                 rand_mat = rng.standard_normal((n_rand, d_r.shape[0]))
                 row["cos_to_random_mean"] = float(
-                    cosine_rows(dv_mat, rand_mat).mean())
+                    cosine_matrix(dv_mat, rand_mat).mean(axis=1).mean())
                 if wrong_d is not None:
                     row["cos_to_wrong_conversion"] = float(cosine_rows(
                         dv_mat, np.stack([wrong_d] * len(entries))).mean())
@@ -119,6 +121,19 @@ def run_e4b_stats(pairs_df, z_by_state, raw_by_state, cfg, logger) -> dict:
                           "cos_to_d_r": float(cosine_rows(
                               r["dv"][None, :], d_r[None, :])[0])})
     return {"rows": rows, "items": items, "dirs": dirs}
+
+
+def merge_dirs(dirs_list) -> dict:
+    """合并各任务返回的 {"d_r", "thr"}（键已带 task 前缀）。
+
+    必须逐内层字典合并：对顶层直接 dict.update 会用后处理任务的整体
+    覆盖先处理任务，绑定对照因此丢失同家族结构方向（审查问题 2）。
+    """
+    out = {"d_r": {}, "thr": {}}
+    for d in dirs_list:
+        out["d_r"].update(d["d_r"])
+        out["thr"].update(d["thr"])
+    return out
 
 
 def _group_semantic(pairs_df):

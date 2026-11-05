@@ -117,11 +117,14 @@ def commit_experiment(tables_dir, experiment: str, outputs) -> None:
     """实验输出成功写出后提交来源（四轮审查问题 1）。
 
     - 用本次尝试的身份更新 experiments/<name>.last_success（含产物清单
-      outputs），status 置 success；失败/中断的运行不会走到这里，
-      last_success 保持旧值；
+      outputs 与逐产物内容摘要 outputs_md5），status 置 success；失败/
+      中断的运行不会走到这里，last_success 保持旧值；
+    - outputs_md5 供消费端核对磁盘文件确属该次提交（E4 汇总：共享输出
+      路径的文件可能被后续中断的运行覆盖，只有来源记录不够）；
     - 新 last_success 与上一次身份不同时，把旧来源**追加**进 replaces 列表
       （补充 D：同版本重跑不追加也不丢失，变更留痕一直保留）；
-    - 未先经 output_tables_dir 登记尝试时按错误处理，防止凭空提交。
+    - 未先经 output_tables_dir 登记尝试时按错误处理，防止凭空提交；
+      提交时产物必须实际存在于 tables_dir，否则按错误处理。
     """
     from datetime import datetime
     meta = Path(tables_dir) / "run_meta.json"
@@ -133,10 +136,18 @@ def commit_experiment(tables_dir, experiment: str, outputs) -> None:
     if rec is None:
         raise RuntimeError(f"实验 {experiment!r} 未登记尝试："
                            f"commit_experiment 必须在 output_tables_dir 之后调用")
+    names = sorted(str(o) for o in outputs)
+    digests = {}
+    for name in names:
+        p = Path(tables_dir) / name
+        if not p.exists():
+            raise RuntimeError(f"提交失败：产物 {name} 不存在于 {tables_dir}，"
+                               f"不得登记未写出的文件")
+        digests[name] = md5_file(p)
     now = datetime.now().isoformat(timespec="seconds")
     prev_success = rec.get("last_success")
     new_success = {**_experiment_ident(rec), "updated": now,
-                   "outputs": sorted(str(o) for o in outputs)}
+                   "outputs": names, "outputs_md5": digests}
     replaces = rec.get("replaces") or []
     if isinstance(replaces, dict):     # 旧格式（单条 dict）→ 列表
         replaces = [replaces]
