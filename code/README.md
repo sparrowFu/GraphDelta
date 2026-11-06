@@ -1,7 +1,7 @@
 # GraphDelta 预实验说明
 
 对应《GraphDelta_研究框架_统一修订版》《GraphDelta_完整预实验方案_统一修订版》与
-《[下一步工作方案：受控结构编辑与迁移验证](outputs/analysis/下一步工作方案_受控结构编辑验证_2026-11-03.md)》
+《[下一步工作方案：受控结构编辑与迁移验证](../下一步工作方案_受控结构编辑验证_2026-11-03.md)》
 （2026-11-03 定稿，下称"工作方案"）。本文件是预实验的总说明：每个环节讲清
 做什么、为什么做、怎么做、怎么执行；操作细节见各阶段 README。
 
@@ -22,7 +22,7 @@
 | 阶段 | 内容 | 状态 |
 |---|---|---|
 | 阶段一 | 冻结 baseline 诊断（E1–E3），公开数据 + 固定协议，只评估不训练 | 已完成，结果冻结 |
-| 阶段二 | 受控结构编辑验证（E4），自建受控数据 + 诊断，骨干冻结、只训线性探针 | 代码完成，待正式运行 |
+| 阶段二 | 受控结构编辑验证（E4），自建受控数据 + 诊断，骨干冻结、只训线性探针 | 代码完成；三轮代码审查修复完毕，76 个单元测试 + 全流程驱动验证通过，待正式运行 |
 
 代码全部在 [`PreExperiments/`](PreExperiments/README.md)（共用模块 `common/`，
 阶段目录 `stage1_frozen_baseline/`、`stage2_controlled_edit/`）；配置在
@@ -147,7 +147,9 @@ conda run -n CudaVersion128Fuxp python <script>
   直接 import 官方实现；Python 侧逐态复核字段 / 位置 / 方向轴 / 关系矩阵，
   可见性失败是确定性失败、登记剔除不重试。
 - **怎么执行**：`render_edit_pairs.py --task binding --limit 8`（小批试运行）
-  或全量；账本跳过已完成状态，`--force` 重渲染。
+  或全量；账本跳过已完成状态，`--force` 重渲染。复用必须同时匹配规格指纹、
+  资产指纹，且磁盘产物内容摘要与成功记录一致——被后续尝试或另一清单的
+  同名状态覆盖过的文件自动作废重渲染，不把旧成功记录套到已变化的产物上。
 
 ### 4.4 Step 4 E4 评测
 
@@ -163,8 +165,9 @@ conda run -n CudaVersion128Fuxp python <script>
   方向"这一最朴素的方案。允许阴性；每条结论区分"证据不足"与"无效"。
 - **怎么做**：骨干完全冻结；特征走独立 float32 命名空间缓存（键带清单指纹，
   清单重建自动换键）；统计口径冻结在 `configs/e4_protocol.yaml`（1,000 次置换、
-  α=0.05、允许重排不足时全枚举）；产物按阶段一 run_meta 机制登记，smoke 带
-  `_smoke` 后缀不写正式结果。
+  α=0.05、允许重排不足时全枚举）；产物按阶段一 run_meta 机制登记（提交时逐
+  产物记录内容摘要 `outputs_md5`，供汇总端核对磁盘文件确属该次提交），全部
+  CSV/JSON 原子写出（中断不留半写文件），smoke 带 `_smoke` 后缀不写正式结果。
 - **怎么执行**：`run_e4.py --model clip_vitl14 --stage all`（先跑核心骨干，
   SigLIP2 复核；`--smoke` 用小批数据查流程）。
 
@@ -176,6 +179,12 @@ conda run -n CudaVersion128Fuxp python <script>
   不足 / 数据不足"。
 - **为什么**：预实验的结束条件是"交付结论与主实验协议"，不是"方法有效"；
   判定规则随产物落盘，防止事后换口径挑显著结果（工作方案第 7 节）。
+- **怎么做**：完整性是判定的前置条件——预先确定的任务（binding+relation）、
+  规定转换（绑定 8 个 / 关系 10 个类型对）、规定对照（E4-D 四个）与冻结清单
+  规定的留出场景覆盖，任一缺失对应轴记"数据不足"，不凭已出现的行判支持；
+  确认性检验族规模冻结（A/C 每任务 1 个 + D 每任务×4 对照 = 12 个），缺数据
+  的检验按 p=1 计入族内，不因缺数据缩小族、放宽其余检验的校正；共享输出
+  路径的文件须与某条成功提交的内容摘要一致才被消费，被中断运行覆盖过即拒绝。
 - **怎么执行**：`summarize_e4.py --model clip_vitl14 --seed 0`，产物
   `e4_summary.csv` + `e4_stage_decision.json` 写入该模型 tables 目录。
 
@@ -190,22 +199,62 @@ conda run -n CudaVersion128Fuxp python <script>
 | `outputs/<model>/seed_<k>/tables/` | 各实验结果表 + `run_meta.json`（含 git commit 与缓存协议指纹） |
 | `outputs/analysis/`、`outputs/audit/`、`outputs/figures/` | 分析报告、审查清单、诊断图 |
 
-## 6. 命令速查（从 code/ 目录）
+## 6. 命令速查（从 code/ 目录，可直接复制）
+
+以下命令都从 `code/` 目录发起（脚本自身锚定路径，任意目录也可运行）。
+
+### 6.1 阶段一（已完成，重跑用于复现；详见各步参数表）
 
 ```bash
-# 阶段一（详见 PreExperiments/stage1_frozen_baseline/README.md）
+# 特征：3 模型 × 7 数据集一次抽完（模型外层、数据集内层；首次全量约数小时 GPU）
 conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/extract_embeddings.py --dataset all --model all
+# 四个实验（各模型结果写 outputs/<model>/seed_0/tables/）
 conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --model all
+conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e1_spar_official.py --model all
 conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e2.py --dataset all --model all
 conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e3.py --model all
+# 三种子：上面四条各再跑两遍，--seed 1、--seed 2（结果自动进 seed_1/ seed_2/）
+# 汇总 / 逐单元分析 / 绘图（不加载模型）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/analyze_e3_units.py --model all
 conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/summarize_seed_stability.py --model all
 conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/make_figures.py --model all --seed 0
+```
 
-# 阶段二（详见 PreExperiments/stage2_controlled_edit/README.md）
-S2=PreExperiments/stage2_controlled_edit/scripts
-conda run -n CudaVersion128Fuxp python $S2/export_audit_items.py
-conda run -n CudaVersion128Fuxp python $S2/build_edit_pairs.py --task all
-conda run -n CudaVersion128Fuxp python $S2/render_edit_pairs.py --task all
-conda run -n CudaVersion128Fuxp python $S2/run_e4.py --model clip_vitl14 --stage all
-conda run -n CudaVersion128Fuxp python $S2/summarize_e4.py --model clip_vitl14 --seed 0
+改代码后的快速自检：各实验脚本加 `--smoke`（输出带 `_smoke` 后缀，分钟级，
+不写正式结果；`run_e2.py --smoke` 需配 `--allow-empty-factors`）。
+
+### 6.2 阶段二·冒烟链路（分钟级，改代码后先跑这个）
+
+```bash
+# 0) 单元测试：76 个用例，不依赖 Blender / 模型 / 数据集，秒级
+conda run -n CudaVersion128Fuxp python -m pytest PreExperiments/stage2_controlled_edit/tests/
+# 1) 小批清单（8 个转换 × 每转换 3 场景；会覆盖 data/edit_pairs/ 下的同名清单）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/build_edit_pairs.py --task binding --binding-n 24 --recolor-n 24 --control-n 8
+# 2) 小批渲染（约 30–39 秒/态，单态失败可重跑，账本跳过已完成）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/render_edit_pairs.py --task binding --limit 18
+# 3) E4 冒烟（输出带 _smoke 后缀，不写正式结果）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model clip_vitl14 --stage all --smoke
+# 4) 冒烟汇总（只记录流程是否跑通，不给机制标签）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model clip_vitl14 --smoke
+```
+
+冒烟通过后，正式运行前须用默认参数重建清单（`build_edit_pairs.py --task all`，
+不带 `--binding-n` 等小批参数）。
+
+### 6.3 阶段二·正式全量（渲染最耗时，详见阶段二 README §6.3 的核对清单）
+
+```bash
+# 1) 题目审计清单（一次性，约 1 分钟）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/export_audit_items.py
+# 2) 默认配额清单（800 交换 + 200 换色 + 500 反转 + 200 扰动；秒级）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/build_edit_pairs.py --task all
+# 3) 全量渲染（约 3,400 个唯一状态；单进程 30–39 秒/态 ≈ 1.5 天，--workers 并行，
+#    加速比以账本实测为准；可中断重跑，账本 + 内容摘要核对自动续）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/render_edit_pairs.py --task all --workers 8
+# 4) E4 评测（GPU，分钟级；核心骨干先跑，SigLIP2 复核）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model clip_vitl14 --stage all
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model siglip2_so400m --stage all
+# 5) 汇总与阶段判断（产物 e4_summary.csv + e4_stage_decision.json）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model clip_vitl14 --seed 0
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model siglip2_so400m --seed 0
 ```

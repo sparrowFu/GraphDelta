@@ -151,7 +151,7 @@ Step 7  汇总：多种子稳定性 + 五张图，判断是否进入第二阶段
 命令（可选；`--dataset all` 一条即可覆盖三个 PUG 数据集）：
 
 ```bash
-python PreExperiments/stage1_frozen_baseline/PreExperiments/stage1_frozen_baseline/scripts/build_manifests.py --dataset [all(默认), pug_spar, pug_animals, pug_imagenet]
+python PreExperiments/stage1_frozen_baseline/scripts/build_manifests.py --dataset [all(默认), pug_spar, pug_animals, pug_imagenet]
 ```
 
 作用：读取 PUG 三个数据集的已有 metadata，统一字段，生成
@@ -421,6 +421,26 @@ python PreExperiments/stage1_frozen_baseline/scripts/make_figures.py --model [cl
 ---
 
 ## 6. 一条命令跑全部（`--model all` / `--dataset all`）
+
+### 6.0 第一次运行：先冒烟，再全量
+
+改代码后或首次运行，先用单模型 + smoke 走一遍流程（输出带 `_smoke` 后缀、
+不写正式结果，分钟级），确认无报错再跑全量（命令从 `code/` 目录发起）：
+
+```bash
+# 冒烟自检（run_e2 的 smoke 需带 --allow-empty-factors，见 §8）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/build_manifests.py --dataset all
+conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --model clip_vitl14 --smoke
+conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e2.py --model clip_vitl14 --smoke --allow-empty-factors
+conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e3.py --model clip_vitl14 --smoke
+# 冒烟通过后：抽特征（首次全量最耗时，约数小时 GPU）→ §6.1 的全量命令
+conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/extract_embeddings.py --dataset clevr_val --model clip_vitl14
+```
+
+阶段一已执行完毕、结果冻结；重跑本节命令用于复现，产物按模型 + 种子目录
+隔离，不会覆盖已有正式结果（smoke 文件名带后缀）。
+
+### 6.1 全量命令
 
 本节命令是**可直接复制运行**的具体形式（§5 记号形式的具体取值，前缀见 §1；
 均省略了可省参数 `--smoke` / `--seed` / `--force` / `--allow-empty-factors` 等，

@@ -1,6 +1,6 @@
 # GraphDelta 第二阶段：受控结构编辑验证（E4）说明
 
-对应《[下一步工作方案：受控结构编辑与迁移验证（执行定稿）](../../../outputs/analysis/下一步工作方案_受控结构编辑验证_2026-11-03.md)》
+对应《[下一步工作方案：受控结构编辑与迁移验证（执行定稿）](../../../下一步工作方案_受控结构编辑验证_2026-11-03.md)》
 （2026-11-03 定稿，下称"工作方案"）。本目录
 （`code/PreExperiments/stage2_controlled_edit/`）是阶段二的全部代码：受控数据
 生成、规格驱动渲染、E4 诊断与汇总。共用模块在 `../common/`（import 名
@@ -22,9 +22,8 @@ import 本仓库代码，规格经 JSON 传入。
 ## 1. 运行环境
 
 Python 环境与命令前缀同阶段一（`conda run -n CudaVersion128Fuxp`，见
-`../stage1_frozen_baseline/README.md` §1）。渲染环境（2026-11-03 试通通过，
-[渲染试通记录](../../../outputs/analysis/render_trial_2026-11-03.md)）配置在
-`configs/paths.yaml` 的 `render` 段：
+`../stage1_frozen_baseline/README.md` §1）。渲染环境（2026-11-03 试通通过）
+配置在 `configs/paths.yaml` 的 `render` 段：
 
 | 项 | 值 |
 |---|---|
@@ -191,7 +190,10 @@ python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model [clip_vit
 作用：装载清单与渲染产物（不完整的任务自动跳过并警告）→ float32 缓存抽取
 → 按 `--stage` 执行 E4-A/B/C/D → 按阶段一 run_meta 机制登记与提交
 （experiment = `e4_<stage>`，smoke 加 `_smoke` 后缀，产物文件同步加后缀）。
-某阶段数据不足（如某家族 split 不全）时警告并继续，不中断其余阶段。
+全部 CSV / JSON 原子写出（临时文件 + 替换，中断不留半写文件、不动旧产物）；
+`commit_experiment` 提交时逐产物记录内容摘要（`outputs_md5`），供 Step 5
+核对磁盘文件确属某次成功提交。某阶段数据不足（如某家族 split 不全）时警告
+并继续，不中断其余阶段。
 
 参数（共 4 个）：
 
@@ -265,21 +267,82 @@ E4-C 每任务 1 个（任务级 `__overall__` C，方向须为正）+ E4-D 每�
 | `outputs/<model>/seed_<k>/tables/e4b_reliability.csv` | 方向可靠性：训练内对半划分子集比较 + 按场景重采样波动 | Step 4 |
 | `outputs/<model>/seed_<k>/tables/e4c_conversion_stats.csv` + `e4c_identity.json` | E4-C 逐转换 C（探索性）+ 任务级 `__overall__` 主统计 + 跨组对照；代数自检 | Step 4 |
 | `outputs/<model>/seed_<k>/tables/e4d_retrieval.csv` + `e4d_meta.json` | E4-D 各方法 top1 / 秩 / 相似度（pool 清单随行落盘）；α 与打乱配对自检 | Step 4 |
-| `outputs/<model>/seed_<k>/tables/e4_summary.csv` + `e4_stage_decision.json` | 三轴判定（有支持证据 / 证据不足 / 数据不足；来源核验 + 任务完整性 + Holm 校正） | Step 5 |
+| `outputs/<model>/seed_<k>/tables/e4_summary.csv` + `e4_stage_decision.json` | 三轴判定（有支持证据 / 证据不足 / 数据不足；来源核验 + 完整性前置 + Holm 校正，判定规则与 Holm 族随产物落盘） | Step 5 |
 | `outputs/<model>/seed_<k>/tables/e4_summary_smoke.csv` + `e4_stage_decision_smoke.json` | smoke 汇总（仅流程是否跑通，无机制标签） | Step 5（`--smoke`） |
+| `outputs/<model>/seed_<k>/tables/run_meta.json` | 实验登记与提交记录：status、产物清单、**逐产物内容摘要**（`outputs_md5`）、git commit 与缓存协议指纹；Step 5 按它守门（共享输出路径的文件被中断运行覆盖过即拒绝消费） | Step 4 |
 
-## 6. 快速自检（小样本，分钟级）
+## 6. 运行示例（自检 → 冒烟 → 正式全量）
+
+以下命令从 `code/` 目录发起，可直接复制。
+
+### 6.1 单元测试（秒级，不依赖 Blender / 模型 / 数据集）
 
 ```bash
-# 1) 生成与统计模块单元测试（不依赖 Blender / 模型）
-conda run -n CudaVersion128Fuxp python -m pytest PreExperiments/stage2_controlled_edit/tests/
-# 2) 小批清单（2 个转换 × 3 场景，split 1/1/1）
-conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/build_edit_pairs.py --task binding --binding-n 24 --recolor-n 24 --control-n 8
-# 3) 小批渲染（约 30 秒/态）
-conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/render_edit_pairs.py --task binding --limit 18
-# 4) E4 冒烟（输出带 _smoke 后缀，不写正式结果）
-conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model clip_vitl14 --stage all --smoke
+conda run -n CudaVersion128Fuxp python -m pytest PreExperiments/stage2_controlled_edit/tests/    # 76 个用例
 ```
+
+覆盖（逐文件用例数与内容见 `../README.md` §4.1）：场景规格与编辑算子、清单
+构建与划分、E4 统计口径（置换 / 平局 / 探针）、随机方向与双任务方向合并、
+渲染账本复用与内容摘要核对、汇总端来源核验与完整性前置。另有开发期全流程
+驱动验证（假渲染器 + 假模型替换，26 项检查，覆盖三轮审查全部修复点），见
+`../README.md` §4.2。
+
+### 6.2 冒烟链路（真实环境，分钟级）
+
+```bash
+# 1) 小批清单（每转换 3 个场景，split 1/1/1）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/build_edit_pairs.py --task binding --binding-n 24 --recolor-n 24 --control-n 8
+# 2) 小批渲染（约 30–39 秒/态，18 态约 10 分钟；可中断重跑，账本自动续）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/render_edit_pairs.py --task binding --limit 18
+# 3) E4 冒烟（输出带 _smoke 后缀，不写正式结果）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model clip_vitl14 --stage all --smoke
+# 4) 冒烟汇总（独立文件名，只记录流程是否跑通，无机制标签）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model clip_vitl14 --smoke
+```
+
+每步的预期结果：
+
+- 1 结束时 `data/edit_pairs/binding_*` 三个文件更新，日志报
+  "24 对 / N 渲染态"；**注意小批构建会覆盖 `data/edit_pairs/` 下的同名
+  正式清单**，正式运行前必须用默认参数重建（§6.3 第 2 步）；
+- 2 结束时渲染目录出现 `images/`、`scenes/`、`ledger.jsonl`、
+  `rendered_states.parquet`，全部状态 `validated=True`；
+- 3 结束时 `outputs/clip_vitl14/seed_0/tables/` 出现带 `_smoke` 后缀的
+  e4a/e4b/e4c/e4d 产物与 `run_meta.json`（`e4_all_smoke` 状态 success），
+  日志含代数自检 `max|C − Δv·Δt|`（应在 1e-6 量级以下）；
+- 4 结束时出现 `e4_summary_smoke.csv` / `e4_stage_decision_smoke.json`，
+  `axes` 各项 `ran=True`。
+
+### 6.3 正式全量运行（渲染最耗时，务必先冒烟）
+
+```bash
+# 0)（可选）题目审计清单已生成过则跳过；重新生成会覆盖 outputs/audit/
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/export_audit_items.py
+# 1) 默认配额清单：800 交换 + 200 换色 + 500 反转 + 200 扰动，秒级；
+#    正式编码前须冻结转换清单与配额（开篇待办 3），换 --seed 须分别报告
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/build_edit_pairs.py --task all
+# 2) 全量渲染：约 3,400 个唯一渲染状态（绑定约 2,100 + 关系约 1,300）；
+#    单进程 30–39 秒/态 ≈ 1.5 天，--workers 并行（加速比以账本实测为准）；
+#    可随时中断重跑：账本 + 图片/场景内容摘要核对，已完成且磁盘一致的跳过
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/render_edit_pairs.py --task all --workers 8
+# 3) E4 评测（GPU，分钟级）：核心骨干先跑，SigLIP2 复核；--seed 1/2 换采样
+#    种子重跑（结果进 seed_1/ seed_2/，汇总前按需补）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model clip_vitl14 --stage all
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model siglip2_so400m --stage all
+# 4) 汇总与阶段判断（不加载模型，秒级）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model clip_vitl14 --seed 0
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model siglip2_so400m --seed 0
+```
+
+跑完后的核对清单：
+
+- 渲染：`rendered_states.parquet` 的状态数 = 清单 `needs_render` 总数，
+  `validated` 全为 True；`ledger.jsonl` 末尾无未通过校验的记录；
+- E4：`run_meta.json` 中 `e4_all` 状态 `success` 且 `outputs_md5` 与磁盘
+  一致（被中断的运行会停在 `running`，重跑该命令至完成即可）；
+- 汇总：`e4_stage_decision.json` 的 `missing` 为空、六轴标签齐全；
+  若出现"数据不足"，`missing` 列表会逐项写明缺哪个转换 / 对照 / 留出场景，
+  按提示补渲染或重跑对应阶段，不要手改 CSV。
 
 ## 7. 主实验接口（工作方案第 9 节，随第二阶段一并交付）
 
