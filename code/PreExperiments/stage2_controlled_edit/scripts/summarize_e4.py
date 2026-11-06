@@ -21,7 +21,7 @@ from src.utils.logging import get_logger
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="clip_vitl14",
+    ap.add_argument("--model", default="all",
                     help="汇总的模型；all = 依次汇总全部已配置模型（串行，不加载模型）")
     ap.add_argument("--seed", type=int, default=0,
                     help="结果所属种子（定位 tables 目录）")

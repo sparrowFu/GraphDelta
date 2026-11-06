@@ -4,3 +4,8 @@
 2026-11-05 11:06:32,276 | INFO | build_edit_pairs | [build] relation: 90 对 / 150 渲染态 / 重采样 0 -> /home/xpfu/WorkSpace/GraphDelta/code/data/edit_pairs
 2026-11-05 18:01:43,133 | INFO | build_edit_pairs | [build] binding: 1520 对 / 2120 渲染态 / 重采样 0 -> /home/xpfu/WorkSpace/GraphDelta/code/data/edit_pairs
 2026-11-05 18:01:43,206 | INFO | build_edit_pairs | [build] relation: 770 对 / 1270 渲染态 / 重采样 2 -> /home/xpfu/WorkSpace/GraphDelta/code/data/edit_pairs
+2026-11-06 10:23:35,534 | INFO | build_edit_pairs | [build] binding: 1520 对 / 2120 渲染态 / 重采样 0 -> /home/xpfu/WorkSpace/GraphDelta/code/data/edit_pairs
+2026-11-06 10:23:35,606 | INFO | build_edit_pairs | [build] relation: 770 对 / 1270 渲染态 / 重采样 2 -> /home/xpfu/WorkSpace/GraphDelta/code/data/edit_pairs
+2026-11-06 10:58:36,627 | INFO | build_edit_pairs | [build] binding: 56 对 / 72 渲染态 / 重采样 0 -> /home/xpfu/WorkSpace/GraphDelta/code/data/edit_pairs
+2026-11-06 11:14:08,878 | INFO | build_edit_pairs | [build] binding: 1520 对 / 2120 渲染态 / 重采样 0 -> /home/xpfu/WorkSpace/GraphDelta/code/data/edit_pairs
+2026-11-06 11:14:08,950 | INFO | build_edit_pairs | [build] relation: 770 对 / 1270 渲染态 / 重采样 2 -> /home/xpfu/WorkSpace/GraphDelta/code/data/edit_pairs

@@ -1,0 +1,26 @@
+{
+  "model": "clip_vitb32",
+  "seed": 0,
+  "smoke": true,
+  "tables_dir": "/home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables",
+  "axes": {
+    "a": {
+      "axis": "a",
+      "file": "e4a_results_smoke.csv",
+      "ran": false,
+      "n_rows": 0
+    },
+    "c": {
+      "axis": "c",
+      "file": "e4c_conversion_stats_smoke.csv",
+      "ran": false,
+      "n_rows": 0
+    },
+    "d": {
+      "axis": "d",
+      "file": "e4d_retrieval_smoke.csv",
+      "ran": false,
+      "n_rows": 0
+    }
+  }
+}

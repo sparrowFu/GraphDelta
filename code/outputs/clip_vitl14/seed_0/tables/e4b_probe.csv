@@ -1,0 +1,11 @@
+task,probe,n_classes,lambda,heldout_acc,chance,n_train,n_heldout
+binding,state_z,2,10.0,0.99375,0.5,960,320
+binding,conversion_z,8,10.0,1.0,0.125,480,160
+binding,conversion_before_only_z,8,0.01,1.0,0.125,480,160
+binding,state_color_hist,2,0.01,0.528125,0.5,960,320
+binding,conversion_pixel_diff,8,0.01,0.21875,0.125,480,160
+relation,state_z,2,100.0,0.955,0.5,600,200
+relation,conversion_z,10,100.0,0.73,0.1,300,100
+relation,conversion_before_only_z,10,0.01,0.95,0.1,300,100
+relation,state_color_hist,2,0.01,0.525,0.5,600,200
+relation,conversion_pixel_diff,10,0.01,0.14,0.1,300,100

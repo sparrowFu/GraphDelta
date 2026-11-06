@@ -184,7 +184,7 @@ blend_render_driver.py`，可见性与关系计算直接 import 官方实现）�
 命令（全部参数）：
 
 ```bash
-python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --stage [all(默认), a, b, c, d] --smoke --seed [0(默认), 1, 2, …]
+python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --stage [all(默认), a, b, c, d] --smoke --seed [0(默认), 1, 2, …]
 ```
 
 作用：装载清单与渲染产物（不完整的任务自动跳过并警告）→ float32 缓存抽取
@@ -199,7 +199,7 @@ python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model [clip_vit
 
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
-| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `clip_vitl14` | 评估的冻结 baseline；核心诊断用 ViT-L/14，SigLIP2 复核主要发现 |
+| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `all` | 评估的冻结 baseline；`all` 按配置顺序串行（核心诊断骨干 ViT-L/14 在最前，SigLIP2 复核在后） |
 | `--stage` | `all` / `a` / `b` / `c` / `d` | `all` | 运行哪个子实验 |
 | `--smoke` | 开关 | 不带 | 小样本自检（配合小批清单 / `--limit` 渲染），输出带 `_smoke` 后缀，不写正式结果 |
 | `--seed` | 任意整数 | `0` | 置换 / bootstrap / 探针种子（默认取配置 `seeds[0]`） |
@@ -209,7 +209,7 @@ python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model [clip_vit
 命令（全部参数）：
 
 ```bash
-python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --seed [0(默认), 任意整数] --smoke
+python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --seed [0(默认), 任意整数] --smoke
 ```
 
 作用：读 `outputs/<model>/seed_<seed>/tables/` 的 e4 产物，写
@@ -230,7 +230,7 @@ E4-C 每任务 1 个（任务级 `__overall__` C，方向须为正）+ E4-D 每�
 
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
-| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `clip_vitl14` | 汇总的模型 |
+| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `all` | 汇总的模型 |
 | `--seed` | 任意整数 | `0` | 结果所属种子（定位 tables 目录） |
 | `--smoke` | 开关 | 不带 | 只汇总 smoke 产物（独立文件名，仅记录流程是否跑通） |
 
@@ -294,10 +294,10 @@ conda run -n CudaVersion128Fuxp python -m pytest PreExperiments/stage2_controlle
 conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/build_edit_pairs.py --task binding --binding-n 24 --recolor-n 24 --control-n 8
 # 2) 小批渲染（约 30–39 秒/态，18 态约 10 分钟；可中断重跑，账本自动续）
 conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/render_edit_pairs.py --task binding --limit 18
-# 3) E4 冒烟（输出带 _smoke 后缀，不写正式结果）
-conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model clip_vitl14 --stage all --smoke
+# 3) E4 冒烟（默认 --model all 三模型串行；输出带 _smoke 后缀，不写正式结果）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --stage all --smoke
 # 4) 冒烟汇总（独立文件名，只记录流程是否跑通，无机制标签）
-conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model clip_vitl14 --smoke
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --smoke
 ```
 
 每步的预期结果：
@@ -307,7 +307,7 @@ conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scr
   正式清单**，正式运行前必须用默认参数重建（§6.3 第 2 步）；
 - 2 结束时渲染目录出现 `images/`、`scenes/`、`ledger.jsonl`、
   `rendered_states.parquet`，全部状态 `validated=True`；
-- 3 结束时 `outputs/clip_vitl14/seed_0/tables/` 出现带 `_smoke` 后缀的
+- 3 结束时各模型 `outputs/<model>/seed_0/tables/` 出现带 `_smoke` 后缀的
   e4a/e4b/e4c/e4d 产物与 `run_meta.json`（`e4_all_smoke` 状态 success），
   日志含代数自检 `max|C − Δv·Δt|`（应在 1e-6 量级以下）；
 - 4 结束时出现 `e4_summary_smoke.csv` / `e4_stage_decision_smoke.json`，
@@ -325,13 +325,11 @@ conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scr
 #    单进程 30–39 秒/态 ≈ 1.5 天，--workers 并行（加速比以账本实测为准）；
 #    可随时中断重跑：账本 + 图片/场景内容摘要核对，已完成且磁盘一致的跳过
 conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/render_edit_pairs.py --task all --workers 8
-# 3) E4 评测（GPU，分钟级）：核心骨干先跑，SigLIP2 复核；--seed 1/2 换采样
-#    种子重跑（结果进 seed_1/ seed_2/，汇总前按需补）
-conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model clip_vitl14 --stage all
-conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --model siglip2_so400m --stage all
-# 4) 汇总与阶段判断（不加载模型，秒级）
-conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model clip_vitl14 --seed 0
-conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --model siglip2_so400m --seed 0
+# 3) E4 评测（GPU，分钟级）：默认 --model all 三模型串行（核心骨干在最前，
+#    SigLIP2 复核在后）；--seed 1/2 换采样种子重跑（结果进 seed_1/ seed_2/，汇总前按需补）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/run_e4.py --stage all
+# 4) 汇总与阶段判断（默认 --model all；不加载模型，秒级）
+conda run -n CudaVersion128Fuxp python PreExperiments/stage2_controlled_edit/scripts/summarize_e4.py --seed 0
 ```
 
 跑完后的核对清单：

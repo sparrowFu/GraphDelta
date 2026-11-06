@@ -1,10 +1,10 @@
 # GraphDelta 预实验代码总览
 
-本目录是预实验的全部代码。总体说明（每个环节做什么、为什么、怎么执行）见
-[`../README.md`](../README.md)；各阶段操作手册见
+本目录是预实验的全部代码。每个环节做什么、为什么、真实示例、全部参数及取值
+见 [`../README.md`](../README.md)；各阶段操作手册见
 [`stage1_frozen_baseline/README.md`](stage1_frozen_baseline/README.md) 与
 [`stage2_controlled_edit/README.md`](stage2_controlled_edit/README.md)。本文件讲
-代码本身的组织方式和公共机制的设计理由。
+代码本身的组织方式和公共机制的设计理由，每个机制配一个仓库里的真实产物作示例。
 
 ## 1. 目录结构与职责
 
@@ -25,7 +25,8 @@ PreExperiments/
 │   ├── scripts/                # run_e1* / run_e2 / run_e3 / extract_embeddings /
 │   │                           # analyze_e3_units / summarize_seed_stability /
 │   │                           # make_figures / build_manifests / audit_e1_sampling /
-│   │                           # render_*_html / convert_siglip2_checkpoint
+│   │                           # render_*_html / convert_siglip2_checkpoint /
+│   │                           # summarize_preexperiment_conclusions
 │   └── src/experiments/        # e1 / e2 / e3 实验模块 + common.py（2AFC 评测核）
 └── stage2_controlled_edit/     # 阶段二（E4）
     ├── scripts/                # export_audit_items / build_edit_pairs /
@@ -40,6 +41,28 @@ PreExperiments/
     │                           # 运行，规格走 JSON，不 import 本仓库代码）
     └── tests/                  # 单元测试（见 §4）
 ```
+
+流程步骤与脚本的对应关系（参数个数 = 该脚本 argparse 定义的参数总数；
+每个参数的全部取值、默认值与含义见 `../README.md` 对应小节的表格）：
+
+| 流程步骤 | 脚本 | 参数个数 | 参数与示例位置 |
+|---|---|---:|---|
+| 阶段一·manifest | `stage1_.../scripts/build_manifests.py` | 1 | `../README.md` §4.0 |
+| 阶段一·特征抽取 | `stage1_.../scripts/extract_embeddings.py` | 3 | §4.0 |
+| E1 状态级诊断 | `stage1_.../scripts/run_e1.py`、`run_e1_spar_official.py` | 各 3 | §4.1 |
+| E2 单因素响应 | `stage1_.../scripts/run_e2.py` | 5 | §4.2 |
+| E3 组合难度 | `stage1_.../scripts/run_e3.py`、`analyze_e3_units.py` | 3、5 | §4.3 |
+| 阶段一·汇总绘图 | `stage1_.../scripts/summarize_seed_stability.py`、`make_figures.py` | 各 3 | §4.4 |
+| 阶段二 Step 1 审计 | `stage2_.../scripts/export_audit_items.py` | 2 | §5.1 |
+| 阶段二 Step 2 清单 | `stage2_.../scripts/build_edit_pairs.py` | 6 | §5.2 |
+| 阶段二 Step 3 渲染 | `stage2_.../scripts/render_edit_pairs.py` | 4 | §5.3 |
+| 阶段二 Step 4 E4 | `stage2_.../scripts/run_e4.py` | 4 | §5.4 |
+| 阶段二 Step 5 汇总 | `stage2_.../scripts/summarize_e4.py` | 3 | §5.5 |
+
+另有几个不在主流程里的辅助脚本：`audit_e1_sampling.py`（E1 平衡采样只读
+审计）、`render_analysis_report_html.py` / `render_preexperiment_report_html.py`
+（分析报告复渲染）、`convert_siglip2_checkpoint.py`（SigLIP2 权重转换，一次性）、
+`summarize_preexperiment_conclusions.py`（阶段结论汇总）。
 
 ## 2. 公共机制与设计理由
 
@@ -71,6 +94,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))     # 阶�
   存储），与阶段一 float16 缓存互不影响；E4 的缓存键额外带编辑对清单指纹
   （范式同 CoGenT 的 `condition_cache_key`），清单重建自动换键。
 
+真实示例（`data/cache/clip_vitl14/` 实际内容，缓存文件名即键）：
+
+```text
+clevr_val_images.npz                  # 无指纹键：数据根目录与配置无关
+cogent_valA@cb38ee6b302e_images.npz   # 带指纹键：换数据根目录 / 改 e3_cogent.yaml 路径后自动换键
+protocol.json                         # 内容 {"protocol": "v1"}，预处理语义变更后旧缓存报错
+```
+
 ### 2.4 run_meta：失败运行不能冒充结果
 
 - 每次实验经 `output_tables_dir` 在 `outputs/<model>/seed_<k>/tables/` 登记
@@ -82,6 +113,20 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))     # 阶�
   记录，汇总时直接拒绝；单阶段成功重跑后内容更新，则按新记录放行；
 - smoke 运行用独立 experiment 键与 `_smoke` 文件名，不更新正式结果；
   下游汇总脚本按 `success` 状态 + 内容摘要双重守门。
+
+真实示例（`outputs/clip_vitl14/seed_0/tables/run_meta.json` 的
+`e4_all_smoke` 条目节选）：状态 `success` 之前有 `started` 时间与被替换的
+旧记录 `replaces`；`last_success.outputs` 列出全部 12 个产物文件，消费端
+逐一核对磁盘文件后才使用：
+
+```json
+{"git_commit": "780ce2f…", "status": "success",
+ "started": "2026-11-05T11:33:38",
+ "last_success": {"updated": "2026-11-05T11:33:47",
+                  "outputs": ["e4a_results_smoke.csv", "e4b_delta_stats_smoke.csv",
+                              "e4c_conversion_stats_smoke.csv", "e4d_retrieval_smoke.csv", …]},
+ "replaces": [{"git_commit": "24dea3c…", "updated": "2026-11-04T11:25:18"}]}
+```
 
 ### 2.5 渲染账本：唯一状态记账、确定性失败不重试
 
@@ -95,12 +140,49 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))     # 阶�
 - 官方脚本无随机种子 → 正式数据由带种子规格驱动；可见性检查失败由驱动以
   退出码 3 报告（规格确定、重试结果相同），登记后剔除该状态。
 
+真实示例（`<render.output_dir>/binding/ledger.jsonl` 的一条成功记录）：
+`spec_md5` 是场景规格指纹、`render_fp` 是渲染设置与资产指纹，两者加上磁盘
+图片内容摘要全部对上才允许复用：
+
+```json
+{"state_id": "cubsph_blye_00000::before", "seconds": 44.46, "exit_code": 0,
+ "retries": 0, "validated": true, "problems": [],
+ "spec_md5": "790ee86126a5f1dcb3c03a6eaf0a0e86",
+ "render_fp": "68c49788cbd84a4fc33be9a5eca9a164", "image_bytes": 181116}
+```
+
+清单划分的真实示例（`data/edit_pairs/binding_splits.json` 顶层字段）：
+`args` 记录构建配额（n_swap=800 等）、`counts` 记录实际条数（pairs=1520、
+render_states=2120）、`pairs_md5` / `states_md5` 是清单指纹——清单文件被改动后
+装载直接报错：
+
+```json
+{"args": {"n_control": 200, "n_flip": 500, "n_recolor": 200, "n_swap": 800},
+ "counts": {"pairs": 1520, "render_states": 2120, "resamples": 0, "states": 2320},
+ "pairs_md5": "0679bca2…", "states_md5": "940cffeb…", "seed": 20261103}
+```
+
+### 2.6 参数与默认值约定
+
+全部脚本共用一套参数约定（完整取值表见 `../README.md` §3）：
+
+- 支持全部选项的参数默认取 `all`：`--model`（默认依次跑三个已配置模型）、
+  `--task`、`--dataset`（特征抽取的 `--dataset` 例外，保持必填，防止裸命令
+  误启数小时全量抽取）；
+- `analyze_e3_units.py` / `make_figures.py` 的 `--model` 实现为"不带时按
+  `all` 处理"，以保持与 `--tables-dir` 的互斥检查正确；
+- `--seed` 有两种角色，不能混用：`build_edit_pairs.py --seed` 是数据生成种子
+  （换值 = 换一份数据），`run_e4.py --seed` 是统计采样种子（结果按
+  `seed_<k>/` 目录隔离），`summarize_e4.py --seed` 只定位汇总哪个目录；
+- 开关参数（`--smoke` / `--force` / `--no-strict` / `--allow-empty-factors` 等）
+  带上即生效、不带即关闭，取值表见各脚本小节。
+
 ## 3. 阶段状态
 
 | 阶段 | 状态 | 正式运行前还须完成（冻结时点见工作方案开篇待办表） |
 |---|---|---|
 | 阶段一 | 已完成，结果冻结 | — |
-| 阶段二 | 代码完成；三轮代码审查修复完毕；76 个单元测试 + 全流程驱动验证通过 | 题目人工审计；转换清单与配额冻结；E4 协议复核；首批人工核验流程；多进程吞吐实测 |
+| 阶段二 | 代码完成；三轮代码审查修复完毕；76 个单元测试 + 全流程驱动验证通过；冒烟链路通过；正式全量待运行 | 题目人工审计；转换清单与配额冻结；E4 协议复核；首批人工核验流程；多进程吞吐实测 |
 
 ## 4. 测试与自检
 
@@ -130,10 +212,4 @@ conda run -n CudaVersion128Fuxp python -m pytest PreExperiments/stage2_controlle
 覆盖共享产物、换清单渲染覆盖磁盘后换回、部分数据缺失的完整性拦截。26 项
 检查全部通过；配合单元测试覆盖了三轮代码审查的全部修复点（审查与修复
 过程记录未入仓库，结论以本节与测试为准）。
-
-### 4.3 冒烟链路（真实环境，分钟级）
-
-见阶段二 README §6.2：小批清单 → `--limit` 渲染 → `run_e4 --smoke` →
-`summarize_e4 --smoke`。2026-11-04 已按此链路验证：21 态渲染全部通过规格
-复核，E4-A/B/C/D 与汇总产物落盘，代数自检 `max|C − Δv·Δt| ≈ 2.3e-08`。
 

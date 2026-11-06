@@ -4,3 +4,15 @@
 2026-11-05 10:58:06,427 | INFO | summarize_e4 | [e4-sum-smoke] clip_vitl14/seed_0: {"a": true, "c": true, "d": true}
 2026-11-05 11:35:27,866 | INFO | summarize_e4 | [e4-sum] clip_vitl14/seed_0: {}
 2026-11-05 11:35:31,236 | INFO | summarize_e4 | [e4-sum-smoke] clip_vitl14/seed_0: {"a": true, "c": true, "d": true}
+2026-11-06 10:41:00,970 | INFO | summarize_e4 | [e4-sum-smoke] clip_vitl14/seed_0: {"a": true, "c": true, "d": true}
+2026-11-06 10:41:00,972 | INFO | summarize_e4 | [e4-sum-smoke] clip_vitb32/seed_0: {"a": false, "c": false, "d": false}
+2026-11-06 10:41:00,972 | INFO | summarize_e4 | [e4-sum-smoke] siglip2_so400m/seed_0: {"a": false, "c": false, "d": false}
+2026-11-06 10:58:00,835 | INFO | summarize_e4 | [e4-sum] clip_vitl14/seed_0: {"binding": "\u8bc1\u636e\u4e0d\u8db3", "relation": "\u8bc1\u636e\u4e0d\u8db3"}
+2026-11-06 10:58:00,998 | INFO | summarize_e4 | [e4-sum] clip_vitb32/seed_0: {"binding": "\u8bc1\u636e\u4e0d\u8db3", "relation": "\u8bc1\u636e\u4e0d\u8db3"}
+2026-11-06 10:58:01,174 | INFO | summarize_e4 | [e4-sum] siglip2_so400m/seed_0: {"binding": "\u8bc1\u636e\u4e0d\u8db3", "relation": "\u8bc1\u636e\u4e0d\u8db3"}
+2026-11-06 11:10:42,352 | INFO | summarize_e4 | [e4-sum-smoke] clip_vitl14/seed_0: {"a": true, "c": true, "d": true}
+2026-11-06 11:10:42,353 | INFO | summarize_e4 | [e4-sum-smoke] clip_vitb32/seed_0: {"a": false, "c": false, "d": false}
+2026-11-06 11:10:42,353 | INFO | summarize_e4 | [e4-sum-smoke] siglip2_so400m/seed_0: {"a": false, "c": false, "d": false}
+2026-11-06 14:47:45,306 | INFO | summarize_e4 | [e4-sum] clip_vitl14/seed_0: {"binding": "\u8bc1\u636e\u4e0d\u8db3", "relation": "\u8bc1\u636e\u4e0d\u8db3"}
+2026-11-06 14:47:45,486 | INFO | summarize_e4 | [e4-sum] clip_vitb32/seed_0: {"binding": "\u8bc1\u636e\u4e0d\u8db3", "relation": "\u8bc1\u636e\u4e0d\u8db3"}
+2026-11-06 14:47:45,662 | INFO | summarize_e4 | [e4-sum] siglip2_so400m/seed_0: {"binding": "\u8bc1\u636e\u4e0d\u8db3", "relation": "\u8bc1\u636e\u4e0d\u8db3"}

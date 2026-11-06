@@ -16,7 +16,7 @@ from src.utils.logging import get_logger
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="clip_vitl14",
+    ap.add_argument("--model", default="all",
                     help="冻结 baseline（all = 依次运行全部已配置模型，"
                          "串行执行、一次只加载一个）")
     ap.add_argument("--smoke", action="store_true", help="小样本快速自检")

@@ -15,7 +15,7 @@ from src.utils.logging import get_logger
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="clip_vitl14",
+    ap.add_argument("--model", default="all",
                     help="冻结 baseline（all = 依次运行全部已配置模型，串行执行）")
     ap.add_argument("--stage", default="all", choices=["all", "a", "b", "c", "d"],
                     help="运行哪个子实验；all = 依次运行 E4-A→D")

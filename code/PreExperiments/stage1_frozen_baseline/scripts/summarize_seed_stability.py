@@ -298,7 +298,7 @@ def summarize_model(model_name, paths, logger,
 def main():
     import argparse
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="clip_vitl14",
+    ap.add_argument("--model", default="all",
                     help="汇总的模型（all = 依次汇总全部已配置模型，串行执行、"
                          "不加载模型；新布局 outputs/<model>/seed_k/tables；R2）")
     ap.add_argument("--allow-mixed-legacy", action="store_true",

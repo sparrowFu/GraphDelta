@@ -25,3 +25,48 @@
 2026-11-05 11:36:30,512 | INFO | run_e4 | [e4-extract] binding_states@a29b69dab2dc: 全部 144 态已缓存
 2026-11-05 11:36:30,554 | INFO | run_e4 | [e4-extract] relation_states@f9571edc894e: 全部 150 态已缓存
 2026-11-05 11:36:30,624 | INFO | run_e4 | [e4] 完成 e4_a_smoke: 3 个产物 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables
+2026-11-06 10:51:54,590 | INFO | run_e4 | [run_e4] model clip_vitl14
+2026-11-06 10:52:09,001 | INFO | run_e4 | [e4-extract] binding_states@1b5f09dc6241: 512/2320
+2026-11-06 10:52:48,780 | INFO | run_e4 | [e4-extract] binding_states@1b5f09dc6241: 新抽 2320 态，共 2320
+2026-11-06 10:53:00,513 | INFO | run_e4 | [e4-extract] relation_states@09ba1eab5788: 512/1270
+2026-11-06 10:53:17,389 | INFO | run_e4 | [e4-extract] relation_states@09ba1eab5788: 新抽 1270 态，共 1270
+2026-11-06 10:53:36,069 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 1.027e-07
+2026-11-06 10:53:36,079 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 7.072e-08
+2026-11-06 10:53:36,669 | INFO | run_e4 | [e4] 完成 e4_all: 12 个产物 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables
+2026-11-06 10:53:36,780 | INFO | run_e4 | [run_e4] model clip_vitb32
+2026-11-06 10:53:49,529 | INFO | run_e4 | [e4-extract] binding_states@1b5f09dc6241: 512/2320
+2026-11-06 10:54:26,328 | INFO | run_e4 | [e4-extract] binding_states@1b5f09dc6241: 新抽 2320 态，共 2320
+2026-11-06 10:54:37,498 | INFO | run_e4 | [e4-extract] relation_states@09ba1eab5788: 512/1270
+2026-11-06 10:54:53,590 | INFO | run_e4 | [e4-extract] relation_states@09ba1eab5788: 新抽 1270 态，共 1270
+2026-11-06 10:55:11,975 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 1.145e-07
+2026-11-06 10:55:11,985 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 1.070e-07
+2026-11-06 10:55:12,549 | INFO | run_e4 | [e4] 完成 e4_all: 12 个产物 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables
+2026-11-06 10:55:12,653 | INFO | run_e4 | [run_e4] model siglip2_so400m
+2026-11-06 10:55:24,581 | INFO | run_e4 | [e4-extract] binding_states@1b5f09dc6241: 256/2320
+2026-11-06 10:56:17,881 | INFO | run_e4 | [e4-extract] binding_states@1b5f09dc6241: 新抽 2320 态，共 2320
+2026-11-06 10:56:24,985 | INFO | run_e4 | [e4-extract] relation_states@09ba1eab5788: 256/1270
+2026-11-06 10:56:51,163 | INFO | run_e4 | [e4-extract] relation_states@09ba1eab5788: 新抽 1270 态，共 1270
+2026-11-06 10:57:19,578 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 8.941e-08
+2026-11-06 10:57:19,588 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 7.092e-08
+2026-11-06 10:57:20,199 | INFO | run_e4 | [e4] 完成 e4_all: 12 个产物 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables
+2026-11-06 11:16:22,393 | INFO | run_e4 | [run_e4] model clip_vitl14
+2026-11-06 11:16:36,165 | INFO | run_e4 | [e4-extract] binding_states@4d412cbd3106: 512/2320
+2026-11-06 11:17:16,096 | INFO | run_e4 | [e4-extract] binding_states@4d412cbd3106: 新抽 2320 态，共 2320
+2026-11-06 11:17:16,343 | INFO | run_e4 | [e4-extract] relation_states@09ba1eab5788: 全部 1270 态已缓存
+2026-11-06 11:17:34,732 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 1.027e-07
+2026-11-06 11:17:34,741 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 7.072e-08
+2026-11-06 11:17:35,320 | INFO | run_e4 | [e4] 完成 e4_all: 12 个产物 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitl14/seed_0/tables
+2026-11-06 11:17:35,436 | INFO | run_e4 | [run_e4] model clip_vitb32
+2026-11-06 11:17:48,044 | INFO | run_e4 | [e4-extract] binding_states@4d412cbd3106: 512/2320
+2026-11-06 11:18:25,992 | INFO | run_e4 | [e4-extract] binding_states@4d412cbd3106: 新抽 2320 态，共 2320
+2026-11-06 11:18:26,238 | INFO | run_e4 | [e4-extract] relation_states@09ba1eab5788: 全部 1270 态已缓存
+2026-11-06 11:18:44,316 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 1.145e-07
+2026-11-06 11:18:44,326 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 1.070e-07
+2026-11-06 11:18:44,882 | INFO | run_e4 | [e4] 完成 e4_all: 12 个产物 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/clip_vitb32/seed_0/tables
+2026-11-06 11:18:44,987 | INFO | run_e4 | [run_e4] model siglip2_so400m
+2026-11-06 11:18:55,974 | INFO | run_e4 | [e4-extract] binding_states@4d412cbd3106: 256/2320
+2026-11-06 11:19:49,848 | INFO | run_e4 | [e4-extract] binding_states@4d412cbd3106: 新抽 2320 态，共 2320
+2026-11-06 11:19:50,120 | INFO | run_e4 | [e4-extract] relation_states@09ba1eab5788: 全部 1270 态已缓存
+2026-11-06 11:20:19,092 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 8.941e-08
+2026-11-06 11:20:19,102 | INFO | run_e4 | [e4c] 代数自检 max|C − Δv·Δt| = 7.092e-08
+2026-11-06 11:20:19,716 | INFO | run_e4 | [e4] 完成 e4_all: 12 个产物 -> /home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables

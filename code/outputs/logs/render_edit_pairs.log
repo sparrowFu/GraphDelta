@@ -3732,3 +3732,49 @@
 2026-11-05 22:36:28,321 | INFO | render_edit_pairs | [render] rel_cyru-spru_00049::flip OK (32.8s, retries=0)
 2026-11-05 22:36:31,834 | INFO | render_edit_pairs | [render] rel_cyru-spru_00049::translate OK (34.7s, retries=0)
 2026-11-05 22:36:32,131 | INFO | render_edit_pairs | [render] relation 完成: {'task': 'relation', 'attempted': 1270, 'skipped_in_ledger': 0, 'stale_fingerprint': 138, 'disk_mismatch': 0, 'legacy_no_digest': 12, 'validated_total': 1270, 'derived': 0, 'derived_skipped': 0, 'wall_seconds': 6112.22031712532, 'attempted_per_second': 0.207780468325347, 'workers': 8}
+2026-11-06 10:24:09,088 | INFO | render_edit_pairs | [render] binding: 待渲染 0 态（账本跳过 2120，指纹不符作废 144，磁盘与记录不符 0，无摘要旧记录 0）
+2026-11-06 10:24:13,954 | INFO | render_edit_pairs | [render] binding 完成: {'task': 'binding', 'attempted': 0, 'skipped_in_ledger': 2120, 'stale_fingerprint': 144, 'disk_mismatch': 0, 'legacy_no_digest': 0, 'validated_total': 2120, 'derived': 200, 'derived_skipped': 0, 'wall_seconds': 0.00014901161193847656, 'attempted_per_second': 0.0, 'workers': 8}
+2026-11-06 10:24:14,708 | INFO | render_edit_pairs | [render] relation: 待渲染 0 态（账本跳过 1270，指纹不符作废 138，磁盘与记录不符 0，无摘要旧记录 0）
+2026-11-06 10:24:14,988 | INFO | render_edit_pairs | [render] relation 完成: {'task': 'relation', 'attempted': 0, 'skipped_in_ledger': 1270, 'stale_fingerprint': 138, 'disk_mismatch': 0, 'legacy_no_digest': 0, 'validated_total': 1270, 'derived': 0, 'derived_skipped': 0, 'wall_seconds': 2.6226043701171875e-05, 'attempted_per_second': 0.0, 'workers': 8}
+2026-11-06 10:58:44,548 | INFO | render_edit_pairs | [render] binding: 待渲染 18 态（账本跳过 7，指纹不符作废 2264，磁盘与记录不符 0，无摘要旧记录 0）
+2026-11-06 10:59:15,628 | INFO | render_edit_pairs | [render] cubsph_blye_00000::before OK (31.1s, retries=0)
+2026-11-06 10:59:46,753 | INFO | render_edit_pairs | [render] cubsph_blye_00000::recolor OK (31.1s, retries=0)
+2026-11-06 11:00:18,059 | INFO | render_edit_pairs | [render] cubsph_blye_00000::swap OK (31.3s, retries=0)
+2026-11-06 11:00:48,712 | INFO | render_edit_pairs | [render] cubsph_blye_00001::before OK (30.7s, retries=0)
+2026-11-06 11:01:19,384 | INFO | render_edit_pairs | [render] cubsph_blye_00001::recolor OK (30.7s, retries=0)
+2026-11-06 11:01:49,931 | INFO | render_edit_pairs | [render] cubsph_blye_00001::swap OK (30.5s, retries=0)
+2026-11-06 11:02:19,924 | INFO | render_edit_pairs | [render] cubsph_blye_00002::before OK (30.0s, retries=0)
+2026-11-06 11:02:49,665 | INFO | render_edit_pairs | [render] cubsph_blye_00002::recolor OK (29.7s, retries=0)
+2026-11-06 11:03:20,325 | INFO | render_edit_pairs | [render] cubsph_blye_00002::swap OK (30.7s, retries=0)
+2026-11-06 11:03:52,752 | INFO | render_edit_pairs | [render] cubsph_grye_00000::before OK (32.4s, retries=0)
+2026-11-06 11:04:25,166 | INFO | render_edit_pairs | [render] cubsph_grye_00000::recolor OK (32.4s, retries=0)
+2026-11-06 11:04:57,594 | INFO | render_edit_pairs | [render] cubsph_grye_00000::swap OK (32.4s, retries=0)
+2026-11-06 11:05:30,959 | INFO | render_edit_pairs | [render] cubsph_grye_00001::before OK (33.4s, retries=0)
+2026-11-06 11:06:03,770 | INFO | render_edit_pairs | [render] cubsph_grye_00001::recolor OK (32.8s, retries=0)
+2026-11-06 11:06:36,929 | INFO | render_edit_pairs | [render] cubsph_grye_00001::swap OK (33.2s, retries=0)
+2026-11-06 11:07:07,642 | INFO | render_edit_pairs | [render] cubsph_grye_00002::before OK (30.7s, retries=0)
+2026-11-06 11:07:38,875 | INFO | render_edit_pairs | [render] cubsph_grye_00002::recolor OK (31.2s, retries=0)
+2026-11-06 11:08:09,516 | INFO | render_edit_pairs | [render] cubsph_grye_00002::swap OK (30.6s, retries=0)
+2026-11-06 11:08:09,715 | INFO | render_edit_pairs | [render] binding 完成: {'task': 'binding', 'attempted': 18, 'skipped_in_ledger': 7, 'stale_fingerprint': 2264, 'disk_mismatch': 0, 'legacy_no_digest': 0, 'validated_total': 25, 'derived': 8, 'derived_skipped': 0, 'wall_seconds': 564.9677691459656, 'attempted_per_second': 0.03186022457034979, 'workers': 1}
+2026-11-06 11:14:17,676 | INFO | render_edit_pairs | [render] binding: 待渲染 18 态（账本跳过 2102，指纹不符作废 162，磁盘与记录不符 18，无摘要旧记录 0）
+2026-11-06 11:14:58,280 | INFO | render_edit_pairs | [render] cubsph_blye_00000::before OK (40.6s, retries=0)
+2026-11-06 11:14:59,729 | INFO | render_edit_pairs | [render] cubsph_blye_00001::before OK (42.1s, retries=0)
+2026-11-06 11:14:59,760 | INFO | render_edit_pairs | [render] cubsph_blye_00002::before OK (42.1s, retries=0)
+2026-11-06 11:15:00,458 | INFO | render_edit_pairs | [render] cubsph_blye_00000::recolor OK (42.8s, retries=0)
+2026-11-06 11:15:02,061 | INFO | render_edit_pairs | [render] cubsph_blye_00000::swap OK (44.4s, retries=0)
+2026-11-06 11:15:03,868 | INFO | render_edit_pairs | [render] cubsph_blye_00002::recolor OK (46.2s, retries=0)
+2026-11-06 11:15:04,152 | INFO | render_edit_pairs | [render] cubsph_blye_00001::swap OK (46.5s, retries=0)
+2026-11-06 11:15:04,696 | INFO | render_edit_pairs | [render] cubsph_blye_00001::recolor OK (47.0s, retries=0)
+2026-11-06 11:15:35,343 | INFO | render_edit_pairs | [render] cubsph_grye_00000::recolor OK (35.6s, retries=0)
+2026-11-06 11:15:39,630 | INFO | render_edit_pairs | [render] cubsph_grye_00000::swap OK (39.2s, retries=0)
+2026-11-06 11:15:40,221 | INFO | render_edit_pairs | [render] cubsph_grye_00000::before OK (40.5s, retries=0)
+2026-11-06 11:15:41,858 | INFO | render_edit_pairs | [render] cubsph_blye_00002::swap OK (43.6s, retries=0)
+2026-11-06 11:15:45,397 | INFO | render_edit_pairs | [render] cubsph_grye_00001::recolor OK (41.5s, retries=0)
+2026-11-06 11:15:47,093 | INFO | render_edit_pairs | [render] cubsph_grye_00002::before OK (42.4s, retries=0)
+2026-11-06 11:15:48,126 | INFO | render_edit_pairs | [render] cubsph_grye_00001::before OK (46.1s, retries=0)
+2026-11-06 11:15:48,152 | INFO | render_edit_pairs | [render] cubsph_grye_00001::swap OK (44.0s, retries=0)
+2026-11-06 11:16:05,638 | INFO | render_edit_pairs | [render] cubsph_grye_00002::recolor OK (30.3s, retries=0)
+2026-11-06 11:16:11,021 | INFO | render_edit_pairs | [render] cubsph_grye_00002::swap OK (31.4s, retries=0)
+2026-11-06 11:16:15,857 | INFO | render_edit_pairs | [render] binding 完成: {'task': 'binding', 'attempted': 18, 'skipped_in_ledger': 2102, 'stale_fingerprint': 162, 'disk_mismatch': 18, 'legacy_no_digest': 0, 'validated_total': 2120, 'derived': 200, 'derived_skipped': 0, 'wall_seconds': 113.34523153305054, 'attempted_per_second': 0.15880685721438, 'workers': 8}
+2026-11-06 11:16:16,189 | INFO | render_edit_pairs | [render] relation: 待渲染 0 态（账本跳过 1270，指纹不符作废 138，磁盘与记录不符 0，无摘要旧记录 0）
+2026-11-06 11:16:16,470 | INFO | render_edit_pairs | [render] relation 完成: {'task': 'relation', 'attempted': 0, 'skipped_in_ledger': 1270, 'stale_fingerprint': 138, 'disk_mismatch': 0, 'legacy_no_digest': 0, 'validated_total': 1270, 'derived': 0, 'derived_skipped': 0, 'wall_seconds': 2.574920654296875e-05, 'attempted_per_second': 0.0, 'workers': 8}

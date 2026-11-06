@@ -1,0 +1,26 @@
+{
+  "model": "siglip2_so400m",
+  "seed": 0,
+  "smoke": true,
+  "tables_dir": "/home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables",
+  "axes": {
+    "a": {
+      "axis": "a",
+      "file": "e4a_results_smoke.csv",
+      "ran": false,
+      "n_rows": 0
+    },
+    "c": {
+      "axis": "c",
+      "file": "e4c_conversion_stats_smoke.csv",
+      "ran": false,
+      "n_rows": 0
+    },
+    "d": {
+      "axis": "d",
+      "file": "e4d_retrieval_smoke.csv",
+      "ran": false,
+      "n_rows": 0
+    }
+  }
+}

@@ -40,8 +40,8 @@ conda run -n CudaVersion128Fuxp python <script>
 
 | `--model` 取值 | 模型 | 角色 | 输入预处理 |
 |---|---|---|---|
-| `all` | —（不是一个模型） | 依次运行下面全部已配置模型 | 按各模型自己的预处理 |
-| `clip_vitl14` | CLIP ViT-L/14 | 首选 baseline（方案 §4 第一轮必做），**所有脚本的默认值** | 224×224，官方 preprocess（短边 resize + center crop） |
+| `all` | —（不是一个模型） | **所有脚本的默认值**：依次运行下面全部已配置模型 | 按各模型自己的预处理 |
+| `clip_vitl14` | CLIP ViT-L/14 | 首选 baseline（方案 §4 第一轮必做） | 224×224，官方 preprocess（短边 resize + center crop） |
 | `clip_vitb32` | CLIP ViT-B/32 | 冻结对照 baseline（方案 §4 允许增加） | 224×224，官方 preprocess |
 | `siglip2_so400m` | SigLIP2 so400m-patch14-384 | 冻结对照 baseline（方案 §4 第二轮对照） | 官方 384×384 resize；文本编码前显式小写 |
 
@@ -170,7 +170,7 @@ python PreExperiments/stage1_frozen_baseline/scripts/build_manifests.py --datase
 两者可组合成 3 模型 × 7 数据集全交叉，具体写法见 §6）：
 
 ```bash
-python PreExperiments/stage1_frozen_baseline/scripts/extract_embeddings.py --dataset [clevr_val, cogent_valA, cogent_valB, pug_spar, pug_spar_official, pug_animals, pug_imagenet, all]（必填，无默认） --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --force
+python PreExperiments/stage1_frozen_baseline/scripts/extract_embeddings.py --dataset [clevr_val, cogent_valA, cogent_valB, pug_spar, pug_spar_official, pug_animals, pug_imagenet, all]（必填，无默认） --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --force
 ```
 
 作用：把指定数据集的全部图像编码成特征，写入 `data/cache/<model>/`。每个样本同时保存
@@ -196,7 +196,7 @@ raw（归一化前）和 normalized（归一化后）两种 embedding（方案 �
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
 | `--dataset` | `all` / `clevr_val` / `cogent_valA` / `cogent_valB` / `pug_spar` / `pug_spar_official` / `pug_animals` / `pug_imagenet`（八个取值见 §3 的表） | 无（必填） | 要抽取特征的数据集；`all` = 全部 7 个串行依次抽取 |
-| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m`（四个取值见 §2 的表） | `clip_vitl14` | 用哪个（哪些）冻结 baseline 抽特征；`all` = 三个模型依次各抽一套 |
+| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m`（四个取值见 §2 的表） | `all` | 用哪个（哪些）冻结 baseline 抽特征；`all` = 三个模型依次各抽一套 |
 | `--force` | 开关（带上即生效，无值） | 不带 | 删除已有缓存重新抽取。协议匹配时只删该数据集图像缓存 + 文本缓存；协议不匹配或无 `protocol.json` 时删整个模型缓存目录 |
 
 ### Step 3 PUG:SPAR 结构诊断（方案 §8–§10 / §27–§33）
@@ -204,13 +204,13 @@ raw（归一化前）和 normalized（归一化后）两种 embedding（方案 �
 命令一：自建 2AFC（E1 的 SPAR 部分）：
 
 ```bash
-python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --smoke --seed [0(默认), 1, 2, …]
+python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --smoke --seed [0(默认), 1, 2, …]
 ```
 
 命令二：SPAR 官方协议复现（方案 §9"官方已有协议优先复现"）：
 
 ```bash
-python PreExperiments/stage1_frozen_baseline/scripts/run_e1_spar_official.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --smoke --seed [0(默认), 1, 2, …]
+python PreExperiments/stage1_frozen_baseline/scripts/run_e1_spar_official.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --smoke --seed [0(默认), 1, 2, …]
 ```
 
 作用：
@@ -237,7 +237,7 @@ binding / SPAR attribute / relation 的正负例词集相同，天然免疫词�
 
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
-| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `clip_vitl14` | 评估的冻结 baseline；`all` = 三个模型串行依次评估 |
+| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `all` | 评估的冻结 baseline；`all` = 三个模型串行依次评估 |
 | `--smoke` | 开关 | 不带 | 小样本快速自检，输出文件带 `_smoke` 后缀，不写正式结果 |
 | `--seed` | 任意整数（方案 §66 固定用 `0` / `1` / `2`） | 取配置 `seeds[0]`（=0） | 候选采样种子。检验多次采样稳定性时分别用 `--seed 1`、`--seed 2` 重跑，结果自动写入 `seed_1` / `seed_2` 目录 |
 
@@ -245,7 +245,7 @@ binding / SPAR attribute / relation 的正负例词集相同，天然免疫词�
 
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
-| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `clip_vitl14` | 评估的冻结 baseline；`all` = 三个模型串行依次评估 |
+| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `all` | 评估的冻结 baseline；`all` = 三个模型串行依次评估 |
 | `--smoke` | 开关 | 不带 | 小样本快速自检（只取前 3000 行，部分任务样本少或为空，全量才有可比数字） |
 | `--seed` | 任意整数（方案 §66 固定用 `0` / `1` / `2`） | 取配置 `seeds[0]`（=0） | 查询图片抽样种子 |
 
@@ -254,7 +254,7 @@ binding / SPAR attribute / relation 的正负例词集相同，天然免疫词�
 命令（与 Step 3 是同一个脚本，一次运行同时完成；全部参数与 Step 3 相同）：
 
 ```bash
-python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --smoke --seed [0(默认), 1, 2, …]
+python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --smoke --seed [0(默认), 1, 2, …]
 ```
 
 作用：读取 CLEVR val 的官方 scene annotation，确定性生成 caption，构造六类
@@ -269,7 +269,7 @@ hard negative 2AFC（object / color / size / material / relation / binding-style
 
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
-| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `clip_vitl14` | 评估的冻结 baseline；`all` = 三个模型串行依次评估 |
+| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `all` | 评估的冻结 baseline；`all` = 三个模型串行依次评估 |
 | `--smoke` | 开关 | 不带 | 小样本快速自检，输出带 `_smoke` 后缀 |
 | `--seed` | 任意整数（方案固定用 `0` / `1` / `2`） | 取配置 `seeds[0]`（=0） | 候选采样种子 |
 
@@ -278,7 +278,7 @@ hard negative 2AFC（object / color / size / material / relation / binding-style
 命令（全部参数；`--dataset all` = 核心数据集 + 辅助数据集串行，pug_animals 在前）：
 
 ```bash
-python PreExperiments/stage1_frozen_baseline/scripts/run_e2.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --dataset [pug_animals(默认), pug_imagenet, all] --smoke --seed [0(默认), 1, 2, …] --allow-empty-factors
+python PreExperiments/stage1_frozen_baseline/scripts/run_e2.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --dataset [all(默认), pug_animals, pug_imagenet] --smoke --seed [0(默认), 1, 2, …] --allow-empty-factors
 ```
 
 作用：按已有 metadata 配对（方案 §12 / §59：固定其余因素、只变一个因素），
@@ -307,8 +307,8 @@ PUG:ImageNet 的重复行处理：该数据集实测每个因素有 1,448 行（
 
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
-| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `clip_vitl14` | 评估的冻结 baseline；`all` = 三个模型串行依次评估（模型在外层，数据集在内层） |
-| `--dataset` | `all` / `pug_animals` / `pug_imagenet`（三个取值见 §3 的表） | `pug_animals` | E2 数据集。`pug_animals`=核心（全量 215,040）；`pug_imagenet`=辅助验证（方案 §14），输出文件名为 `e2_delta_stats_pug_imagenet.csv`；`all` = 两个数据集串行 |
+| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `all` | 评估的冻结 baseline；`all` = 三个模型串行依次评估（模型在外层，数据集在内层） |
+| `--dataset` | `all` / `pug_animals` / `pug_imagenet`（三个取值见 §3 的表） | `all` | E2 数据集。`pug_animals`=核心（全量 215,040）；`pug_imagenet`=辅助验证（方案 §14），输出文件名为 `e2_delta_stats_pug_imagenet.csv`；`all` = 两个数据集串行 |
 | `--smoke` | 开关 | 不带 | 小样本快速自检（按 smoke_cols 逐层筛选小子集），输出带 `_smoke` 后缀 |
 | `--seed` | 任意整数（方案固定用 `0` / `1` / `2`） | 取配置 `seeds[0]`（=0） | 配对与 nuisance 采样种子 |
 | `--allow-empty-factors` | 开关 | 不带 | 某因素 0 对有效配对时跳过该因素而不是停止。默认停止是为了保证完整因素集；开启后结果不构成完整因素集。smoke 下 pug_imagenet 子集覆盖不全，自检时需要带上此参数 |
@@ -318,18 +318,19 @@ PUG:ImageNet 的重复行处理：该数据集实测每个因素有 1,448 行（
 命令一：E3 主实验：
 
 ```bash
-python PreExperiments/stage1_frozen_baseline/scripts/run_e3.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --smoke --seed [0(默认), 1, 2, …]
+python PreExperiments/stage1_frozen_baseline/scripts/run_e3.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --smoke --seed [0(默认), 1, 2, …]
 ```
 
 命令二：逐单元分析（方案 §49 附加分析 2 / §71 情况 C 排查）：
 
 ```bash
-python PreExperiments/stage1_frozen_baseline/scripts/analyze_e3_units.py --model [clip_vitl14, clip_vitb32, siglip2_so400m, all]（默认不带） --seed [0(默认), 1, 2, …] --tables-dir [任意目录路径]（默认不带） --no-strict --check-atol [1e-8(默认), 任意浮点数]
+python PreExperiments/stage1_frozen_baseline/scripts/analyze_e3_units.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --seed [0(默认), 1, 2, …] --tables-dir [任意目录路径]（默认不带） --no-strict --check-atol [1e-8(默认), 任意浮点数]
 ```
 
 `analyze_e3_units.py` 的目录定位：`--tables-dir` 优先；否则用 `--model` + `--seed` 定位
 `outputs/<model>/seed_<seed>/tables`（`--model all` = 依次分析全部模型，串行、不加载模型）；
-两者都不带时默认 `clip_vitl14` / seed 0，目录不存在则回退旧布局 `outputs/tables`。
+两者都不带时默认 `--model all` / seed 0（依次分析全部模型；旧布局快照
+`outputs/tables` 需用 `--tables-dir` 显式指定）。
 
 作用：
 
@@ -348,7 +349,7 @@ python PreExperiments/stage1_frozen_baseline/scripts/analyze_e3_units.py --model
 
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
-| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `clip_vitl14` | 评估的冻结 baseline；`all` = 三个模型串行依次评估 |
+| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `all` | 评估的冻结 baseline；`all` = 三个模型串行依次评估 |
 | `--smoke` | 开关 | 不带 | 小样本快速自检，输出带 `_smoke` 后缀 |
 | `--seed` | 任意整数（方案固定用 `0` / `1` / `2`） | 取配置 `seeds[0]`（=0） | 候选采样种子 |
 
@@ -356,7 +357,7 @@ python PreExperiments/stage1_frozen_baseline/scripts/analyze_e3_units.py --model
 
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
-| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | 不带（沿用默认 clip_vitl14/seed_0 布局） | 结果所属模型：定位 `outputs/<model>/seed_<seed>/tables`；`all` = 依次分析全部模型（串行，不加载模型）。不能与 `--tables-dir` 同用 |
+| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `all` | 结果所属模型：定位 `outputs/<model>/seed_<seed>/tables`；`all` = 依次分析全部模型（串行，不加载模型）。不能与 `--tables-dir` 同用 |
 | `--seed` | 任意整数 | `0` | 结果所属种子，与 `--model` 配合定位 tables 目录 |
 | `--tables-dir` | 目录路径 | 不带 | 直接指定 tables 目录（优先于 `--model`）；默认不带时：`outputs/clip_vitl14/seed_0/tables`，不存在则回退旧布局 `outputs/tables` |
 | `--no-strict` | 开关 | 不带 | 探索模式：总 gap 复算与主表不一致时仍输出单元表（检查结果始终写入 `e3_unit_consistency.json`） |
@@ -369,21 +370,21 @@ negative / 扰动，不是训练）：Step 3–6 的四个实验脚本各再跑�
 `1` 和 `2`（其余参数不变，结果自动写入 `seed_1` / `seed_2` 目录）：
 
 ```bash
-python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --smoke --seed [0(默认), 1, 2, …]
-python PreExperiments/stage1_frozen_baseline/scripts/run_e1_spar_official.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --smoke --seed [0(默认), 1, 2, …]
-python PreExperiments/stage1_frozen_baseline/scripts/run_e2.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --dataset [pug_animals(默认), pug_imagenet, all] --smoke --seed [0(默认), 1, 2, …] --allow-empty-factors
-python PreExperiments/stage1_frozen_baseline/scripts/run_e3.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --smoke --seed [0(默认), 1, 2, …]
+python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --smoke --seed [0(默认), 1, 2, …]
+python PreExperiments/stage1_frozen_baseline/scripts/run_e1_spar_official.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --smoke --seed [0(默认), 1, 2, …]
+python PreExperiments/stage1_frozen_baseline/scripts/run_e2.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --dataset [all(默认), pug_animals, pug_imagenet] --smoke --seed [0(默认), 1, 2, …] --allow-empty-factors
+python PreExperiments/stage1_frozen_baseline/scripts/run_e3.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --smoke --seed [0(默认), 1, 2, …]
 # 每个种子跑完后对其逐单元分析（供稳定性汇总消费；--seed 取该种子，三个种子各跑一次）：
-python PreExperiments/stage1_frozen_baseline/scripts/analyze_e3_units.py --model [clip_vitl14, clip_vitb32, siglip2_so400m, all]（默认不带） --seed [0(默认), 1, 2, …] --tables-dir [任意目录路径]（默认不带） --no-strict --check-atol [1e-8(默认), 任意浮点数]
+python PreExperiments/stage1_frozen_baseline/scripts/analyze_e3_units.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --seed [0(默认), 1, 2, …] --tables-dir [任意目录路径]（默认不带） --no-strict --check-atol [1e-8(默认), 任意浮点数]
 ```
 
 然后汇总（全部参数形式）：
 
 ```bash
 # 三种子判定稳定性汇总（需 seeds 0/1/2 的全量结果都已跑完）
-python PreExperiments/stage1_frozen_baseline/scripts/summarize_seed_stability.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --allow-mixed-legacy --allow-exploratory-e3
+python PreExperiments/stage1_frozen_baseline/scripts/summarize_seed_stability.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --allow-mixed-legacy --allow-exploratory-e3
 # 生成方案 §67 的五张图
-python PreExperiments/stage1_frozen_baseline/scripts/make_figures.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --seed [0(默认), 1, 2, …] --tables-dir [outputs/<model>/seed_<seed>/tables(默认), 任意目录路径]
+python PreExperiments/stage1_frozen_baseline/scripts/make_figures.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --seed [0(默认), 1, 2, …] --tables-dir [outputs/<model>/seed_<seed>/tables(默认), 任意目录路径]
 ```
 
 作用：
@@ -403,7 +404,7 @@ python PreExperiments/stage1_frozen_baseline/scripts/make_figures.py --model [cl
 
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
-| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `clip_vitl14` | 汇总的模型（读 `outputs/<model>/seed_{0,1,2}/tables`）。该模型三种子缺全量结果时直接报错并停止。`all` = 依次汇总全部模型（串行，不加载模型） |
+| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `all` | 汇总的模型（读 `outputs/<model>/seed_{0,1,2}/tables`）。某模型三种子缺全量结果时直接报错并停止。`all` = 依次汇总全部模型（串行，不加载模型） |
 | `--allow-mixed-legacy` | 开关 | 不带 | 三种子混用新旧目录布局时仍输出，仅作版本临时对照（默认停止，因为新旧数据口径不可比） |
 | `--allow-exploratory-e3` | 开关 | 不带 | E3 派生单元表状态异常（failed / stale / 指纹不匹配）时仍汇总，但输出写入独立的 `seed_stability_exploratory.csv`，不冒充正式结果 |
 
@@ -411,7 +412,7 @@ python PreExperiments/stage1_frozen_baseline/scripts/make_figures.py --model [cl
 
 | 参数 | 取值 | 默认 | 作用 |
 |---|---|---|---|
-| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `clip_vitl14` | 结果所属模型：定位 tables 目录与图标题。`all` = 依次给全部模型绘图（串行，不加载模型；某模型缺全量结果即停止） |
+| `--model` | `all` / `clip_vitl14` / `clip_vitb32` / `siglip2_so400m` | `all` | 结果所属模型：定位 tables 目录与图标题。`all` = 依次给全部模型绘图（串行，不加载模型；某模型缺全量结果即停止） |
 | `--seed` | 任意整数 | `0` | 结果所属种子：定位 tables 目录与图标题 |
 | `--tables-dir` | 目录路径 | `outputs/<model>/seed_<seed>/tables`（`clip_vitl14` + seed 0 可回退旧布局 `outputs/tables`） | 直接指定 tables 目录；只对应一个模型，不能与 `--model all` 同用。其他模型 / 种子缺少新结果时不会回退，直接报错 |
 
@@ -430,9 +431,9 @@ python PreExperiments/stage1_frozen_baseline/scripts/make_figures.py --model [cl
 ```bash
 # 冒烟自检（run_e2 的 smoke 需带 --allow-empty-factors，见 §8）
 conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/build_manifests.py --dataset all
-conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --model clip_vitl14 --smoke
-conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e2.py --model clip_vitl14 --smoke --allow-empty-factors
-conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e3.py --model clip_vitl14 --smoke
+conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --smoke
+conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e2.py --smoke --allow-empty-factors
+conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/run_e3.py --smoke
 # 冒烟通过后：抽特征（首次全量最耗时，约数小时 GPU）→ §6.1 的全量命令
 conda run -n CudaVersion128Fuxp python PreExperiments/stage1_frozen_baseline/scripts/extract_embeddings.py --dataset clevr_val --model clip_vitl14
 ```
@@ -508,10 +509,10 @@ SigLIP2 注意事项：当前实现是 FixRes checkpoint 路径（固定 384×38
 改代码后先跑 smoke 确认流程通畅，输出带 `_smoke` 后缀、不写正式结果：
 
 ```bash
-python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --smoke --seed [0(默认), 1, 2, …]
-python PreExperiments/stage1_frozen_baseline/scripts/run_e1_spar_official.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --smoke --seed [0(默认), 1, 2, …]
-python PreExperiments/stage1_frozen_baseline/scripts/run_e2.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --dataset [pug_animals(默认), pug_imagenet, all] --smoke --seed [0(默认), 1, 2, …] --allow-empty-factors
-python PreExperiments/stage1_frozen_baseline/scripts/run_e3.py --model [clip_vitl14(默认), clip_vitb32, siglip2_so400m, all] --smoke --seed [0(默认), 1, 2, …]
+python PreExperiments/stage1_frozen_baseline/scripts/run_e1.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --smoke --seed [0(默认), 1, 2, …]
+python PreExperiments/stage1_frozen_baseline/scripts/run_e1_spar_official.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --smoke --seed [0(默认), 1, 2, …]
+python PreExperiments/stage1_frozen_baseline/scripts/run_e2.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --dataset [all(默认), pug_animals, pug_imagenet] --smoke --seed [0(默认), 1, 2, …] --allow-empty-factors
+python PreExperiments/stage1_frozen_baseline/scripts/run_e3.py --model [all(默认), clip_vitl14, clip_vitb32, siglip2_so400m] --smoke --seed [0(默认), 1, 2, …]
 ```
 
 `--model all` / `--dataset all` 在 smoke 下同样可用（串行自检全部模型 / 数据集）。

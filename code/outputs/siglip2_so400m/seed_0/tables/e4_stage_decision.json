@@ -1,0 +1,224 @@
+{
+  "model": "siglip2_so400m",
+  "seed": 0,
+  "tables_dir": "/home/xpfu/WorkSpace/GraphDelta/code/outputs/siglip2_so400m/seed_0/tables",
+  "alpha": 0.05,
+  "rules": {
+    "confirmatory_family": "E4-A 每任务 1 个 + E4-C 每任务 1 个 + E4-D 每任务×规定对照['wrong_conversion', 'random', 'reverse', 'text_delta']各 1 个（族规模冻结：缺数据的检验按 p=1 计入，不缩小族）",
+    "multiplicity": "Holm step-down，族内校正后 p < alpha 才判支持",
+    "completeness": "完整性是前置条件：规定转换 / 对照 / 留出场景覆盖缺失时对应轴记数据不足，不凭已出现的行判定",
+    "structure": "E4-A 任务级 heldout 置换 Holm p < α 且 pair_acc > null_mean",
+    "crossmodal": "E4-C 任务级 heldout C 符号翻转 Holm p < α 且 C_mean > 0（方向检查；逐转换结果仅探索性）",
+    "transfer": "E4-D 正确方向 vs 每个规定对照：同场景配对差 Holm p < α且差均值 > 0；任一规定对照或清单规定留出场景缺失记数据不足"
+  },
+  "provenance": {
+    "e4a_results.csv": "e4_all",
+    "e4c_conversion_stats.csv": "e4_all",
+    "e4d_retrieval.csv": "e4_all"
+  },
+  "holm_family": [
+    {
+      "key": "A:binding",
+      "computed": true,
+      "p_raw": 0.0,
+      "p_holm": 0.0
+    },
+    {
+      "key": "C:binding",
+      "computed": true,
+      "p_raw": 0.0,
+      "p_holm": 0.0
+    },
+    {
+      "key": "C:relation",
+      "computed": true,
+      "p_raw": 0.0,
+      "p_holm": 0.0
+    },
+    {
+      "key": "A:relation",
+      "computed": true,
+      "p_raw": 0.233,
+      "p_holm": 1.0
+    },
+    {
+      "key": "D:binding:random",
+      "computed": true,
+      "p_raw": 1.0,
+      "p_holm": 1.0
+    },
+    {
+      "key": "D:binding:reverse",
+      "computed": true,
+      "p_raw": 1.0,
+      "p_holm": 1.0
+    },
+    {
+      "key": "D:binding:text_delta",
+      "computed": true,
+      "p_raw": 1.0,
+      "p_holm": 1.0
+    },
+    {
+      "key": "D:binding:wrong_conversion",
+      "computed": true,
+      "p_raw": 1.0,
+      "p_holm": 1.0
+    },
+    {
+      "key": "D:relation:random",
+      "computed": true,
+      "p_raw": 1.0,
+      "p_holm": 1.0
+    },
+    {
+      "key": "D:relation:reverse",
+      "computed": true,
+      "p_raw": 1.0,
+      "p_holm": 1.0
+    },
+    {
+      "key": "D:relation:text_delta",
+      "computed": true,
+      "p_raw": 1.0,
+      "p_holm": 1.0
+    },
+    {
+      "key": "D:relation:wrong_conversion",
+      "computed": true,
+      "p_raw": 1.0,
+      "p_holm": 1.0
+    }
+  ],
+  "structure_identifiability": {
+    "binding": {
+      "pair_acc": 0.3107142857142856,
+      "perm_p": 0.0,
+      "null_mean": 0.1868973214285714,
+      "n_scenes": 160,
+      "cond_raw": true,
+      "p_holm": 0.0,
+      "label": "有支持证据"
+    },
+    "relation": {
+      "pair_acc": 0.0028571428571428,
+      "perm_p": 0.233,
+      "null_mean": 0.0013942857142857,
+      "n_scenes": 100,
+      "cond_raw": false,
+      "p_holm": 1.0,
+      "label": "证据不足"
+    }
+  },
+  "crossmodal_alignment": {
+    "binding": {
+      "n_conditions": 8,
+      "n_heldout": 160,
+      "C_mean_heldout": 0.0036465596577727,
+      "C_ci_low_heldout": 0.0027340341063086,
+      "C_ci_high_heldout": 0.0046020369830489,
+      "p_heldout": 0.0,
+      "n_perm": 1000,
+      "exact": false,
+      "cond_raw": true,
+      "p_holm": 0.0,
+      "label": "有支持证据"
+    },
+    "relation": {
+      "n_conditions": 10,
+      "n_heldout": 100,
+      "C_mean_heldout": 0.0002107805011718,
+      "C_ci_low_heldout": 0.0001398416426678,
+      "C_ci_high_heldout": 0.000284419781811,
+      "p_heldout": 0.0,
+      "n_perm": 1000,
+      "exact": false,
+      "cond_raw": true,
+      "p_holm": 0.0,
+      "label": "有支持证据"
+    }
+  },
+  "direction_transfer": {
+    "binding": {
+      "n_scenes": 160,
+      "correct_top1": 0.00625,
+      "controls": {
+        "wrong_conversion": {
+          "mean_diff": 0.00625,
+          "diff_ci_low": 0.0,
+          "diff_ci_high": 0.01875,
+          "p_signflip": 1.0,
+          "n_scenes": 160,
+          "p_holm": 1.0
+        },
+        "random": {
+          "mean_diff": 0.00625,
+          "diff_ci_low": 0.0,
+          "diff_ci_high": 0.01875,
+          "p_signflip": 1.0,
+          "n_scenes": 160,
+          "p_holm": 1.0
+        },
+        "reverse": {
+          "mean_diff": 0.00625,
+          "diff_ci_low": 0.0,
+          "diff_ci_high": 0.01875,
+          "p_signflip": 1.0,
+          "n_scenes": 160,
+          "p_holm": 1.0
+        },
+        "text_delta": {
+          "mean_diff": 0.00625,
+          "diff_ci_low": 0.0,
+          "diff_ci_high": 0.01875,
+          "p_signflip": 1.0,
+          "n_scenes": 160,
+          "p_holm": 1.0
+        }
+      },
+      "missing_controls": [],
+      "label": "证据不足"
+    },
+    "relation": {
+      "n_scenes": 100,
+      "correct_top1": 0.0,
+      "controls": {
+        "wrong_conversion": {
+          "mean_diff": 0.0,
+          "diff_ci_low": 0.0,
+          "diff_ci_high": 0.0,
+          "p_signflip": 1.0,
+          "n_scenes": 100,
+          "p_holm": 1.0
+        },
+        "random": {
+          "mean_diff": 0.0,
+          "diff_ci_low": 0.0,
+          "diff_ci_high": 0.0,
+          "p_signflip": 1.0,
+          "n_scenes": 100,
+          "p_holm": 1.0
+        },
+        "reverse": {
+          "mean_diff": 0.0,
+          "diff_ci_low": 0.0,
+          "diff_ci_high": 0.0,
+          "p_signflip": 1.0,
+          "n_scenes": 100,
+          "p_holm": 1.0
+        },
+        "text_delta": {
+          "mean_diff": 0.0,
+          "diff_ci_low": 0.0,
+          "diff_ci_high": 0.0,
+          "p_signflip": 1.0,
+          "n_scenes": 100,
+          "p_holm": 1.0
+        }
+      },
+      "missing_controls": [],
+      "label": "证据不足"
+    }
+  },
+  "missing": []
+}

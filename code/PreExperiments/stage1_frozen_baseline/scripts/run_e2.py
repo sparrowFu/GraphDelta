@@ -19,10 +19,10 @@ E2_DATASETS = ["pug_animals", "pug_imagenet"]
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="clip_vitl14",
+    ap.add_argument("--model", default="all",
                     help="冻结 baseline（all = 依次运行全部已配置模型，"
                          "串行执行、一次只加载一个）")
-    ap.add_argument("--dataset", default="pug_animals",
+    ap.add_argument("--dataset", default="all",
                     choices=["all"] + E2_DATASETS,
                     help="E2 数据集（all = 两个数据集串行；pug_imagenet 为"
                          "方案 §14 辅助验证，审查 A1）")

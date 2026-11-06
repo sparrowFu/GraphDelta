@@ -141,7 +141,7 @@ def main():
     ap.add_argument("--dataset", required=True,
                     choices=["all"] + EXTRACT_DATASETS,
                     help="要抽取特征的数据集（all = 全部数据集串行依次抽取）")
-    ap.add_argument("--model", default="clip_vitl14",
+    ap.add_argument("--model", default="all",
                     help="冻结 baseline（all = 依次运行全部已配置模型，"
                          "串行执行、一次只加载一个）")
     ap.add_argument("--force", action="store_true", help="删除已有缓存重新抽取")

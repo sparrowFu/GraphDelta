@@ -151,6 +151,48 @@
           "updated": "2026-10-28T11:29:20"
         }
       ]
+    },
+    "e4_all": {
+      "git_commit": "9861e900c52a61d29c88e27a7df106d46d4fffec",
+      "git_dirty": true,
+      "cache_protocol": "siglip2-fixres-lowercase-v1",
+      "status": "success",
+      "started": "2026-11-06T11:18:48",
+      "last_success": {
+        "git_commit": "9861e900c52a61d29c88e27a7df106d46d4fffec",
+        "git_dirty": true,
+        "cache_protocol": "siglip2-fixres-lowercase-v1",
+        "updated": "2026-11-06T11:20:19",
+        "outputs": [
+          "e4a_control_results.csv",
+          "e4a_items.jsonl",
+          "e4a_results.csv",
+          "e4b_control_delta.csv",
+          "e4b_delta_stats.csv",
+          "e4b_items.jsonl",
+          "e4b_probe.csv",
+          "e4b_reliability.csv",
+          "e4c_conversion_stats.csv",
+          "e4c_identity.json",
+          "e4d_meta.json",
+          "e4d_retrieval.csv"
+        ],
+        "outputs_md5": {
+          "e4a_control_results.csv": "180d64e0057da9f39232fb2a70454d45",
+          "e4a_items.jsonl": "920c59e942e9cae4b24949e4bc5400d7",
+          "e4a_results.csv": "d27aa8e7feb257754dedce4c30c42ce3",
+          "e4b_control_delta.csv": "791f6e411cac342a4a587cbe24a62ba3",
+          "e4b_delta_stats.csv": "8cc98fc8a874eeea55b13c469dfcc7b9",
+          "e4b_items.jsonl": "73ed716f8baf7de0327f2871e8a52761",
+          "e4b_probe.csv": "462b27a6c9f2941c96ff87728ead0c96",
+          "e4b_reliability.csv": "9988ee13044a9d06cb04fb55ba93722e",
+          "e4c_conversion_stats.csv": "a4f11de43b90f5fefe02a34aac458081",
+          "e4c_identity.json": "04cdc073f22c1398f6384e0d05a77fb7",
+          "e4d_meta.json": "1eb4cf02e404255ea7b868c509a0c80e",
+          "e4d_retrieval.csv": "9d305e3dbacf87b37da5b5ac745718fd"
+        }
+      },
+      "replaces": []
     }
   }
 }

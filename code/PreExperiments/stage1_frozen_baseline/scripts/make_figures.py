@@ -279,9 +279,9 @@ def run_one(model_name, seed, tables_dir, paths):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="clip_vitl14",
+    ap.add_argument("--model", default=None,
                     help="结果所属模型：定位 tables 目录与图标题（all = 依次给全部"
-                         "已配置模型绘图，串行执行、不加载模型；R2/R7）")
+                         "已配置模型绘图，串行执行、不加载模型；不带时默认 all；R2/R7）")
     ap.add_argument("--seed", type=int, default=0,
                     help="结果所属种子：定位 tables 目录与图标题")
     ap.add_argument("--tables-dir", default=None,
@@ -290,10 +290,12 @@ def main():
                          "不能与 --model all 同用）")
     args = ap.parse_args()
     paths = load_paths()
-    if args.tables_dir and args.model == "all":
+    # 不带 --model 时默认 all；--tables-dir 只对应一个模型，不能与 all 同用
+    model = args.model or "all"
+    if args.tables_dir and model == "all":
         raise SystemExit("--tables-dir 只对应一个模型，不能与 --model all 同用")
     # --model all：串行依次绘图；某模型缺全量结果即停止，后面的不再绘制
-    for name in resolve_models(args.model, paths):
+    for name in resolve_models(model, paths):
         print(f"===== figures: {name} seed {args.seed} =====")
         run_one(name, args.seed, args.tables_dir, paths)
 

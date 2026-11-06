@@ -191,8 +191,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default=None,
                     help="结果所属模型：定位 outputs/<model>/seed_<seed>/tables"
-                         "（all = 依次分析全部已配置模型，串行、不加载模型）；"
-                         "默认沿用 clip_vitl14/seed_0（缺失时回退旧布局 outputs/tables）")
+                         "（all = 依次分析全部已配置模型，串行、不加载模型；"
+                         "不带时默认 all）")
     ap.add_argument("--seed", type=int, default=0,
                     help="结果所属种子（与 --model 配合定位 tables 目录，默认 0）")
     ap.add_argument("--tables-dir", default=None,
@@ -211,16 +211,11 @@ def main():
         raise SystemExit("--tables-dir 已直接指定目录，不能与 --model 同时使用")
     if args.tables_dir:
         targets = [(Path(args.tables_dir), None, None)]
-    elif args.model:
-        targets = [(out / name / f"seed_{args.seed}" / "tables", name, args.seed)
-                   for name in resolve_models(args.model, paths)]
     else:
-        default_new = out / "clip_vitl14" / "seed_0" / "tables"
-        if (default_new / "e3_items_cogent.jsonl").exists():
-            verify_run_meta(default_new, "clip_vitl14", 0)
-            targets = [(default_new, None, None)]
-        else:
-            targets = [(out / "tables", None, None)]      # 旧布局（R2 隔离前的历史结果）
+        # 不带 --model 时默认 all（旧布局快照 outputs/tables 用 --tables-dir 显式指定）
+        model = args.model or "all"
+        targets = [(out / name / f"seed_{args.seed}" / "tables", name, args.seed)
+                   for name in resolve_models(model, paths)]
     logger = get_logger("analyze_e3_units", paths["dirs"]["outputs"] / "logs")
     # 串行逐目录分析；某目录缺全量结果或校验失败即停止，后面的不再分析
     for tables, mname, mseed in targets:

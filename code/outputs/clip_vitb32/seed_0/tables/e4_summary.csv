@@ -1,0 +1,7 @@
+axis,task,value,p,label
+structure,binding,0.0401785714285714,1.0,证据不足
+crossmodal,binding,2.096713987498333e-05,1.0,证据不足
+transfer,binding,0.0,,证据不足
+structure,relation,0.0085714285714285,1.0,证据不足
+crossmodal,relation,-0.0009877303671601,0.0,证据不足
+transfer,relation,0.0,,证据不足
